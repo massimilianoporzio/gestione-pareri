@@ -13,9 +13,32 @@
       {
         "match": "\\.(html|djhtml|django-html)$",
         "cmd": "uv run djlint \"${file}\" --reformat --ignore H030"
+      },
+      {
+        "match": "\\.py$",
+        "cmd": "uv run isort \"${file}\""
       }
     ]
   },
-
-  "djlint.enableLinting": false
+  "djlint.enableLinting": false,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "black-formatter.args": [
+    "--line-length=120"
+  ],
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true,
+  "python.linting.pylintArgs": [
+    "--load-plugins=pylint_django",
+    "--django-settings-module=home.settings"
+  ],
+  "isort.args": [
+    "--profile=django",
+    "--line-length=120"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  }
 }
