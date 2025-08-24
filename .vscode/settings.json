@@ -1,11 +1,11 @@
 {
   "[html]": {
     "editor.formatOnSave": false,
-    "editor.defaultFormatter": "monosans.djlint"
+
   },
   "[django-html]": {
     "editor.formatOnSave": false,
-    "editor.defaultFormatter": "monosans.djlint"
+
   },
   "editor.formatOnSave": false,
   "emeraldwalk.runonsave": {
