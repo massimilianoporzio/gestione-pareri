@@ -6,10 +6,27 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "django===5.2.0",
+    "djlint>=1.36.4",
 ]
 
-[tool.flake8]
-max-line-length = 120
-
 [tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "django"
+combine_as_imports = true
+include_trailing_comma = true
+line_length = 120
+
+[dependency-groups]
+dev = [
+    "pylint>=3.3.8",
+    "pylint-django>=2.6.1",
+]
+
+[tool.djlint]
+profile="django"
+ignore = "H031"
+
+[tool.ruff]
 line-length = 120

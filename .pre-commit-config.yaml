@@ -1,14 +1,4 @@
 repos:
-  - repo: https://github.com/psf/black
-    rev: 24.4.2
-    hooks:
-      - id: black
-        language_version: python3
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.0.0
-    hooks:
-      - id: flake8
-        args: [--max-line-length=119, --ignore=E501]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -16,3 +6,46 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+      - id: black
+        language_version: python3
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "v0.12.10"
+    hooks:
+      - id: ruff
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.3.0
+    hooks:
+      - id: flake8
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: isort (python)
+  # Hook locale per formattare i template Django
+  - repo: local
+    hooks:
+      - id: djlint-local
+        name: Format Django HTML templates
+        entry: pwsh -Command "uv run djlint 'src/templates/' --reformat --ignore H030"
+        language: system
+        pass_filenames: false
+        files: \.html$
+        always_run: true
+  # Hook locale per pylint
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: uv run pylint
+        language: system
+        types: [python]
+        require_serial: true
+        args: [
+            "-rn", # Only display messages
+            "-sn", # Don't display the score
+            "--load-plugins=pylint_django", # new
+            "--django-settings-module=home.settings", # new
+          ]

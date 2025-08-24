@@ -1,0 +1,10 @@
+{
+  "indent": 2,
+  "max_line_length": 120,
+  "profile": "django",
+  "use_gitignore": true,
+  "extension": "html",
+  "format_js": true,
+  "format_css": true,
+  "ignore": "H030"
+}
