@@ -77,3 +77,19 @@ convention = "google"  # Usa il formato Google per docstring
 "src/home/settings/*.py" = ["F401", "F403"]
 "tools/add_docstring_batch.py" = ["E402"]
 "src/test_logging.py" = ["E402"]
+
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.pylint.messages_control]
+disable = [
+    "missing-docstring",
+    "too-few-public-methods",
+    "import-error",
+    "no-name-in-module",
+    "too-many-locals",
+    "too-many-branches",
+    "too-many-statements",
+    "wrong-import-position",
+    "import-outside-toplevel",
+]
