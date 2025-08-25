@@ -63,6 +63,8 @@ ignore = []
 [tool.ruff.lint.per-file-ignores]
 "examples/logging_example.py" = ["E402"]
 "examples/check_logging.py" = ["E402"]
+"src/home/settings.py" = ["F401", "F403"]
+"src/home/settings/*.py" = ["F401", "F403"]
 
 [tool.ruff.isort]
 known-third-party = ["django"]

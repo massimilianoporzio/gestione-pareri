@@ -1,18 +1,16 @@
 {
   "[html]": {
-    "editor.formatOnSave": false,
-
+    "editor.formatOnSave": false
   },
   "[django-html]": {
-    "editor.formatOnSave": false,
-
+    "editor.formatOnSave": false
   },
   "editor.formatOnSave": false,
   "emeraldwalk.runonsave": {
     "commands": [
       {
         "match": "\\.(html|djhtml|django-html)$",
-        "cmd": "uv run djlint \"${file}\" --reformat --ignore H030"
+        "cmd": "uv run djlint \"${file}\" --reformat --ignore H030 --configuration .config/djlintrc"
       },
       {
         "match": "\\.py$",
@@ -20,7 +18,7 @@
       },
       {
         "match": "\\.(md|markdown)$",
-        "cmd": "prettier --write \"${file}\" && markdownlint-cli2-fix \"${file}\""
+        "cmd": "prettier --write \"${file}\" --config .config/prettierrc.json && markdownlint-cli2-fix \"${file}\" --config .config/.markdownlint-cli2.jsonc"
       }
     ]
   },
@@ -29,19 +27,27 @@
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true
   },
-  "black-formatter.args": [
-    "--line-length=120"
-  ],
   "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
+  "python.linting.pylintUseMinimalCheckers": false,
+  "python.linting.pylintPath": "pylint",
   "python.linting.pylintArgs": [
-    "--load-plugins=pylint_django",
-    "--django-settings-module=home.settings"
+    "--rcfile=.config/pylintrc"
+  ],
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Path": "flake8",
+  "python.linting.flake8Args": [
+    "--config=.config/flake8"
   ],
   "python.linting.ignorePatterns": [
     ".venv/**/*.py",
     "**/site-packages/**/*.py",
-    "examples/logging_example.py"
+    "examples/logging_example.py",
+    "src/home/settings.py",
+    "src/home/settings/*.py"
+  ],
+  "black-formatter.args": [
+    "--line-length=120"
   ],
   "isort.args": [
     "--profile=django",
@@ -54,5 +60,13 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  "makefile.configureOnOpen": false
+  "makefile.configureOnOpen": false,
+  "ruff.enable": true,
+  "ruff.organizeImports": true,
+  "ruff.path": ["ruff"],
+  "ruff.configPath": ".config/ruff.toml",
+  "ruff.ignorePatterns": [
+    "src/home/settings.py",
+    "src/home/settings/*.py"
+  ]
 }

@@ -11,26 +11,30 @@ repos:
     hooks:
       - id: black
         language_version: python3
+        exclude: ^src/home/settings/
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: "v0.12.10"
     hooks:
       - id: ruff
+        args: ["--config", ".config/ruff.toml"]
   - repo: https://github.com/PyCQA/flake8
     rev: 7.3.0
     hooks:
       - id: flake8
+        args: ["--config=.config/flake8"]
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0
     hooks:
       - id: isort
         name: isort (python)
+        exclude: ^src/home/settings/
 
   # Hook per djlint cross-platform
   - repo: local
     hooks:
       - id: djlint-cross-platform
         name: Format Django HTML templates
-        entry: uv run djlint src/templates/ --reformat --ignore H030
+        entry: uv run djlint src/templates/ --reformat --ignore H030 --configuration .config/djlintrc
         language: python
         additional_dependencies: [djlint]
         pass_filenames: false
@@ -43,10 +47,9 @@ repos:
       - id: pylint-unified
         name: pylint
         language: python
-        entry: python -c "import os, sys, platform; exit(0 if platform.system() != 'Windows' else os.system('set PYTHONPATH=src && uv run pylint src -rn -sn --load-plugins=pylint_django --django-settings-module=home.settings'))"
+        entry: python scripts/run_pylint.py
         types: [python]
         require_serial: true
-        exclude: examples/.*
         stages: [pre-commit]
         pass_filenames: false
         additional_dependencies: [pylint, pylint-django]
@@ -57,10 +60,9 @@ repos:
       - id: pylint-unix-ci
         name: pylint (CI)
         language: python
-        entry: python -c "import os, sys, platform; exit(0 if platform.system() == 'Windows' else os.system('PYTHONPATH=src uv run pylint src -rn -sn --load-plugins=pylint_django --django-settings-module=home.settings'))"
+        entry: python scripts/run_pylint.py
         types: [python]
         require_serial: true
-        exclude: examples/.*
         stages: [pre-commit]
         pass_filenames: false
         additional_dependencies: [pylint, pylint-django]
@@ -72,6 +74,7 @@ repos:
       - id: prettier
         name: prettier (markdown)
         types: [markdown]
+        args: ["--config", ".config/prettierrc.json"]
         additional_dependencies:
           - prettier@3.2.5
 
