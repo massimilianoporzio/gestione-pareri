@@ -1,4 +1,4 @@
-.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs
+.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings
 
 # Colori
 GREEN = \033[0;32m
@@ -50,6 +50,8 @@ help:
 	@echo -e "$(GREEN)make check-custom-logs LOGS_DIR=/path/to/logs ENV=dev$(NC) Verifica directory log personalizzata"
 	@echo -e "$(GREEN)make lint$(NC)          Esegue i controlli di qualità del codice"
 	@echo -e "$(GREEN)make format$(NC)        Formatta il codice Python e i template"
+	@echo -e "$(GREEN)make sonarqube$(NC)     Esegue l'analisi SonarQube locale"
+	@echo -e "$(GREEN)make add-docstrings$(NC) Aggiunge docstring a tutti i file Python del progetto"
 	@echo -e "$(GREEN)make help$(NC)          Mostra questo messaggio di aiuto"
 
 run-server:
@@ -132,6 +134,16 @@ format:
 	uv run isort .
 	uv run djlint . --reformat
 
+sonarqube:
+	@echo -e "$(CYAN)Esecuzione dell'analisi SonarQube locale...$(NC)"
+ifeq ($(OS),Windows_NT)
+	# Windows: usa lo script PowerShell
+	powershell -File tools/run_sonarqube.ps1
+else
+	# macOS/Linux: usa lo script bash
+	chmod +x tools/run_sonarqube.sh && ./tools/run_sonarqube.sh
+endif
+
 # Target per controllare l'ambiente corrente
 check-env:
 	@echo -e "$(CYAN)Controllo dell'ambiente corrente...$(NC)"
@@ -166,3 +178,16 @@ endif
 else
 	@echo -e "$(YELLOW)Nessuna directory specificata. Usa LOGS_DIR=/path/to/logs$(NC)"
 endif
+
+# Target per aggiungere docstring a tutti i file Python
+add-docstrings:
+	@echo -e "$(CYAN)Aggiunta docstring ai file Python del progetto...$(NC)"
+ifeq ($(OS),Windows_NT)
+	@REM Ambiente Windows
+	uv run python tools/add_docstring_batch.py .
+else
+	@# Ambiente Linux/macOS
+	chmod +x tools/add_docstring_batch.py
+	uv run python tools/add_docstring_batch.py .
+endif
+	@echo -e "$(GREEN)Docstring aggiunte con successo!$(NC)"

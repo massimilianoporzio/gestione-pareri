@@ -14,7 +14,7 @@
       },
       {
         "match": "\\.py$",
-        "cmd": "uv run isort \"${file}\""
+        "cmd": "uv run isort \"${file}\" && \"${workspaceFolder}\\tools\\add_docstring.bat\" \"${file}\""
       },
       {
         "match": "\\.(md|markdown)$",
@@ -68,5 +68,25 @@
   "ruff.ignorePatterns": [
     "src/home/settings.py",
     "src/home/settings/*.py"
-  ]
+  ],
+  "sonarlint.pathToCompileCommands": "${workspaceFolder}",
+  "sonarlint.connectedMode.project": {
+    "projectKey": "massimilianoporzio_deploy-django",
+    "connectionId": "SonarCloud"
+  },
+  "sonarlint.rules": {
+    "python:S1128": {
+      "level": "off"
+    },
+    "python:S112": {
+      "level": "off"
+    },
+    "python:S3776": {
+      "level": "off"
+    },
+    "python:S1542": {
+      "level": "off"
+    }
+  },
+  "sonarlint.disableTelemetry": true
 }

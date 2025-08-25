@@ -59,3 +59,4 @@ ignore-imports=yes
 
 [per-file]
 examples/logging_example.py = wrong-import-position, import-outside-toplevel
+tools/add_docstring_batch.py = wrong-import-position, import-outside-toplevel

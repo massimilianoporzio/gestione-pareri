@@ -403,6 +403,8 @@ Questo progetto include documentazione dettagliata per aiutarti a comprendere le
 - [Formattazione Markdown](docs/markdown-formatting.md): Linee guida per la formattazione
 - [Note sul linting](docs/linting_notes.md): Configurazione e utilizzo degli strumenti di linting
 - [Analisi del codice](docs/code_analysis.md): Strumenti per l'analisi della qualità del codice
+- [SonarQube/SonarCloud](docs/sonarqube.md): Configurazione e utilizzo di SonarQube
+- [Generazione di docstring](docs/docstring_generation.md): Aggiunta automatica di docstring
 - [Quick Start](docs/quick-start.md): Guida rapida per iniziare
 
 ## 🤝 Contribuire

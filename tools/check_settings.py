@@ -1,3 +1,9 @@
+"""
+Check Settings module.
+
+Questo modulo fornisce funzionalità per check settings.
+"""
+
 import os
 import sys
 from pathlib import Path
