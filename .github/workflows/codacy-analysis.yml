@@ -6,6 +6,7 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  # Temporarily enabled push for testing
 
 permissions:
   contents: read
@@ -38,6 +39,8 @@ jobs:
 
       - name: Upload SARIF results file
         uses: github/codeql-action/upload-sarif@main
+        # Only upload if SARIF file was generated
+        if: success() && hashFiles('results.sarif') != ''
         with:
           sarif_file: results.sarif
-          category: codacy
+          # Let GitHub generate a unique category automatically
