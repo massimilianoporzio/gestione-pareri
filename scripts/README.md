@@ -22,6 +22,16 @@ Questi script installano gli strumenti necessari per la formattazione Markdown:
 | `install-markdown-tools.ps1` | Windows     | Installa Prettier e markdownlint-cli2 su Windows       |
 | `install-markdown-tools.sh`  | macOS/Linux | Installa Prettier e markdownlint-cli2 su macOS e Linux |
 
+### Script per l'installazione di Make
+
+Questi script installano Make sulla piattaforma specificata:
+
+| Script                     | Piattaforma | Descrizione                                        |
+| -------------------------- | ----------- | -------------------------------------------------- |
+| `install-make-windows.ps1` | Windows     | Installa Make su Windows usando Chocolatey o Scoop |
+| `install-make-macos.sh`    | macOS       | Installa Make su macOS usando Homebrew             |
+| `install-make-linux.sh`    | Linux       | Installa Make su diverse distribuzioni Linux       |
+
 ## Utilizzo
 
 ### Su Windows (PowerShell)
@@ -32,9 +42,12 @@ Questi script installano gli strumenti necessari per la formattazione Markdown:
 
 # Installazione degli strumenti Markdown
 .\install-markdown-tools.ps1
+
+# Installazione di Make
+.\install-make-windows.ps1
 ```
 
-### Su macOS/Linux (Bash)
+### Su macOS (Bash)
 
 ```bash
 # Rendere gli script eseguibili
@@ -45,6 +58,27 @@ chmod +x *.sh
 
 # Installazione degli strumenti Markdown
 ./install-markdown-tools.sh
+
+# Installazione di Make
+chmod +x install-make-macos.sh
+./install-make-macos.sh
+```
+
+### Su Linux (Bash)
+
+```bash
+# Rendere gli script eseguibili
+chmod +x *.sh
+
+# Setup completo del progetto
+./setup.sh
+
+# Installazione degli strumenti Markdown
+./install-markdown-tools.sh
+
+# Installazione di Make
+chmod +x install-make-linux.sh
+./install-make-linux.sh
 ```
 
 ## Note

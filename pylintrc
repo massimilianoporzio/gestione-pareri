@@ -16,6 +16,11 @@ ignore-paths=
 # matches against base names, not paths.
 ignore-patterns=^\.#
 
+# Per-file ignores pattern for specific messages
+# Format is <file_pattern>:<comma-separated-list-of-messages>
+per-file-ignores=
+    examples/logging_example.py:wrong-import-position,import-outside-toplevel
+
 # Pickle collected data for later comparisons.
 persistent=yes
 
