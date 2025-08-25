@@ -12,6 +12,7 @@
 [![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/)
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/release/python-3130/)
 [![uv](https://img.shields.io/badge/uv-package%20manager-blueviolet)](https://github.com/astral-sh/uv)
+[![Make](https://img.shields.io/badge/Make-automation-brightgreen)](https://www.gnu.org/software/make/)
 [![Pre-commit](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml)
 [![Django CI](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml)
 [![pre-commit-hooks](https://img.shields.io/badge/pre--commit--hooks-enabled-brightgreen)](https://github.com/pre-commit/pre-commit-hooks)
@@ -104,8 +105,52 @@ chmod +x scripts/setup.sh  # Rendi lo script eseguibile
 
    ```bash
    cd src
+
+   # Usando uv (consigliato):
+   uv run python manage.py runserver
+
+   # Usando l'ambiente virtuale:
+   # Attiva prima l'ambiente (.\.venv\Scripts\Activate.ps1 o source .venv/bin/activate)
    python manage.py runserver
    ```
+
+## 💻 Esecuzione di comandi Python
+
+Questo template utilizza [uv](https://github.com/astral-sh/uv) come gestore di pacchetti e ambiente virtuale. Ci sono due modi per eseguire comandi Python:
+
+### 1. Usando uv direttamente (consigliato)
+
+Con uv, non è necessario attivare l'ambiente virtuale. Basta usare `uv run` seguito dal comando:
+
+```bash
+# Eseguire uno script Python
+uv run python mio_script.py
+
+# Eseguire comandi Django
+uv run python src/manage.py migrate
+uv run python src/manage.py runserver
+
+# Eseguire altri pacchetti Python
+uv run black .
+uv run pytest
+```
+
+### 2. Usando l'ambiente virtuale tradizionale
+
+Se preferisci l'approccio tradizionale, puoi attivare l'ambiente virtuale e poi eseguire i comandi:
+
+```bash
+# Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+
+# Linux/macOS
+source .venv/bin/activate
+
+# Poi esegui i comandi normalmente
+python src/manage.py runserver
+```
+
+> **Nota**: Gli script nella cartella `examples/` sono progettati per funzionare con entrambi gli approcci.
 
 ## 🛠️ Strumenti di sviluppo integrati
 
@@ -121,6 +166,16 @@ Questo template include i seguenti strumenti configurati e pronti all'uso:
 - **markdownlint**: Linter specifico per file Markdown
 - **pre-commit**: Esegue automaticamente tutti i controlli di qualità prima di ogni commit
 - **GitHub Actions**: Pipeline CI/CD preconfigurate per verificare automaticamente la qualità del codice
+
+## 📊 Logging configurato
+
+Il template include un sistema di logging avanzato:
+
+- **Log colorati in console**: Durante lo sviluppo (DEBUG=True), i log vengono visualizzati in console con colori per ogni livello di severità
+- **Log su file**: In produzione, i log vengono salvati automaticamente in file con rotazione
+- **Facile integrazione**: Logger già configurati per l'uso immediato nei tuoi moduli
+
+Per maggiori dettagli, consulta la [documentazione sul logging](docs/logging.md).
 
 ## 🌐 Compatibilità multipiattaforma
 
@@ -141,17 +196,69 @@ Questo template include configurazioni VS Code ottimizzate:
 3. Configurazioni specifiche per ciascun linter/formattatore
 4. "Run on Save" per formattare automaticamente i template HTML Django
 
-Estensioni VS Code consigliate (già configurate):
+### Estensioni VS Code consigliate
 
-- Black Formatter
-- isort
-- Pylint
-- Ruff
-- Error Lens
-- Git Graph
-- markdownlint
-- Prettier - Code formatter
-- Run On Save
+Il progetto è configurato per funzionare con le seguenti estensioni:
+
+| Estensione      | ID                               | Descrizione                                       |
+| --------------- | -------------------------------- | ------------------------------------------------- |
+| Black Formatter | `ms-python.black-formatter`      | Formatta il codice Python utilizzando Black       |
+| isort           | `ms-python.isort`                | Organizza automaticamente gli import Python       |
+| Pylint          | `ms-python.pylint`               | Analizzatore di codice Python per rilevare errori |
+| Ruff            | `charliermarsh.ruff`             | Linter Python ultrarapido                         |
+| Error Lens      | `usernamehw.errorlens`           | Evidenzia errori e avvisi direttamente nel codice |
+| Git Graph       | `mhutchie.git-graph`             | Visualizza il grafico dei commit di Git           |
+| markdownlint    | `davidanson.vscode-markdownlint` | Linting per file Markdown                         |
+| Prettier        | `esbenp.prettier-vscode`         | Formattatore di codice per vari linguaggi         |
+| Run On Save     | `emeraldwalk.RunOnSave`          | Esegue comandi quando si salva un file            |
+| Django          | `batisteo.vscode-django`         | Supporto per template e sintassi Django           |
+
+### Configurazione `.vscode`
+
+La cartella `.vscode` contiene il file `settings.json` che configura automaticamente l'editor:
+
+```json
+{
+  // Configurazione per file HTML e Django templates
+  "[html]": { "editor.formatOnSave": false },
+  "[django-html]": { "editor.formatOnSave": false },
+
+  // Run on Save - esegue formattatori quando si salvano i file
+  "emeraldwalk.runonsave": {
+    "commands": [
+      // Formatta HTML/Django templates con djlint
+      {
+        "match": "\\.(html|djhtml|django-html)$",
+        "cmd": "uv run djlint \"${file}\" --reformat --ignore H030"
+      },
+      // Organizza import Python con isort
+      { "match": "\\.py$", "cmd": "uv run isort \"${file}\"" },
+      // Formatta Markdown con Prettier e markdownlint
+      {
+        "match": "\\.(md|markdown)$",
+        "cmd": "prettier --write \"${file}\" && markdownlint-cli2-fix \"${file}\""
+      }
+    ]
+  },
+
+  // Configurazione Python (Black, Pylint, isort)
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "black-formatter.args": ["--line-length=120"],
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true,
+
+  // Configurazione Markdown (Prettier)
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  }
+}
+```
+
+Questa configurazione permette un'esperienza di sviluppo coerente per tutti i membri del team e applica automaticamente le regole di stile del progetto.
 
 ## 🔄 Formattazione automatica dei template HTML
 
@@ -159,6 +266,39 @@ I template HTML Django vengono formattati automaticamente in due modi:
 
 1. **Durante il pre-commit**: Ogni commit esegue djlint sui template modificati
 2. **In VS Code**: Al salvataggio di un file HTML, viene eseguito djlint tramite "Run on Save"
+
+## 🛠️ Automazione con Make
+
+Questo template include un sistema di automazione basato su Make per semplificare l'esecuzione di comandi comuni:
+
+```bash
+# Avvia il server di sviluppo Django
+make run-server
+```
+
+Per una lista completa dei comandi disponibili e istruzioni su come installare Make, consulta la [documentazione su Make](docs/make.md).
+
+### Installazione di Make
+
+**Windows:**
+
+```powershell
+.\scripts\install-make-windows.ps1
+```
+
+**macOS:**
+
+```bash
+chmod +x scripts/install-make-macos.sh
+./scripts/install-make-macos.sh
+```
+
+**Linux:**
+
+```bash
+chmod +x scripts/install-make-linux.sh
+./scripts/install-make-linux.sh
+```
 
 ## 📝 Formattazione automatica dei file Markdown
 
@@ -200,11 +340,18 @@ deploy-django/
 ├── .github/workflows/    # Configurazioni GitHub Actions
 ├── .vscode/              # Configurazioni VS Code
 ├── docs/                 # Documentazione
+├── examples/             # Esempi di utilizzo
+│   ├── logging_example.py  # Esempio di utilizzo del logging
+│   └── README.md         # Guida agli esempi
+├── logs/                 # Directory per i file di log
 ├── scripts/              # Script di utilità
 │   ├── setup.ps1         # Script di setup per Windows
 │   ├── setup.sh          # Script di setup per macOS/Linux
 │   ├── install-markdown-tools.ps1  # Installazione strumenti Markdown per Windows
 │   ├── install-markdown-tools.sh   # Installazione strumenti Markdown per macOS/Linux
+│   ├── install-make-windows.ps1    # Installazione Make per Windows
+│   ├── install-make-macos.sh       # Installazione Make per macOS
+│   ├── install-make-linux.sh       # Installazione Make per Linux
 │   └── README.md         # Documentazione degli script
 ├── src/                  # Codice sorgente Django
 │   ├── manage.py         # Script di gestione Django
@@ -212,6 +359,7 @@ deploy-django/
 ├── .pre-commit-config.yaml  # Configurazione pre-commit
 ├── .markdownlint-cli2.jsonc # Configurazione markdownlint
 ├── .prettierrc.json      # Configurazione prettier
+├── Makefile              # Automazione con Make
 ├── pyproject.toml        # Configurazione strumenti Python
 └── README.md             # Questo file
 ```

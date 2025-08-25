@@ -1,2 +1,6 @@
 [flake8]
 max-line-length = 120
+extend-ignore = E203
+exclude = .git,__pycache__,docs/conf.py,old,build,dist,.venv
+per-file-ignores =
+    examples/logging_example.py:E402

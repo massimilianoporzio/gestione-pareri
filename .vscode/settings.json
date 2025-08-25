@@ -38,6 +38,11 @@
     "--load-plugins=pylint_django",
     "--django-settings-module=home.settings"
   ],
+  "python.linting.ignorePatterns": [
+    ".venv/**/*.py",
+    "**/site-packages/**/*.py",
+    "examples/logging_example.py"
+  ],
   "isort.args": [
     "--profile=django",
     "--line-length=120"
