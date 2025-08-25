@@ -3,7 +3,6 @@ Impostazioni base di Django, condivise tra tutti gli ambienti.
 """
 
 import importlib.util
-import os
 from pathlib import Path
 
 from decouple import config

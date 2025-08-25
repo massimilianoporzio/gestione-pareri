@@ -108,7 +108,7 @@ def test_logging():
             logs_dir = base_dir / "logs"
             print(f"Directory dei log di fallback: {logs_dir}")
             print(f"Esiste: {logs_dir.exists()}")
-    except Exception as e:
+    except (AttributeError, OSError) as e:
         print(f"Errore nell'analisi della directory dei log: {e}")
         logs_dir = Path(__file__).resolve().parent.parent / "logs"
 
@@ -128,11 +128,11 @@ def test_logging():
                     print("\nUltime righe del file di log:")
                     for line in last_lines:
                         print(f"  {line.strip()}")
-            except Exception as e:
+            except OSError as e:
                 print(f"Errore nella lettura del file di log: {e}")
         elif env == "prod":
             print("Il file di log non esiste ancora.")
-    except Exception as e:
+    except OSError as e:
         print(f"Errore nell'accesso al file di log: {e}")
 
     print("\n--- Fine del test ---")

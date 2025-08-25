@@ -4,7 +4,7 @@ Impostazioni di Django per l'ambiente di produzione.
 
 from decouple import config
 
-from home.settings.base import *  # noqa
+from home.settings.base import LOGGING, REPO_DIR  # Import only used names
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
