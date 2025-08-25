@@ -16,8 +16,10 @@ jobs:
 
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          # The token is already available as an environment variable
           verbose: true
           output: results.sarif
           format: sarif
@@ -26,9 +28,12 @@ jobs:
           # Force 0 exit code to allow SARIF file generation
           # This will handover control about PR rejection to the GitHub side
           max-allowed-issues: 2147483647
+          # Specify a unique category for this analysis
+          tool: codacy
 
       # Upload the SARIF file generated in the previous step
       - name: Upload SARIF results file
         uses: github/codeql-action/upload-sarif@main
         with:
           sarif_file: results.sarif
+          category: codacy
