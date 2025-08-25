@@ -23,7 +23,9 @@ print(f"DJANGO_ENV (prima dell'inizializzazione): {django_env}")
 print(f"DJANGO_LOGS_DIR (prima dell'inizializzazione): {django_logs_dir}")
 
 # Configurazione di Django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "home.settings")
+django_env = os.environ.get("DJANGO_ENV", "dev")
+settings_module = f"home.settings.{django_env}"
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
 django.setup()
 
 # Importa le impostazioni
