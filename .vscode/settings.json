@@ -17,6 +17,10 @@
       {
         "match": "\\.py$",
         "cmd": "uv run isort \"${file}\""
+      },
+      {
+        "match": "\\.(md|markdown)$",
+        "cmd": "prettier --write \"${file}\""
       }
     ]
   },
@@ -40,5 +44,9 @@
   ],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
   }
 }
