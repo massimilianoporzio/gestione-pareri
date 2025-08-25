@@ -1,5 +1,4 @@
-"""
-Check Settings module.
+"""Check Settings module.
 
 Questo modulo fornisce funzionalità per check settings.
 """

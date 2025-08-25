@@ -1,6 +1,4 @@
-"""
-Impostazioni di Django per l'ambiente di sviluppo.
-"""
+"""Impostazioni di Django per l'ambiente di sviluppo."""
 
 from home.settings.base import BASE_DIR, LOGGING, REPO_DIR
 

@@ -134,6 +134,11 @@ format:
 	uv run isort .
 	uv run djlint . --reformat
 
+format-markdown:
+	@echo "Correzione automatica dei file Markdown..."
+	npx prettier --write "**/*.md"
+	npx markdownlint-cli2 --fix "**/*.md"
+
 sonarqube:
 	@echo -e "$(CYAN)Esecuzione dell'analisi SonarQube locale...$(NC)"
 ifeq ($(OS),Windows_NT)

@@ -16,6 +16,7 @@ repos:
         name: ruff (formatter)
       - id: ruff
         name: ruff (linter)
+        args: [--fix]
 
   # Linting più specifico
   - repo: https://github.com/PyCQA/flake8

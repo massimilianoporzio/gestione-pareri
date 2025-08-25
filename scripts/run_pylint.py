@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-"""
-Script per eseguire pylint escludendo il modulo settings.
+"""Script per eseguire pylint escludendo il modulo settings.
+
 Questo script viene utilizzato da pre-commit.
 """
 

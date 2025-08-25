@@ -14,7 +14,7 @@
       },
       {
         "match": "\\.py$",
-        "cmd": "uv run isort \"${file}\" && \"${workspaceFolder}\\tools\\add_docstring.bat\" \"${file}\""
+        "cmd": "uv run ruff \"${file}\" --fix --unsafe-fixes --select E,F,N,C,D,UP && uv run python \"${workspaceFolder}\\tools\\add_docstring.py\" \"${file}\" && uv run autopep8 --in-place --aggressive --aggressive \"${file}\""
       },
       {
         "match": "\\.(md|markdown)$",
@@ -24,8 +24,13 @@
   },
   "djlint.enableLinting": false,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.formatOnSave": true
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit",
+      "source.fixAll": "explicit",
+      "source.fixAll.ruff": "explicit"
+    }
   },
   "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,

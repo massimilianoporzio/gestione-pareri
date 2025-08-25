@@ -1,5 +1,4 @@
-"""
-Pacchetto per le impostazioni di Django suddivise per ambiente.
+"""Pacchetto per le impostazioni di Django suddivise per ambiente.
 
 Struttura:
 - base.py: Impostazioni di base condivise tra tutti gli ambienti

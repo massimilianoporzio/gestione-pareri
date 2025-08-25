@@ -1,5 +1,5 @@
-"""
-Esempio di utilizzo del sistema di logging configurato per Django.
+"""Esempio di utilizzo del sistema di logging configurato per Django.
+
 Questo script dimostra come utilizzare i diversi livelli di log disponibili
 nel progetto Django configurato con colorlog o colorama.
 
@@ -34,6 +34,9 @@ import sys
 import time
 from pathlib import Path
 
+import django  # pylint: disable=wrong-import-position
+from django.conf import settings  # pylint: disable=wrong-import-position
+
 # Aggiungi il percorso della directory src per importare le impostazioni Django
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root / "src"))
@@ -42,8 +45,6 @@ sys.path.append(str(project_root / "src"))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "home.settings")
 
 # Dobbiamo importare Django dopo aver impostato l'ambiente
-import django  # pylint: disable=wrong-import-position
-from django.conf import settings  # pylint: disable=wrong-import-position
 
 # Configura Django
 django.setup()

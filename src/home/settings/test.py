@@ -1,6 +1,4 @@
-"""
-Impostazioni di Django per l'ambiente di test.
-"""
+"""Impostazioni di Django per l'ambiente di test."""
 
 from home.settings.base import LOGGING, MIDDLEWARE
 

@@ -1,5 +1,4 @@
-"""
-Script per testare la configurazione di logging nei diversi ambienti.
+"""Script per testare la configurazione di logging nei diversi ambienti.
 
 Uso:
     - DJANGO_ENV=dev python test_logging.py
