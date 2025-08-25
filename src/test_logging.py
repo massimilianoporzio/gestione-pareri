@@ -165,7 +165,7 @@ def test_logging():
                             break
                         else:
                             if attempt < max_attempts - 1:
-                                print(f"Tentativo {attempt+1}: Messaggio di test non trovato, attendo...")
+                                print(f"Tentativo {attempt + 1}: Messaggio di test non trovato, attendo...")
                                 time.sleep(1)  # Attendi prima di riprovare
                             else:
                                 print("❌ ERRORE: Il messaggio di test non è stato trovato nel file di log!")

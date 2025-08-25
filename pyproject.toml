@@ -5,30 +5,18 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "black>=25.1.0",
     "colorama>=0.4.6",
     "django===5.2.0",
     "djlint>=1.36.4",
     "python-decouple>=3.8",
+    "ruff>=0.12.10",
 ]
-
-[tool.black]
-line-length = 120
-
-[tool.isort]
-profile = "django"
-combine_as_imports = true
-include_trailing_comma = true
-line_length = 120
 
 [dependency-groups]
 dev = [
-    "black>=25.1.0",
     "flake8>=7.3.0",
-    "isort>=6.0.1",
     "pylint>=3.3.8",
     "pylint-django>=2.6.1",
-    "ruff>=0.12.10",
 ]
 
 [tool.djlint]
@@ -36,10 +24,12 @@ profile="django"
 ignore = "H031"
 
 [tool.ruff]
+# Configurazione generale
 line-length = 120
 target-version = "py313"
 
 [tool.ruff.lint]
+# Regole da attivare
 select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
@@ -51,13 +41,14 @@ select = [
 ]
 ignore = []
 
+[tool.ruff.lint.isort]
+known-third-party = ["django"]
+known-first-party = ["home"]
+
 [tool.ruff.lint.per-file-ignores]
 "examples/logging_example.py" = ["E402"]
 "examples/check_logging.py" = ["E402"]
 "src/home/settings.py" = ["F401", "F403"]
 "src/home/settings/*.py" = ["F401", "F403"]
 "tools/add_docstring_batch.py" = ["E402"]
-
-[tool.ruff.lint.isort]
-known-third-party = ["django"]
-known-first-party = ["home"]
+"src/test_logging.py" = ["E402"]
