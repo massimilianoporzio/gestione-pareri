@@ -35,7 +35,8 @@ jobs:
           format: sarif
           gh-code-scanning-compat: true
           max-allowed-issues: 2147483647
-          # Let Codacy auto-detect available tools
+          # Specify exact tools to avoid auto-detection issues
+          tool: ruff
 
       - name: Upload SARIF results file
         uses: github/codeql-action/upload-sarif@main
