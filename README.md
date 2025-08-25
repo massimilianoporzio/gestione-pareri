@@ -15,6 +15,9 @@
 [![Make](https://img.shields.io/badge/Make-automation-brightgreen)](https://www.gnu.org/software/make/)
 [![Pre-commit](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml)
 [![Django CI](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml)
+[![CodeQL](https://github.com/massimilianoporzio/deploy-django/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/codeql-analysis.yml)
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=massimilianoporzio_deploy-django&metric=alert_status)](https://sonarcloud.io/dashboard?id=massimilianoporzio_deploy-django)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/YOUR_PROJECT_ID)](https://www.codacy.com/gh/massimilianoporzio/deploy-django/dashboard)
 [![pre-commit-hooks](https://img.shields.io/badge/pre--commit--hooks-enabled-brightgreen)](https://github.com/pre-commit/pre-commit-hooks)
 [![VS Code](https://img.shields.io/badge/VS%20Code-Ready-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
 [![Run on Save](https://img.shields.io/badge/Run%20on%20Save-enabled-success)](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
@@ -389,6 +392,18 @@ deploy-django/
 ├── pyproject.toml        # Configurazione strumenti Python
 └── README.md             # Questo file
 ```
+
+## 📚 Documentazione
+
+Questo progetto include documentazione dettagliata per aiutarti a comprendere le funzionalità e le configurazioni:
+
+- [Variabili d'ambiente](docs/environment-variables.md): Configurazione delle variabili d'ambiente
+- [Configurazione dei logs](docs/logs_configuration.md): Come funziona il sistema di logging
+- [Make e automazione](docs/make.md): Utilizzo di Make per automatizzare i task
+- [Formattazione Markdown](docs/markdown-formatting.md): Linee guida per la formattazione
+- [Note sul linting](docs/linting_notes.md): Configurazione e utilizzo degli strumenti di linting
+- [Analisi del codice](docs/code_analysis.md): Strumenti per l'analisi della qualità del codice
+- [Quick Start](docs/quick-start.md): Guida rapida per iniziare
 
 ## 🤝 Contribuire
 
