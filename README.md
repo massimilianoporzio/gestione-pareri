@@ -167,6 +167,8 @@ Questo template include i seguenti strumenti configurati e pronti all'uso:
 - **pre-commit**: Esegue automaticamente tutti i controlli di qualità prima di ogni commit
 - **GitHub Actions**: Pipeline CI/CD preconfigurate per verificare automaticamente la qualità del codice
 
+> **Nota**: I file del modulo `settings` sono esclusi dai controlli di linting per permettere la massima flessibilità. Per maggiori dettagli, consulta [docs/linting_notes.md](docs/linting_notes.md).
+
 ## 📊 Logging configurato
 
 Il template include un sistema di logging avanzato:
@@ -174,8 +176,20 @@ Il template include un sistema di logging avanzato:
 - **Log colorati in console**: Durante lo sviluppo (DEBUG=True), i log vengono visualizzati in console con colori per ogni livello di severità
 - **Log su file**: In produzione, i log vengono salvati automaticamente in file con rotazione
 - **Facile integrazione**: Logger già configurati per l'uso immediato nei tuoi moduli
+- **Directory dei log personalizzabile**: Puoi specificare una directory personalizzata per i log tramite la variabile d'ambiente `DJANGO_LOGS_DIR`
 
-Per maggiori dettagli, consulta la [documentazione sul logging](docs/logging.md).
+```bash
+# Windows PowerShell
+$env:DJANGO_LOGS_DIR = "E:\percorso\personalizzato\logs"
+
+# macOS/Linux
+export DJANGO_LOGS_DIR="/percorso/personalizzato/logs"
+
+# Verifica configurazione tramite Makefile
+make check-custom-logs LOGS_DIR="/percorso/personalizzato/logs" ENV=dev|test|prod
+```
+
+Per maggiori dettagli, consulta la [documentazione sul logging](docs/logs_configuration.md).
 
 ## 🌐 Compatibilità multipiattaforma
 
@@ -337,14 +351,20 @@ Il repository include workflow GitHub Actions preconfigurati:
 
 ```bash
 deploy-django/
+├── .config/              # File di configurazione centralizzati
+│   ├── djlintrc          # Configurazione per djlint
+│   ├── flake8            # Configurazione per flake8
+│   ├── markdownlint.json # Configurazione per markdownlint
+│   ├── .pylintrc         # Configurazione per pylint (backup)
+│   └── ruff.toml         # Configurazione per ruff
 ├── .github/workflows/    # Configurazioni GitHub Actions
 ├── .vscode/              # Configurazioni VS Code
 ├── docs/                 # Documentazione
 ├── examples/             # Esempi di utilizzo
-│   ├── logging_example.py  # Esempio di utilizzo del logging
+│   ├── logging_example.py # Esempio di utilizzo del logging
 │   └── README.md         # Guida agli esempi
 ├── logs/                 # Directory per i file di log
-├── scripts/              # Script di utilità
+├── scripts/              # Script di utilità per setup del progetto
 │   ├── setup.ps1         # Script di setup per Windows
 │   ├── setup.sh          # Script di setup per macOS/Linux
 │   ├── install-markdown-tools.ps1  # Installazione strumenti Markdown per Windows
@@ -353,12 +373,18 @@ deploy-django/
 │   ├── install-make-macos.sh       # Installazione Make per macOS
 │   ├── install-make-linux.sh       # Installazione Make per Linux
 │   └── README.md         # Documentazione degli script
+├── tools/                # Script di utilità per sviluppo e debug
+│   ├── check_env.py      # Verifica variabili d'ambiente
+│   ├── check_import.py   # Verifica importazione moduli
+│   ├── check_settings.py # Verifica impostazioni Django
+│   └── env_test.py       # Test delle variabili d'ambiente
 ├── src/                  # Codice sorgente Django
 │   ├── manage.py         # Script di gestione Django
 │   └── home/             # Progetto Django principale
-├── .pre-commit-config.yaml  # Configurazione pre-commit
-├── .markdownlint-cli2.jsonc # Configurazione markdownlint
-├── .prettierrc.json      # Configurazione prettier
+├── .pre-commit-config.yaml # Configurazione pre-commit
+├── .markdownlint.json    # Configurazione markdownlint per strumenti che la cercano nella root
+├── .pylintrc             # Configurazione pylint
+├── .flake8               # Configurazione flake8
 ├── Makefile              # Automazione con Make
 ├── pyproject.toml        # Configurazione strumenti Python
 └── README.md             # Questo file
