@@ -20,11 +20,19 @@ if not template_dir.exists():
     sys.exit(0)
 
 # Esegui djlint con le opzioni desiderate
-cmd = ["djlint", str(template_dir), "--reformat", "--ignore", "H030", "--configuration", ".config/djlintrc"]
+CMD = [
+    "djlint",
+    str(template_dir),
+    "--reformat",
+    "--ignore",
+    "H030",
+    "--configuration",
+    ".config/djlintrc",
+]
 
 try:
     # Cattura l'output per evitare di mostrare i warning
-    result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    result = subprocess.run(CMD, capture_output=True, text=True, check=False)
 
     # Filtra i warning relativi all'ambiente virtuale
     stderr_lines = []

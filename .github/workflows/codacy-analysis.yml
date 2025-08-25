@@ -17,9 +17,9 @@ jobs:
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master
         env:
+          # Pass token as env var to avoid editor warning
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         with:
-          # The token is already available as an environment variable
           verbose: true
           output: results.sarif
           format: sarif

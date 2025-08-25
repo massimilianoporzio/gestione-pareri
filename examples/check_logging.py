@@ -1,5 +1,5 @@
-"""
-Script di controllo per il sistema di logging.
+"""Script di controllo per il sistema di logging.
+
 Questo script verifica quale formatter è attualmente in uso e mostra il colore per ogni livello.
 """
 
@@ -7,6 +7,9 @@ import logging
 import os
 import sys
 from pathlib import Path
+
+import django
+from django.conf import settings
 
 # Aggiungi il percorso della directory src per importare le impostazioni Django
 project_root = Path(__file__).resolve().parent.parent
@@ -17,8 +20,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "home.settings")
 
 # Dobbiamo importare Django dopo aver impostato l'ambiente
 # pylint: disable=wrong-import-position
-import django
-from django.conf import settings
 
 # pylint: enable=wrong-import-position
 

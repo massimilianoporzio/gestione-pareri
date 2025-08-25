@@ -1,6 +1,4 @@
-"""
-Django settings manager - Carica l'ambiente appropriato in base alla variabile d'ambiente
-"""
+"""Django settings manager - Carica l'ambiente appropriato in base alla variabile d'ambiente."""
 
 # pylint: disable=all  # Disabilita tutti i controlli pylint in questo file che usa wildcard import
 # flake8: noqa: F401, F403  # Disabilita i controlli flake8 per wildcard import
@@ -27,7 +25,10 @@ elif (
     module_parts = os.environ["DJANGO_SETTINGS_MODULE"].split(".")
     if len(module_parts) >= 3:
         DJANGO_ENV = module_parts[-1]
-        print(f"DJANGO_ENV aggiornato a '{DJANGO_ENV}' in base a DJANGO_SETTINGS_MODULE", file=sys.stderr)
+        print(
+            f"DJANGO_ENV aggiornato a '{DJANGO_ENV}' in base a DJANGO_SETTINGS_MODULE",
+            file=sys.stderr,
+        )
 
 try:
     if DJANGO_ENV == "dev":
@@ -39,7 +40,10 @@ try:
     else:
         from home.settings.dev import *
 
-        print(f"Warning: Unknown environment {DJANGO_ENV}, using development settings", file=sys.stderr)
+        print(
+            f"Warning: Unknown environment {DJANGO_ENV}, using development settings",
+            file=sys.stderr,
+        )
 except ImportError as e:
     # Fallback alle impostazioni di base in caso di errore
     from home.settings.base import *  # noqa: F401, F403

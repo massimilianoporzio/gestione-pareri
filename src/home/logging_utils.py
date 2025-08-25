@@ -1,5 +1,5 @@
-"""
-Configurazione per il logging colorato usando colorama.
+"""Configurazione per il logging colorato usando colorama.
+
 Questo modulo fornisce un formatter personalizzato che aggiunge colori ai log
 utilizzando la libreria colorama, che supporta i colori in modo cross-platform.
 """
@@ -14,8 +14,8 @@ init(autoreset=True)
 
 
 class ColoramaFormatter(logging.Formatter):
-    """
-    Formatter per log colorati che usa colorama per la compatibilità cross-platform.
+    """Formatter per log colorati che usa colorama per la compatibilità cross-platform.
+
     Supporta Windows, Linux e macOS.
     """
 
@@ -29,8 +29,7 @@ class ColoramaFormatter(logging.Formatter):
     }
 
     def __init__(self, fmt=None, datefmt=None, style="%", use_colors=True):
-        """
-        Inizializza il formatter.
+        """Inizializza il formatter.
 
         Args:
             fmt (str, optional): Il formato del messaggio
@@ -42,8 +41,7 @@ class ColoramaFormatter(logging.Formatter):
         self.use_colors = use_colors
 
     def format(self, record):
-        """
-        Formatta il record aggiungendo colori in base al livello di log.
+        """Formatta il record aggiungendo colori in base al livello di log.
 
         Args:
             record (logging.LogRecord): Il record di log da formattare
@@ -65,8 +63,7 @@ class ColoramaFormatter(logging.Formatter):
 
 
 def get_colorama_console_handler(level=logging.DEBUG, use_colors=True):
-    """
-    Crea e restituisce un handler per la console con colori usando colorama.
+    """Crea e restituisce un handler per la console con colori usando colorama.
 
     Args:
         level (int, optional): Il livello di log minimo da visualizzare

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-"""
-Script per aggiungere docstring a tutti i file Python in un progetto.
+"""Script per aggiungere docstring a tutti i file Python in un progetto.
 
 Questo script attraversa ricorsivamente una directory e aggiunge docstring
 a tutti i file Python che ne sono privi, escludendo i file __init__.py.
@@ -11,14 +10,14 @@ import os
 import sys
 from pathlib import Path
 
+from add_docstring import add_function_docstrings, add_module_docstring
+
 # Importa le funzioni dal nostro script esistente
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from add_docstring import add_module_docstring
 
 
 def should_process_file(file_path):
-    """
-    Determina se un file dovrebbe essere processato.
+    """Determina se un file dovrebbe essere processato.
 
     Args:
         file_path (Path): Percorso del file da valutare
@@ -42,8 +41,7 @@ def should_process_file(file_path):
 
 
 def process_directory(directory, verbose=False, dry_run=False):
-    """
-    Elabora ricorsivamente tutti i file Python in una directory.
+    """Elabora ricorsivamente tutti i file Python in una directory.
 
     Args:
         directory (str): Percorso della directory da elaborare
@@ -69,7 +67,9 @@ def process_directory(directory, verbose=False, dry_run=False):
                 print(f"Elaborazione del file: {item}")
 
             if not dry_run:
-                if add_module_docstring(str(item)):
+                module_modified = add_module_docstring(str(item))
+                function_modified = add_function_docstrings(str(item))
+                if module_modified or function_modified:
                     files_modified += 1
             else:
                 print(f"[Dry run] Sarebbe stato elaborato: {item}")
@@ -81,7 +81,10 @@ def main():
     """Funzione principale che gestisce gli argomenti da linea di comando."""
     parser = argparse.ArgumentParser(description="Aggiunge docstring a tutti i file Python in una directory")
     parser.add_argument(
-        "directory", nargs="?", default=".", help="Directory da elaborare (default: directory corrente)"
+        "directory",
+        nargs="?",
+        default=".",
+        help="Directory da elaborare (default: directory corrente)",
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Visualizza messaggi dettagliati")
     parser.add_argument("--dry-run", action="store_true", help="Esegui senza apportare modifiche")

@@ -1,5 +1,4 @@
-"""
-Utility script per verificare l'importabilità dei moduli di configurazione Django.
+"""Utility script per verificare l'importabilità dei moduli di configurazione Django.
 
 Questo script tenta di importare vari moduli di impostazioni Django e mostra
 informazioni di debug per aiutare a diagnosticare problemi di importazione.

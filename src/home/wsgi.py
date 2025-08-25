@@ -1,5 +1,4 @@
-"""
-WSGI config for home project.
+"""WSGI config for home project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

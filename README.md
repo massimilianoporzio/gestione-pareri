@@ -409,3 +409,39 @@ Questo progetto include documentazione dettagliata per aiutarti a comprendere le
 ## 🤝 Contribuire
 
 Se vuoi migliorare questo template, sentiti libero di aprire una issue o una pull request nel repository originale.
+
+## 🛠️ Correzione automatica di Ruff e Pylint in VS Code
+
+Questa repository è configurata per correggere automaticamente la maggior parte dei problemi di stile, docstring e import segnalati da **Ruff** e **Pylint** ogni volta che salvi un file Python in VS Code.
+
+### Come funziona
+
+- **Ruff**: corregge automaticamente errori di formattazione, docstring, import, linee troppo lunghe e naming.
+- **autopep8**: corregge ulteriori problemi di stile compatibili con Pylint.
+- **Script custom**: aggiunge docstring mancanti a moduli, funzioni e metodi secondo lo stile Google richiesto da Ruff.
+
+### Cosa devi fare
+
+1. Assicurati di avere installato le estensioni VS Code:
+   - [Run on Save](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
+   - [Ruff](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
+2. Salva un file Python (`Ctrl+S`):
+   - Verranno eseguiti in sequenza:
+     - Ruff (`ruff --fix --unsafe-fixes`)
+     - Script docstring custom (`tools/add_docstring.py`)
+     - autopep8 (`autopep8 --in-place --aggressive --aggressive`)
+   - La maggior parte dei warning di Ruff e Pylint verrà risolta automaticamente.
+
+### Limitazioni
+
+- Alcuni warning di Pylint (es. design, naming non standard, errori logici) non possono essere corretti automaticamente e richiedono intervento manuale.
+- Le regole di Ruff sono configurate in `pyproject.toml`.
+- Puoi lanciare manualmente la correzione su tutto il progetto con:
+
+  ```bash
+  uv run ruff check . --fix --unsafe-fixes
+  uv run python tools/add_docstring_batch.py .
+  uv run autopep8 --in-place --aggressive --aggressive $(git ls-files '*.py')
+  ```
+
+Per dettagli vedi la sezione `.vscode/settings.json` e i file in `tools/`.

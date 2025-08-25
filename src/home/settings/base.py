@@ -1,6 +1,4 @@
-"""
-Impostazioni base di Django, condivise tra tutti gli ambienti.
-"""
+"""Impostazioni base di Django, condivise tra tutti gli ambienti."""
 
 import importlib.util
 from pathlib import Path

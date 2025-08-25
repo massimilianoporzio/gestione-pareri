@@ -23,27 +23,52 @@ dev = [
 profile="django"
 ignore = "H031"
 
+
 [tool.ruff]
 # Configurazione generale
 line-length = 120
 target-version = "py313"
 
+# Formatter configuration
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+line_length = 120
+
+[tool.autopep8]
+max_line_length = 120
+
 [tool.ruff.lint]
 # Regole da attivare
 select = [
-    "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
-    "F",  # pyflakes
-    "I",  # isort
-    "B",  # flake8-bugbear
-    "C4", # flake8-comprehensions
-    "UP", # pyupgrade
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "D",   # pydocstyle
+    "N",   # naming
 ]
-ignore = []
+ignore = [
+    "D203",  # one-blank-line-before-class (incompatibile con D211)
+    "D213",  # multi-line-summary-second-line (incompatibile con D212)
+]
 
 [tool.ruff.lint.isort]
 known-third-party = ["django"]
 known-first-party = ["home"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"  # Usa il formato Google per docstring
 
 [tool.ruff.lint.per-file-ignores]
 "examples/logging_example.py" = ["E402"]

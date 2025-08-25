@@ -1,6 +1,4 @@
-"""
-Impostazioni di Django per l'ambiente di produzione.
-"""
+"""Impostazioni di Django per l'ambiente di produzione."""
 
 import os
 
@@ -14,6 +12,15 @@ DEBUG = False
 
 # Parse comma-separated values for hosts and origins
 def parse_list(val, separator=","):
+    """Analizza una stringa separata da delimitatori e la converte in lista.
+
+    Args:
+        val (str): La stringa da analizzare
+        separator (str, optional): Il separatore da utilizzare. Default: ","
+
+    Returns:
+        list: Lista di valori ripuliti dagli spazi
+    """
     return [x.strip() for x in val.split(separator) if x.strip()]
 
 

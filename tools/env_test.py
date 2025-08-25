@@ -1,3 +1,9 @@
+"""Mostra le variabili d'ambiente Django per il debugging.
+
+Questo script visualizza tutte le variabili d'ambiente che iniziano con DJANGO_,
+utile per verificare quali variabili sono impostate nel sistema corrente.
+"""
+
 import os
 
 print("Environment variables:")
