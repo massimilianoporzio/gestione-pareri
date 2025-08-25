@@ -2,7 +2,7 @@
 Impostazioni di Django per l'ambiente di sviluppo.
 """
 
-from home.settings.base import BASE_DIR, LOGGING, REPO_DIR
+from home.settings.base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
