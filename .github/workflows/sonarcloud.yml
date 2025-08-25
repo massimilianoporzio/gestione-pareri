@@ -2,9 +2,11 @@ name: SonarCloud Analysis
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, main ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, main ]
+  # Permette di eseguire questo workflow manualmente dalla tab Actions
+  workflow_dispatch:
 
 jobs:
   sonarcloud:
@@ -13,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0  # Necessario per consentire SonarCloud di determinare quali file sono cambiati
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -23,36 +25,50 @@ jobs:
       - name: Install uv
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH  # Aggiunge uv al PATH in modo più robusto
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
         run: |
-          # Installa coverage direttamente con pip
-          python -m pip install coverage
+          # Installa coverage, pytest e pytest-cov
+          python -m pip install coverage pytest pytest-cov
 
           # Usa uv per installare le dipendenze del progetto
-          uv sync --system
+          uv sync
 
       - name: Run tests with coverage
         run: |
-          cd src
-          # Tenta di eseguire i test di Django se presenti
-          python manage.py test || true
+          # Prova ad eseguire pytest con coverage
+          python -m pytest --cov=src --cov-report=xml || true
 
-          # Genera il report di coverage anche senza test
-          coverage run --source='home' manage.py check || true
-          coverage xml || true
+          # Se il file coverage.xml non esiste, prova con Django
+          if [ ! -f coverage.xml ]; then
+            echo "Pytest non è riuscito a generare il report, provo con Django test"
+            cd src
+            python manage.py test || true
+            coverage run --source='.' manage.py check || true
+            coverage xml || true
 
-          # Sposta il report se è stato generato
-          if [ -f coverage.xml ]; then
-            mv coverage.xml ../coverage.xml
-          else
-            # Se non è stato generato, crea un file vuoto per evitare errori
-            echo '<?xml version="1.0" ?><coverage version="1.0"></coverage>' > ../coverage.xml
+            # Sposta il report se è stato generato
+            if [ -f coverage.xml ]; then
+              mv coverage.xml ../coverage.xml
+            fi
           fi
+
+          # Verifica finale per assicurarsi che esista un file coverage.xml
+          if [ ! -f coverage.xml ]; then
+            echo "Creazione di un file coverage.xml vuoto"
+            echo '<?xml version="1.0" ?><coverage version="1.0"></coverage>' > coverage.xml
+          fi
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # Generate a token on SonarCloud.io, add to GitHub repo secrets
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Necessario per le PR info
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

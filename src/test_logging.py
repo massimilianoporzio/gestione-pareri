@@ -27,6 +27,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "home.settings")
 django.setup()
 
 # Importa le impostazioni
+# noqa: E402
+# NOSONAR
+# @SuppressWarnings("python:S1542")
 from django.conf import settings  # noqa: E402
 
 # Ottieni il logger root

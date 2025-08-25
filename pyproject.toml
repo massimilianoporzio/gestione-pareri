@@ -24,6 +24,7 @@ line_length = 120
 [dependency-groups]
 dev = [
     "black>=25.1.0",
+    "flake8>=7.3.0",
     "isort>=6.0.1",
     "pylint>=3.3.8",
     "pylint-django>=2.6.1",
@@ -65,6 +66,7 @@ ignore = []
 "examples/check_logging.py" = ["E402"]
 "src/home/settings.py" = ["F401", "F403"]
 "src/home/settings/*.py" = ["F401", "F403"]
+"tools/add_docstring_batch.py" = ["E402"]
 
 [tool.ruff.isort]
 known-third-party = ["django"]

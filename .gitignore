@@ -233,3 +233,11 @@ __marimo__/
 
 # Virtual environments
 .venv
+
+# SonarQube specific files
+.scannerwork/
+.sonar/
+.sonarlint/
+.sonarqube/
+sonarqube-analysis.xml
+.sonar-scanner/
