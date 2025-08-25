@@ -1,0 +1,20 @@
+---
+# Codacy configuration file
+# Disable engines that might cause parsing issues
+exclude:
+  - .venv/**
+  - venv/**
+  - node_modules/**
+  - .git/**
+
+# Configure specific engines
+engines:
+  ruff:
+    enabled: true
+  pylint:
+    enabled: true
+
+# Use project's pyproject.toml for configuration
+configuration_files:
+  - pyproject.toml
+  - .pylintrc
