@@ -1,4 +1,4 @@
-.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings
+.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all format-markdown
 
 # Colori
 GREEN = \033[0;32m
@@ -50,6 +50,8 @@ help:
 	@echo -e "$(GREEN)make check-custom-logs LOGS_DIR=/path/to/logs ENV=dev$(NC) Verifica directory log personalizzata"
 	@echo -e "$(GREEN)make lint$(NC)          Esegue i controlli di qualità del codice"
 	@echo -e "$(GREEN)make format$(NC)        Formatta il codice Python e i template"
+	@echo -e "$(GREEN)make fix-all$(NC)       ⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice"
+	@echo -e "$(GREEN)make format-markdown$(NC) Formatta tutti i file Markdown del progetto"
 	@echo -e "$(GREEN)make sonarqube$(NC)     Esegue l'analisi SonarQube locale"
 	@echo -e "$(GREEN)make add-docstrings$(NC) Aggiunge docstring a tutti i file Python del progetto"
 	@echo -e "$(GREEN)make help$(NC)          Mostra questo messaggio di aiuto"
@@ -130,14 +132,10 @@ lint:
 
 format:
 	@echo -e "$(CYAN)Formattazione del codice...$(NC)"
-	uv run black .
-	uv run isort .
-	uv run djlint . --reformat
-
-format-markdown:
-	@echo "Correzione automatica dei file Markdown..."
-	npx prettier --write "**/*.md"
-	npx markdownlint-cli2 --fix "**/*.md"
+	uv run ruff format .
+	uv run ruff check . --fix --unsafe-fixes
+	uv run python tools/add_docstring_batch.py .
+	uv run autopep8 --in-place --aggressive --aggressive $$(find . -name "*.py" -not -path "./.venv/*" -not -path "./venv/*" 2>/dev/null || git ls-files "*.py")
 
 sonarqube:
 	@echo -e "$(CYAN)Esecuzione dell'analisi SonarQube locale...$(NC)"
@@ -196,3 +194,32 @@ else
 	uv run python tools/add_docstring_batch.py .
 endif
 	@echo -e "$(GREEN)Docstring aggiunte con successo!$(NC)"
+
+# Fix all code quality issues across the project
+fix-all:
+	@echo -e "$(CYAN)Correzione completa di tutti i problemi di qualità del codice...$(NC)"
+	@echo -e "$(YELLOW)1/5 - Formattazione con Ruff...$(NC)"
+	uv run ruff format .
+	@echo -e "$(YELLOW)2/5 - Correzione automatica con Ruff...$(NC)"
+	uv run ruff check . --fix --unsafe-fixes
+	@echo -e "$(YELLOW)3/5 - Aggiunta docstring...$(NC)"
+ifeq ($(OS),Windows_NT)
+	uv run python tools/add_docstring_batch.py .
+else
+	uv run python tools/add_docstring_batch.py .
+endif
+	@echo -e "$(YELLOW)4/5 - Correzioni aggressive con autopep8...$(NC)"
+	uv run autopep8 --in-place --aggressive --aggressive --recursive .
+	@echo -e "$(YELLOW)5/5 - Formattazione Markdown...$(NC)"
+	$(MAKE) format-markdown
+	@echo -e "$(GREEN)✅ Tutti i problemi di qualità del codice sono stati corretti!$(NC)"
+
+# Format all markdown files
+format-markdown:
+	@echo -e "$(CYAN)Formattazione file Markdown...$(NC)"
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Get-ChildItem -Path . -Include '*.md' -Recurse | ForEach-Object { Write-Host 'Formatting' $$_.FullName; $$content = Get-Content $$_.FullName -Raw; if ($$content) { $$formatted = $$content -replace '(?m)^[ \t]+$$', '' -replace '(?m)\r?\n{3,}', \"`n`n\" -replace '(?m)[ \t]+$$', ''; Set-Content $$_.FullName -Value $$formatted -NoNewline } }"
+else
+	@find . -name "*.md" -type f -exec sh -c 'echo "Formatting $$1"; sed -i "/^[[:space:]]*$$/d; /^$$/N; /^\\n$$/d" "$$1"' _ {} \;
+endif
+	@echo -e "$(GREEN)File Markdown formattati con successo!$(NC)"
