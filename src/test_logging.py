@@ -28,8 +28,8 @@ if django_env == "prod":
 
 # Configurazione di Django
 django_env = os.environ.get("DJANGO_ENV", "dev")
-settings_module = f"home.settings.{django_env}"
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
+SETTINGS_MODULE = f"home.settings.{django_env}"
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", SETTINGS_MODULE)
 django.setup()
 
 # Importa le impostazioni
@@ -162,14 +162,14 @@ def test_logging():
                                 for line in last_lines:
                                     print(f"  {line.strip()}")
                             break
+
+                        if attempt < max_attempts - 1:
+                            print(f"Tentativo {attempt + 1}: Messaggio di test non trovato, attendo...")
+                            time.sleep(1)  # Attendi prima di riprovare
                         else:
-                            if attempt < max_attempts - 1:
-                                print(f"Tentativo {attempt + 1}: Messaggio di test non trovato, attendo...")
-                                time.sleep(1)  # Attendi prima di riprovare
-                            else:
-                                print("❌ ERRORE: Il messaggio di test non è stato trovato nel file di log!")
-                                print("Contenuto parziale del file di log:")
-                                print(log_content[-500:])  # Mostra gli ultimi 500 caratteri
+                            print("❌ ERRORE: Il messaggio di test non è stato trovato nel file di log!")
+                            print("Contenuto parziale del file di log:")
+                            print(log_content[-500:])  # Mostra gli ultimi 500 caratteri
                 except OSError as e:
                     print(f"Errore nella lettura del file di log: {e}")
                     break

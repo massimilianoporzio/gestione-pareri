@@ -28,16 +28,16 @@ if __name__ == "__main__":
     ]
 
     # Comando completo
-    cmd = " ".join(cmd_parts)
+    CMD = " ".join(cmd_parts)
 
     # Su Windows, usa 'set' per impostare PYTHONPATH
     if platform.system() == "Windows":
-        cmd = f"set PYTHONPATH=src && {cmd}"
+        CMD = f"set PYTHONPATH=src && {CMD}"
 
-    print(f"Esecuzione di: {cmd}")
+    print(f"Esecuzione di: {CMD}")
 
     # Esegui pylint e restituisci il suo codice di uscita
-    exit_code = os.system(cmd)
+    exit_code = os.system(CMD)
 
     # Su Windows, os.system restituisce un valore che include il codice di uscita nei bit più significativi
     # Normalizziamo il codice di uscita su 0 per successo, 1 per errore
