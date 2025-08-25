@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-import os
 from pathlib import Path
+
+from decouple import config
+from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,13 +23,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = config("DJANGO_SECRET_KEY", default=get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
+DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = []
 
+# Parse comma-separated values for hosts and origins
+def parse_list(val, separator=","):
+    return [x.strip() for x in val.split(separator) if x.strip()]
+
+
+# ALLOWED_HOSTS configuration
+if DEBUG:
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+else:
+    ALLOWED_HOSTS = parse_list(config("DJANGO_ALLOWED_HOSTS", default=".onrender.com,.massimilianoporzio.com"))
+
+# CSRF trusted origins configuration
+CSRF_TRUSTED_ORIGINS = []
+if not DEBUG:
+    # Add https:// prefix to each domain if not already present
+    origins = parse_list(config("DJANGO_CSRF_TRUSTED_ORIGINS", default=".onrender.com,.massimilianoporzio.com"))
+    CSRF_TRUSTED_ORIGINS = [
+        f"https://{origin}" if not origin.startswith(("http://", "https://")) else origin for origin in origins
+    ]
 
 # Application definition
 
@@ -120,4 +140,6 @@ STATIC_URL = "static/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

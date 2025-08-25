@@ -20,7 +20,7 @@
       },
       {
         "match": "\\.(md|markdown)$",
-        "cmd": "prettier --write \"${file}\""
+        "cmd": "prettier --write \"${file}\" && markdownlint-cli2-fix \"${file}\""
       }
     ]
   },

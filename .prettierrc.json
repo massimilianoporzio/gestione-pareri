@@ -15,5 +15,13 @@
   "tabWidth": 2,
   "trailingComma": "es5",
   "useTabs": false,
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "proseWrap": "preserve"
+      }
+    }
+  ]
 }
