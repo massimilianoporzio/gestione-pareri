@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import importlib.util
 from pathlib import Path
 
 from decouple import config
@@ -149,6 +150,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGS_DIR = REPO_DIR / "logs"
 LOGS_DIR.mkdir(exist_ok=True)
 
+# Verifica se il modulo logging_utils è disponibile
+USE_COLORAMA = importlib.util.find_spec("home.logging_utils") is not None
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -161,23 +165,12 @@ LOGGING = {
             "format": "{levelname} {message}",
             "style": "{",
         },
-        "colored": {
-            "()": "colorlog.ColoredFormatter",
-            "format": (
-                "%(log_color)s%(levelname)-8s%(reset)s "
-                "%(blue)s%(asctime)s%(reset)s "
-                "%(white)s%(name)s%(reset)s "
-                "%(bold_purple)s%(filename)s:%(lineno)d%(reset)s "
-                "%(message)s"
-            ),
+        # Formatter colorato basato su colorama
+        "colorama": {
+            "()": "home.logging_utils.ColoramaFormatter",
+            "fmt": "%(levelname)-8s %(asctime)s %(name)s %(filename)s:%(lineno)d %(message)s",
             "datefmt": "%Y-%m-%d %H:%M:%S",
-            "log_colors": {
-                "DEBUG": "cyan",
-                "INFO": "green",
-                "WARNING": "yellow",
-                "ERROR": "red",
-                "CRITICAL": "bold_red",
-            },
+            "use_colors": True,
         },
     },
     "filters": {
@@ -193,7 +186,7 @@ LOGGING = {
             "level": "DEBUG",
             "filters": ["require_debug_true"],
             "class": "logging.StreamHandler",
-            "formatter": "colored",
+            "formatter": "colorama",
         },
         "file": {
             "level": "INFO",
@@ -203,6 +196,7 @@ LOGGING = {
             "maxBytes": 1024 * 1024 * 5,  # 5 MB
             "backupCount": 5,
             "formatter": "verbose",
+            "encoding": "utf-8",  # Aggiungiamo l'encoding UTF-8 per gestire correttamente i caratteri accentati
         },
         "mail_admins": {
             "level": "ERROR",
