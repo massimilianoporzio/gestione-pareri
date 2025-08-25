@@ -1,4 +1,5 @@
 repos:
+  # Controlli di base
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -6,35 +7,29 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-      - id: black
-        language_version: python3
-        exclude: ^src/home/settings/
+
+  # Formattazione del codice
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: "v0.12.10"
     hooks:
+      - id: ruff-format
+        name: ruff (formatter)
       - id: ruff
-        args: ["--config", ".config/ruff.toml"]
+        name: ruff (linter)
+
+  # Linting più specifico
   - repo: https://github.com/PyCQA/flake8
     rev: 7.3.0
     hooks:
       - id: flake8
         args: ["--config=.config/flake8"]
-  - repo: https://github.com/pycqa/isort
-    rev: 6.0.1
-    hooks:
-      - id: isort
-        name: isort (python)
-        exclude: ^src/home/settings/
 
   # Hook per djlint cross-platform
   - repo: local
     hooks:
       - id: djlint-cross-platform
         name: Format Django HTML templates
-        entry: uv run djlint src/templates/ --reformat --ignore H030 --configuration .config/djlintrc
+        entry: python scripts/run_djlint.py
         language: python
         additional_dependencies: [djlint]
         pass_filenames: false

@@ -17,5 +17,8 @@ jobs:
     - name: Install uv
       run: |
         pip install uv
+    - name: Install dependencies
+      run: |
+        uv pip install djlint ruff
     - name: Run pre-commit
       uses: pre-commit/action@v3.0.0
