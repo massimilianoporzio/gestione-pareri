@@ -32,24 +32,9 @@
       "source.fixAll.ruff": "explicit"
     }
   },
-  "python.linting.pylintEnabled": true,
-  "python.linting.enabled": true,
-  "python.linting.pylintUseMinimalCheckers": false,
-  "python.linting.pylintPath": "pylint",
-  "python.linting.pylintArgs": [
-    "--rcfile=.config/pylintrc"
-  ],
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Path": "flake8",
-  "python.linting.flake8Args": [
-    "--config=.config/flake8"
-  ],
-  "python.linting.ignorePatterns": [
-    ".venv/**/*.py",
-    "**/site-packages/**/*.py",
-    "examples/logging_example.py",
-    "src/home/settings.py",
-    "src/home/settings/*.py"
+  "pylint.enabled": true,
+  "pylint.args": [
+    "--rcfile=.pylintrc"
   ],
   "black-formatter.args": [
     "--line-length=120"
@@ -58,9 +43,6 @@
     "--profile=django",
     "--line-length=120"
   ],
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit"
-  },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
@@ -92,5 +74,10 @@
       "level": "off"
     }
   },
-  "sonarlint.disableTelemetry": true
+  "sonarlint.disableTelemetry": true,
+  "github-actions.workflows.pinned.workflows": [
+    ".github/workflows/codacy-analysis.yml"
+  ],
+  "yaml.validate": true,
+  "yaml.format.enable": true
 }

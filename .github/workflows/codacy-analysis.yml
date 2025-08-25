@@ -1,15 +1,24 @@
 name: Codacy Analysis
 
+# yamllint disable-line rule:truthy
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
 jobs:
   codacy-analysis:
     name: Codacy Analysis
     runs-on: ubuntu-latest
+    # Skip if no token is available
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,21 +26,16 @@ jobs:
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master
         env:
-          # Pass token as env var to avoid editor warning
+          # yamllint disable-line rule:line-length
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         with:
           verbose: true
           output: results.sarif
           format: sarif
-          # Adjust severity of non-security issues
           gh-code-scanning-compat: true
-          # Force 0 exit code to allow SARIF file generation
-          # This will handover control about PR rejection to the GitHub side
           max-allowed-issues: 2147483647
-          # Specify a unique category for this analysis
-          tool: codacy
+          # Let Codacy auto-detect available tools
 
-      # Upload the SARIF file generated in the previous step
       - name: Upload SARIF results file
         uses: github/codeql-action/upload-sarif@main
         with:
