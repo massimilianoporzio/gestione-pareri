@@ -2,7 +2,7 @@
 Impostazioni di Django per l'ambiente di test.
 """
 
-from home.settings.base import LOGGING, MIDDLEWARE
+from home.settings.base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
