@@ -13,7 +13,8 @@ Questo progetto utilizza un sistema di logging avanzato con supporto per log col
 
 I log sono configurati con diversi formattatori:
 
-- **Formattatore colorato** (console): Utilizza `colorlog` per visualizzare log con colori diversi per ogni livello
+- **Formattatore colorato cross-platform** (console): Utilizza `colorama` per visualizzare log con colori su Windows, macOS e Linux
+- **Formattatore colorato alternativo** (console): Utilizza `colorlog` come fallback se colorama non è disponibile
 - **Formattatore verboso** (file): Include informazioni dettagliate come timestamp, modulo, processo e thread
 - **Formattatore semplice**: Versione minimal per log non critici
 
@@ -62,8 +63,21 @@ I file di log vengono salvati nella directory `logs/` nella root del progetto. Q
 
 I file di log principali sono:
 
-- `django.log`: Log principale dell'applicazione
+- `django.log`: Log principale dell'applicazione (codificato in UTF-8 per supportare caratteri speciali e accentati)
 - `django.log.1`, `django.log.2`, ecc.: File di backup per la rotazione dei log
+
+### Supporto per caratteri internazionali
+
+Il sistema di logging è configurato per usare l'encoding UTF-8 nei file di log, garantendo la corretta visualizzazione di caratteri accentati, simboli e caratteri di lingue diverse dall'inglese. Questo è particolarmente importante per applicazioni multilinguistiche o con contenuti in italiano.
+
+### Compatibilità cross-platform per log colorati
+
+Il sistema utilizza due approcci per i log colorati:
+
+1. **Colorama**: Libreria leggera che fornisce supporto per ANSI colors su Windows, macOS e Linux in modo trasparente
+2. **Colorlog**: Libreria alternativa che viene utilizzata come fallback
+
+L'implementazione basata su colorama assicura che i log colorati funzionino correttamente su tutte le piattaforme, incluso Windows dove i colori ANSI standard potrebbero non essere supportati da tutti i terminali.
 
 ## Nota sulle performance
 

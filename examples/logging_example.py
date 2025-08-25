@@ -1,7 +1,7 @@
 """
 Esempio di utilizzo del sistema di logging configurato per Django.
 Questo script dimostra come utilizzare i diversi livelli di log disponibili
-nel progetto Django configurato con colorlog.
+nel progetto Django configurato con colorlog o colorama.
 
 Per eseguire:
 1. Usando uv (consigliato): uv run python examples/logging_example.py
@@ -10,20 +10,22 @@ Per eseguire:
    - Esegui: python examples/logging_example.py
 
 Output atteso in modalità DEBUG (con colori):
-+---------------------------------------------------------------------------+
-| DEBUG    2025-08-25 16:43:05 examples.logging Questo è un messaggio DEBUG |
-| INFO     2025-08-25 16:43:05 examples.logging Questo è un messaggio INFO  |
-| WARNING  2025-08-25 16:43:05 examples.logging Questo è un avviso          |
-| ERROR    2025-08-25 16:43:05 examples.logging Questo è un errore          |
-| CRITICAL 2025-08-25 16:43:05 examples.logging Questo è un errore critico  |
-+---------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------+
+| DEBUG    2025-08-25 16:43:05 examples.logging Questo è un messaggio DEBUG              |
+| INFO     2025-08-25 16:43:05 examples.logging Questo è un messaggio INFO               |
+| WARNING  2025-08-25 16:43:05 examples.logging Questo è un messaggio di WARNING         |
+| ERROR    2025-08-25 16:43:05 examples.logging Questo è un messaggio di ERROR           |
+| CRITICAL 2025-08-25 16:43:05 examples.logging Questo è un messaggio di CRITICAL        |
++----------------------------------------------------------------------------------------+
 
 I livelli hanno colori diversi:
-- DEBUG: ciano
-- INFO: verde
-- WARNING: giallo
-- ERROR: rosso
-- CRITICAL: sfondo rosso, testo bianco
+- DEBUG: ciano (Fore.CYAN) - Per informazioni di sviluppo e debugging dettagliate
+- INFO: verde (Fore.GREEN) - Per messaggi informativi generali sul funzionamento
+- WARNING: giallo (Fore.YELLOW) - Per avvisi su situazioni potenzialmente problematiche
+- ERROR: rosso (Fore.RED) - Per errori che impediscono specifiche funzionalità
+- CRITICAL: rosso brillante (Fore.RED + Style.BRIGHT) - Per errori critici che compromettono l'applicazione
+
+Questo esempio mostra molteplici messaggi per ogni livello di log, tutti con il colore appropriato.
 """
 
 import logging
@@ -54,11 +56,30 @@ def demo_basic_logging():
     """Dimostra i livelli di log di base."""
     print("\n=== Demo livelli di log di base ===")
 
+    # Messaggi di DEBUG (colore CIANO)
     logger.debug("Questo è un messaggio di DEBUG - visibile solo in modalità sviluppo")
+    logger.debug("DEBUG: Dettagli tecnici utili per il debugging")
+    logger.debug("DEBUG: Valori delle variabili: x=10, y=20, z=30")
+
+    # Messaggi di INFO (colore VERDE)
     logger.info("Questo è un messaggio di INFO - mostra informazioni generali")
+    logger.info("INFO: Operazione completata con successo")
+    logger.info("INFO: Utente autenticato correttamente")
+
+    # Messaggi di WARNING (colore GIALLO)
     logger.warning("Questo è un messaggio di WARNING - segnala situazioni potenzialmente problematiche")
+    logger.warning("WARNING: Spazio su disco inferiore al 10%")
+    logger.warning("WARNING: Funzionalità deprecata in uso")
+
+    # Messaggi di ERROR (colore ROSSO)
     logger.error("Questo è un messaggio di ERROR - segnala errori che impediscono il corretto funzionamento")
+    logger.error("ERROR: Impossibile connettersi al database")
+    logger.error("ERROR: Errore durante l'elaborazione della richiesta")
+
+    # Messaggi di CRITICAL (colore ROSSO BRILLANTE o SFONDO ROSSO)
     logger.critical("Questo è un messaggio di CRITICAL - segnala errori critici che richiedono attenzione immediata")
+    logger.critical("CRITICAL: Sistema in stato di emergenza")
+    logger.critical("CRITICAL: Errore irreversibile nell'applicazione")
 
 
 def demo_exception_logging():

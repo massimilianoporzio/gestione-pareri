@@ -39,15 +39,16 @@ repos:
     hooks:
       - id: pylint
         name: pylint
-        entry: uv run pylint
+        entry: powershell -Command "Set-Item -Path env:PYTHONPATH -Value 'e:\\progetti\\deploy-django\\src'; uv run pylint"
         language: system
         types: [python]
         require_serial: true
+        exclude: examples/.*
         args: [
             "-rn", # Only display messages
             "-sn", # Don't display the score
-            "--load-plugins=pylint_django", # new
-            "--django-settings-module=home.settings", # new
+            "--load-plugins=pylint_django",
+            "--django-settings-module=home.settings",
           ]
   # Markdown formatter using Prettier
   - repo: https://github.com/pre-commit/mirrors-prettier

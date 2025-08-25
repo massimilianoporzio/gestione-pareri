@@ -14,12 +14,7 @@ ignore-paths=
 
 # Files or directories matching the regex patterns are skipped. The regex
 # matches against base names, not paths.
-ignore-patterns=^\.#
-
-# Per-file ignores pattern for specific messages
-# Format is <file_pattern>:<comma-separated-list-of-messages>
-per-file-ignores=
-    examples/logging_example.py:wrong-import-position,import-outside-toplevel
+ignore-patterns=^\.#,^examples/
 
 # Pickle collected data for later comparisons.
 persistent=yes
