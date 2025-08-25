@@ -2,6 +2,8 @@
 Impostazioni di Django per l'ambiente di produzione.
 """
 
+import os
+
 from decouple import config
 
 from home.settings.base import LOGGING, REPO_DIR
@@ -28,17 +30,26 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Database di produzione
 # Configura il database di produzione, ad esempio PostgreSQL
-DATABASES = {
-    "default": {
-        "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
-        "NAME": config("DB_NAME", default="deploy_django"),
-        "USER": config("DB_USER", default="postgres"),
-        "PASSWORD": config("DB_PASSWORD", default=""),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", default="5432"),
-        "CONN_MAX_AGE": config("DB_CONN_MAX_AGE", default=600, cast=int),
+# Se stiamo eseguendo un test, usa SQLite invece di PostgreSQL
+if os.environ.get("DJANGO_TEST_DB", "0") == "1":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": ":memory:",  # Database in memoria
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
+            "NAME": config("DB_NAME", default="deploy_django"),
+            "USER": config("DB_USER", default="postgres"),
+            "PASSWORD": config("DB_PASSWORD", default=""),
+            "HOST": config("DB_HOST", default="localhost"),
+            "PORT": config("DB_PORT", default="5432"),
+            "CONN_MAX_AGE": config("DB_CONN_MAX_AGE", default=600, cast=int),
+        }
+    }
 
 # Configurazione di sicurezza per la produzione
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

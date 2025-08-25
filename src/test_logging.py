@@ -22,6 +22,11 @@ django_logs_dir = os.environ.get("DJANGO_LOGS_DIR", "non impostato")
 print(f"DJANGO_ENV (prima dell'inizializzazione): {django_env}")
 print(f"DJANGO_LOGS_DIR (prima dell'inizializzazione): {django_logs_dir}")
 
+# Per i test in ambiente di produzione, impostiamo un database SQLite temporaneo
+# per evitare di connetterci a PostgreSQL
+if django_env == "prod":
+    os.environ["DJANGO_TEST_DB"] = "1"  # Segnala che stiamo usando un DB di test
+
 # Configurazione di Django
 django_env = os.environ.get("DJANGO_ENV", "dev")
 settings_module = f"home.settings.{django_env}"
@@ -87,6 +92,20 @@ def test_logging():
     django_logger.warning("Django logger: Questo è un messaggio di WARNING")
     django_logger.error("Django logger: Questo è un messaggio di ERROR")
 
+    # Verifica della scrittura dei log su file in ambiente di produzione
+    if env == "prod":
+        print("\nVerifica della scrittura dei log in ambiente di produzione:")
+
+        # Scrittura di un log specifico per il test con un identificatore univoco
+        test_id = f"test-{os.getpid()}"
+        test_message = f"TEST-LOG-ENTRY-{test_id}"
+        django_logger.error(test_message)
+
+        # Aspetta un breve momento per assicurarsi che il log sia stato scritto
+        import time
+
+        time.sleep(0.5)
+
     print("\nControlla il file di log in ambiente di produzione:")
 
     # Prima parte: informazioni sulla directory dei log
@@ -123,17 +142,40 @@ def test_logging():
 
         # Mostra informazioni sul file di log se in ambiente di produzione
         if env == "prod" and log_file.exists():
-            print(f"Dimensione del file di log: {log_file.stat().st_size} bytes")
-            try:
-                with open(log_file, encoding="utf-8") as f:
-                    last_lines = f.readlines()[-10:]  # ultime 10 righe
-                    print("\nUltime righe del file di log:")
-                    for line in last_lines:
-                        print(f"  {line.strip()}")
-            except OSError as e:
-                print(f"Errore nella lettura del file di log: {e}")
+            # Verifica se il messaggio di test è stato scritto nel file di log
+            import time
+
+            test_id = f"test-{os.getpid()}"
+            test_message = f"TEST-LOG-ENTRY-{test_id}"
+
+            # Leggi il file di log e cerca il messaggio di test
+            max_attempts = 3
+            for attempt in range(max_attempts):
+                try:
+                    with open(log_file, encoding="utf-8") as f:
+                        log_content = f.read()
+                        if test_message in log_content:
+                            print("\n✅ SUCCESSO: Il messaggio di test è stato scritto nel file di log!")
+                            # Mostra le ultime righe del file di log
+                            print("\nUltime righe del file di log:")
+                            with open(log_file, encoding="utf-8") as f:
+                                last_lines = f.readlines()[-10:]  # ultime 10 righe
+                                for line in last_lines:
+                                    print(f"  {line.strip()}")
+                            break
+                        else:
+                            if attempt < max_attempts - 1:
+                                print(f"Tentativo {attempt+1}: Messaggio di test non trovato, attendo...")
+                                time.sleep(1)  # Attendi prima di riprovare
+                            else:
+                                print("❌ ERRORE: Il messaggio di test non è stato trovato nel file di log!")
+                                print("Contenuto parziale del file di log:")
+                                print(log_content[-500:])  # Mostra gli ultimi 500 caratteri
+                except OSError as e:
+                    print(f"Errore nella lettura del file di log: {e}")
+                    break
         elif env == "prod":
-            print("Il file di log non esiste ancora.")
+            print("❌ ERRORE: Il file di log non esiste. Verifica la configurazione!")
     except OSError as e:
         print(f"Errore nell'accesso al file di log: {e}")
 
