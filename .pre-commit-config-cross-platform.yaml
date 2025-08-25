@@ -37,33 +37,17 @@ repos:
         files: \.html$
         always_run: true
 
-  # Hook unificato per pylint che funziona su tutte le piattaforme
+  # Hook per pylint cross-platform
   - repo: local
     hooks:
-      - id: pylint-unified
+      - id: pylint-cross-platform
         name: pylint
+        entry: python -c "import os; os.environ['PYTHONPATH'] = './src' + os.pathsep + os.environ.get('PYTHONPATH', ''); import sys; from pylint import lint; lint.Run(['-rn', '-sn', '--load-plugins=pylint_django', '--django-settings-module=home.settings'] + sys.argv[1:])"
         language: python
-        entry: python -c "import os, sys, platform; exit(0 if platform.system() != 'Windows' else os.system('set PYTHONPATH=src && uv run pylint src -rn -sn --load-plugins=pylint_django --django-settings-module=home.settings'))"
+        additional_dependencies: [pylint, pylint-django]
         types: [python]
         require_serial: true
         exclude: examples/.*
-        stages: [pre-commit]
-        pass_filenames: false
-        additional_dependencies: [pylint, pylint-django]
-
-  # Versione Unix (solo per GitHub Actions)
-  - repo: local
-    hooks:
-      - id: pylint-unix-ci
-        name: pylint (CI)
-        language: python
-        entry: python -c "import os, sys, platform; exit(0 if platform.system() == 'Windows' else os.system('PYTHONPATH=src uv run pylint src -rn -sn --load-plugins=pylint_django --django-settings-module=home.settings'))"
-        types: [python]
-        require_serial: true
-        exclude: examples/.*
-        stages: [pre-commit]
-        pass_filenames: false
-        additional_dependencies: [pylint, pylint-django]
 
   # Markdown formatter using Prettier
   - repo: https://github.com/pre-commit/mirrors-prettier
