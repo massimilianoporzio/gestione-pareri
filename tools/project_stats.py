@@ -4,17 +4,26 @@
 Genera report dettagliati su qualità del codice, complessità e metriche.
 """
 
+import shlex
 import subprocess
 from datetime import datetime
 from pathlib import Path
 
 
 def run_command(cmd):
-    """Esegue un comando e restituisce l'output."""
+    """Esegue un comando e restituisce l'output in modo sicuro."""
     try:
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        # Se cmd è una stringa, la convertiamo in lista per evitare shell injection
+        if isinstance(cmd, str):
+            # Usa shlex.split per parsing sicuro dei comandi
+            cmd_args = shlex.split(cmd)
+        else:
+            cmd_args = cmd
+
+        # Esegui senza shell=True per maggiore sicurezza
+        result = subprocess.run(cmd_args, capture_output=True, text=True, check=False)
         return result.stdout, result.stderr, result.returncode
-    except Exception as e:
+    except (subprocess.SubprocessError, OSError, ValueError) as e:
         return "", str(e), 1
 
 
@@ -33,7 +42,7 @@ def count_lines_of_code():
                 total_lines += lines
                 total_files += 1
                 print(f"  {py_file}: {lines} linee")
-        except Exception as e:
+        except (OSError, UnicodeDecodeError) as e:
             print(f"  Errore leggendo {py_file}: {e}")
 
     return total_files, total_lines
@@ -53,6 +62,7 @@ def analyze_ruff_rules():
         "N": "naming",
         "D": "docstring",
         "UP": "pyupgrade",
+        "S": "security (bandit)",
     }
 
     for code, desc in categories.items():

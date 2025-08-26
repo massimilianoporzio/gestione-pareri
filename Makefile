@@ -231,9 +231,9 @@ stats:  ## Genera statistiche complete del progetto
 ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'Generazione statistiche progetto...' -ForegroundColor Cyan"
 	uv run python tools/project_stats.py
-	@powershell -Command "Write-Host 'Dashboard completa disponibile in quality_dashboard.md' -ForegroundColor Green"
+	@powershell -Command "Write-Host 'Dashboard completa disponibile in tools/quality_dashboard.md' -ForegroundColor Green"
 else
 	@echo -e "$(CYAN)Generazione statistiche progetto...$(NC)"
 	uv run python tools/project_stats.py
-	@echo -e "$(GREEN)📊 Dashboard completa disponibile in quality_dashboard.md$(NC)"
+	@echo -e "$(GREEN)📊 Dashboard completa disponibile in tools/quality_dashboard.md$(NC)"
 endif
