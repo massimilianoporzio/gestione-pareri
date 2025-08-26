@@ -4,6 +4,7 @@ import importlib.util
 from pathlib import Path
 
 from decouple import Config, RepositoryEnv
+from decouple import config as default_config
 from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -17,7 +18,7 @@ if env_file.exists():
     config = Config(RepositoryEnv(str(env_file)))
 else:
     # Se il file .env non esiste, usa la configurazione standard (variabili d'ambiente)
-    from decouple import config
+    config = default_config
 
 # Configurazione della directory dei log
 # Puoi specificare un percorso assoluto in .env o usare il valore predefinito
