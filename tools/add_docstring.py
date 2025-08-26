@@ -96,6 +96,96 @@ def get_function_params(node):
     return params
 
 
+def _validate_file_path(filepath):
+    """Valida che il percorso sia un file Python valido."""
+    path = Path(filepath)
+    if not path.exists() or not path.is_file() or path.suffix != ".py":
+        print(f"Il file {filepath} non è un file Python valido.")
+        return None
+    return path
+
+
+def _collect_functions_to_modify(tree):
+    """Raccoglie tutte le funzioni e metodi senza docstring."""
+    functions_to_modify = []
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef) and ast.get_docstring(node) is None:
+            functions_to_modify.append(node)
+        elif isinstance(node, ast.ClassDef):
+            # Metodi di classe senza docstring
+            for subnode in node.body:
+                if isinstance(subnode, ast.FunctionDef) and ast.get_docstring(subnode) is None:
+                    functions_to_modify.append(subnode)
+
+    return functions_to_modify
+
+
+def _create_docstring_content(node):
+    """Crea il contenuto della docstring per una funzione."""
+    # Ottiene i nomi dei parametri
+    params = get_function_params(node)
+
+    # Inizia la docstring
+    if node.name.startswith("__") and node.name.endswith("__"):
+        summary = f"Metodo speciale {node.name}."
+    else:
+        name_formatted = node.name.replace("_", " ")
+        summary = f"{name_formatted.capitalize()}."
+
+    # Rimuovi 'self' dai parametri
+    if params and "self" in params:
+        params.remove("self")
+
+    docstring_parts = [summary, ""]  # Summary + riga vuota
+
+    # Aggiungi sezione Args se ci sono parametri
+    if params:
+        docstring_parts.append("Args:")
+        for param in params:
+            docstring_parts.append(f"    {param}: Descrizione di {param}")
+
+        docstring_parts.append("")  # Riga vuota prima di Returns
+        docstring_parts.append("Returns:")
+        docstring_parts.append("    Descrizione del valore restituito")
+
+    return docstring_parts
+
+
+def _insert_docstring(lines, node, leading_spaces):
+    """Inserisce la docstring per una funzione specifica."""
+    indent = " " * leading_spaces
+    docstring_parts = _create_docstring_content(node)
+
+    # Costruisce la docstring formattata
+    docstring_lines = [f'{indent}"""']
+    docstring_lines.append(f"{indent}{docstring_parts[0]}")  # Summary
+
+    for part in docstring_parts[1:]:
+        if part == "":
+            docstring_lines.append(f"{indent}")
+        elif part.startswith("    "):
+            docstring_lines.append(f"{indent}{part}")
+        else:
+            docstring_lines.append(f"{indent}{part}")
+
+    docstring_lines.append(f'{indent}"""')
+
+    # Inserisce tutte le righe della docstring
+    for i, docstring_line in enumerate(docstring_lines):
+        lines.insert(node.lineno + i, docstring_line)
+
+
+def _process_functions(lines, functions_to_modify):
+    """Processa tutte le funzioni per aggiungere le docstring."""
+    # Modifica le funzioni dalla fine del file verso l'inizio
+    # per evitare che gli offset delle righe cambino
+    for node in sorted(functions_to_modify, key=lambda n: n.lineno, reverse=True):
+        # Determina l'indentazione
+        leading_spaces = len(lines[node.lineno - 1]) - len(lines[node.lineno - 1].lstrip())
+        _insert_docstring(lines, node, leading_spaces)
+
+
 def add_function_docstrings(filepath):
     """Aggiunge docstring alle funzioni e metodi senza docstring.
 
@@ -105,83 +195,34 @@ def add_function_docstrings(filepath):
     Returns:
         bool: True se sono state aggiunte docstring, altrimenti False
     """
-    path = Path(filepath)
-    if not path.exists() or not path.is_file() or path.suffix != ".py":
-        print(f"Il file {filepath} non è un file Python valido.")
+    # 1. Validazione del file
+    path = _validate_file_path(filepath)
+    if path is None:
         return False
 
-    # Legge il contenuto del file
+    # 2. Legge il contenuto del file
     content = path.read_text(encoding="utf-8")
-    modified = False
 
     try:
+        # 3. Parse del codice
         tree = ast.parse(content)
 
-        # Raccoglie tutte le funzioni e classi
-        functions_to_modify = []
-
-        # Funzioni globali
-        for node in ast.walk(tree):
-            if isinstance(node, ast.FunctionDef) and ast.get_docstring(node) is None:
-                functions_to_modify.append(node)
-            elif isinstance(node, ast.ClassDef):
-                # Metodi di classe senza docstring
-                for subnode in node.body:
-                    if isinstance(subnode, ast.FunctionDef) and ast.get_docstring(subnode) is None:
-                        functions_to_modify.append(subnode)
+        # 4. Raccoglie le funzioni da modificare
+        functions_to_modify = _collect_functions_to_modify(tree)
 
         if not functions_to_modify:
             return False
 
-        # Converte il contenuto in righe per l'editing
+        # 5. Converte il contenuto in righe per l'editing
         lines = content.splitlines()
 
-        # Modifica le funzioni dalla fine del file verso l'inizio
-        # per evitare che gli offset delle righe cambino
-        for node in sorted(functions_to_modify, key=lambda n: n.lineno, reverse=True):
-            # Determina l'indentazione
-            leading_spaces = len(lines[node.lineno - 1]) - len(lines[node.lineno - 1].lstrip())
-            indent = " " * leading_spaces
+        # 6. Processa le funzioni
+        _process_functions(lines, functions_to_modify)
 
-            # Ottiene i nomi dei parametri
-            params = get_function_params(node)
-
-            # Crea la docstring
-            docstring = f'{indent}"""'
-            if node.name.startswith("__") and node.name.endswith("__"):
-                docstring += f"Metodo speciale {node.name}."
-            else:
-                name_formatted = node.name.replace("_", " ")
-                docstring += f"{name_formatted.capitalize()}."
-
-            # Aggiungi la riga vuota di separazione tra il sommario e il resto
-            docstring += "\n\n"
-
-            # Aggiungi sezione Args se ci sono parametri
-            if params and "self" in params:
-                params.remove("self")
-
-            if params:
-                docstring += f"{indent}Args:\n"
-                for param in params:
-                    docstring += f"{indent}    {param}: Descrizione di {param}\n"
-
-                # Aggiungi la riga vuota di separazione prima di Returns
-                docstring += f"\n{indent}Returns:\n"
-                docstring += f"{indent}    Descrizione del valore restituito\n"
-
-            docstring += f'{indent}"""'
-
-            # Inserisce la docstring subito dopo la dichiarazione della funzione
-            # La linea successiva alla dichiarazione di funzione è node.lineno
-            lines.insert(node.lineno, docstring)
-            modified = True
-
-        if modified:
-            path.write_text("\n".join(lines), encoding="utf-8")
-            print(f"Aggiunte docstring alle funzioni in {filepath}")
-
-        return modified
+        # 7. Salva il file modificato
+        path.write_text("\n".join(lines), encoding="utf-8")
+        print(f"Aggiunte docstring alle funzioni in {filepath}")
+        return True
 
     except SyntaxError:
         print(f"Errore di sintassi nel file {filepath}")
