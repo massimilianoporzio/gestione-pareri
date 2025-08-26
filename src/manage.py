@@ -8,8 +8,15 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    # Usa home.settings come entry point che poi caricherà l'ambiente appropriato
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "home.settings")
+    # Determina l'ambiente da utilizzare
+    from decouple import config
+
+    django_env = config("DJANGO_ENV", default="dev")
+
+    # Imposta il modulo delle impostazioni direttamente per l'ambiente specifico
+    settings_module = f"home.settings.{django_env}"
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
