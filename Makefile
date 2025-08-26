@@ -36,7 +36,9 @@ ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'make run-test      ' -NoNewline -ForegroundColor Green; Write-Host 'Avvia il server di sviluppo in ambiente TEST'"
 	@powershell -Command "Write-Host 'make run-prod      ' -NoNewline -ForegroundColor Green; Write-Host 'Avvia il server di sviluppo in ambiente PROD'"
 	@powershell -Command "Write-Host 'make test          ' -NoNewline -ForegroundColor Green; Write-Host 'Esegue i test del progetto'"
+	@powershell -Command "Write-Host 'make add-docstrings' -NoNewline -ForegroundColor Green; Write-Host '📝 Aggiunge docstring mancanti ai file Python'"
 	@powershell -Command "Write-Host 'make fix-all       ' -NoNewline -ForegroundColor Green; Write-Host '⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice'"
+	@powershell -Command "Write-Host 'make lint-codacy   ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Controlli qualità stile Codacy (senza correzioni)'"
 	@powershell -Command "Write-Host 'make stats         ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)'"
 	@powershell -Command "Write-Host 'make help          ' -NoNewline -ForegroundColor Green; Write-Host 'Mostra questo messaggio di aiuto'"
 else
@@ -46,7 +48,9 @@ else
 	@echo -e "$(GREEN)make run-test$(NC)      Avvia il server di sviluppo in ambiente TEST"
 	@echo -e "$(GREEN)make run-prod$(NC)      Avvia il server di sviluppo in ambiente PROD"
 	@echo -e "$(GREEN)make test$(NC)          Esegue i test del progetto"
+	@echo -e "$(GREEN)make add-docstrings$(NC) 📝 Aggiunge docstring mancanti ai file Python"
 	@echo -e "$(GREEN)make fix-all$(NC)       ⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice"
+	@echo -e "$(GREEN)make lint-codacy$(NC)   🔍 Controlli qualità stile Codacy (senza correzioni)"
 	@echo -e "$(GREEN)make stats$(NC)         🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)"
 	@echo -e "$(GREEN)make help$(NC)          Mostra questo messaggio di aiuto"
 endif
@@ -194,32 +198,40 @@ endif
 fix-all:
 ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'Correzione completa di tutti i problemi di qualita del codice...' -ForegroundColor Cyan"
-	@powershell -Command "Write-Host '1/6 - Aggiunta docstring...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '1/8 - Aggiunta docstring...' -ForegroundColor Yellow"
 	-uv run python tools/add_docstring_batch.py .
-	@powershell -Command "Write-Host '2/6 - Formattazione con Ruff...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '2/8 - Ordinamento import (isort style)...' -ForegroundColor Yellow"
+	-uv run ruff check --select I --fix .
+	@powershell -Command "Write-Host '3/8 - Formattazione con Ruff...' -ForegroundColor Yellow"
 	-uv run ruff format .
-	@powershell -Command "Write-Host '3/6 - Correzione automatica con Ruff...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '4/8 - Correzione automatica con Ruff...' -ForegroundColor Yellow"
 	-uv run ruff check . --fix --unsafe-fixes
-	@powershell -Command "Write-Host '4/6 - Correzioni aggressive con autopep8...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '5/8 - Correzioni aggressive con autopep8...' -ForegroundColor Yellow"
 	-uv run autopep8 --in-place --aggressive --aggressive --recursive .
-	@powershell -Command "Write-Host '5/6 - Formattazione finale con Ruff...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '6/8 - Formattazione finale con Ruff...' -ForegroundColor Yellow"
 	-uv run ruff format .
-	@powershell -Command "Write-Host '6/6 - Formattazione Markdown...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '7/8 - Controllo finale import...' -ForegroundColor Yellow"
+	-uv run ruff check --select I --fix .
+	@powershell -Command "Write-Host '8/8 - Formattazione Markdown...' -ForegroundColor Yellow"
 	$(MAKE) format-markdown
 	@powershell -Command "Write-Host 'Tutti i problemi di qualita del codice sono stati corretti!' -ForegroundColor Green"
 else
 	@echo -e "$(CYAN)Correzione completa di tutti i problemi di qualità del codice...$(NC)"
-	@echo -e "$(YELLOW)1/6 - Aggiunta docstring...$(NC)"
+	@echo -e "$(YELLOW)1/8 - Aggiunta docstring...$(NC)"
 	-uv run python tools/add_docstring_batch.py .
-	@echo -e "$(YELLOW)2/6 - Formattazione con Ruff...$(NC)"
+	@echo -e "$(YELLOW)2/8 - Ordinamento import (isort style)...$(NC)"
+	-uv run ruff check --select I --fix .
+	@echo -e "$(YELLOW)3/8 - Formattazione con Ruff...$(NC)"
 	-uv run ruff format .
-	@echo -e "$(YELLOW)3/6 - Correzione automatica con Ruff...$(NC)"
+	@echo -e "$(YELLOW)4/8 - Correzione automatica con Ruff...$(NC)"
 	-uv run ruff check . --fix --unsafe-fixes
-	@echo -e "$(YELLOW)4/6 - Correzioni aggressive con autopep8...$(NC)"
+	@echo -e "$(YELLOW)5/8 - Correzioni aggressive con autopep8...$(NC)"
 	-uv run autopep8 --in-place --aggressive --aggressive --recursive .
-	@echo -e "$(YELLOW)5/6 - Formattazione finale con Ruff...$(NC)"
+	@echo -e "$(YELLOW)6/8 - Formattazione finale con Ruff...$(NC)"
 	-uv run ruff format .
-	@echo -e "$(YELLOW)6/6 - Formattazione Markdown...$(NC)"
+	@echo -e "$(YELLOW)7/8 - Controllo finale import...$(NC)"
+	-uv run ruff check --select I --fix .
+	@echo -e "$(YELLOW)8/8 - Formattazione Markdown...$(NC)"
 	$(MAKE) format-markdown
 	@echo -e "$(GREEN)✅ Tutti i problemi di qualità del codice sono stati corretti!$(NC)"
 endif
@@ -246,4 +258,30 @@ else
 	@echo -e "$(CYAN)Generazione statistiche progetto...$(NC)"
 	uv run python tools/project_stats.py
 	@echo -e "$(GREEN)📊 Dashboard completa disponibile in tools/quality_dashboard.md$(NC)"
+endif
+
+# 🔍 Controllo qualità completo simile a Codacy
+lint-codacy:  ## Esegue controlli simili a Codacy
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host 'Controlli qualità stile Codacy...' -ForegroundColor Cyan"
+	@powershell -Command "Write-Host '1/4 - Ruff (stile e errori)...' -ForegroundColor Yellow"
+	-uv run ruff check --output-format=github .
+	@powershell -Command "Write-Host '2/4 - Flake8 (stile aggiuntivo)...' -ForegroundColor Yellow"
+	-uv run flake8 --format=default .
+	@powershell -Command "Write-Host '3/4 - Pylint (analisi statica)...' -ForegroundColor Yellow"
+	-uv run pylint src/home/ --output-format=colorized
+	@powershell -Command "Write-Host '4/4 - Import sorting check...' -ForegroundColor Yellow"
+	-uv run ruff check --select I .
+	@powershell -Command "Write-Host 'Controlli completati!' -ForegroundColor Green"
+else
+	@echo -e "$(CYAN)🔍 Controlli qualità stile Codacy...$(NC)"
+	@echo -e "$(YELLOW)1/4 - Ruff (stile e errori)...$(NC)"
+	-uv run ruff check --output-format=github .
+	@echo -e "$(YELLOW)2/4 - Flake8 (stile aggiuntivo)...$(NC)"
+	-uv run flake8 --format=default .
+	@echo -e "$(YELLOW)3/4 - Pylint (analisi statica)...$(NC)"
+	-uv run pylint src/home/ --output-format=colorized
+	@echo -e "$(YELLOW)4/4 - Import sorting check...$(NC)"
+	-uv run ruff check --select I .
+	@echo -e "$(GREEN)✅ Controlli completati!$(NC)"
 endif
