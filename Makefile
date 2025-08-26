@@ -6,6 +6,12 @@ YELLOW = \033[0;33m
 CYAN = \033[0;36m
 NC = \033[0m # No Color
 
+# Include .env file if it exists
+ifneq (,$(wildcard .env))
+    include .env
+    export
+endif
+
 # Comandi specifici per Windows PowerShell
 ifeq ($(OS),Windows_NT)
     # Rilevato Windows
@@ -16,9 +22,9 @@ ifeq ($(OS),Windows_NT)
     SET_ENV_PRESERVE = powershell -Command ""
 else
     # Rilevato macOS o Linux
-    SET_ENV_DEV = DJANGO_ENV=dev
-    SET_ENV_TEST = DJANGO_ENV=test
-    SET_ENV_PROD = DJANGO_ENV=prod
+    SET_ENV_DEV = env DJANGO_ENV=dev
+    SET_ENV_TEST = env DJANGO_ENV=test
+    SET_ENV_PROD = env DJANGO_ENV=prod
     SET_ENV_PRESERVE =
 endif
 

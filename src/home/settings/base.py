@@ -3,7 +3,7 @@
 import importlib.util
 from pathlib import Path
 
-from decouple import config
+from decouple import Config, RepositoryEnv
 from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -11,14 +11,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 REPO_DIR = BASE_DIR.parent
 TEMPLATES_DIR = BASE_DIR / "templates"
 
+# Configura decouple per leggere il .env dalla directory root del progetto
+env_file = REPO_DIR / ".env"
+config = Config(RepositoryEnv(str(env_file))) if env_file.exists() else Config()
+
 # Configurazione della directory dei log
 # Puoi specificare un percorso assoluto in .env o usare il valore predefinito
 LOGS_DIR_PATH = config("DJANGO_LOGS_DIR", default=str(REPO_DIR / "logs"))
 
 # Assicurati che LOGS_DIR sia un oggetto Path
 LOGS_DIR = Path(LOGS_DIR_PATH)
-# Creazione automatica della directory dei log
-LOGS_DIR.mkdir(exist_ok=True)
+# Creazione automatica della directory dei log solo se il path non è il placeholder di default
+if LOGS_DIR_PATH != "/path/to/your/logs":
+    LOGS_DIR.mkdir(exist_ok=True)
+else:
+    # Usa il default nella repo se il placeholder non è stato cambiato
+    LOGS_DIR = REPO_DIR / "logs"
+    LOGS_DIR.mkdir(exist_ok=True)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("DJANGO_SECRET_KEY", default=get_random_secret_key())
