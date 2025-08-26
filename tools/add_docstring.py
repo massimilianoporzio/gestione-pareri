@@ -137,10 +137,11 @@ def _create_docstring_content(node):
     if params and "self" in params:
         params.remove("self")
 
-    docstring_parts = [summary, ""]  # Summary + riga vuota
+    docstring_parts = [f'"""{summary}']  # Summary nella prima riga
 
     # Aggiungi sezione Args se ci sono parametri
     if params:
+        docstring_parts.append("")  # Riga vuota
         docstring_parts.append("Args:")
         for param in params:
             docstring_parts.append(f"    {param}: Descrizione di {param}")
@@ -148,6 +149,8 @@ def _create_docstring_content(node):
         docstring_parts.append("")  # Riga vuota prima di Returns
         docstring_parts.append("Returns:")
         docstring_parts.append("    Descrizione del valore restituito")
+
+    docstring_parts.append('"""')
 
     return docstring_parts
 
@@ -158,18 +161,14 @@ def _insert_docstring(lines, node, leading_spaces):
     docstring_parts = _create_docstring_content(node)
 
     # Costruisce la docstring formattata
-    docstring_lines = [f'{indent}"""']
-    docstring_lines.append(f"{indent}{docstring_parts[0]}")  # Summary
-
-    for part in docstring_parts[1:]:
+    docstring_lines = []
+    for part in docstring_parts:
         if part == "":
             docstring_lines.append(f"{indent}")
         elif part.startswith("    "):
             docstring_lines.append(f"{indent}{part}")
         else:
             docstring_lines.append(f"{indent}{part}")
-
-    docstring_lines.append(f'{indent}"""')
 
     # Inserisce tutte le righe della docstring
     for i, docstring_line in enumerate(docstring_lines):
