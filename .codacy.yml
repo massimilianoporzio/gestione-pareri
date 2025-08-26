@@ -1,0 +1,29 @@
+---
+engines:
+  pylint:
+    enabled: true
+    exclude_paths:
+      - "src/home/settings/*.py"
+  ruff:
+    enabled: true
+    exclude_paths:
+      - "src/home/settings/*.py"
+  flake8:
+    enabled: true
+    exclude_paths:
+      - "src/home/settings/*.py"
+
+exclude_paths:
+  - "**/__pycache__/"
+  - "**/migrations/"
+  - ".venv/"
+  - "venv/"
+  - "logs/"
+  - "staticfiles/"
+  - "mediafiles/"
+
+coverage:
+  exclude_paths:
+    - "src/home/settings/*.py"
+    - "**/migrations/"
+    - "**/tests/"
