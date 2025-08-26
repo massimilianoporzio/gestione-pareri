@@ -23,38 +23,27 @@ else
 endif
 
 help:
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host 'Deploy Django Template - Comandi disponibili:' -ForegroundColor Cyan"
+	@powershell -Command "Write-Host 'make run-server    ' -NoNewline -ForegroundColor Green; Write-Host 'Avvia il server di sviluppo Django'"
+	@powershell -Command "Write-Host 'make run-dev       ' -NoNewline -ForegroundColor Green; Write-Host 'Avvia il server di sviluppo in ambiente DEV'"
+	@powershell -Command "Write-Host 'make run-test      ' -NoNewline -ForegroundColor Green; Write-Host 'Avvia il server di sviluppo in ambiente TEST'"
+	@powershell -Command "Write-Host 'make run-prod      ' -NoNewline -ForegroundColor Green; Write-Host 'Avvia il server di sviluppo in ambiente PROD'"
+	@powershell -Command "Write-Host 'make test          ' -NoNewline -ForegroundColor Green; Write-Host 'Esegue i test del progetto'"
+	@powershell -Command "Write-Host 'make fix-all       ' -NoNewline -ForegroundColor Green; Write-Host '⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice'"
+	@powershell -Command "Write-Host 'make stats         ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)'"
+	@powershell -Command "Write-Host 'make help          ' -NoNewline -ForegroundColor Green; Write-Host 'Mostra questo messaggio di aiuto'"
+else
 	@echo -e "$(CYAN)Deploy Django Template - Comandi disponibili:$(NC)"
 	@echo -e "$(GREEN)make run-server$(NC)    Avvia il server di sviluppo Django"
 	@echo -e "$(GREEN)make run-dev$(NC)       Avvia il server di sviluppo in ambiente DEV"
 	@echo -e "$(GREEN)make run-test$(NC)      Avvia il server di sviluppo in ambiente TEST"
 	@echo -e "$(GREEN)make run-prod$(NC)      Avvia il server di sviluppo in ambiente PROD"
 	@echo -e "$(GREEN)make test$(NC)          Esegue i test del progetto"
-	@echo -e "$(GREEN)make test-dev$(NC)      Esegue i test in ambiente DEV"
-	@echo -e "$(GREEN)make test-test$(NC)     Esegue i test in ambiente TEST (predefinito)"
-	@echo -e "$(GREEN)make test-prod$(NC)     Esegue i test in ambiente PROD"
-	@echo -e "$(GREEN)make migrate$(NC)       Applica le migrazioni al database"
-	@echo -e "$(GREEN)make migrate-dev$(NC)   Applica le migrazioni in ambiente DEV"
-	@echo -e "$(GREEN)make migrate-test$(NC)  Applica le migrazioni in ambiente TEST"
-	@echo -e "$(GREEN)make migrate-prod$(NC)  Applica le migrazioni in ambiente PROD"
-	@echo -e "$(GREEN)make makemigrations$(NC) Crea nuove migrazioni"
-	@echo -e "$(GREEN)make shell$(NC)         Avvia una shell Python con contesto Django"
-	@echo -e "$(GREEN)make check-env$(NC)     Controlla l'ambiente corrente"
-	@echo -e "$(GREEN)make check-custom-logs LOGS_DIR=/path/to/logs ENV=dev|test|prod$(NC) Verifica la configurazione personalizzata dei log"
-	@echo -e "$(GREEN)make shell-dev$(NC)     Avvia una shell in ambiente DEV"
-	@echo -e "$(GREEN)make shell-test$(NC)    Avvia una shell in ambiente TEST"
-	@echo -e "$(GREEN)make shell-prod$(NC)    Avvia una shell in ambiente PROD"
-	@echo -e "$(GREEN)make check-env$(NC)     Controlla l'ambiente corrente"
-	@echo -e "$(GREEN)make check-env-dev$(NC) Controlla l'ambiente DEV"
-	@echo -e "$(GREEN)make check-env-test$(NC) Controlla l'ambiente TEST"
-	@echo -e "$(GREEN)make check-env-prod$(NC) Controlla l'ambiente PROD"
-	@echo -e "$(GREEN)make check-custom-logs LOGS_DIR=/path/to/logs ENV=dev$(NC) Verifica directory log personalizzata"
-	@echo -e "$(GREEN)make lint$(NC)          Esegue i controlli di qualità del codice"
-	@echo -e "$(GREEN)make format$(NC)        Formatta il codice Python e i template"
 	@echo -e "$(GREEN)make fix-all$(NC)       ⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice"
-	@echo -e "$(GREEN)make format-markdown$(NC) Formatta tutti i file Markdown del progetto"
-	@echo -e "$(GREEN)make sonarqube$(NC)     Esegue l'analisi SonarQube locale"
-	@echo -e "$(GREEN)make add-docstrings$(NC) Aggiunge docstring a tutti i file Python del progetto"
+	@echo -e "$(GREEN)make stats$(NC)         🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)"
 	@echo -e "$(GREEN)make help$(NC)          Mostra questo messaggio di aiuto"
+endif
 
 run-server:
 	@echo -e "$(CYAN)Avvio del server di sviluppo Django...$(NC)"
@@ -197,29 +186,54 @@ endif
 
 # Fix all code quality issues across the project
 fix-all:
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host 'Correzione completa di tutti i problemi di qualita del codice...' -ForegroundColor Cyan"
+	@powershell -Command "Write-Host '1/5 - Formattazione con Ruff...' -ForegroundColor Yellow"
+	uv run ruff format .
+	@powershell -Command "Write-Host '2/5 - Correzione automatica con Ruff...' -ForegroundColor Yellow"
+	uv run ruff check . --fix --unsafe-fixes
+	@powershell -Command "Write-Host '3/5 - Aggiunta docstring...' -ForegroundColor Yellow"
+	uv run python tools/add_docstring_batch.py .
+	@powershell -Command "Write-Host '4/5 - Correzioni aggressive con autopep8...' -ForegroundColor Yellow"
+	uv run autopep8 --in-place --aggressive --aggressive --recursive .
+	@powershell -Command "Write-Host '5/5 - Formattazione Markdown...' -ForegroundColor Yellow"
+	$(MAKE) format-markdown
+	@powershell -Command "Write-Host 'Tutti i problemi di qualita del codice sono stati corretti!' -ForegroundColor Green"
+else
 	@echo -e "$(CYAN)Correzione completa di tutti i problemi di qualità del codice...$(NC)"
 	@echo -e "$(YELLOW)1/5 - Formattazione con Ruff...$(NC)"
 	uv run ruff format .
 	@echo -e "$(YELLOW)2/5 - Correzione automatica con Ruff...$(NC)"
 	uv run ruff check . --fix --unsafe-fixes
 	@echo -e "$(YELLOW)3/5 - Aggiunta docstring...$(NC)"
-ifeq ($(OS),Windows_NT)
 	uv run python tools/add_docstring_batch.py .
-else
-	uv run python tools/add_docstring_batch.py .
-endif
 	@echo -e "$(YELLOW)4/5 - Correzioni aggressive con autopep8...$(NC)"
 	uv run autopep8 --in-place --aggressive --aggressive --recursive .
 	@echo -e "$(YELLOW)5/5 - Formattazione Markdown...$(NC)"
 	$(MAKE) format-markdown
 	@echo -e "$(GREEN)✅ Tutti i problemi di qualità del codice sono stati corretti!$(NC)"
+endif
 
 # Format all markdown files
 format-markdown:
-	@echo -e "$(CYAN)Formattazione file Markdown...$(NC)"
 ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host 'Formattazione file Markdown...' -ForegroundColor Cyan"
 	@powershell -Command "Get-ChildItem -Path . -Include '*.md' -Recurse | ForEach-Object { Write-Host 'Formatting' $$_.FullName; $$content = Get-Content $$_.FullName -Raw; if ($$content) { $$formatted = $$content -replace '(?m)^[ \t]+$$', '' -replace '(?m)\r?\n{3,}', \"`n`n\" -replace '(?m)[ \t]+$$', ''; Set-Content $$_.FullName -Value $$formatted -NoNewline } }"
+	@powershell -Command "Write-Host 'File Markdown formattati con successo!' -ForegroundColor Green"
 else
+	@echo -e "$(CYAN)Formattazione file Markdown...$(NC)"
 	@find . -name "*.md" -type f -exec sh -c 'echo "Formatting $$1"; sed -i "/^[[:space:]]*$$/d; /^$$/N; /^\\n$$/d" "$$1"' _ {} \;
-endif
 	@echo -e "$(GREEN)File Markdown formattati con successo!$(NC)"
+endif
+
+# Genera statistiche complete del progetto (alternativa a Codacy)
+stats:  ## Genera statistiche complete del progetto
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host 'Generazione statistiche progetto...' -ForegroundColor Cyan"
+	uv run python tools/project_stats.py
+	@powershell -Command "Write-Host 'Dashboard completa disponibile in quality_dashboard.md' -ForegroundColor Green"
+else
+	@echo -e "$(CYAN)Generazione statistiche progetto...$(NC)"
+	uv run python tools/project_stats.py
+	@echo -e "$(GREEN)📊 Dashboard completa disponibile in quality_dashboard.md$(NC)"
+endif
