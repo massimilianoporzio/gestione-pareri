@@ -79,5 +79,6 @@
     ".github/workflows/codacy-analysis.yml"
   ],
   "yaml.validate": true,
-  "yaml.format.enable": true
+  "yaml.format.enable": true,
+  "postman.settings.dotenv-detection-notification-visibility": false
 }

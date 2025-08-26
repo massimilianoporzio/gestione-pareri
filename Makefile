@@ -194,28 +194,32 @@ endif
 fix-all:
 ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'Correzione completa di tutti i problemi di qualita del codice...' -ForegroundColor Cyan"
-	@powershell -Command "Write-Host '1/5 - Formattazione con Ruff...' -ForegroundColor Yellow"
-	uv run ruff format .
-	@powershell -Command "Write-Host '2/5 - Correzione automatica con Ruff...' -ForegroundColor Yellow"
-	uv run ruff check . --fix --unsafe-fixes
-	@powershell -Command "Write-Host '3/5 - Aggiunta docstring...' -ForegroundColor Yellow"
-	uv run python tools/add_docstring_batch.py .
-	@powershell -Command "Write-Host '4/5 - Correzioni aggressive con autopep8...' -ForegroundColor Yellow"
-	uv run autopep8 --in-place --aggressive --aggressive --recursive .
-	@powershell -Command "Write-Host '5/5 - Formattazione Markdown...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '1/6 - Aggiunta docstring...' -ForegroundColor Yellow"
+	-uv run python tools/add_docstring_batch.py .
+	@powershell -Command "Write-Host '2/6 - Formattazione con Ruff...' -ForegroundColor Yellow"
+	-uv run ruff format .
+	@powershell -Command "Write-Host '3/6 - Correzione automatica con Ruff...' -ForegroundColor Yellow"
+	-uv run ruff check . --fix --unsafe-fixes
+	@powershell -Command "Write-Host '4/6 - Correzioni aggressive con autopep8...' -ForegroundColor Yellow"
+	-uv run autopep8 --in-place --aggressive --aggressive --recursive .
+	@powershell -Command "Write-Host '5/6 - Formattazione finale con Ruff...' -ForegroundColor Yellow"
+	-uv run ruff format .
+	@powershell -Command "Write-Host '6/6 - Formattazione Markdown...' -ForegroundColor Yellow"
 	$(MAKE) format-markdown
 	@powershell -Command "Write-Host 'Tutti i problemi di qualita del codice sono stati corretti!' -ForegroundColor Green"
 else
 	@echo -e "$(CYAN)Correzione completa di tutti i problemi di qualità del codice...$(NC)"
-	@echo -e "$(YELLOW)1/5 - Formattazione con Ruff...$(NC)"
-	uv run ruff format .
-	@echo -e "$(YELLOW)2/5 - Correzione automatica con Ruff...$(NC)"
-	uv run ruff check . --fix --unsafe-fixes
-	@echo -e "$(YELLOW)3/5 - Aggiunta docstring...$(NC)"
-	uv run python tools/add_docstring_batch.py .
-	@echo -e "$(YELLOW)4/5 - Correzioni aggressive con autopep8...$(NC)"
-	uv run autopep8 --in-place --aggressive --aggressive --recursive .
-	@echo -e "$(YELLOW)5/5 - Formattazione Markdown...$(NC)"
+	@echo -e "$(YELLOW)1/6 - Aggiunta docstring...$(NC)"
+	-uv run python tools/add_docstring_batch.py .
+	@echo -e "$(YELLOW)2/6 - Formattazione con Ruff...$(NC)"
+	-uv run ruff format .
+	@echo -e "$(YELLOW)3/6 - Correzione automatica con Ruff...$(NC)"
+	-uv run ruff check . --fix --unsafe-fixes
+	@echo -e "$(YELLOW)4/6 - Correzioni aggressive con autopep8...$(NC)"
+	-uv run autopep8 --in-place --aggressive --aggressive --recursive .
+	@echo -e "$(YELLOW)5/6 - Formattazione finale con Ruff...$(NC)"
+	-uv run ruff format .
+	@echo -e "$(YELLOW)6/6 - Formattazione Markdown...$(NC)"
 	$(MAKE) format-markdown
 	@echo -e "$(GREEN)✅ Tutti i problemi di qualità del codice sono stati corretti!$(NC)"
 endif

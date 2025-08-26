@@ -4,7 +4,7 @@ import os
 
 from decouple import config
 
-from home.settings.base import LOGGING, REPO_DIR
+from home.settings.base import *  # noqa: F403, F401
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
