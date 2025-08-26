@@ -13,7 +13,11 @@ TEMPLATES_DIR = BASE_DIR / "templates"
 
 # Configura decouple per leggere il .env dalla directory root del progetto
 env_file = REPO_DIR / ".env"
-config = Config(RepositoryEnv(str(env_file))) if env_file.exists() else Config()
+if env_file.exists():
+    config = Config(RepositoryEnv(str(env_file)))
+else:
+    # Se il file .env non esiste, usa la configurazione standard (variabili d'ambiente)
+    from decouple import config
 
 # Configurazione della directory dei log
 # Puoi specificare un percorso assoluto in .env o usare il valore predefinito
