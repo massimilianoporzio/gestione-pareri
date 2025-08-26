@@ -90,7 +90,7 @@ def send_test_messages(django_logger):
         ("warning", "Questo è un messaggio di WARNING"),
         ("error", "Questo è un messaggio di ERROR"),
     ]:
-        getattr(custom_logger, level)(f"Custom logger: {message}")
+        getattr(custom_logger, level)("Custom logger: %s", message)
 
     # Messaggi al root logger
     for level, message in [
