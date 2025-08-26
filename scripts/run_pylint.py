@@ -5,39 +5,45 @@ Questo script viene utilizzato da pre-commit.
 """
 
 import os
-import platform
+import subprocess
 import sys
 
 if __name__ == "__main__":
     # Imposta PYTHONPATH
     os.environ["PYTHONPATH"] = "src"
 
-    # Comando pylint base
-    cmd_parts = [
-        "uv run pylint",
-        # Usa il file di configurazione nella directory .config
-        "--rcfile=.config/pylintrc",
+    # Comando pylint base come lista di argomenti separati
+    cmd_args = [
+        "uv",
+        "run",
+        "pylint",
+        # Usa il file di configurazione nella directory root
+        "--rcfile=.pylintrc",
         # Specifica quali file analizzare (tutte le cartelle src)
         "src",
         # Opzioni per il report
-        "-rn -sn",
+        "-rn",
+        "-sn",
         # Plugins Django
         "--load-plugins=pylint_django",
         # Impostazioni Django
         "--django-settings-module=home.settings",
     ]
 
-    # Comando completo
-    CMD = " ".join(cmd_parts)
+    print(f"Esecuzione di: {' '.join(cmd_args)}")
 
-    # Su Windows, usa 'set' per impostare PYTHONPATH
-    if platform.system() == "Windows":
-        CMD = f"set PYTHONPATH=src && {CMD}"
-
-    print(f"Esecuzione di: {CMD}")
-
-    # Esegui pylint e restituisci il suo codice di uscita
-    exit_code = os.system(CMD)
+    # Esegui pylint in modo sicuro
+    try:
+        result = subprocess.run(
+            cmd_args,
+            # Non cambiare directory, esegui dalla root del progetto
+            capture_output=False,  # Mostra output direttamente
+            check=False,  # Non sollevare eccezione per exit code non-zero
+        )
+        exit_code = result.returncode
+    except (subprocess.SubprocessError, OSError) as e:
+        print(f"Errore nell'esecuzione di pylint: {e}")
+        sys.exit(1)
 
     # Su Windows, os.system restituisce un valore che include il codice di uscita nei bit più significativi
     # Normalizziamo il codice di uscita su 0 per successo, 1 per errore

@@ -16,7 +16,7 @@
 [![Pre-commit](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml)
 [![Django CI](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml)
 [![CodeQL](https://github.com/massimilianoporzio/deploy-django/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/codeql-analysis.yml)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/679bcf1491f346a89508bc8c2aff64da)](https://app.codacy.com/gh/massimilianoporzio/deploy-django/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Quality Pipeline](https://img.shields.io/badge/Quality%20Pipeline-Local%20Dashboard-success)](tools/quality_dashboard.md)
 [![pre-commit-hooks](https://img.shields.io/badge/pre--commit--hooks-enabled-brightgreen)](https://github.com/pre-commit/pre-commit-hooks)
 [![VS Code](https://img.shields.io/badge/VS%20Code-Ready-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
 [![Run on Save](https://img.shields.io/badge/Run%20on%20Save-enabled-success)](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
@@ -168,6 +168,7 @@ Questo template include i seguenti strumenti configurati e pronti all'uso:
 - **markdownlint**: Linter specifico per file Markdown
 - **pre-commit**: Esegue automaticamente tutti i controlli di qualità prima di ogni commit
 - **GitHub Actions**: Pipeline CI/CD preconfigurate per verificare automaticamente la qualità del codice
+- **Pipeline locale**: Dashboard di qualità completa (`make stats`) con analisi dettagliata alternativa a servizi cloud
 
 > **Nota**: I file del modulo `settings` sono esclusi dai controlli di linting per permettere la massima flessibilità. Per maggiori dettagli, consulta [docs/linting_notes.md](docs/linting_notes.md).
 
@@ -290,6 +291,12 @@ Questo template include un sistema di automazione basato su Make per semplificar
 ```bash
 # Avvia il server di sviluppo Django
 make run-server
+
+# Genera dashboard di qualità del codice completa (alternativa locale a Codacy)
+make stats
+
+# Corregge automaticamente tutti i problemi di qualità del codice
+make fix-all
 ```
 
 Per una lista completa dei comandi disponibili e istruzioni su come installare Make, consulta la [documentazione su Make](docs/make.md).

@@ -57,6 +57,7 @@ select = [
     "UP",  # pyupgrade
     "D",   # pydocstyle
     "N",   # naming
+    "S",   # flake8-bandit (security)
 ]
 ignore = [
     "D203",  # one-blank-line-before-class (incompatibile con D211)
@@ -77,6 +78,10 @@ convention = "google"  # Usa il formato Google per docstring
 "src/home/settings/*.py" = ["F401", "F403"]
 "tools/add_docstring_batch.py" = ["E402"]
 "src/test_logging.py" = ["E402"]
+# Scripts con subprocess controllato - ignorare warning sicurezza falsi positivi
+"scripts/run_djlint.py" = ["S603"]  # subprocess con argomenti controllati
+"scripts/run_pylint.py" = ["S603"]  # subprocess con argomenti controllati
+"tools/project_stats.py" = ["S603"]  # subprocess con argomenti controllati
 
 [tool.pylint.format]
 max-line-length = 120
