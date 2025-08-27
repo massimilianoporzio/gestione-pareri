@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+set -x
 
 # Configurazione predefinita
 DJANGO_ENV=${DJANGO_ENV:-prod}
@@ -59,7 +60,7 @@ else
 		uv run uvicorn home.asgi:application \
 			--host "${HOST}" \
 			--port "${PORT}" \
-			--log-level "${LOG_LEVEL}" \
+			--log-level debug \
 			--access-log \
 			--app-dir src \
 			--timeout-keep-alive "${KEEP_ALIVE}"
@@ -74,7 +75,7 @@ else
 			--keep-alive "${KEEP_ALIVE}" \
 			--max-requests "${MAX_REQUESTS}" \
 			--max-requests-jitter "${MAX_REQUESTS_JITTER}" \
-			--log-level "${LOG_LEVEL}" \
+			--log-level debug \
 			--access-logfile - \
 			--error-logfile - \
 			--chdir src
