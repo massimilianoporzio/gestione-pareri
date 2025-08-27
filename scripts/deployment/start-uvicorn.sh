@@ -1,8 +1,4 @@
 #!/bin/bash
-"""
-Script per avviare Uvicorn (ASGI server) su sistemi Unix-like.
-Supporta configurazione tramite variabili d'ambiente.
-"""
 
 set -e
 
