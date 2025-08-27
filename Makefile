@@ -1,4 +1,4 @@
-.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all test-precommit format-markdown install-prod gunicorn waitress deploy-dev deploy-prod deploy-staging deploy collectstatic fix-markdown stop-servers kill-port
+.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all test-precommit format-markdown install-prod gunicorn waitress uvicorn deploy-dev deploy-prod deploy-staging deploy collectstatic fix-markdown stop-servers kill-port
 
 .SILENT: run-server run-dev run-test run-prod deploy deploy-dev deploy-prod deploy-staging gunicorn waitress install-prod stop-servers kill-port
 
@@ -61,6 +61,7 @@ ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'make deploy        ' -NoNewline -ForegroundColor Green; Write-Host '🎯 Deploy automatico (rileva OS e usa il server ottimale)'"
 	@powershell -Command "Write-Host 'make waitress      ' -NoNewline -ForegroundColor Green; Write-Host '🪟 Avvia con Waitress (Windows/Cross-platform)'"
 	@powershell -Command "Write-Host 'make gunicorn      ' -NoNewline -ForegroundColor Green; Write-Host '🐧 Avvia con Gunicorn (Unix/Linux/macOS)'"
+	@powershell -Command "Write-Host 'make uvicorn       ' -NoNewline -ForegroundColor Green; Write-Host '⚡ Avvia con Uvicorn ASGI (Tutti gli OS) - RACCOMANDATO'"
 	@powershell -Command "Write-Host 'make collectstatic ' -NoNewline -ForegroundColor Green; Write-Host '📦 Raccoglie i file statici'"
 	@powershell -Command "Write-Host 'make stop-servers  ' -NoNewline -ForegroundColor Yellow; Write-Host '🛑 Ferma tutti i server Django'"
 	@powershell -Command "Write-Host 'make kill-port     ' -NoNewline -ForegroundColor Red; Write-Host '🔪 Termina i processi sulla porta 8000'"
@@ -85,6 +86,7 @@ else
 	@printf "$(GREEN)make deploy$(NC)        🎯 Deploy automatico (rileva OS e usa il server ottimale)\n"
 	@printf "$(GREEN)make waitress$(NC)      🪟 Avvia con Waitress (Windows/Cross-platform)\n"
 	@printf "$(GREEN)make gunicorn$(NC)      🐧 Avvia con Gunicorn (Unix/Linux/macOS)\n"
+	@printf "$(GREEN)make uvicorn$(NC)       ⚡ Avvia con Uvicorn ASGI (Tutti gli OS) - RACCOMANDATO\n"
 	@printf "$(GREEN)make collectstatic$(NC) 📦 Raccoglie i file statici\n"
 	@printf "$(YELLOW)make stop-servers$(NC)  🛑 Ferma tutti i server Django\n"
 	@printf "$(RED)make kill-port$(NC)     🔪 Termina i processi sulla porta 8000\n"
@@ -379,6 +381,16 @@ else
 	@cd src && DJANGO_ENV=prod uv run waitress-serve --host=0.0.0.0 --port=8000 home.wsgi:application
 endif
 
+uvicorn: install-prod ## Start Django with Uvicorn ASGI (All OS) - RECOMMENDED
+ifeq ($(OS), Windows_NT)
+	@powershell -Command "Write-Host '⚡ Starting Django with Uvicorn ASGI (Windows)...' -ForegroundColor Green"
+	@powershell -ExecutionPolicy Bypass -File scripts/deployment/start-uvicorn.ps1
+else
+	@echo "⚡ Starting Django with Uvicorn ASGI (Unix/Linux/macOS)..."
+	@chmod +x scripts/deployment/start-uvicorn.sh
+	@./scripts/deployment/start-uvicorn.sh
+endif
+
 deploy-dev: ## Deploy in development mode with auto-reload
 ifeq ($(OS), Windows_NT)
 	@powershell -Command "Write-Host '🔧 Starting development server...' -ForegroundColor Yellow"
@@ -388,31 +400,31 @@ else
 	@DJANGO_ENV=dev cd src && uv run python manage.py runserver
 endif
 
-deploy-prod: install-prod ## Deploy in production with optimal server for OS
+deploy-prod: install-prod ## Deploy in production with Uvicorn ASGI (recommended)
 ifeq ($(OS), Windows_NT)
-	@powershell -Command "Write-Host '🚀 Production deployment (Windows - Waitress)...' -ForegroundColor Green"
-	@$(MAKE) waitress
+	@powershell -Command "Write-Host '🚀 Production deployment (Windows - Uvicorn ASGI)...' -ForegroundColor Green"
+	@$(MAKE) uvicorn
 else
-	@echo "🚀 Production deployment (Unix/Linux/macOS - Gunicorn)..."
-	@$(MAKE) gunicorn
+	@echo "🚀 Production deployment (Unix/Linux/macOS - Uvicorn ASGI)..."
+	@$(MAKE) uvicorn
 endif
 
-deploy-staging: ## Deploy in staging/test mode
+deploy-staging: ## Deploy in staging/test mode with Uvicorn
 ifeq ($(OS), Windows_NT)
-	@powershell -Command "Write-Host '🧪 Staging deployment (Windows)...' -ForegroundColor Yellow"
-	@set DJANGO_ENV=test&& powershell -ExecutionPolicy Bypass -File scripts/deployment/start-waitress.ps1 -DjangoEnv test
+	@powershell -Command "Write-Host '🧪 Staging deployment (Windows - Uvicorn)...' -ForegroundColor Yellow"
+	@set DJANGO_ENV=test&& powershell -ExecutionPolicy Bypass -File scripts/deployment/start-uvicorn.ps1 -DjangoEnv test
 else
-	@echo "🧪 Staging deployment (Unix/Linux/macOS)..."
-	@DJANGO_ENV=test ./scripts/deployment/start-gunicorn.sh
+	@echo "🧪 Staging deployment (Unix/Linux/macOS - Uvicorn)..."
+	@DJANGO_ENV=test ./scripts/deployment/start-uvicorn.sh
 endif
 
-deploy: install-prod ## 🎯 Smart deploy - automatically detects OS and uses optimal server
+deploy: install-prod ## 🎯 Smart deploy - uses Uvicorn ASGI on all platforms (recommended)
 ifeq ($(OS), Windows_NT)
-	@powershell -Command "Write-Host '🎯 Smart deployment - Windows detected, using Waitress...' -ForegroundColor Cyan"
-	@$(MAKE) waitress
+	@powershell -Command "Write-Host '🎯 Smart deployment - Windows detected, using Uvicorn ASGI...' -ForegroundColor Cyan"
+	@$(MAKE) uvicorn
 else
-	@echo "🎯 Smart deployment - Unix/Linux/macOS detected, using Gunicorn..."
-	@$(MAKE) gunicorn
+	@echo "🎯 Smart deployment - Unix/Linux/macOS detected, using Uvicorn ASGI..."
+	@$(MAKE) uvicorn
 endif
 
 # Static files management
@@ -440,10 +452,12 @@ stop-servers: ## 🛑 Stop all Django servers (run from different terminal!)
 	@printf "$(CYAN)ℹ️  Note: Run this from a DIFFERENT terminal than the one running the server$(NC)\n"
 ifeq ($(OS), Windows_NT)
 	@powershell -Command "Write-Host '🛑 Stopping all Django servers...' -ForegroundColor Yellow"
-	@powershell -Command "Get-Process | Where-Object {$$_.ProcessName -match 'python|gunicorn|waitress'} | Where-Object {$$_.CommandLine -match 'django|manage.py|wsgi'} | Stop-Process -Force" 2>nul || echo "No Django servers found"
+	@powershell -Command "Get-Process | Where-Object {$$_.ProcessName -match 'python|gunicorn|waitress|uvicorn'} | Where-Object {$$_.CommandLine -match 'django|manage.py|wsgi|asgi'} | Stop-Process -Force" 2>nul || echo "No Django servers found"
 else
 	@printf "$(YELLOW)🛑 Stopping all Django servers...$(NC)\n"
 	@pkill -f "gunicorn.*wsgi" 2>/dev/null || true
+	@pkill -f "gunicorn.*asgi" 2>/dev/null || true
+	@pkill -f "uvicorn.*asgi" 2>/dev/null || true
 	@pkill -f "waitress.*wsgi" 2>/dev/null || true
 	@pkill -f "manage.py runserver" 2>/dev/null || true
 	@printf "$(GREEN)✅ All Django servers stopped$(NC)\n"
