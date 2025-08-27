@@ -25,6 +25,7 @@
 
 <!-- Deployment & Static Files -->
 
+[![Uvicorn](https://img.shields.io/badge/Uvicorn-ASGI%20%E2%9A%A1-blueviolet?logo=fastapi&logoColor=white)](https://www.uvicorn.org/)
 [![Gunicorn](https://img.shields.io/badge/Gunicorn-deployment-green?logo=gunicorn&logoColor=white)](https://gunicorn.org/)
 [![Waitress](https://img.shields.io/badge/Waitress-cross--platform-yellow)](https://github.com/Pylons/waitress)
 [![WhiteNoise](https://img.shields.io/badge/WhiteNoise-static%20files-blue)](http://whitenoise.evans.io/)
@@ -465,9 +466,10 @@ make deploy-prod      # Produzione con server ottimale per OS
 make deploy-staging   # Staging/test environment
 make deploy-dev       # Sviluppo con hot-reload
 
-# Server specifici
-make gunicorn        # Unix/Linux/macOS (alta performance)
-make waitress        # Windows/Cross-platform
+# Server specifici (per compatibility legacy)
+make uvicorn         # ⚡ ASGI Server (Cross-platform) - RACCOMANDATO per tutti gli OS! ⚡
+make gunicorn        # Unix/Linux/macOS (legacy WSGI)
+make waitress        # Windows/Cross-platform (legacy WSGI)
 ```
 
 ### 📦 Gestione File Statici
@@ -569,6 +571,7 @@ deploy-django/
 
 Questo progetto include documentazione dettagliata per aiutarti a comprendere le funzionalità e le configurazioni:
 
+- [Uvicorn ASGI Integration](docs/uvicorn-integration.md): 🎯 **Nuovo!** Server ASGI cross-platform raccomandato
 - [Variabili d'ambiente](docs/environment-variables.md): Configurazione delle variabili d'ambiente
 - [Configurazione dei logs](docs/logs_configuration.md): Come funziona il sistema di logging
 - [Make e automazione](docs/make.md): Utilizzo di Make per automatizzare i task
