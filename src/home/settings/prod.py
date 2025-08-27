@@ -44,17 +44,13 @@ def parse_list(val, separator=","):
 ALLOWED_HOSTS = parse_list(config("DJANGO_ALLOWED_HOSTS"))
 
 # CSRF trusted origins configuration (deve essere sempre impostato via variabile d'ambiente)
-origins = parse_list(config("DJANGO_CSRF_TRUSTED_ORIGINS"))
-CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv(), default=None)
+CSRF_TRUSTED_ORIGINS = config("DJANGO_CSRF_TRUSTED_ORIGINS", cast=Csv(), default=None)
 if CSRF_TRUSTED_ORIGINS is None:
     CSRF_TRUSTED_ORIGINS = []
     for host in ALLOWED_HOSTS:
-        # Skip empty, localhost, or wildcard hosts
         if not host or host in ["localhost", "127.0.0.1"] or host.startswith("."):
             continue
-        # Remove port if present
         host_no_port = host.split(":")[0]
-        # Add https:// prefix if not present
         if host_no_port.startswith("http://") or host_no_port.startswith("https://"):
             origin = host_no_port
         else:

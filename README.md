@@ -256,7 +256,7 @@ Questo template include i seguenti strumenti configurati e pronti all'uso:
 - **ruff**: Linter Python ultra-veloce (sostituto moderno di flake8)
 - **pylint**: Linter Python avanzato per analisi di codice approfondita
 - **djlint**: Formattatore e linter specifico per template HTML Django
-- **prettier**: Formattatore per file Markdown e altri linguaggi
+- **prettier**: Formattore per file Markdown e altri linguaggi
 - **markdownlint**: Linter specifico per file Markdown
 - **pre-commit**: Esegue automaticamente tutti i controlli di qualità prima di ogni commit
 - **GitHub Actions**: Pipeline CI/CD preconfigurate per verificare automaticamente la qualità del codice
@@ -790,6 +790,8 @@ git push origin feature/user-authentication
 > - `DJANGO_CSRF_TRUSTED_ORIGINS=https://tuo-dominio.onrender.com,https://altridomini.com`
 >
 > Ricorda: separa i domini con la virgola, e per CSRF usa sempre il prefisso `https://`.
+> **Nota automatica**: Se la variabile `DJANGO_CSRF_TRUSTED_ORIGINS` **non è impostata**, il sistema la genera automaticamente a partire dai domini in `DJANGO_ALLOWED_HOSTS` (aggiungendo il prefisso `https://`). Questo semplifica il deploy su Render e altri PaaS: basta configurare correttamente `DJANGO_ALLOWED_HOSTS` e la protezione CSRF sarà attiva anche per i tuoi domini custom.
+> Puoi comunque sovrascrivere manualmente `DJANGO_CSRF_TRUSTED_ORIGINS` se hai esigenze particolari (es. domini con http, porte custom, ecc).
 
 ### 🤖 AI Code Review: Il Tuo Secondo Parere Automatico
 
