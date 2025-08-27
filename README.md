@@ -776,6 +776,21 @@ git push origin feature/user-authentication
    - **Heroku**: Config Vars
    - **Kubernetes**: Secrets e ConfigMaps
 
+### ⚠️ Configurazione obbligatoria per deploy in produzione (es. Render)
+
+> **Importante:**
+> Le variabili `DJANGO_ALLOWED_HOSTS` e `DJANGO_CSRF_TRUSTED_ORIGINS` **devono essere sempre impostate** come variabili d'ambiente (o nel file `.env`).
+>
+> - **Non esiste più un default**: se non le imposti, Django rifiuterà tutte le richieste per sicurezza.
+> - Su Render (o altri PaaS) aggiungi queste variabili nella dashboard del servizio.
+>
+> **Esempio per Render:**
+>
+> - `DJANGO_ALLOWED_HOSTS=tuo-dominio.onrender.com,altridomini.com`
+> - `DJANGO_CSRF_TRUSTED_ORIGINS=https://tuo-dominio.onrender.com,https://altridomini.com`
+>
+> Ricorda: separa i domini con la virgola, e per CSRF usa sempre il prefisso `https://`.
+
 ### 🤖 AI Code Review: Il Tuo Secondo Parere Automatico
 
 Per avere un confronto objective durante le review, puoi integrare **agenti AI** che analizzano automaticamente ogni Pull Request. Questo ti dà una prospettiva diversa dalla tua e ti aiuta a individuare problemi che potresti non vedere.
