@@ -2,7 +2,7 @@
 
 import os
 
-from decouple import config
+from decouple import Csv, config
 
 from home.settings.base import *  # noqa: F403, F401
 
@@ -45,9 +45,21 @@ ALLOWED_HOSTS = parse_list(config("DJANGO_ALLOWED_HOSTS"))
 
 # CSRF trusted origins configuration (deve essere sempre impostato via variabile d'ambiente)
 origins = parse_list(config("DJANGO_CSRF_TRUSTED_ORIGINS"))
-CSRF_TRUSTED_ORIGINS = [
-    f"https://{origin}" if not origin.startswith(("http://", "https://")) else origin for origin in origins
-]
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv(), default=None)
+if CSRF_TRUSTED_ORIGINS is None:
+    CSRF_TRUSTED_ORIGINS = []
+    for host in ALLOWED_HOSTS:
+        # Skip empty, localhost, or wildcard hosts
+        if not host or host in ["localhost", "127.0.0.1"] or host.startswith("."):
+            continue
+        # Remove port if present
+        host_no_port = host.split(":")[0]
+        # Add https:// prefix if not present
+        if host_no_port.startswith("http://") or host_no_port.startswith("https://"):
+            origin = host_no_port
+        else:
+            origin = f"https://{host_no_port}"
+        CSRF_TRUSTED_ORIGINS.append(origin)
 
 # Database di produzione
 # Configura il database di produzione, ad esempio PostgreSQL
