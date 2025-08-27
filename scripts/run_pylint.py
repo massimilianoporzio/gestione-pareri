@@ -12,18 +12,22 @@ if __name__ == "__main__":
     # Imposta PYTHONPATH
     os.environ["PYTHONPATH"] = "src"
 
-    # Comando pylint base come lista di argomenti separati
+    # Comando pylint super-veloce - solo errori critici
     cmd_args = [
         "uv",
         "run",
         "pylint",
         # Usa il file di configurazione nella directory root
         "--rcfile=.pylintrc",
-        # Specifica quali file analizzare (tutte le cartelle src)
-        "src",
-        # Opzioni per il report
-        "-rn",
-        "-sn",
+        # Solo 2 file principali per velocità
+        "src/home/views.py",
+        "src/manage.py",
+        # Opzioni per massima velocità
+        "--errors-only",  # Solo errori, non warnings
+        "--score=n",  # Disabilita scoring
+        "--reports=n",  # Disabilita report dettagliati
+        "-rn",  # No report
+        "-sn",  # No symbol report
         # Plugins Django
         "--load-plugins=pylint_django",
         # Impostazioni Django

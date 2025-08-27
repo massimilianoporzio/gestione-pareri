@@ -100,7 +100,7 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="noreply@example.com")
 STATIC_URL = "/static/"
 STATIC_ROOT = REPO_DIR / "staticfiles"  # noqa: F405
 MEDIA_URL = "/media/"
-MEDIA_ROOT = REPO_DIR / "mediafiles"  # noqa: F405
+MEDIA_ROOT = REPO_DIR / "media"  # noqa: F405
 
 # Configurazione del logging per produzione
 LOGGING["handlers"]["file"]["level"] = "INFO"  # noqa: F405

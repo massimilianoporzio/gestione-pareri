@@ -4,6 +4,8 @@ This directory contains the source static files for your Django project.
 
 ## Structure
 
+When you add static files, organize them like this:
+
 - `css/` - Stylesheets
 - `js/` - JavaScript files
 - `images/` - Images and icons
@@ -40,3 +42,27 @@ WhiteNoise automatically:
 - Adds cache headers
 - Serves files with optimal performance
 - Handles file versioning for cache busting
+
+## Example Usage in Templates
+
+```html
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <script src="{% static 'js/main.js' %}"></script>
+  </head>
+  <body>
+    <!-- Your content -->
+  </body>
+</html>
+```
+
+## Testing WhiteNoise
+
+To test that WhiteNoise is working:
+
+1. Run `make collectstatic` to collect static files
+2. Start production server: `make gunicorn` or `make waitress`
+3. Check that static files are served with compression and cache headers

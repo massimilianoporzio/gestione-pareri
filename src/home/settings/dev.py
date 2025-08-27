@@ -32,4 +32,4 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 STATIC_URL = "/static/"
 STATIC_ROOT = REPO_DIR / "staticfiles"  # noqa: F405
 MEDIA_URL = "/media/"
-MEDIA_ROOT = REPO_DIR / "mediafiles"  # noqa: F405
+MEDIA_ROOT = REPO_DIR / "media"  # noqa: F405

@@ -1,3 +1,17 @@
+# Esclusioni globali per tutti i hook
+exclude: |
+  (?x)(
+    # Node.js dependencies
+    ^node_modules/.*|
+    # Build outputs
+    ^dist/.*|
+    ^build/.*|
+    ^out/.*|
+    # Temporary files
+    .*\.tmp$|
+    .*\.temp$
+  )
+
 repos:
   # Controlli di base
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -81,3 +95,4 @@ repos:
       - id: markdownlint-cli2
         name: markdownlint
         types: [markdown]
+        args: ["--config", ".config/.markdownlint-cli2.jsonc"]

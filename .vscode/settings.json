@@ -80,5 +80,28 @@
   ],
   "yaml.validate": true,
   "yaml.format.enable": true,
-  "postman.settings.dotenv-detection-notification-visibility": false
+  "postman.settings.dotenv-detection-notification-visibility": false,
+
+  // Node.js and frontend files exclusions
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/out": true,
+    "**/.npm": true,
+    "**/.yarn": true,
+    "**/.pnpm": true
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.npm": true,
+    "**/.yarn": true,
+    "**/.pnpm": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/out/**": true
+  }
 }

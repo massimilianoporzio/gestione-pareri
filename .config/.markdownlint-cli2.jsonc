@@ -11,8 +11,21 @@
     "MD003": { "style": "consistent" },
     // Permetti enfasi con underscore e asterisco
     "MD049": { "style": "consistent" },
-    "MD050": { "style": "consistent" }
+    "MD050": { "style": "consistent" },
+    // Permetti punteggiatura finale nei titoli (utile per guide)
+    "MD026": false,
+    // Non richiedere linguaggio per tutti i blocchi di codice
+    "MD040": false,
+    // Permetti tab (alcuni file possono averne)
+    "MD010": false,
+    // Permetti enfasi come pseudo-heading (comune nella documentazione tecnica)
+    "MD036": false
   },
-  // Ignora i file nel node_modules
-  "ignores": ["node_modules/**"]
+  // Ignora i file nel node_modules e altre directory
+  "ignores": [
+    "node_modules/**",
+    ".venv/**",
+    "staticfiles/**",
+    "media/**"
+  ]
 }

@@ -133,8 +133,8 @@ make waitress      # Windows/Cross-platform
 curl http://localhost:8000/
 curl http://localhost:8000/healthz/
 
-# Verifica file statici
-curl http://localhost:8000/static/css/style.css
+# Verifica file statici (esempio con file admin Django)
+curl http://localhost:8000/static/admin/css/base.css
 ```
 
 ## 🔧 Configurazione Avanzata

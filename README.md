@@ -1,5 +1,7 @@
 # Deploy Django - Template Repository
 
+<!-- Code Quality & Linting -->
+
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat)](https://pycqa.github.io/isort/)
@@ -9,18 +11,55 @@
 [![djlint](https://img.shields.io/badge/djlint-HTML%20linting-blue)](https://github.com/Riverside-Healthcare/djlint)
 [![Prettier](https://img.shields.io/badge/prettier-markdown-ff69b4)](https://prettier.io/)
 [![markdownlint](https://img.shields.io/badge/markdownlint-enabled-brightgreen)](https://github.com/DavidAnson/markdownlint)
+
+<!-- Framework & Language -->
+
 [![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/)
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/release/python-3130/)
+[![Node.js Ready](https://img.shields.io/badge/Node.js-Ready-green?logo=node.js&logoColor=white)](docs/nodejs-integration.md)
+
+<!-- Package Management & Tools -->
+
 [![uv](https://img.shields.io/badge/uv-package%20manager-blueviolet)](https://github.com/astral-sh/uv)
 [![Make](https://img.shields.io/badge/Make-automation-brightgreen)](https://www.gnu.org/software/make/)
+
+<!-- Deployment & Static Files -->
+
+[![Gunicorn](https://img.shields.io/badge/Gunicorn-deployment-green?logo=gunicorn&logoColor=white)](https://gunicorn.org/)
+[![Waitress](https://img.shields.io/badge/Waitress-cross--platform-yellow)](https://github.com/Pylons/waitress)
+[![WhiteNoise](https://img.shields.io/badge/WhiteNoise-static%20files-blue)](http://whitenoise.evans.io/)
+[![PostgreSQL Ready](https://img.shields.io/badge/PostgreSQL-Ready-blue?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Cross Platform](https://img.shields.io/badge/Cross%20Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen)](scripts/deployment/README.md)
+
+<!-- Development Environment -->
+
+[![VS Code](https://img.shields.io/badge/VS%20Code-Ready-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
+[![Run on Save](https://img.shields.io/badge/Run%20on%20Save-enabled-success)](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
+[![Quality Pipeline](https://img.shields.io/badge/Quality%20Pipeline-Local%20Dashboard-success)](tools/quality_dashboard.md)
+
+<!-- CI/CD & GitHub Actions -->
+
 [![Pre-commit](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml)
 [![Django CI](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml)
 [![CodeQL](https://github.com/massimilianoporzio/deploy-django/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/codeql-analysis.yml)
-[![Quality Pipeline](https://img.shields.io/badge/Quality%20Pipeline-Local%20Dashboard-success)](tools/quality_dashboard.md)
-[![pre-commit-hooks](https://img.shields.io/badge/pre--commit--hooks-enabled-brightgreen)](https://github.com/pre-commit/pre-commit-hooks)
-[![VS Code](https://img.shields.io/badge/VS%20Code-Ready-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
-[![Run on Save](https://img.shields.io/badge/Run%20on%20Save-enabled-success)](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%20enabled-2088FF)](https://github.com/features/actions)
+
+<!-- AI Code Review -->
+
+[![CodeRabbit](https://img.shields.io/badge/CodeRabbit-AI%20Review-purple?logo=ai&logoColor=white)](https://coderabbit.ai)
+[![Codacy Ready](https://img.shields.io/badge/Codacy-Ready-blue?logo=codacy&logoColor=white)](https://www.codacy.com/)
+[![pre-commit-hooks](https://img.shields.io/badge/pre--commit--hooks-enabled-brightgreen)](https://github.com/pre-commit/pre-commit-hooks)
+
+<!-- Template Features -->
+
+[![Template Ready](https://img.shields.io/badge/Template-Production%20Ready-success?style=flat-square)](https://github.com/massimilianoporzio/deploy-django)
+[![Multi Environment](https://img.shields.io/badge/Environments-Dev%20%7C%20Test%20%7C%20Prod-blue)](src/home/settings/)
+[![Smart Deploy](https://img.shields.io/badge/Deploy-OS%20Detection-orange)](Makefile)
+[![Server Management](https://img.shields.io/badge/Server%20Management-Automated-green)](Makefile)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Template](https://img.shields.io/badge/Template-Use%20This-brightgreen)](https://github.com/massimilianoporzio/deploy-django/generate)
+[![Stars](https://img.shields.io/github/stars/massimilianoporzio/deploy-django?style=social)](https://github.com/massimilianoporzio/deploy-django/stargazers)
+[![Forks](https://img.shields.io/github/forks/massimilianoporzio/deploy-django?style=social)](https://github.com/massimilianoporzio/deploy-django/network/members)
 
 Questo è un **template repository** per progetti Django, già configurato con strumenti moderni per lo sviluppo, la qualità del codice e il deployment. Questo template è progettato per aiutarti a iniziare rapidamente un nuovo progetto Django con best practices già implementate.
 
@@ -300,6 +339,61 @@ make fix-all
 ```
 
 Per una lista completa dei comandi disponibili e istruzioni su come installare Make, consulta la [documentazione su Make](docs/make.md).
+
+## 🌐 Supporto Frontend (Node.js Ready)
+
+Questo template è già predisposto per l'integrazione con Node.js e strumenti frontend moderni:
+
+### 📦 **Configurazione pre-integrata:**
+
+- ✅ **`.gitignore`**: Esclude `node_modules/`, build outputs, e file temporanei
+- ✅ **Pre-commit**: Configurato per ignorare directory Node.js durante i controlli di qualità
+- ✅ **Struttura directory**: Pronto per `package.json` nella root del progetto
+
+### 🚀 **Setup futuro (quando necessario):**
+
+```bash
+# 1. Inizializza package.json
+npm init -y
+
+# 2. Installa dipendenze frontend (esempi)
+npm install --save-dev @tailwindcss/cli autoprefixer
+npm install --save-dev webpack webpack-cli
+npm install --save-dev @babel/core @babel/preset-env
+
+# 3. Build script esempio per package.json
+{
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "css": "tailwindcss -i src/static/css/input.css -o src/static/css/style.css"
+  }
+}
+```
+
+### 📁 **Struttura consigliata con Node.js:**
+
+```
+deploy-django/
+├── src/                     # Django source code
+│   ├── static/
+│   │   ├── css/            # CSS sorgente e compilato
+│   │   ├── js/             # JavaScript sorgente
+│   │   └── dist/           # Build outputs (ignorato da Git)
+├── node_modules/           # Dipendenze Node.js (ignorato da Git)
+├── package.json            # Configurazione Node.js
+├── webpack.config.js       # Build configuration
+├── tailwind.config.js      # Tailwind configuration
+└── staticfiles/            # Django collected static files
+```
+
+### ⚙️ **Integrazione con Django:**
+
+- I file compilati da Node.js vanno in `src/static/`
+- Django collectstatic raccoglie tutto in `staticfiles/`
+- WhiteNoise serve i file in produzione con ottimizzazioni
+
+> **📚 Per maggiori dettagli sull'integrazione Node.js**, consulta la [documentazione Node.js](docs/nodejs-integration.md).
 
 ### Installazione di Make
 
