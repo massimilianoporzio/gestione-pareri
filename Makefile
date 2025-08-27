@@ -1,4 +1,4 @@
-.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all format-markdown install-prod gunicorn waitress deploy-dev deploy-prod deploy-staging deploy collectstatic fix-markdown stop-servers kill-port
+.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all test-precommit format-markdown install-prod gunicorn waitress deploy-dev deploy-prod deploy-staging deploy collectstatic fix-markdown stop-servers kill-port
 
 .SILENT: run-server run-dev run-test run-prod deploy deploy-dev deploy-prod deploy-staging gunicorn waitress install-prod stop-servers kill-port
 
@@ -50,6 +50,7 @@ ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'make test          ' -NoNewline -ForegroundColor Green; Write-Host 'Esegue i test del progetto'"
 	@powershell -Command "Write-Host 'make add-docstrings' -NoNewline -ForegroundColor Green; Write-Host '📝 Aggiunge docstring mancanti ai file Python'"
 	@powershell -Command "Write-Host 'make fix-all       ' -NoNewline -ForegroundColor Green; Write-Host '⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice'"
+	@powershell -Command "Write-Host 'make test-precommit ' -NoNewline -ForegroundColor Green; Write-Host '🔍 TEST PRE-COMMIT: Verifica tutti i controlli senza modifiche'"
 	@powershell -Command "Write-Host 'make fix-markdown  ' -NoNewline -ForegroundColor Green; Write-Host '📝 Corregge problemi di linting Markdown'"
 	@powershell -Command "Write-Host 'make lint-codacy   ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Controlli qualità stile Codacy (senza correzioni)'"
 	@powershell -Command "Write-Host 'make stats         ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)'"
@@ -73,6 +74,7 @@ else
 	@printf "$(GREEN)make test$(NC)          Esegue i test del progetto\n"
 	@printf "$(GREEN)make add-docstrings$(NC) 📝 Aggiunge docstring mancanti ai file Python\n"
 	@printf "$(GREEN)make fix-all$(NC)       ⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice\n"
+	@printf "$(GREEN)make test-precommit$(NC) 🔍 TEST PRE-COMMIT: Verifica tutti i controlli senza modifiche\n"
 	@printf "$(GREEN)make fix-markdown$(NC)  📝 Corregge problemi di linting Markdown\n"
 	@printf "$(GREEN)make lint-codacy$(NC)   🔍 Controlli qualità stile Codacy (senza correzioni)\n"
 	@printf "$(GREEN)make stats$(NC)         🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)\n"
@@ -272,6 +274,18 @@ else
 	@echo -e "$(YELLOW)9/9 - Correzione problemi Markdown...$(NC)"
 	$(MAKE) fix-markdown
 	@echo -e "$(GREEN)✅ Tutti i problemi di qualità del codice sono stati corretti!$(NC)"
+endif
+
+# Test all pre-commit hooks without making changes
+test-precommit:
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host 'Test di tutti i controlli pre-commit...' -ForegroundColor Cyan"
+	pre-commit run --all-files
+	@powershell -Command "Write-Host 'Test pre-commit completato!' -ForegroundColor Green"
+else
+	@echo -e "$(CYAN)🔍 Test di tutti i controlli pre-commit...$(NC)"
+	pre-commit run --all-files
+	@echo -e "$(GREEN)✅ Test pre-commit completato!$(NC)"
 endif
 
 # Format all markdown files

@@ -54,3 +54,4 @@ PASSWORD_HASHERS = [
 # Configurazione dei file statici e media per i test
 STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
+MEDIA_ROOT = REPO_DIR / "media"  # noqa: F405
