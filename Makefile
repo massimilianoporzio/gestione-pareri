@@ -409,7 +409,10 @@ else
 	@chmod +x scripts/deployment/start-uvicorn.sh
 	@./scripts/deployment/start-uvicorn.sh &
 	sleep 2
-	$(MAKE) open-home
+	# Apri la home solo se non siamo su Render/CI
+	if [ -z "$RENDER" ] && [ -z "$CI" ]; then \
+		$(MAKE) open-home; \
+	fi
 endif
 
 open-home: ## Apre la pagina home nel browser
