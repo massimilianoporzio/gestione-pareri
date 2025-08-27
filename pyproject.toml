@@ -10,6 +10,7 @@ dependencies = [
     "djlint>=1.36.4",
     "python-decouple>=3.8",
     "ruff>=0.12.10",
+    "uvicorn[standard]>=0.24.0",
 ]
 
 [dependency-groups]
