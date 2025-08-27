@@ -8,6 +8,16 @@ DEBUG = True
 # ALLOWED_HOSTS
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
+# WhiteNoise per servire file statici in test/staging
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")  # noqa: F405
+
+# Configurazione WhiteNoise
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# WhiteNoise settings per test
+WHITENOISE_USE_FINDERS = True  # Consente di servire file da STATICFILES_DIRS
+WHITENOISE_AUTOREFRESH = True  # Auto-refresh in test per development-like experience
+
 # Utilizza un database in memoria per i test
 DATABASES = {
     "default": {

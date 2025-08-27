@@ -349,6 +349,78 @@ chmod +x scripts/install-markdown-tools.sh
 ./scripts/install-markdown-tools.sh
 ```
 
+## 🚀 Deployment e Produzione
+
+Questo template include un sistema completo per il deployment in produzione con:
+
+### ⚡ WhiteNoise per File Statici
+
+- **Zero configurazione**: Serve automaticamente CSS, JS e file statici
+- **Compressione Gzip**: Ottimizzazione automatica delle performance
+- **Caching intelligente**: Headers ottimali per browser e CDN
+- **Multi-ambiente**: Configurato per dev/test/prod
+
+### 🎯 Deployment Intelligente
+
+```bash
+# Deployment automatico - rileva il sistema operativo
+make deploy
+
+# Comandi specifici
+make deploy-prod      # Produzione con server ottimale per OS
+make deploy-staging   # Staging/test environment
+make deploy-dev       # Sviluppo con hot-reload
+
+# Server specifici
+make gunicorn        # Unix/Linux/macOS (alta performance)
+make waitress        # Windows/Cross-platform
+```
+
+### 📦 Gestione File Statici
+
+```bash
+# Raccolta automatica file statici
+make collectstatic
+
+# Per ambiente specifico
+make collectstatic-prod
+make collectstatic-test
+make collectstatic-dev
+```
+
+### 🗄️ Database Supportati
+
+- **SQLite**: Default per sviluppo e deployment semplici
+- **PostgreSQL**: Produzione con driver `psycopg2-binary` incluso
+- **Multi-ambiente**: Configurazioni separate per dev/test/prod
+
+### 📋 Deployment Step-by-Step
+
+```bash
+# 1. Installa dipendenze produzione
+make install-prod
+
+# 2. Configura database (crea .env con le tue variabili)
+echo "DJANGO_ENV=prod" >> .env
+make migrate-prod
+
+# 3. Raccogli file statici
+make collectstatic-prod
+
+# 4. Deploy!
+make deploy
+```
+
+### 📚 Documentazione Completa
+
+Per guide dettagliate, configurazioni avanzate e troubleshooting:
+
+- [**Guida Deployment Completa**](scripts/deployment/README.md)
+- Esempi Docker e systemd service
+- Configurazioni SSL e sicurezza
+- Best practices per produzione
+- Troubleshooting errori comuni
+
 ## 🚢 CI/CD
 
 Il repository include workflow GitHub Actions preconfigurati:

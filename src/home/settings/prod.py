@@ -9,6 +9,22 @@ from home.settings.base import *  # noqa: F403, F401
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+# WhiteNoise per servire file statici in produzione
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")  # noqa: F405
+
+# Configurazione WhiteNoise per produzione
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# WhiteNoise settings per produzione
+WHITENOISE_USE_FINDERS = False  # Non usare finders in produzione
+WHITENOISE_AUTOREFRESH = False  # Disabilita auto-refresh in produzione
+WHITENOISE_MAX_AGE = 31536000  # Cache files for 1 year (31536000 seconds)
+
+# Servire anche i media files con WhiteNoise (solo se non usi un CDN)
+# Nota: In produzione è meglio usare un CDN per i media files
+WHITENOISE_USE_FINDERS = False
+WHITENOISE_STATIC_PREFIX = "/static/"
+
 
 # Parse comma-separated values for hosts and origins
 def parse_list(val, separator=","):
@@ -38,11 +54,12 @@ CSRF_TRUSTED_ORIGINS = [
 # Database di produzione
 # Configura il database di produzione, ad esempio PostgreSQL
 # Se stiamo eseguendo un test, usa SQLite invece di PostgreSQL
-if os.environ.get("DJANGO_TEST_DB", "0") == "1":
+if os.environ.get("DJANGO_TEST_DB", "0") == "1" or not config("DB_NAME", default=""):
+    # Usa SQLite se non è configurato PostgreSQL o se è un test
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": ":memory:",  # Database in memoria
+            "NAME": REPO_DIR / "db_prod.sqlite3",  # noqa: F405
         }
     }
 else:

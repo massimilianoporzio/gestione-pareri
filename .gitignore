@@ -62,6 +62,13 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
+# Static and media files
+staticfiles/
+mediafiles/
+# Keep media directory structure but ignore uploaded files
+media/*
+!media/README.md
+
 # Flask stuff:
 instance/
 .webassets-cache

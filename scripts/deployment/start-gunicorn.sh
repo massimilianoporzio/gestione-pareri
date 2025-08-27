@@ -37,6 +37,8 @@ python src/manage.py migrate --no-input
 
 # Collect static files
 echo "📁 Collecting static files..."
+# Note: staticfiles/ directory is auto-generated and should not be committed to Git
+# It's recreated on each deployment and contains processed/compressed static files
 python src/manage.py collectstatic --no-input --clear
 
 # Start Gunicorn
