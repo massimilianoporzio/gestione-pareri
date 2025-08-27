@@ -40,13 +40,11 @@ def parse_list(val, separator=","):
     return [x.strip() for x in val.split(separator) if x.strip()]
 
 
-# ALLOWED_HOSTS configuration
-ALLOWED_HOSTS = parse_list(config("DJANGO_ALLOWED_HOSTS", default=".onrender.com,.example.com"))
+# ALLOWED_HOSTS configuration (deve essere sempre impostato via variabile d'ambiente)
+ALLOWED_HOSTS = parse_list(config("DJANGO_ALLOWED_HOSTS"))
 
-# CSRF trusted origins configuration
-CSRF_TRUSTED_ORIGINS = []
-# Add https:// prefix to each domain if not already present
-origins = parse_list(config("DJANGO_CSRF_TRUSTED_ORIGINS", default=".onrender.com,.example.com"))
+# CSRF trusted origins configuration (deve essere sempre impostato via variabile d'ambiente)
+origins = parse_list(config("DJANGO_CSRF_TRUSTED_ORIGINS"))
 CSRF_TRUSTED_ORIGINS = [
     f"https://{origin}" if not origin.startswith(("http://", "https://")) else origin for origin in origins
 ]

@@ -1,4 +1,7 @@
-"""Impostazioni base di Django, condivise tra tutti gli ambienti."""
+"""Impostazioni base di Django, condivise tra tutti gli ambienti.
+
+Questo modulo fornisce funzionalità di configurazione condivise.
+"""
 
 import importlib.util
 from pathlib import Path
@@ -19,6 +22,9 @@ if env_file.exists():
 else:
     # Se il file .env non esiste, usa la configurazione standard (variabili d'ambiente)
     config = default_config
+
+# Nome del progetto (da .env o variabile d'ambiente)
+PROJECT_NAME = config("PROJECT_NAME", default="Unset Project Name")
 
 # Configurazione della directory dei log
 # Puoi specificare un percorso assoluto in .env o usare il valore predefinito
