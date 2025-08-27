@@ -276,3 +276,56 @@ async def async_view(request):
 ---
 
 💡 **Raccomandazione**: Usa `make uvicorn` come server primario. Mantieni `make gunicorn` e `make waitress` solo per compatibilità legacy o requisiti specifici.
+
+## 🛠️ Correzione automatica script bash (shfmt)
+
+Per correggere automaticamente la formattazione e alcune best practice degli script bash (es. variabili non quotate, word splitting), usa **shfmt**.
+
+### Installazione shfmt
+
+**macOS (Homebrew):**
+
+```bash
+brew install shfmt
+```
+
+**Linux (Debian/Ubuntu):**
+
+```bash
+sudo apt-get install shfmt
+```
+
+**Windows:**
+
+- Scarica il binario da [shfmt releases](https://github.com/mvdan/sh/releases)
+- Aggiungi la cartella del binario a PATH
+- Oppure usa [Scoop](https://scoop.sh/):
+
+```powershell
+scoop install shfmt
+```
+
+**Manuale (tutti gli OS):**
+
+- Scarica da [shfmt releases](https://github.com/mvdan/sh/releases)
+- Oppure, se hai Go installato:
+
+```bash
+go install mvdan.cc/sh/v3/cmd/shfmt@latest
+```
+
+### Utilizzo
+
+Correggi tutti gli script bash di deployment:
+
+```bash
+shfmt -w scripts/deployment/*.sh
+```
+
+Puoi anche usare:
+
+```bash
+make fix-codacy
+```
+
+Questo comando applica le correzioni automatiche a tutti gli script bash di deploy.

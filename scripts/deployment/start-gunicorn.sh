@@ -19,7 +19,7 @@ cd "$(dirname "$0")/../.."
 
 # Activate virtual environment if exists
 if [ -d ".venv" ]; then
-    source .venv/bin/activate
+	source .venv/bin/activate
 fi
 
 echo "🚀 Starting Django with Gunicorn"
@@ -44,16 +44,16 @@ python src/manage.py collectstatic --no-input --clear
 # Start Gunicorn
 echo "🌟 Starting Gunicorn server..."
 exec gunicorn \
-    --chdir src \
-    --bind $HOST:$PORT \
-    --workers $WORKERS \
-    --worker-class $WORKER_CLASS \
-    --timeout $TIMEOUT \
-    --keep-alive $KEEP_ALIVE \
-    --max-requests $MAX_REQUESTS \
-    --max-requests-jitter $MAX_REQUESTS_JITTER \
-    --access-logfile - \
-    --error-logfile - \
-    --log-level info \
-    --preload \
-    home.wsgi:application
+	--chdir src \
+	--bind "$HOST:$PORT" \
+	--workers "$WORKERS" \
+	--worker-class "$WORKER_CLASS" \
+	--timeout "$TIMEOUT" \
+	--keep-alive "$KEEP_ALIVE" \
+	--max-requests "$MAX_REQUESTS" \
+	--max-requests-jitter "$MAX_REQUESTS_JITTER" \
+	--access-logfile - \
+	--error-logfile - \
+	--log-level info \
+	--preload \
+	home.wsgi:application
