@@ -1,3 +1,14 @@
+# 🔧 Correzione automatica script bash (formattazione e best practice)
+fix-codacy:  ## Applica correzioni automatiche agli script bash di deployment
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host 'Correzione automatica script bash...' -ForegroundColor Cyan"
+	shfmt -w scripts/deployment/*.sh
+	@powershell -Command "Write-Host 'Correzioni applicate!' -ForegroundColor Green"
+else
+	@echo -e "$(CYAN)🔧 Correzione automatica script bash...$(NC)"
+	shfmt -w scripts/deployment/*.sh
+	@echo -e "$(GREEN)✅ Correzioni applicate!$(NC)"
+endif
 .PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all test-precommit format-markdown install-prod gunicorn waitress uvicorn deploy-dev deploy-prod deploy-staging deploy collectstatic fix-markdown stop-servers kill-port
 
 .SILENT: run-server run-dev run-test run-prod deploy deploy-dev deploy-prod deploy-staging gunicorn waitress install-prod stop-servers kill-port
@@ -336,25 +347,29 @@ endif
 lint-codacy:  ## Esegue controlli simili a Codacy
 ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'Controlli qualità stile Codacy...' -ForegroundColor Cyan"
-	@powershell -Command "Write-Host '1/4 - Ruff (stile e errori)...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '1/5 - Ruff (stile e errori)...' -ForegroundColor Yellow"
 	-uv run ruff check --output-format=github .
-	@powershell -Command "Write-Host '2/4 - Flake8 (stile aggiuntivo)...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '2/5 - Flake8 (stile aggiuntivo)...' -ForegroundColor Yellow"
 	-uv run flake8 --format=default .
-	@powershell -Command "Write-Host '3/4 - Pylint (analisi statica)...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '3/5 - Pylint (analisi statica)...' -ForegroundColor Yellow"
 	-uv run pylint src/home/ --output-format=colorized
-	@powershell -Command "Write-Host '4/4 - Import sorting check...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '4/5 - Import sorting check...' -ForegroundColor Yellow"
 	-uv run ruff check --select I .
+	@powershell -Command "Write-Host '5/5 - ShellCheck (script bash)...' -ForegroundColor Yellow"
+	shellcheck scripts/deployment/*.sh || true
 	@powershell -Command "Write-Host 'Controlli completati!' -ForegroundColor Green"
 else
 	@echo -e "$(CYAN)🔍 Controlli qualità stile Codacy...$(NC)"
-	@echo -e "$(YELLOW)1/4 - Ruff (stile e errori)...$(NC)"
+	@echo -e "$(YELLOW)1/5 - Ruff (stile e errori)...$(NC)"
 	-uv run ruff check --output-format=github .
-	@echo -e "$(YELLOW)2/4 - Flake8 (stile aggiuntivo)...$(NC)"
+	@echo -e "$(YELLOW)2/5 - Flake8 (stile aggiuntivo)...$(NC)"
 	-uv run flake8 --format=default .
-	@echo -e "$(YELLOW)3/4 - Pylint (analisi statica)...$(NC)"
+	@echo -e "$(YELLOW)3/5 - Pylint (analisi statica)...$(NC)"
 	-uv run pylint src/home/ --output-format=colorized
-	@echo -e "$(YELLOW)4/4 - Import sorting check...$(NC)"
+	@echo -e "$(YELLOW)4/5 - Import sorting check...$(NC)"
 	-uv run ruff check --select I .
+	@echo -e "$(YELLOW)5/5 - ShellCheck (script bash)...$(NC)"
+	shellcheck scripts/deployment/*.sh || true
 	@echo -e "$(GREEN)✅ Controlli completati!$(NC)"
 endif
 

@@ -20,15 +20,14 @@
 
 <!-- Package Management & Tools -->
 
-[![uv](https://img.shields.io/badge/uv-package%20manager-blueviolet)](https://github.com/astral-sh/uv)
+[![uv](https://img.shields.io/badge/uv-Python%20Package%20Manager-blueviolet?logo=python&logoColor=white)](https://github.com/astral-sh/uv)
 [![Make](https://img.shields.io/badge/Make-automation-brightgreen)](https://www.gnu.org/software/make/)
 
 <!-- Deployment & Static Files -->
 
 [![Uvicorn](https://img.shields.io/badge/Uvicorn-ASGI%20%E2%9A%A1-blueviolet?logo=fastapi&logoColor=white)](https://www.uvicorn.org/)
-[![Gunicorn](https://img.shields.io/badge/Gunicorn-deployment-green?logo=gunicorn&logoColor=white)](https://gunicorn.org/)
-[![Waitress](https://img.shields.io/badge/Waitress-cross--platform-yellow)](https://github.com/Pylons/waitress)
-[![WhiteNoise](https://img.shields.io/badge/WhiteNoise-static%20files-blue)](http://whitenoise.evans.io/)
+[![Gunicorn](https://img.shields.io/badge/Gunicorn-WSGI%20Server-green?logo=gunicorn&logoColor=white)](https://gunicorn.org/)
+[![Waitress](https://img.shields.io/badge/Waitress-WSGI%20Server-yellow)](https://github.com/Pylons/waitress)
 [![PostgreSQL Ready](https://img.shields.io/badge/PostgreSQL-Ready-blue?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Cross Platform](https://img.shields.io/badge/Cross%20Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen)](scripts/deployment/README.md)
 
@@ -55,8 +54,8 @@
 
 [![Template Ready](https://img.shields.io/badge/Template-Production%20Ready-success?style=flat-square)](https://github.com/massimilianoporzio/deploy-django)
 [![Multi Environment](https://img.shields.io/badge/Environments-Dev%20%7C%20Test%20%7C%20Prod-blue)](src/home/settings/)
-[![Smart Deploy](https://img.shields.io/badge/Deploy-OS%20Detection-orange)](Makefile)
-[![Server Management](https://img.shields.io/badge/Server%20Management-Automated-green)](Makefile)
+[![Smart Deploy](https://img.shields.io/badge/Deploy-uvicorn%20%7C%20gunicorn%20%7C%20waitress-orange)](Makefile)
+[![Server Management](https://img.shields.io/badge/Server%20Management-ASGI%20%7C%20WSGI%20%7C%20Auto-green)](Makefile)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Template](https://img.shields.io/badge/Template-Use%20This-brightgreen)](https://github.com/massimilianoporzio/deploy-django/generate)
 [![Stars](https://img.shields.io/github/stars/massimilianoporzio/deploy-django?style=social)](https://github.com/massimilianoporzio/deploy-django/stargazers)
@@ -82,6 +81,59 @@ Questo è un **template repository** per progetti Django, già configurato con s
 - Python 3.13+
 - [uv](https://github.com/astral-sh/uv) - Gestore di pacchetti Python veloce e moderno
 - Visual Studio Code (consigliato per l'integrazione automatica)
+
+## 🛠️ Correzione automatica script bash (shfmt)
+
+Per correggere automaticamente la formattazione e alcune best practice degli script bash (es. variabili non quotate, word splitting), usa **shfmt**.
+
+### Installazione shfmt
+
+**macOS (Homebrew):**
+
+```bash
+brew install shfmt
+```
+
+**Linux (Debian/Ubuntu):**
+
+```bash
+sudo apt-get install shfmt
+```
+
+**Windows:**
+
+- Scarica il binario da [shfmt releases](https://github.com/mvdan/sh/releases)
+- Aggiungi la cartella del binario a PATH
+- Oppure usa [Scoop](https://scoop.sh/):
+
+```powershell
+scoop install shfmt
+```
+
+**Manuale (tutti gli OS):**
+
+- Scarica da [shfmt releases](https://github.com/mvdan/sh/releases)
+- Oppure, se hai Go installato:
+
+```bash
+go install mvdan.cc/sh/v3/cmd/shfmt@latest
+```
+
+### Utilizzo
+
+Correggi tutti gli script bash di deployment:
+
+```bash
+shfmt -w scripts/deployment/*.sh
+```
+
+Puoi anche usare:
+
+```bash
+make fix-codacy
+```
+
+Questo comando applica le correzioni automatiche a tutti gli script bash di deploy.
 
 ## 🔨 Setup iniziale
 
@@ -973,6 +1025,7 @@ LOGGING = {
 
 ```python
 # settings/prod.py
+
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -1303,7 +1356,7 @@ Crea un file `CONTRIBUTING.md` con linee guida per il team:
 
 - `make test` - Esegui tutti i test
 - `make test-coverage` - Test con coverage report
-- `make fix-all` - Correggi automaticamente problemi di stile
+- `make fix-all` - Correggi automaticamente problemi di qualità
 ```
 
 Questa guida completa alle best practices mantiene il template flessibile ma fornisce tutte le informazioni necessarie per trasformare un progetto da sviluppo a produzione in modo sicuro e scalabile.
@@ -1343,7 +1396,7 @@ Questa repository è configurata per correggere automaticamente la maggior parte
   ```bash
   uv run ruff check . --fix --unsafe-fixes
   uv run python tools/add_docstring_batch.py .
-  uv run autopep8 --in-place --aggressive --aggressive $(git ls-files '*.py')
+  uv run autopep8 --inplace --aggressive --aggressive $(git ls-files '*.py')
   ```
 
 Per dettagli vedi la sezione `.vscode/settings.json` e i file in `tools/`.
