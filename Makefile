@@ -1,4 +1,4 @@
-.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all format-markdown
+.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all format-markdown install-prod gunicorn waitress deploy-dev deploy-prod deploy-staging
 
 # Colori
 GREEN = \033[0;32m
@@ -40,6 +40,12 @@ ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'make fix-all       ' -NoNewline -ForegroundColor Green; Write-Host '⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice'"
 	@powershell -Command "Write-Host 'make lint-codacy   ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Controlli qualità stile Codacy (senza correzioni)'"
 	@powershell -Command "Write-Host 'make stats         ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)'"
+	@powershell -Command "Write-Host '== DEPLOYMENT ==' -ForegroundColor Magenta"
+	@powershell -Command "Write-Host 'make deploy-dev    ' -NoNewline -ForegroundColor Green; Write-Host '🔧 Avvia server di sviluppo'"
+	@powershell -Command "Write-Host 'make deploy-staging' -NoNewline -ForegroundColor Green; Write-Host '🧪 Deploy in modalità staging/test'"
+	@powershell -Command "Write-Host 'make deploy-prod   ' -NoNewline -ForegroundColor Green; Write-Host '🚀 Deploy in produzione (Waitress)'"
+	@powershell -Command "Write-Host 'make waitress      ' -NoNewline -ForegroundColor Green; Write-Host '🪟 Avvia con Waitress (Windows/Cross-platform)'"
+	@powershell -Command "Write-Host 'make gunicorn      ' -NoNewline -ForegroundColor Green; Write-Host '🐧 Avvia con Gunicorn (Unix/Linux/macOS)'"
 	@powershell -Command "Write-Host 'make help          ' -NoNewline -ForegroundColor Green; Write-Host 'Mostra questo messaggio di aiuto'"
 else
 	@echo -e "$(CYAN)Deploy Django Template - Comandi disponibili:$(NC)"
@@ -52,6 +58,12 @@ else
 	@echo -e "$(GREEN)make fix-all$(NC)       ⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice"
 	@echo -e "$(GREEN)make lint-codacy$(NC)   🔍 Controlli qualità stile Codacy (senza correzioni)"
 	@echo -e "$(GREEN)make stats$(NC)         🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)"
+	@echo -e "$(MAGENTA)== DEPLOYMENT ==$(NC)"
+	@echo -e "$(GREEN)make deploy-dev$(NC)    🔧 Avvia server di sviluppo"
+	@echo -e "$(GREEN)make deploy-staging$(NC) 🧪 Deploy in modalità staging/test"
+	@echo -e "$(GREEN)make deploy-prod$(NC)   🚀 Deploy in produzione (Waitress)"
+	@echo -e "$(GREEN)make waitress$(NC)      🪟 Avvia con Waitress (Windows/Cross-platform)"
+	@echo -e "$(GREEN)make gunicorn$(NC)      🐧 Avvia con Gunicorn (Unix/Linux/macOS)"
 	@echo -e "$(GREEN)make help$(NC)          Mostra questo messaggio di aiuto"
 endif
 
@@ -284,4 +296,50 @@ else
 	@echo -e "$(YELLOW)4/4 - Import sorting check...$(NC)"
 	-uv run ruff check --select I .
 	@echo -e "$(GREEN)✅ Controlli completati!$(NC)"
+endif
+
+# Deployment commands
+install-prod: ## Install production dependencies
+ifeq ($(OS), Windows_NT)
+	@powershell -Command "Write-Host '📦 Installing production dependencies...' -ForegroundColor Cyan"
+	uv sync --group prod
+else
+	@echo -e "$(CYAN)📦 Installing production dependencies...$(NC)"
+	uv sync --group prod
+endif
+
+gunicorn: install-prod ## Start Django with Gunicorn (Unix/Linux/macOS)
+ifeq ($(OS), Windows_NT)
+	@powershell -Command "Write-Host '❌ Gunicorn non è supportato su Windows. Usa waitress invece: make waitress' -ForegroundColor Red"
+else
+	@echo -e "$(GREEN)🚀 Starting Django with Gunicorn...$(NC)"
+	chmod +x scripts/deployment/start-gunicorn.sh
+	./scripts/deployment/start-gunicorn.sh
+endif
+
+waitress: install-prod ## Start Django with Waitress (Windows/Cross-platform)
+ifeq ($(OS), Windows_NT)
+	@powershell -Command "Write-Host '🚀 Starting Django with Waitress...' -ForegroundColor Green"
+	powershell -ExecutionPolicy Bypass -File scripts/deployment/start-waitress.ps1
+else
+	@echo -e "$(GREEN)🚀 Starting Django with Waitress...$(NC)"
+	DJANGO_ENV=prod waitress-serve --host=0.0.0.0 --port=8000 --call "src.home.wsgi:application"
+endif
+
+deploy-dev: ## Deploy in development mode with auto-reload
+ifeq ($(OS), Windows_NT)
+	@powershell -Command "Write-Host '🔧 Starting development server...' -ForegroundColor Yellow"
+	@set DJANGO_ENV=dev&& cd src && uv run python manage.py runserver
+else
+	@echo -e "$(YELLOW)🔧 Starting development server...$(NC)"
+	DJANGO_ENV=dev cd src && uv run python manage.py runserver
+endif
+
+deploy-prod: waitress ## Deploy in production (alias for waitress)
+
+deploy-staging: ## Deploy in staging/test mode
+ifeq ($(OS), Windows_NT)
+	@set DJANGO_ENV=test&& powershell -ExecutionPolicy Bypass -File scripts/deployment/start-waitress.ps1 -DjangoEnv test
+else
+	DJANGO_ENV=test ./scripts/deployment/start-gunicorn.sh
 endif
