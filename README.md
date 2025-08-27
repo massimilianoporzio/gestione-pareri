@@ -318,7 +318,7 @@ Il progetto è configurato per funzionare con le seguenti estensioni:
 | Error Lens      | `usernamehw.errorlens`           | Evidenzia errori e avvisi direttamente nel codice |
 | Git Graph       | `mhutchie.git-graph`             | Visualizza il grafico dei commit di Git           |
 | markdownlint    | `davidanson.vscode-markdownlint` | Linting per file Markdown                         |
-| Prettier        | `esbenp.prettier-vscode`         | Formattatore di codice per vari linguaggi         |
+| Prettier        | `esbenp.prettier-vscode`         | Formattore di codice per vari linguaggi           |
 | Run On Save     | `emeraldwalk.RunOnSave`          | Esegue comandi quando si salva un file            |
 | Django          | `batisteo.vscode-django`         | Supporto per template e sintassi Django           |
 
@@ -1415,3 +1415,13 @@ Questa repository è configurata per correggere automaticamente la maggior parte
   ```
 
 Per dettagli vedi la sezione `.vscode/settings.json` e i file in `tools/`.
+
+## 🔑 Generazione Django SECRET_KEY per la produzione
+
+Per generare una chiave segreta sicura per Django, usa il comando:
+
+```sh
+make generate-secret-key
+```
+
+Copia la chiave generata e usala come valore per la variabile d'ambiente `DJANGO_SECRET_KEY` (o nel file `.env`).

@@ -329,3 +329,13 @@ make fix-codacy
 ```
 
 Questo comando applica le correzioni automatiche a tutti gli script bash di deploy.
+
+## 🔑 Generazione Django SECRET_KEY per la produzione
+
+Per generare una chiave segreta sicura per Django, usa il comando:
+
+```sh
+make generate-secret-key
+```
+
+Copia la chiave generata e usala come valore per la variabile d'ambiente `DJANGO_SECRET_KEY` (o nel file `.env`).

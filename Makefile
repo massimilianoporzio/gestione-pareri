@@ -1,3 +1,5 @@
+generate-secret-key: ## Genera una Django SECRET_KEY sicura per la produzione
+	@uv run python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 # 🔧 Correzione automatica script bash (formattazione e best practice)
 fix-codacy:  ## Applica correzioni automatiche agli script bash di deployment
 ifeq ($(OS),Windows_NT)
