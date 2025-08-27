@@ -90,6 +90,8 @@ dependencies = [
     { name = "djlint" },
     { name = "python-decouple" },
     { name = "ruff" },
+    { name = "uvicorn", extra = ["standard"] },
+    { name = "whitenoise" },
 ]
 
 [package.dev-dependencies]
@@ -114,6 +116,8 @@ requires-dist = [
     { name = "djlint", specifier = ">=1.36.4" },
     { name = "python-decouple", specifier = ">=3.8" },
     { name = "ruff", specifier = ">=0.12.10" },
+    { name = "uvicorn", extras = ["standard"], specifier = ">=0.24.0" },
+    { name = "whitenoise", specifier = ">=6.8.2" },
 ]
 
 [package.metadata.requires-dev]
