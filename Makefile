@@ -419,7 +419,9 @@ open-home: ## Apre la pagina home nel browser
 ifeq ($(OS),Windows_NT)
 	start http://localhost:8000/
 else
-	open http://localhost:8000/
+	if command -v open >/dev/null 2>&1; then \
+		open http://localhost:8000/; \
+	fi
 endif
 
 deploy-dev: ## Deploy in development mode with auto-reload
