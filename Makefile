@@ -1,10 +1,22 @@
-.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all format-markdown install-prod gunicorn waitress deploy-dev deploy-prod deploy-staging
+.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all format-markdown install-prod gunicorn waitress deploy-dev deploy-prod deploy-staging deploy collectstatic fix-markdown stop-servers kill-port
 
-# Colori
-GREEN = \033[0;32m
-YELLOW = \033[0;33m
-CYAN = \033[0;36m
-NC = \033[0m # No Color
+.SILENT: run-server run-dev run-test run-prod deploy deploy-dev deploy-prod deploy-staging gunicorn waitress install-prod stop-servers kill-port
+
+# Colori - solo per l'help
+SHELL := /bin/bash
+ifneq (,$(findstring xterm,${TERM}))
+	GREEN = \033[0;32m
+	YELLOW = \033[0;33m
+	CYAN = \033[0;36m
+	MAGENTA = \033[0;35m
+	NC = \033[0m
+else
+	GREEN =
+	YELLOW =
+	CYAN =
+	MAGENTA =
+	NC =
+endif
 
 # Include .env file if it exists
 ifneq (,$(wildcard .env))
@@ -38,50 +50,60 @@ ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'make test          ' -NoNewline -ForegroundColor Green; Write-Host 'Esegue i test del progetto'"
 	@powershell -Command "Write-Host 'make add-docstrings' -NoNewline -ForegroundColor Green; Write-Host '📝 Aggiunge docstring mancanti ai file Python'"
 	@powershell -Command "Write-Host 'make fix-all       ' -NoNewline -ForegroundColor Green; Write-Host '⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice'"
+	@powershell -Command "Write-Host 'make fix-markdown  ' -NoNewline -ForegroundColor Green; Write-Host '📝 Corregge problemi di linting Markdown'"
 	@powershell -Command "Write-Host 'make lint-codacy   ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Controlli qualità stile Codacy (senza correzioni)'"
 	@powershell -Command "Write-Host 'make stats         ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)'"
 	@powershell -Command "Write-Host '== DEPLOYMENT ==' -ForegroundColor Magenta"
 	@powershell -Command "Write-Host 'make deploy-dev    ' -NoNewline -ForegroundColor Green; Write-Host '🔧 Avvia server di sviluppo'"
 	@powershell -Command "Write-Host 'make deploy-staging' -NoNewline -ForegroundColor Green; Write-Host '🧪 Deploy in modalità staging/test'"
-	@powershell -Command "Write-Host 'make deploy-prod   ' -NoNewline -ForegroundColor Green; Write-Host '🚀 Deploy in produzione (Waitress)'"
+	@powershell -Command "Write-Host 'make deploy-prod   ' -NoNewline -ForegroundColor Green; Write-Host '🚀 Deploy in produzione'"
+	@powershell -Command "Write-Host 'make deploy        ' -NoNewline -ForegroundColor Green; Write-Host '🎯 Deploy automatico (rileva OS e usa il server ottimale)'"
 	@powershell -Command "Write-Host 'make waitress      ' -NoNewline -ForegroundColor Green; Write-Host '🪟 Avvia con Waitress (Windows/Cross-platform)'"
 	@powershell -Command "Write-Host 'make gunicorn      ' -NoNewline -ForegroundColor Green; Write-Host '🐧 Avvia con Gunicorn (Unix/Linux/macOS)'"
+	@powershell -Command "Write-Host 'make collectstatic ' -NoNewline -ForegroundColor Green; Write-Host '📦 Raccoglie i file statici'"
+	@powershell -Command "Write-Host 'make stop-servers  ' -NoNewline -ForegroundColor Yellow; Write-Host '🛑 Ferma tutti i server Django'"
+	@powershell -Command "Write-Host 'make kill-port     ' -NoNewline -ForegroundColor Red; Write-Host '🔪 Termina i processi sulla porta 8000'"
 	@powershell -Command "Write-Host 'make help          ' -NoNewline -ForegroundColor Green; Write-Host 'Mostra questo messaggio di aiuto'"
 else
-	@echo -e "$(CYAN)Deploy Django Template - Comandi disponibili:$(NC)"
-	@echo -e "$(GREEN)make run-server$(NC)    Avvia il server di sviluppo Django"
-	@echo -e "$(GREEN)make run-dev$(NC)       Avvia il server di sviluppo in ambiente DEV"
-	@echo -e "$(GREEN)make run-test$(NC)      Avvia il server di sviluppo in ambiente TEST"
-	@echo -e "$(GREEN)make run-prod$(NC)      Avvia il server di sviluppo in ambiente PROD"
-	@echo -e "$(GREEN)make test$(NC)          Esegue i test del progetto"
-	@echo -e "$(GREEN)make add-docstrings$(NC) 📝 Aggiunge docstring mancanti ai file Python"
-	@echo -e "$(GREEN)make fix-all$(NC)       ⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice"
-	@echo -e "$(GREEN)make lint-codacy$(NC)   🔍 Controlli qualità stile Codacy (senza correzioni)"
-	@echo -e "$(GREEN)make stats$(NC)         🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)"
-	@echo -e "$(MAGENTA)== DEPLOYMENT ==$(NC)"
-	@echo -e "$(GREEN)make deploy-dev$(NC)    🔧 Avvia server di sviluppo"
-	@echo -e "$(GREEN)make deploy-staging$(NC) 🧪 Deploy in modalità staging/test"
-	@echo -e "$(GREEN)make deploy-prod$(NC)   🚀 Deploy in produzione (Waitress)"
-	@echo -e "$(GREEN)make waitress$(NC)      🪟 Avvia con Waitress (Windows/Cross-platform)"
-	@echo -e "$(GREEN)make gunicorn$(NC)      🐧 Avvia con Gunicorn (Unix/Linux/macOS)"
-	@echo -e "$(GREEN)make help$(NC)          Mostra questo messaggio di aiuto"
+	@printf "$(CYAN)Deploy Django Template - Comandi disponibili:$(NC)\n"
+	@printf "$(GREEN)make run-server$(NC)    Avvia il server di sviluppo Django\n"
+	@printf "$(GREEN)make run-dev$(NC)       Avvia il server di sviluppo in ambiente DEV\n"
+	@printf "$(GREEN)make run-test$(NC)      Avvia il server di sviluppo in ambiente TEST\n"
+	@printf "$(GREEN)make run-prod$(NC)      Avvia il server di sviluppo in ambiente PROD\n"
+	@printf "$(GREEN)make test$(NC)          Esegue i test del progetto\n"
+	@printf "$(GREEN)make add-docstrings$(NC) 📝 Aggiunge docstring mancanti ai file Python\n"
+	@printf "$(GREEN)make fix-all$(NC)       ⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice\n"
+	@printf "$(GREEN)make fix-markdown$(NC)  📝 Corregge problemi di linting Markdown\n"
+	@printf "$(GREEN)make lint-codacy$(NC)   🔍 Controlli qualità stile Codacy (senza correzioni)\n"
+	@printf "$(GREEN)make stats$(NC)         🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)\n"
+	@printf "$(MAGENTA)== DEPLOYMENT ==$(NC)\n"
+	@printf "$(GREEN)make deploy-dev$(NC)    🔧 Avvia server di sviluppo\n"
+	@printf "$(GREEN)make deploy-staging$(NC) 🧪 Deploy in modalità staging/test\n"
+	@printf "$(GREEN)make deploy-prod$(NC)   🚀 Deploy in produzione\n"
+	@printf "$(GREEN)make deploy$(NC)        🎯 Deploy automatico (rileva OS e usa il server ottimale)\n"
+	@printf "$(GREEN)make waitress$(NC)      🪟 Avvia con Waitress (Windows/Cross-platform)\n"
+	@printf "$(GREEN)make gunicorn$(NC)      🐧 Avvia con Gunicorn (Unix/Linux/macOS)\n"
+	@printf "$(GREEN)make collectstatic$(NC) 📦 Raccoglie i file statici\n"
+	@printf "$(YELLOW)make stop-servers$(NC)  🛑 Ferma tutti i server Django\n"
+	@printf "$(RED)make kill-port$(NC)     🔪 Termina i processi sulla porta 8000\n"
+	@printf "$(GREEN)make help$(NC)          Mostra questo messaggio di aiuto\n"
 endif
 
 run-server:
-	@echo -e "$(CYAN)Avvio del server di sviluppo Django...$(NC)"
-	uv run src/manage.py runserver
+	@echo "🚀 Avvio del server di sviluppo Django..."
+	@uv run src/manage.py runserver
 
 run-dev:
-	@echo -e "$(CYAN)Avvio del server di sviluppo in ambiente DEV...$(NC)"
-	$(SET_ENV_DEV) uv run src/manage.py runserver
+	@echo "� Avvio del server di sviluppo in ambiente DEV..."
+	@$(SET_ENV_DEV) uv run src/manage.py runserver
 
 run-test:
-	@echo -e "$(CYAN)Avvio del server di sviluppo in ambiente TEST...$(NC)"
-	$(SET_ENV_TEST) uv run src/manage.py runserver
+	@echo "🧪 Avvio del server di sviluppo in ambiente TEST..."
+	@$(SET_ENV_TEST) uv run src/manage.py runserver
 
 run-prod:
-	@echo -e "$(CYAN)Avvio del server di sviluppo in ambiente PROD...$(NC)"
-	$(SET_ENV_PROD) uv run src/manage.py runserver
+	@echo "⚡ Avvio del server di sviluppo in ambiente PROD..."
+	@$(SET_ENV_PROD) uv run src/manage.py runserver
 
 test:
 	@echo -e "$(CYAN)Esecuzione dei test...$(NC)"
@@ -222,10 +244,12 @@ ifeq ($(OS),Windows_NT)
 	-uv run autopep8 --in-place --aggressive --aggressive --recursive .
 	@powershell -Command "Write-Host '6/8 - Formattazione finale con Ruff...' -ForegroundColor Yellow"
 	-uv run ruff format .
-	@powershell -Command "Write-Host '7/8 - Controllo finale import...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '7/9 - Controllo finale import...' -ForegroundColor Yellow"
 	-uv run ruff check --select I --fix .
-	@powershell -Command "Write-Host '8/8 - Formattazione Markdown...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '8/9 - Formattazione Markdown...' -ForegroundColor Yellow"
 	$(MAKE) format-markdown
+	@powershell -Command "Write-Host '9/9 - Correzione problemi Markdown...' -ForegroundColor Yellow"
+	$(MAKE) fix-markdown
 	@powershell -Command "Write-Host 'Tutti i problemi di qualita del codice sono stati corretti!' -ForegroundColor Green"
 else
 	@echo -e "$(CYAN)Correzione completa di tutti i problemi di qualità del codice...$(NC)"
@@ -241,10 +265,12 @@ else
 	-uv run autopep8 --in-place --aggressive --aggressive --recursive .
 	@echo -e "$(YELLOW)6/8 - Formattazione finale con Ruff...$(NC)"
 	-uv run ruff format .
-	@echo -e "$(YELLOW)7/8 - Controllo finale import...$(NC)"
+	@echo -e "$(YELLOW)7/9 - Controllo finale import...$(NC)"
 	-uv run ruff check --select I --fix .
-	@echo -e "$(YELLOW)8/8 - Formattazione Markdown...$(NC)"
+	@echo -e "$(YELLOW)8/9 - Formattazione Markdown...$(NC)"
 	$(MAKE) format-markdown
+	@echo -e "$(YELLOW)9/9 - Correzione problemi Markdown...$(NC)"
+	$(MAKE) fix-markdown
 	@echo -e "$(GREEN)✅ Tutti i problemi di qualità del codice sono stati corretti!$(NC)"
 endif
 
@@ -255,9 +281,27 @@ ifeq ($(OS),Windows_NT)
 	@powershell -Command "Get-ChildItem -Path . -Include '*.md' -Recurse | ForEach-Object { Write-Host 'Formatting' $$_.FullName; $$content = Get-Content $$_.FullName -Raw; if ($$content) { $$formatted = $$content -replace '(?m)^[ \t]+$$', '' -replace '(?m)\r?\n{3,}', \"`n`n\" -replace '(?m)[ \t]+$$', ''; Set-Content $$_.FullName -Value $$formatted -NoNewline } }"
 	@powershell -Command "Write-Host 'File Markdown formattati con successo!' -ForegroundColor Green"
 else
-	@echo -e "$(CYAN)Formattazione file Markdown...$(NC)"
+	@echo "Formattazione file Markdown..."
 	@find . -name "*.md" -type f -exec sh -c 'echo "Formatting $$1"; sed -i "/^[[:space:]]*$$/d; /^$$/N; /^\\n$$/d" "$$1"' _ {} \;
-	@echo -e "$(GREEN)File Markdown formattati con successo!$(NC)"
+	@echo "File Markdown formattati con successo!"
+endif
+
+# Fix markdown linting issues
+fix-markdown: ## 📝 Fix markdown linting issues with prettier and markdownlint
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host 'Correzione problemi Markdown...' -ForegroundColor Cyan"
+	@powershell -Command "Write-Host '1/2 - Prettier formatting...' -ForegroundColor Yellow"
+	-pre-commit run prettier --all-files
+	@powershell -Command "Write-Host '2/2 - Markdownlint fixes...' -ForegroundColor Yellow"
+	-pre-commit run markdownlint-cli2 --all-files
+	@powershell -Command "Write-Host 'Problemi Markdown corretti!' -ForegroundColor Green"
+else
+	@echo "Correzione problemi Markdown..."
+	@echo "1/2 - Prettier formatting..."
+	-pre-commit run prettier --all-files
+	@echo "2/2 - Markdownlint fixes..."
+	-pre-commit run markdownlint-cli2 --all-files
+	@echo "Problemi Markdown corretti!"
 endif
 
 # Genera statistiche complete del progetto (alternativa a Codacy)
@@ -300,30 +344,25 @@ endif
 
 # Deployment commands
 install-prod: ## Install production dependencies
-ifeq ($(OS), Windows_NT)
-	@powershell -Command "Write-Host '📦 Installing production dependencies...' -ForegroundColor Cyan"
-	uv sync --group prod
-else
-	@echo -e "$(CYAN)📦 Installing production dependencies...$(NC)"
-	uv sync --group prod
-endif
+	@echo "📦 Installing production dependencies..."
+	@uv sync --group prod
 
 gunicorn: install-prod ## Start Django with Gunicorn (Unix/Linux/macOS)
 ifeq ($(OS), Windows_NT)
-	@powershell -Command "Write-Host '❌ Gunicorn non è supportato su Windows. Usa waitress invece: make waitress' -ForegroundColor Red"
+	@echo "❌ Gunicorn non è supportato su Windows. Usa waitress invece: make waitress"
 else
-	@echo -e "$(GREEN)🚀 Starting Django with Gunicorn...$(NC)"
-	chmod +x scripts/deployment/start-gunicorn.sh
-	./scripts/deployment/start-gunicorn.sh
+	@echo "🐧 Starting Django with Gunicorn (Unix/Linux/macOS)..."
+	@chmod +x scripts/deployment/start-gunicorn.sh
+	@./scripts/deployment/start-gunicorn.sh
 endif
 
 waitress: install-prod ## Start Django with Waitress (Windows/Cross-platform)
 ifeq ($(OS), Windows_NT)
-	@powershell -Command "Write-Host '🚀 Starting Django with Waitress...' -ForegroundColor Green"
-	powershell -ExecutionPolicy Bypass -File scripts/deployment/start-waitress.ps1
+	@powershell -Command "Write-Host '🪟 Starting Django with Waitress (Windows)...' -ForegroundColor Green"
+	@powershell -ExecutionPolicy Bypass -File scripts/deployment/start-waitress.ps1
 else
-	@echo -e "$(GREEN)🚀 Starting Django with Waitress...$(NC)"
-	DJANGO_ENV=prod waitress-serve --host=0.0.0.0 --port=8000 --call "src.home.wsgi:application"
+	@echo "🪟 Starting Django with Waitress (Cross-platform)..."
+	@cd src && DJANGO_ENV=prod uv run waitress-serve --host=0.0.0.0 --port=8000 home.wsgi:application
 endif
 
 deploy-dev: ## Deploy in development mode with auto-reload
@@ -331,15 +370,77 @@ ifeq ($(OS), Windows_NT)
 	@powershell -Command "Write-Host '🔧 Starting development server...' -ForegroundColor Yellow"
 	@set DJANGO_ENV=dev&& cd src && uv run python manage.py runserver
 else
-	@echo -e "$(YELLOW)🔧 Starting development server...$(NC)"
-	DJANGO_ENV=dev cd src && uv run python manage.py runserver
+	@echo "🔧 Starting development server..."
+	@DJANGO_ENV=dev cd src && uv run python manage.py runserver
 endif
 
-deploy-prod: waitress ## Deploy in production (alias for waitress)
+deploy-prod: install-prod ## Deploy in production with optimal server for OS
+ifeq ($(OS), Windows_NT)
+	@powershell -Command "Write-Host '🚀 Production deployment (Windows - Waitress)...' -ForegroundColor Green"
+	@$(MAKE) waitress
+else
+	@echo "🚀 Production deployment (Unix/Linux/macOS - Gunicorn)..."
+	@$(MAKE) gunicorn
+endif
 
 deploy-staging: ## Deploy in staging/test mode
 ifeq ($(OS), Windows_NT)
+	@powershell -Command "Write-Host '🧪 Staging deployment (Windows)...' -ForegroundColor Yellow"
 	@set DJANGO_ENV=test&& powershell -ExecutionPolicy Bypass -File scripts/deployment/start-waitress.ps1 -DjangoEnv test
 else
-	DJANGO_ENV=test ./scripts/deployment/start-gunicorn.sh
+	@echo "🧪 Staging deployment (Unix/Linux/macOS)..."
+	@DJANGO_ENV=test ./scripts/deployment/start-gunicorn.sh
+endif
+
+deploy: install-prod ## 🎯 Smart deploy - automatically detects OS and uses optimal server
+ifeq ($(OS), Windows_NT)
+	@powershell -Command "Write-Host '🎯 Smart deployment - Windows detected, using Waitress...' -ForegroundColor Cyan"
+	@$(MAKE) waitress
+else
+	@echo "🎯 Smart deployment - Unix/Linux/macOS detected, using Gunicorn..."
+	@$(MAKE) gunicorn
+endif
+
+# Static files management
+collectstatic: ## 📦 Collect static files for production
+	@echo "📦 Collecting static files..."
+	@uv run src/manage.py collectstatic --noinput
+
+collectstatic-dev: ## 📦 Collect static files in DEV environment
+	@echo "📦 Collecting static files (DEV)..."
+	@$(SET_ENV_DEV) uv run src/manage.py collectstatic --noinput
+
+collectstatic-test: ## 📦 Collect static files in TEST environment
+	@echo "📦 Collecting static files (TEST)..."
+	@$(SET_ENV_TEST) uv run src/manage.py collectstatic --noinput
+
+collectstatic-prod: ## 📦 Collect static files in PROD environment
+	@echo "📦 Collecting static files (PROD)..."
+	@$(SET_ENV_PROD) uv run src/manage.py collectstatic --noinput
+
+# Server management
+# IMPORTANT: stop-servers and kill-port must be run from a DIFFERENT terminal
+# than the one running the server (since servers run in foreground/background)
+stop-servers: ## 🛑 Stop all Django servers (run from different terminal!)
+	@printf "$(YELLOW)🛑 Stopping all Django servers...$(NC)\n"
+	@printf "$(CYAN)ℹ️  Note: Run this from a DIFFERENT terminal than the one running the server$(NC)\n"
+ifeq ($(OS), Windows_NT)
+	@powershell -Command "Write-Host '🛑 Stopping all Django servers...' -ForegroundColor Yellow"
+	@powershell -Command "Get-Process | Where-Object {$$_.ProcessName -match 'python|gunicorn|waitress'} | Where-Object {$$_.CommandLine -match 'django|manage.py|wsgi'} | Stop-Process -Force" 2>nul || echo "No Django servers found"
+else
+	@printf "$(YELLOW)🛑 Stopping all Django servers...$(NC)\n"
+	@pkill -f "gunicorn.*wsgi" 2>/dev/null || true
+	@pkill -f "waitress.*wsgi" 2>/dev/null || true
+	@pkill -f "manage.py runserver" 2>/dev/null || true
+	@printf "$(GREEN)✅ All Django servers stopped$(NC)\n"
+endif
+
+kill-port: ## 🔪 Kill processes on port 8000 (run from different terminal!)
+	@printf "$(YELLOW)🔪 Killing processes on port 8000...$(NC)\n"
+	@printf "$(CYAN)ℹ️  Note: Run this from a DIFFERENT terminal than the one running the server$(NC)\n"
+ifeq ($(OS), Windows_NT)
+	@powershell -Command "$$processes = Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess; if ($$processes) { $$processes | ForEach-Object { Stop-Process -Id $$_ -Force -ErrorAction SilentlyContinue }; Write-Host 'Processes on port 8000 terminated' } else { Write-Host 'No processes found on port 8000' }"
+else
+	@lsof -ti:8000 | xargs kill -9 2>/dev/null || echo "No processes found on port 8000"
+	@printf "$(GREEN)✅ Port 8000 is now free$(NC)\n"
 endif
