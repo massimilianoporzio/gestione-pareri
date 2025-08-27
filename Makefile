@@ -409,17 +409,8 @@ else
 	@chmod +x scripts/deployment/start-uvicorn.sh
 	@./scripts/deployment/start-uvicorn.sh &
 	sleep 2
-	# Non aprire la home in ambiente server/cloud
 endif
 
-open-home: ## Apre la pagina home nel browser
-ifeq ($(OS),Windows_NT)
-	start http://localhost:8000/
-else
-	if command -v open >/dev/null 2>&1; then \
-		open http://localhost:8000/; \
-	fi
-endif
 
 deploy-dev: ## Deploy in development mode with auto-reload
 ifeq ($(OS), Windows_NT)
