@@ -409,8 +409,8 @@ else
 	@chmod +x scripts/deployment/start-uvicorn.sh
 	@./scripts/deployment/start-uvicorn.sh &
 	sleep 2
-	# Apri la home solo se non siamo su Render/CI
-	if [ -z "$RENDER" ] && [ -z "$CI" ]; then \
+	# Apri la home solo se il comando 'open' è disponibile
+	if command -v open >/dev/null 2>&1; then \
 		$(MAKE) open-home; \
 	fi
 endif
