@@ -75,6 +75,7 @@ ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'make waitress      ' -NoNewline -ForegroundColor Green; Write-Host '🪟 Avvia con Waitress (Windows/Cross-platform)'"
 	@powershell -Command "Write-Host 'make gunicorn      ' -NoNewline -ForegroundColor Green; Write-Host '🐧 Avvia con Gunicorn (Unix/Linux/macOS)'"
 	@powershell -Command "Write-Host 'make run-uvicorn   ' -NoNewline -ForegroundColor Green; Write-Host '⚡ Avvia con Uvicorn ASGI (Tutti gli OS) - RACCOMANDATO'"
+	@powershell -Command "Write-Host 'make test-uvicorn-local' -NoNewline -ForegroundColor Green; Write-Host 'Test locale Uvicorn ASGI (debug, singolo worker)'"
 	@powershell -Command "Write-Host 'make open-home     ' -NoNewline -ForegroundColor Green; Write-Host '🌐 Apre la pagina home nel browser'"
 	@powershell -Command "Write-Host 'make collectstatic ' -NoNewline -ForegroundColor Green; Write-Host '📦 Raccoglie i file statici'"
 	@powershell -Command "Write-Host 'make stop-servers  ' -NoNewline -ForegroundColor Yellow; Write-Host '🛑 Ferma tutti i server Django'"
@@ -101,12 +102,16 @@ else
 	@printf "$(GREEN)make waitress$(NC)      🪟 Avvia con Waitress (Windows/Cross-platform)\n"
 	@printf "$(GREEN)make gunicorn$(NC)      🐧 Avvia con Gunicorn (Unix/Linux/macOS)\n"
 	@printf "$(GREEN)make run-uvicorn$(NC)   ⚡ Avvia con Uvicorn ASGI (Tutti gli OS) - RACCOMANDATO\n"
+	@printf "$(GREEN)make test-uvicorn-local$(NC) Test locale Uvicorn ASGI (debug, singolo worker)\n"
 	@printf "$(GREEN)make open-home$(NC)     🌐 Apre la pagina home nel browser\n"
 	@printf "$(GREEN)make collectstatic$(NC) 📦 Raccoglie i file statici\n"
 	@printf "$(YELLOW)make stop-servers$(NC)  🛑 Ferma tutti i server Django\n"
 	@printf "$(RED)make kill-port$(NC)     🔪 Termina i processi sulla porta 8000\n"
 	@printf "$(GREEN)make help$(NC)          Mostra questo messaggio di aiuto\n"
 endif
+test-uvicorn-local: ## Test locale Uvicorn ASGI (debug, singolo worker)
+	@echo "Test locale Uvicorn ASGI (debug, singolo worker)..."
+	bash scripts/deployment/test-uvicorn-local.sh
 
 run-server:
 	@echo "🚀 Avvio del server di sviluppo Django..."
@@ -389,6 +394,16 @@ else
 	@echo "🐧 Starting Django with Gunicorn (Unix/Linux/macOS)..."
 	@chmod +x scripts/deployment/start-gunicorn.sh
 	@./scripts/deployment/start-gunicorn.sh
+endif
+
+uvicorn: install-prod ## Start Django with Uvicorn ASGI (multi-worker, produzione, compatibile Render)
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host '⚡ Starting Django with Uvicorn ASGI (Windows, single worker)...' -ForegroundColor Green"
+	@powershell -ExecutionPolicy Bypass -File scripts/deployment/start-uvicorn.ps1
+else
+	@echo "⚡ Starting Django with Uvicorn ASGI (Unix/Linux/macOS, multi-worker, compatibile Render)..."
+	@chmod +x scripts/deployment/start-uvicorn-render.sh
+	@./scripts/deployment/start-uvicorn-render.sh
 endif
 
 waitress: install-prod ## Start Django with Waitress (Windows/Cross-platform)
