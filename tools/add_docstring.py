@@ -185,6 +185,27 @@ def _process_functions(lines, functions_to_modify):
         _insert_docstring(lines, node, leading_spaces)
 
 
+def _parse_and_collect_functions(content):
+    """Parse del codice e raccolta delle funzioni da modificare."""
+    try:
+        tree = ast.parse(content)
+        functions_to_modify = _collect_functions_to_modify(tree)
+        return functions_to_modify
+    except SyntaxError:
+        return None
+
+
+def _modify_and_save_file(filepath, content, functions_to_modify):
+    """Modifica il file aggiungendo le docstring e lo salva."""
+    lines = content.splitlines()
+    _process_functions(lines, functions_to_modify)
+    
+    path = Path(filepath)
+    path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"Aggiunte docstring alle funzioni in {filepath}")
+    return True
+
+
 def add_function_docstrings(filepath):
     """Aggiunge docstring alle funzioni e metodi senza docstring.
 
@@ -202,30 +223,18 @@ def add_function_docstrings(filepath):
     # 2. Legge il contenuto del file
     content = path.read_text(encoding="utf-8")
 
-    try:
-        # 3. Parse del codice
-        tree = ast.parse(content)
-
-        # 4. Raccoglie le funzioni da modificare
-        functions_to_modify = _collect_functions_to_modify(tree)
-
-        if not functions_to_modify:
-            return False
-
-        # 5. Converte il contenuto in righe per l'editing
-        lines = content.splitlines()
-
-        # 6. Processa le funzioni
-        _process_functions(lines, functions_to_modify)
-
-        # 7. Salva il file modificato
-        path.write_text("\n".join(lines), encoding="utf-8")
-        print(f"Aggiunte docstring alle funzioni in {filepath}")
-        return True
-
-    except SyntaxError:
+    # 3. Parse del codice e raccolta funzioni
+    functions_to_modify = _parse_and_collect_functions(content)
+    
+    if functions_to_modify is None:
         print(f"Errore di sintassi nel file {filepath}")
         return False
+        
+    if not functions_to_modify:
+        return False
+
+    # 4. Modifica e salva il file
+    return _modify_and_save_file(filepath, content, functions_to_modify)
 
 
 def main():

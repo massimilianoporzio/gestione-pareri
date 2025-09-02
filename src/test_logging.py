@@ -127,28 +127,43 @@ def write_production_test_log(env, django_logger):
     return test_message
 
 
+def _get_logs_dir_from_settings():
+    """Ottiene la directory dei log dalle impostazioni Django."""
+    if hasattr(settings, "LOGS_DIR_PATH"):
+        print(f"LOGS_DIR_PATH da settings: {settings.LOGS_DIR_PATH}")
+        print(f"Tipo: {type(settings.LOGS_DIR_PATH)}")
+
+    if hasattr(settings, "LOGS_DIR"):
+        logs_dir = settings.LOGS_DIR
+        print(f"LOGS_DIR da settings: {logs_dir}")
+        print(f"Tipo: {type(logs_dir)}")
+        print(f"Esiste: {logs_dir.exists()}")
+        return logs_dir
+    
+    return None
+
+
+def _get_fallback_logs_dir():
+    """Ottiene la directory dei log di fallback."""
+    base_dir = Path(__file__).resolve().parent.parent
+    logs_dir = base_dir / "logs"
+    print(f"Directory dei log di fallback: {logs_dir}")
+    print(f"Esiste: {logs_dir.exists()}")
+    return logs_dir
+
+
 def get_logs_directory():
     """Ottiene la directory dei log configurata."""
     try:
         print("\nInformazioni sulla directory dei log:")
-
-        if hasattr(settings, "LOGS_DIR_PATH"):
-            print(f"LOGS_DIR_PATH da settings: {settings.LOGS_DIR_PATH}")
-            print(f"Tipo: {type(settings.LOGS_DIR_PATH)}")
-
-        if hasattr(settings, "LOGS_DIR"):
-            logs_dir = settings.LOGS_DIR
-            print(f"LOGS_DIR da settings: {logs_dir}")
-            print(f"Tipo: {type(logs_dir)}")
-            print(f"Esiste: {logs_dir.exists()}")
+        
+        # Prova a ottenere dalle impostazioni
+        logs_dir = _get_logs_dir_from_settings()
+        if logs_dir:
             return logs_dir
-
+            
         # Directory di fallback
-        base_dir = Path(__file__).resolve().parent.parent
-        logs_dir = base_dir / "logs"
-        print(f"Directory dei log di fallback: {logs_dir}")
-        print(f"Esiste: {logs_dir.exists()}")
-        return logs_dir
+        return _get_fallback_logs_dir()
 
     except (AttributeError, OSError) as e:
         print(f"Errore nell'analisi della directory dei log: {e}")
@@ -171,32 +186,50 @@ def verify_log_file_content(env, logs_dir, test_message):
         print(f"Errore nell'accesso al file di log: {e}")
 
 
+def _read_log_file_content(log_file):
+    """Legge il contenuto del file di log."""
+    try:
+        with open(log_file, encoding="utf-8") as f:
+            return f.read()
+    except OSError as e:
+        print(f"Errore nella lettura del file di log: {e}")
+        return None
+
+
+def _verify_message_in_content(log_content, test_message, log_file):
+    """Verifica se il messaggio è presente nel contenuto del log."""
+    if test_message in log_content:
+        print("\n✅ SUCCESSO: Il messaggio di test è stato scritto nel file di log!")
+        _show_last_log_lines(log_file)
+        return True
+    return False
+
+
+def _handle_message_not_found(log_content):
+    """Gestisce il caso in cui il messaggio di test non è stato trovato."""
+    print("❌ ERRORE: Il messaggio di test non è stato trovato nel file di log!")
+    print("Contenuto parziale del file di log:")
+    print(log_content[-500:])
+
+
 def _check_test_message_in_log(log_file, test_message):
     """Controlla se il messaggio di test è presente nel file di log."""
     import time
 
     max_attempts = 3
     for attempt in range(max_attempts):
-        try:
-            with open(log_file, encoding="utf-8") as f:
-                log_content = f.read()
-
-            if test_message in log_content:
-                print("\n✅ SUCCESSO: Il messaggio di test è stato scritto nel file di log!")
-                _show_last_log_lines(log_file)
-                break
-
-            if attempt < max_attempts - 1:
-                print(f"Tentativo {attempt + 1}: Messaggio di test non trovato, attendo...")
-                time.sleep(1)
-            else:
-                print("❌ ERRORE: Il messaggio di test non è stato trovato nel file di log!")
-                print("Contenuto parziale del file di log:")
-                print(log_content[-500:])
-
-        except OSError as e:
-            print(f"Errore nella lettura del file di log: {e}")
+        log_content = _read_log_file_content(log_file)
+        if log_content is None:
             break
+
+        if _verify_message_in_content(log_content, test_message, log_file):
+            break
+
+        if attempt < max_attempts - 1:
+            print(f"Tentativo {attempt + 1}: Messaggio di test non trovato, attendo...")
+            time.sleep(1)
+        else:
+            _handle_message_not_found(log_content)
 
 
 def _show_last_log_lines(log_file):
