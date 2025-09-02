@@ -1,0 +1,60 @@
+# CodeRabbit configuration
+# Configurazione per review AI automatiche
+
+# Linguaggi da revieware
+language: "python"
+
+# Regole specifiche per Django
+rules:
+  python:
+    # Django-specific checks
+    - "django-best-practices"
+    - "security-vulnerabilities"
+    - "performance-issues"
+    - "code-complexity"
+    - "naming-conventions"
+
+  # File da escludere dalla review
+  ignore_patterns:
+    - "**/migrations/*.py"
+    - "**/venv/**"
+    - "**/__pycache__/**"
+    - "**/node_modules/**"
+    - "**/static/admin/**"
+
+# Review settings
+review:
+  # Livello di dettaglio: basic, standard, comprehensive
+  level: "comprehensive"
+
+  # Auto-approval per piccole modifiche
+  auto_approve:
+    enabled: true
+    max_files: 3
+    max_lines: 50
+    exclude_patterns:
+      - "**/settings/*.py"
+      - "**/migrations/*.py"
+      - "**/.github/workflows/*.yml"
+
+# Commenti della review
+comments:
+  # Stile dei commenti: conversational, direct, minimal
+  style: "conversational"
+
+  # Suggerimenti di codice
+  code_suggestions: true
+
+  # Spiegazioni dettagliate
+  explanations: true
+
+# Integrazione con GitHub
+github:
+  # Review automatica su ogni PR
+  auto_review: true
+
+  # Richiedi review anche per il proprietario
+  review_owner_prs: true
+
+  # Commenti inline nel codice
+  inline_comments: true

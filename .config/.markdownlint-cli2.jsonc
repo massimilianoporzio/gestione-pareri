@@ -1,0 +1,31 @@
+{
+  // Configurazione markdownlint
+  "config": {
+    // Regole di default
+    "default": true,
+    // Disabilita il controllo della lunghezza della riga
+    "MD013": false,
+    // Consenti più righe vuote consecutive
+    "MD012": false,
+    // Permetti diversi stili di titoli
+    "MD003": { "style": "consistent" },
+    // Permetti enfasi con underscore e asterisco
+    "MD049": { "style": "consistent" },
+    "MD050": { "style": "consistent" },
+    // Permetti punteggiatura finale nei titoli (utile per guide)
+    "MD026": false,
+    // Non richiedere linguaggio per tutti i blocchi di codice
+    "MD040": false,
+    // Permetti tab (alcuni file possono averne)
+    "MD010": false,
+    // Permetti enfasi come pseudo-heading (comune nella documentazione tecnica)
+    "MD036": false
+  },
+  // Ignora i file nel node_modules e altre directory
+  "ignores": [
+    "node_modules/**",
+    ".venv/**",
+    "staticfiles/**",
+    "media/**"
+  ]
+}

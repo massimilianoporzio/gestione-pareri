@@ -1,0 +1,38 @@
+# Sourcery configuration for Python refactoring and review
+# https://sourcery.ai/
+
+# Enable all Python refactoring rules
+python_version: "3.13"
+
+# Django-specific settings
+rules:
+  - "django-best-practices"
+  - "performance"
+  - "complexity-reduction"
+  - "readability"
+  - "pythonic-code"
+
+# Refactoring preferences
+refactor:
+  - "low-quality-code"
+  - "unnecessary-comprehension"
+  - "simplify-boolean-expression"
+  - "merge-duplicate-blocks"
+  - "convert-to-enumerate"
+  - "use-f-string"
+
+# Skip certain files
+skip:
+  - "**/migrations/"
+  - "**/venv/"
+  - "**/__pycache__/"
+  - "**/node_modules/"
+
+# GitHub integration
+github_sourcery_branch: "sourcery/{base_branch}"
+
+# Clone detection
+clone_detection: true
+
+# Quality threshold (1-100, higher = stricter)
+min_quality_score: 80
