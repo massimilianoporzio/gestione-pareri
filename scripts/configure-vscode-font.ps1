@@ -10,7 +10,7 @@
 
 .NOTES
     Font supportati disponibili:
-    - FiraCode Nerd Font Mono  
+    - FiraCode Nerd Font Mono
     - CaskaydiaCove Nerd Font Mono
     - Consolas (fallback senza icone)
 #>
@@ -22,7 +22,7 @@ param(
 
 # Colori per output
 $Green = "`e[32m"
-$Yellow = "`e[33m" 
+$Yellow = "`e[33m"
 $Red = "`e[31m"
 $Reset = "`e[0m"
 
@@ -123,17 +123,17 @@ Write-Host "`n${Yellow}🔄 Riavvia VS Code per applicare le modifiche${Reset}" 
 Write-Host "`n🔍 Verifica font installati:" -ForegroundColor Green
 $installedFonts = @(
     "FiraCode Nerd Font Mono",
-    "CaskaydiaCove Nerd Font Mono", 
+    "CaskaydiaCove Nerd Font Mono",
     "Cascadia Code",
     "Consolas"
 )
 
 foreach ($font in $installedFonts) {
     try {
-        $fontRegistry = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" | 
-                       Get-Member -MemberType NoteProperty | 
+        $fontRegistry = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" |
+                       Get-Member -MemberType NoteProperty |
                        Where-Object { $_.Name -like "*$font*" }
-        
+
         if ($fontRegistry) {
             Write-Host "  ✅ $font - Disponibile" -ForegroundColor Green
         }
@@ -149,5 +149,5 @@ foreach ($font in $installedFonts) {
 Write-Host "`n${Green}🎯 Configurazione completata!${Reset}" -ForegroundColor Green
 Write-Host "Per testare Oh My Posh:" -ForegroundColor Yellow
 Write-Host "1. Riavvia VS Code" -ForegroundColor Yellow
-Write-Host "2. Apri un nuovo terminale integrato (Ctrl+`)" -ForegroundColor Yellow 
+Write-Host "2. Apri un nuovo terminale integrato (Ctrl+`)" -ForegroundColor Yellow
 Write-Host "3. Verifica che le icone Oh My Posh siano visualizzate correttamente" -ForegroundColor Yellow

@@ -267,44 +267,48 @@ endif
 fix-all:
 ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'Correzione completa di tutti i problemi di qualita del codice...' -ForegroundColor Cyan"
-	@powershell -Command "Write-Host '1/8 - Aggiunta docstring...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '1/10 - Rimozione spazi finali...' -ForegroundColor Yellow"
+	-pre-commit run trailing-whitespace --all-files
+	@powershell -Command "Write-Host '2/10 - Correzione fine file...' -ForegroundColor Yellow"
+	-pre-commit run end-of-file-fixer --all-files
+	@powershell -Command "Write-Host '3/10 - Aggiunta docstring...' -ForegroundColor Yellow"
 	-uv run python tools/add_docstring_batch.py .
-	@powershell -Command "Write-Host '2/8 - Ordinamento import (isort style)...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '4/10 - Ordinamento import (isort style)...' -ForegroundColor Yellow"
 	-uv run ruff check --select I --fix .
-	@powershell -Command "Write-Host '3/8 - Formattazione con Ruff...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '5/10 - Formattazione con Ruff...' -ForegroundColor Yellow"
 	-uv run ruff format .
-	@powershell -Command "Write-Host '4/8 - Correzione automatica con Ruff...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '6/10 - Correzione automatica con Ruff...' -ForegroundColor Yellow"
 	-uv run ruff check . --fix --unsafe-fixes
-	@powershell -Command "Write-Host '5/8 - Correzioni aggressive con autopep8...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '7/10 - Correzioni aggressive con autopep8...' -ForegroundColor Yellow"
 	-uv run autopep8 --in-place --aggressive --aggressive --recursive .
-	@powershell -Command "Write-Host '6/8 - Formattazione finale con Ruff...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '8/10 - Formattazione finale con Ruff...' -ForegroundColor Yellow"
 	-uv run ruff format .
-	@powershell -Command "Write-Host '7/9 - Controllo finale import...' -ForegroundColor Yellow"
-	-uv run ruff check --select I --fix .
-	@powershell -Command "Write-Host '8/9 - Formattazione Markdown...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '9/10 - Formattazione Markdown...' -ForegroundColor Yellow"
 	$(MAKE) format-markdown
-	@powershell -Command "Write-Host '9/9 - Correzione problemi Markdown...' -ForegroundColor Yellow"
+	@powershell -Command "Write-Host '10/10 - Correzione problemi Markdown...' -ForegroundColor Yellow"
 	$(MAKE) fix-markdown
 	@powershell -Command "Write-Host 'Tutti i problemi di qualita del codice sono stati corretti!' -ForegroundColor Green"
 else
 	@echo -e "$(CYAN)Correzione completa di tutti i problemi di qualità del codice...$(NC)"
-	@echo -e "$(YELLOW)1/8 - Aggiunta docstring...$(NC)"
+	@echo -e "$(YELLOW)1/10 - Rimozione spazi finali...$(NC)"
+	-pre-commit run trailing-whitespace --all-files
+	@echo -e "$(YELLOW)2/10 - Correzione fine file...$(NC)"
+	-pre-commit run end-of-file-fixer --all-files
+	@echo -e "$(YELLOW)3/10 - Aggiunta docstring...$(NC)"
 	-uv run python tools/add_docstring_batch.py .
-	@echo -e "$(YELLOW)2/8 - Ordinamento import (isort style)...$(NC)"
+	@echo -e "$(YELLOW)4/10 - Ordinamento import (isort style)...$(NC)"
 	-uv run ruff check --select I --fix .
-	@echo -e "$(YELLOW)3/8 - Formattazione con Ruff...$(NC)"
+	@echo -e "$(YELLOW)5/10 - Formattazione con Ruff...$(NC)"
 	-uv run ruff format .
-	@echo -e "$(YELLOW)4/8 - Correzione automatica con Ruff...$(NC)"
+	@echo -e "$(YELLOW)6/10 - Correzione automatica con Ruff...$(NC)"
 	-uv run ruff check . --fix --unsafe-fixes
-	@echo -e "$(YELLOW)5/8 - Correzioni aggressive con autopep8...$(NC)"
+	@echo -e "$(YELLOW)7/10 - Correzioni aggressive con autopep8...$(NC)"
 	-uv run autopep8 --in-place --aggressive --aggressive --recursive .
-	@echo -e "$(YELLOW)6/8 - Formattazione finale con Ruff...$(NC)"
+	@echo -e "$(YELLOW)8/10 - Formattazione finale con Ruff...$(NC)"
 	-uv run ruff format .
-	@echo -e "$(YELLOW)7/9 - Controllo finale import...$(NC)"
-	-uv run ruff check --select I --fix .
-	@echo -e "$(YELLOW)8/9 - Formattazione Markdown...$(NC)"
+	@echo -e "$(YELLOW)9/10 - Formattazione Markdown...$(NC)"
 	$(MAKE) format-markdown
-	@echo -e "$(YELLOW)9/9 - Correzione problemi Markdown...$(NC)"
+	@echo -e "$(YELLOW)10/10 - Correzione problemi Markdown...$(NC)"
 	$(MAKE) fix-markdown
 	@echo -e "$(GREEN)✅ Tutti i problemi di qualità del codice sono stati corretti!$(NC)"
 endif
