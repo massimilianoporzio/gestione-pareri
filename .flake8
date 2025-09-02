@@ -1,9 +1,9 @@
 [flake8]
 max-line-length = 120
-extend-ignore = 
+extend-ignore =
     # Ignora errori di importazione per settings Django
     F401,F403
-exclude = 
+exclude =
     .venv,
     venv,
     __pycache__,

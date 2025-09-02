@@ -38,7 +38,7 @@ try {
 # Font consigliati per Oh My Posh (in ordine di preferenza)
 $preferredFonts = @(
     "FiraCode Nerd Font",
-    "FiraCode Nerd Font Mono", 
+    "FiraCode Nerd Font Mono",
     "CaskaydiaCove Nerd Font",
     "MesloLGM Nerd Font",
     "Consolas"
@@ -98,7 +98,7 @@ if ($updated) {
     # Salva la configurazione aggiornata
     $settings | ConvertTo-Json -Depth 10 | Set-Content -Path $configPath -Encoding UTF8
     Write-Host "💾 Configurazione salvata!" -ForegroundColor Green
-    
+
     Write-Host ""
     Write-Host "🎉 Configurazione completata!" -ForegroundColor Green
     Write-Host ""
@@ -106,7 +106,7 @@ if ($updated) {
     Write-Host "1. Riavvia Windows Terminal" -ForegroundColor White
     Write-Host "2. Le icone Oh My Posh dovrebbero ora essere visualizzate correttamente" -ForegroundColor White
     Write-Host "3. Se vedi ancora problemi, prova: oh-my-posh font install CascadiaCode" -ForegroundColor White
-    
+
     Write-Host ""
     Write-Host "🔤 Font configurato: $selectedFont" -ForegroundColor Yellow
     Write-Host "📂 Backup disponibile: $backupPath" -ForegroundColor Gray
