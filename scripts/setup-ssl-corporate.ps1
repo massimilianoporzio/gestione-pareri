@@ -37,7 +37,7 @@ trusted-host = pypi.org
                files.pythonhosted.org
                github.com
                raw.githubusercontent.com
-cert = 
+cert =
 proxy = http://$proxy
 "@
 
@@ -97,7 +97,7 @@ $sitePackagesPath = & uv run python -c "import site; print(site.getsitepackages(
 if ($sitePackagesPath) {
     $pthFile = Join-Path $sitePackagesPath "ssl_patch.pth"
     "import ssl_patch" | Out-File -FilePath $pthFile -Encoding UTF8 -Force
-    
+
     $patchFile = Join-Path $sitePackagesPath "ssl_patch.py"
     $pythonSslPatch | Out-File -FilePath $patchFile -Encoding UTF8 -Force
 }
@@ -153,7 +153,7 @@ Write-Host "   2. Oppure: make quality-corporate (fallback senza Node.js)" -Fore
 Write-Host ""
 Write-Host "🔧 Le seguenti configurazioni sono attive:" -ForegroundColor Yellow
 Write-Host "   - SSL verification disabilitata per Python/pip/uv" -ForegroundColor White
-Write-Host "   - Proxy aziendale configurato" -ForegroundColor White  
+Write-Host "   - Proxy aziendale configurato" -ForegroundColor White
 Write-Host "   - Node.js/npm SSL disabilitato" -ForegroundColor White
 Write-Host "   - nodeenv SSL bypass attivato" -ForegroundColor White
 Write-Host ""

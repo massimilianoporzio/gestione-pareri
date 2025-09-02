@@ -5,7 +5,7 @@ Write-Host "Configurazione pre-commit con uv per ambiente aziendale..." -Foregro
 
 # 1. Configurazione variabili di ambiente SSL per Python/urllib
 $env:PYTHONHTTPSVERIFY = "0"
-$env:SSL_VERIFY = "false" 
+$env:SSL_VERIFY = "false"
 $env:CURL_CA_BUNDLE = ""
 $env:REQUESTS_CA_BUNDLE = ""
 
