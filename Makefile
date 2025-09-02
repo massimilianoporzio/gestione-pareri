@@ -11,7 +11,41 @@ else
 	shfmt -w scripts/deployment/*.sh
 	@echo -e "$(GREEN)✅ Correzioni applicate!$(NC)"
 endif
-.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all test-precommit format-markdown install-prod gunicorn waitress uvicorn deploy-dev deploy-prod deploy-staging deploy collectstatic fix-markdown stop-servers kill-port
+
+# 🏢 Controlli qualità per ambiente aziendale (alternativa a pre-commit)
+quality-corporate: ## Esegue tutti i controlli qualità senza pre-commit (per ambienti aziendali)
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host '🏢 Controlli qualità ambiente aziendale...' -ForegroundColor Cyan"
+	@powershell -Command "Write-Host '1/6 - Ruff format...' -ForegroundColor Yellow"
+	-uv run ruff format .
+	@powershell -Command "Write-Host '2/6 - Ruff check e fix...' -ForegroundColor Yellow"
+	-uv run ruff check . --fix --unsafe-fixes
+	@powershell -Command "Write-Host '3/6 - Import sorting...' -ForegroundColor Yellow"
+	-uv run ruff check --select I --fix .
+	@powershell -Command "Write-Host '4/6 - Flake8...' -ForegroundColor Yellow"
+	-uv run flake8 --format=default .
+	@powershell -Command "Write-Host '5/6 - Correzione script bash...' -ForegroundColor Yellow"
+	$(MAKE) fix-codacy
+	@powershell -Command "Write-Host '6/6 - Formattazione Markdown...' -ForegroundColor Yellow"
+	$(MAKE) format-markdown
+	@powershell -Command "Write-Host '✅ Controlli qualità completati (ambiente aziendale)!' -ForegroundColor Green"
+else
+	@echo -e "$(CYAN)🏢 Controlli qualità ambiente aziendale...$(NC)"
+	@echo -e "$(YELLOW)1/6 - Ruff format...$(NC)"
+	-uv run ruff format .
+	@echo -e "$(YELLOW)2/6 - Ruff check e fix...$(NC)"
+	-uv run ruff check . --fix --unsafe-fixes
+	@echo -e "$(YELLOW)3/6 - Import sorting...$(NC)"
+	-uv run ruff check --select I --fix .
+	@echo -e "$(YELLOW)4/6 - Flake8...$(NC)"
+	-uv run flake8 --format=default .
+	@echo -e "$(YELLOW)5/6 - Correzione script bash...$(NC)"
+	$(MAKE) fix-codacy
+	@echo -e "$(YELLOW)6/6 - Formattazione Markdown...$(NC)"
+	$(MAKE) format-markdown
+	@echo -e "$(GREEN)✅ Controlli qualità completati (ambiente aziendale)!$(NC)"
+endif
+.PHONY: run-server test migrate makemigrations shell lint format help run-dev run-test run-prod test-dev test-test test-prod migrate-dev migrate-test migrate-prod shell-dev shell-test shell-prod check-env check-env-dev check-env-test check-env-prod check-custom-logs add-docstrings fix-all test-precommit format-markdown install-prod gunicorn waitress uvicorn deploy-dev deploy-prod deploy-staging deploy collectstatic fix-markdown stop-servers kill-port quality-corporate fix-codacy precommit-corporate
 
 .SILENT: run-server run-dev run-test run-prod deploy deploy-dev deploy-prod deploy-staging gunicorn waitress install-prod stop-servers kill-port
 
@@ -283,6 +317,18 @@ else
 	@echo -e "$(CYAN)🔍 Test di tutti i controlli pre-commit...$(NC)"
 	pre-commit run --all-files
 	@echo -e "$(GREEN)✅ Test pre-commit completato!$(NC)"
+endif
+
+# 🏢 Pre-commit completo per ambiente aziendale (con Node.js)
+precommit-corporate: ## Esegue pre-commit completo in ambiente aziendale (tutti gli hook inclusi Node.js)
+ifeq ($(OS),Windows_NT)
+	@powershell -Command "Write-Host 'Pre-commit ambiente aziendale (completo)...' -ForegroundColor Cyan"
+	@powershell -Command "$$env:NODE_TLS_REJECT_UNAUTHORIZED='0'; $$env:PYTHONHTTPSVERIFY='0'; pre-commit run --all-files"
+	@powershell -Command "Write-Host 'Pre-commit aziendale completato!' -ForegroundColor Green"
+else
+	@echo -e "$(CYAN)🏢 Pre-commit ambiente aziendale (completo)...$(NC)"
+	NODE_TLS_REJECT_UNAUTHORIZED=0 PYTHONHTTPSVERIFY=0 pre-commit run --all-files
+	@echo -e "$(GREEN)✅ Pre-commit aziendale completato!$(NC)"
 endif
 
 # Format all markdown files
