@@ -20,8 +20,15 @@ def run_command(cmd):
         else:
             cmd_args = cmd
 
-        # Esegui senza shell=True per maggiore sicurezza
-        result = subprocess.run(cmd_args, capture_output=True, text=True, check=False)
+        # Esegui con encoding UTF-8 esplicito per evitare problemi su Windows
+        result = subprocess.run(
+            cmd_args, 
+            capture_output=True, 
+            text=True, 
+            encoding="utf-8", 
+            errors="replace",
+            check=False
+        )
         return result.stdout, result.stderr, result.returncode
     except (subprocess.SubprocessError, OSError, ValueError) as e:
         return "", str(e), 1
