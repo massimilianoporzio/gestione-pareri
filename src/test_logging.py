@@ -139,7 +139,7 @@ def _get_logs_dir_from_settings():
         print(f"Tipo: {type(logs_dir)}")
         print(f"Esiste: {logs_dir.exists()}")
         return logs_dir
-    
+
     return None
 
 
@@ -156,12 +156,12 @@ def get_logs_directory():
     """Ottiene la directory dei log configurata."""
     try:
         print("\nInformazioni sulla directory dei log:")
-        
+
         # Prova a ottenere dalle impostazioni
         logs_dir = _get_logs_dir_from_settings()
         if logs_dir:
             return logs_dir
-            
+
         # Directory di fallback
         return _get_fallback_logs_dir()
 

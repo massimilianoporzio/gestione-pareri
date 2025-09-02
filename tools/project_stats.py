@@ -22,12 +22,7 @@ def run_command(cmd):
 
         # Esegui con encoding UTF-8 esplicito per evitare problemi su Windows
         result = subprocess.run(
-            cmd_args, 
-            capture_output=True, 
-            text=True, 
-            encoding="utf-8", 
-            errors="replace",
-            check=False
+            cmd_args, capture_output=True, text=True, encoding="utf-8", errors="replace", check=False
         )
         return result.stdout, result.stderr, result.returncode
     except (subprocess.SubprocessError, OSError, ValueError) as e:

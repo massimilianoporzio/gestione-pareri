@@ -11,7 +11,7 @@ django_manage := "uv run src/manage.py"
 # 📋 Comando default: mostra l'help
 default:
     @Write-Host "Deploy Django Template - Comandi disponibili:" -ForegroundColor Cyan
-    @Write-Host "just run-server     🚀 Avvia il server di sviluppo Django" -ForegroundColor Green  
+    @Write-Host "just run-server     🚀 Avvia il server di sviluppo Django" -ForegroundColor Green
     @Write-Host "just run-dev        🔧 Avvia il server di sviluppo in ambiente DEV" -ForegroundColor Green
     @Write-Host "just run-test       🧪 Avvia il server di sviluppo in ambiente TEST" -ForegroundColor Green
     @Write-Host "just run-prod       ⚡ Avvia il server di sviluppo in ambiente PROD" -ForegroundColor Green
@@ -19,14 +19,14 @@ default:
     @Write-Host "just add-docstrings 📝 Aggiunge docstring mancanti ai file Python" -ForegroundColor Green
     @Write-Host "just fix-all        ⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice" -ForegroundColor Green
     @Write-Host "just test-precommit 🔍 TEST PRE-COMMIT: Verifica tutti i controlli senza modifiche" -ForegroundColor Green
-    @Write-Host "just quality-corporate 🏢 Controlli qualità per ambiente aziendale" -ForegroundColor Green  
+    @Write-Host "just quality-corporate 🏢 Controlli qualità per ambiente aziendale" -ForegroundColor Green
     @Write-Host "just fix-markdown   📝 Corregge problemi di linting Markdown" -ForegroundColor Green
     @Write-Host "just lint-codacy    🔍 Controlli qualità stile Codacy (senza correzioni)" -ForegroundColor Green
     @Write-Host "just stats          📊 Genera statistiche complete del progetto" -ForegroundColor Green
     @Write-Host "" -ForegroundColor White
     @Write-Host "== DEPLOYMENT ==" -ForegroundColor Magenta
     @Write-Host "just deploy-dev     🔧 Avvia server di sviluppo" -ForegroundColor Green
-    @Write-Host "just deploy-staging 🧪 Deploy in modalità staging/test" -ForegroundColor Green  
+    @Write-Host "just deploy-staging 🧪 Deploy in modalità staging/test" -ForegroundColor Green
     @Write-Host "just deploy-prod    🚀 Deploy in produzione" -ForegroundColor Green
     @Write-Host "just deploy         🎯 Deploy automatico (rileva OS e usa il server ottimale)" -ForegroundColor Green
     @Write-Host "just waitress       🪟 Avvia con Waitress (Windows/Cross-platform)" -ForegroundColor Green
@@ -45,14 +45,14 @@ run-server:
     @Write-Host "🚀 Avvio del server di sviluppo Django..." -ForegroundColor Cyan
     @{{django_manage}} runserver
 
-# 🔧 Server di sviluppo in ambiente DEV  
+# 🔧 Server di sviluppo in ambiente DEV
 run-dev:
     @Write-Host "🔧 Avvio del server di sviluppo in ambiente DEV..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="dev"; {{django_manage}} runserver
 
 # 🧪 Server di sviluppo in ambiente TEST
 run-test:
-    @Write-Host "🧪 Avvio del server di sviluppo in ambiente TEST..." -ForegroundColor Cyan  
+    @Write-Host "🧪 Avvio del server di sviluppo in ambiente TEST..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="test"; {{django_manage}} runserver
 
 # ⚡ Server di sviluppo in ambiente PROD
@@ -102,7 +102,7 @@ migrate-prod:
 
 # 📝 Creazione migrazioni
 makemigrations:
-    @Write-Host "📝 Creazione delle migrazioni..." -ForegroundColor Cyan  
+    @Write-Host "📝 Creazione delle migrazioni..." -ForegroundColor Cyan
     @{{django_manage}} makemigrations
 
 # 🐚 Shell Django
@@ -120,7 +120,7 @@ shell-test:
     @Write-Host "🐚 Avvio della shell Django in ambiente TEST..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="test"; {{django_manage}} shell
 
-# 🐚 Shell Django PROD  
+# 🐚 Shell Django PROD
 shell-prod:
     @Write-Host "🐚 Avvio della shell Django in ambiente PROD..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="prod"; {{django_manage}} shell
@@ -305,7 +305,7 @@ stop-servers:
     @Write-Host "ℹ️  Nota: Eseguire da un terminale DIVERSO da quello che esegue il server" -ForegroundColor Cyan
     @Get-Process | Where-Object {$_.ProcessName -match "python|gunicorn|waitress|uvicorn"} | Where-Object {$_.CommandLine -match "django|manage.py|wsgi|asgi"} | Stop-Process -Force
 
-# 🔪 Termina processi sulla porta 8000  
+# 🔪 Termina processi sulla porta 8000
 kill-port:
     @Write-Host "🔪 Terminazione processi sulla porta 8000..." -ForegroundColor Yellow
     @Write-Host "ℹ️  Nota: Eseguire da un terminale DIVERSO da quello che esegue il server" -ForegroundColor Cyan
