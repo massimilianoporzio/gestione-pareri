@@ -79,6 +79,8 @@ ifeq ($(OS),Windows_NT)
     SET_ENV_PROD = powershell -Command "$$env:DJANGO_ENV='prod';"
     # Preserva le variabili d'ambiente esistenti
     SET_ENV_PRESERVE = powershell -Command ""
+    # PowerShell con encoding UTF-8
+    POWERSHELL_UTF8 = powershell -Command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8;"
 else
     # Rilevato macOS o Linux
     SET_ENV_DEV = env DJANGO_ENV=dev
@@ -376,28 +378,28 @@ endif
 # 🔍 Controllo qualità completo simile a Codacy
 lint-codacy:  ## Esegue controlli simili a Codacy
 ifeq ($(OS),Windows_NT)
-	@powershell -Command "Write-Host 'Controlli qualità stile Codacy...' -ForegroundColor Cyan"
+	@powershell -Command "Write-Host 'Controlli qualita stile Codacy...' -ForegroundColor Cyan"
 	@powershell -Command "Write-Host '1/5 - Ruff (stile e errori)...' -ForegroundColor Yellow"
-	-uv run ruff check --output-format=github .
+	-uv run ruff check --output-format=github --exclude=.venv .
 	@powershell -Command "Write-Host '2/5 - Flake8 (stile aggiuntivo)...' -ForegroundColor Yellow"
-	-uv run flake8 --format=default .
+	-uv run flake8 --format=default --exclude=.venv .
 	@powershell -Command "Write-Host '3/5 - Pylint (analisi statica)...' -ForegroundColor Yellow"
 	-uv run pylint src/home/ --output-format=colorized
 	@powershell -Command "Write-Host '4/5 - Import sorting check...' -ForegroundColor Yellow"
-	-uv run ruff check --select I .
+	-uv run ruff check --select I --exclude=.venv .
 	@powershell -Command "Write-Host '5/5 - ShellCheck (script bash)...' -ForegroundColor Yellow"
-	shellcheck scripts/deployment/*.sh || true
+	-@for %%f in (scripts\deployment\*.sh) do @shellcheck "%%f" || echo Continuing...
 	@powershell -Command "Write-Host 'Controlli completati!' -ForegroundColor Green"
 else
 	@echo -e "$(CYAN)🔍 Controlli qualità stile Codacy...$(NC)"
 	@echo -e "$(YELLOW)1/5 - Ruff (stile e errori)...$(NC)"
-	-uv run ruff check --output-format=github .
+	-uv run ruff check --output-format=github --exclude=.venv .
 	@echo -e "$(YELLOW)2/5 - Flake8 (stile aggiuntivo)...$(NC)"
-	-uv run flake8 --format=default .
+	-uv run flake8 --format=default --exclude=.venv .
 	@echo -e "$(YELLOW)3/5 - Pylint (analisi statica)...$(NC)"
 	-uv run pylint src/home/ --output-format=colorized
 	@echo -e "$(YELLOW)4/5 - Import sorting check...$(NC)"
-	-uv run ruff check --select I .
+	-uv run ruff check --select I --exclude=.venv .
 	@echo -e "$(YELLOW)5/5 - ShellCheck (script bash)...$(NC)"
 	shellcheck scripts/deployment/*.sh || true
 	@echo -e "$(GREEN)✅ Controlli completati!$(NC)"
