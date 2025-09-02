@@ -1,0 +1,62 @@
+[MASTER]
+# Specifica il modo in cui Pylint tratta i file e le cartelle
+load-plugins=pylint_django
+django-settings-module=home.settings
+ignore=CVS,src/home/settings,src/home/settings.py
+ignore-patterns = ^\.#
+
+# Ignora errori e warning specifici
+disable=
+    wildcard-import,           # W0401: Wildcard import
+    unused-wildcard-import,    # W0614: Unused import from wildcard import
+    unused-import,             # W0611: Unused import
+    protected-access,          # W0212: Access to a protected member
+    too-many-statements,       # R0915: Too many statements
+    too-many-locals,           # R0914: Too many local variables
+    too-many-branches,         # R0912: Too many branches
+    too-many-arguments,        # R0913: Too many arguments
+    too-many-instance-attributes,  # R0902: Too many instance attributes
+    too-many-public-methods,   # R0904: Too many public methods
+    duplicate-code,            # R0801: Similar lines in 2 files
+    fixme,                     # W0511: FIXME/TODO found
+    C0111,                     # Missing docstring
+    R0903                      # Too few public methods
+
+[MESSAGES CONTROL]
+# Specifica gli specifici errori/warning da ignorare
+disable=
+    C0111,  # Missing docstring
+    C0103,  # Invalid name
+    C0303,  # Trailing whitespace
+    C0330,  # Bad continuation
+    C1801,  # Do not use len() to determine if a sequence is empty
+    W0614,  # Unused import from wildcard import
+    W0401,  # Wildcard import
+    W0611,  # Unused import
+    F403,   # Unable to detect undefined names (wildcard imports)
+    F405,   # May be undefined, or defined from star imports
+
+[FORMAT]
+# Specifica il formato del codice
+max-line-length=120
+
+[BASIC]
+# Nomi consentiti
+good-names=i,j,k,e,ex,Run,_,id,pk,db
+
+[REPORTS]
+# Tipo di report da generare
+output-format=text
+reports=yes
+evaluation=10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10)
+
+[SIMILARITIES]
+# Configurazione per le verifiche di codice duplicato
+min-similarity-lines=5
+ignore-comments=yes
+ignore-docstrings=yes
+ignore-imports=yes
+
+[per-file]
+examples/logging_example.py = wrong-import-position, import-outside-toplevel
+tools/add_docstring_batch.py = wrong-import-position, import-outside-toplevel

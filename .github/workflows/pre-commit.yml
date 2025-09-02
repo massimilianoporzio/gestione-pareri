@@ -1,0 +1,30 @@
+name: Pre-commit
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+    - name: Install uv
+      run: |
+        pip install uv
+    - name: Install dependencies
+      run: |
+        # Crea l'ambiente virtuale se necessario
+        uv venv || echo "Ambiente virtuale già esistente"
+        # Installa i pacchetti nell'ambiente virtuale
+        . .venv/bin/activate
+        uv pip install djlint ruff
+        # Installa anche a livello di sistema per pre-commit
+        pip install djlint ruff
+    - name: Run pre-commit
+      uses: pre-commit/action@v3.0.0

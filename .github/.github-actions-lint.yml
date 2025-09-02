@@ -1,0 +1,8 @@
+# GitHub Actions workflow validation settings
+# Disable specific warnings that are false positives
+
+rules:
+  # Disable context access warnings for secrets
+  context-access-invalid: false
+  # Disable other common false positives
+  unrecognized-named-value: false
