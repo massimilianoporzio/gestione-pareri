@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Script Python per mostrare l'help colorato con emoji.
+"""Script Python per mostrare l'help colorato con emoji.
+
 Python gestisce Unicode molto meglio di PowerShell su Windows.
 """
 
-from colorama import init, Fore, Style
 import sys
+
+from colorama import Fore, Style, init
 
 # Inizializza colorama per supporto colori su Windows
 init(autoreset=True)
@@ -20,8 +20,10 @@ def print_help():
     print(f"{Fore.GREEN}make run-prod       {Style.RESET_ALL}Avvia il server di sviluppo in ambiente PROD")
     print(f"{Fore.GREEN}make test           {Style.RESET_ALL}Esegue i test del progetto")
     print(f"{Fore.GREEN}make add-docstrings {Style.RESET_ALL}📝 Aggiunge docstring mancanti ai file Python")
-    print(f"{Fore.GREEN}make fix-all        {Style.RESET_ALL}⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice")
-    print(f"{Fore.GREEN}make test-precommit {Style.RESET_ALL}🔍 TEST PRE-COMMIT: Verifica tutti i controlli senza modifiche")
+    print(f"{Fore.GREEN}make fix-all        {Style.RESET_ALL}⭐ CORREZIONE GLOBALE: "
+          "Risolve tutti i problemi di qualità del codice")
+    print(f"{Fore.GREEN}make test-precommit {Style.RESET_ALL}🔍 TEST PRE-COMMIT: "
+          "Verifica tutti i controlli senza modifiche")
     print(f"{Fore.GREEN}make fix-markdown   {Style.RESET_ALL}📝 Corregge problemi di linting Markdown")
     print(f"{Fore.GREEN}make lint-codacy    {Style.RESET_ALL}🔍 Controlli qualità stile Codacy (senza correzioni)")
     print(f"{Fore.GREEN}make stats          {Style.RESET_ALL}🔍 Genera statistiche complete del progetto")
@@ -44,5 +46,5 @@ if __name__ == "__main__":
     # Imposta encoding UTF-8 per stdout
     if sys.stdout.encoding != 'utf-8':
         sys.stdout.reconfigure(encoding='utf-8')
-    
+
     print_help()
