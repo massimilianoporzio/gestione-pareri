@@ -14,7 +14,7 @@ LOG_LEVEL="info"
 cd "$APP_DIR"
 echo "Starting Uvicorn ASGI server on $HOST:$PORT with $WORKERS workers..."
 uvicorn "$APP_MODULE" \
-  --host "$HOST" \
-  --port "$PORT" \
-  --log-level "$LOG_LEVEL" \
-  --workers "$WORKERS"
+	--host "$HOST" \
+	--port "$PORT" \
+	--log-level "$LOG_LEVEL" \
+	--workers "$WORKERS"
