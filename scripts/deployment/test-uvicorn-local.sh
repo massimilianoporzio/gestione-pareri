@@ -10,6 +10,6 @@ APP_DIR="src"
 cd "$APP_DIR"
 echo "Testing Uvicorn ASGI app on http://127.0.0.1:$PORT ..."
 uv run uvicorn "$APP_MODULE" \
-  --host 0.0.0.0 \
-  --port "$PORT" \
-  --log-level debug
+	--host 0.0.0.0 \
+	--port "$PORT" \
+	--log-level debug

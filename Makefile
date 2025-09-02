@@ -4,7 +4,7 @@ generate-secret-key: ## Genera una Django SECRET_KEY sicura per la produzione
 fix-codacy:  ## Applica correzioni automatiche agli script bash di deployment
 ifeq ($(OS),Windows_NT)
 	@powershell -Command "Write-Host 'Correzione automatica script bash...' -ForegroundColor Cyan"
-	shfmt -w scripts/deployment/*.sh
+	@powershell -Command "Get-ChildItem -Path 'scripts/deployment' -Filter '*.sh' | ForEach-Object { shfmt -w $$_.FullName }"
 	@powershell -Command "Write-Host 'Correzioni applicate!' -ForegroundColor Green"
 else
 	@echo -e "$(CYAN)🔧 Correzione automatica script bash...$(NC)"
