@@ -199,7 +199,7 @@ def _modify_and_save_file(filepath, content, functions_to_modify):
     """Modifica il file aggiungendo le docstring e lo salva."""
     lines = content.splitlines()
     _process_functions(lines, functions_to_modify)
-    
+
     path = Path(filepath)
     path.write_text("\n".join(lines), encoding="utf-8")
     print(f"Aggiunte docstring alle funzioni in {filepath}")
@@ -225,11 +225,11 @@ def add_function_docstrings(filepath):
 
     # 3. Parse del codice e raccolta funzioni
     functions_to_modify = _parse_and_collect_functions(content)
-    
+
     if functions_to_modify is None:
         print(f"Errore di sintassi nel file {filepath}")
         return False
-        
+
     if not functions_to_modify:
         return False
 
