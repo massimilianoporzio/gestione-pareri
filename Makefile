@@ -55,32 +55,7 @@ endif
 
 help:
 ifeq ($(OS),Windows_NT)
-	@powershell -Command "Write-Host 'Deploy Django Template - Comandi disponibili:' -ForegroundColor Cyan"
-	@powershell -Command "Write-Host 'make run-server    ' -NoNewline -ForegroundColor Green; Write-Host 'Avvia il server di sviluppo Django'"
-	@powershell -Command "Write-Host 'make run-dev       ' -NoNewline -ForegroundColor Green; Write-Host 'Avvia il server di sviluppo in ambiente DEV'"
-	@powershell -Command "Write-Host 'make run-test      ' -NoNewline -ForegroundColor Green; Write-Host 'Avvia il server di sviluppo in ambiente TEST'"
-	@powershell -Command "Write-Host 'make run-prod      ' -NoNewline -ForegroundColor Green; Write-Host 'Avvia il server di sviluppo in ambiente PROD'"
-	@powershell -Command "Write-Host 'make test          ' -NoNewline -ForegroundColor Green; Write-Host 'Esegue i test del progetto'"
-	@powershell -Command "Write-Host 'make add-docstrings' -NoNewline -ForegroundColor Green; Write-Host '📝 Aggiunge docstring mancanti ai file Python'"
-	@powershell -Command "Write-Host 'make fix-all       ' -NoNewline -ForegroundColor Green; Write-Host '⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice'"
-	@powershell -Command "Write-Host 'make test-precommit ' -NoNewline -ForegroundColor Green; Write-Host '🔍 TEST PRE-COMMIT: Verifica tutti i controlli senza modifiche'"
-	@powershell -Command "Write-Host 'make fix-markdown  ' -NoNewline -ForegroundColor Green; Write-Host '📝 Corregge problemi di linting Markdown'"
-	@powershell -Command "Write-Host 'make lint-codacy   ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Controlli qualità stile Codacy (senza correzioni)'"
-	@powershell -Command "Write-Host 'make stats         ' -NoNewline -ForegroundColor Green; Write-Host '🔍 Genera statistiche complete del progetto (alternativa locale a Codacy)'"
-	@powershell -Command "Write-Host '== DEPLOYMENT ==' -ForegroundColor Magenta"
-	@powershell -Command "Write-Host 'make deploy-dev    ' -NoNewline -ForegroundColor Green; Write-Host '🔧 Avvia server di sviluppo'"
-	@powershell -Command "Write-Host 'make deploy-staging' -NoNewline -ForegroundColor Green; Write-Host '🧪 Deploy in modalità staging/test'"
-	@powershell -Command "Write-Host 'make deploy-prod   ' -NoNewline -ForegroundColor Green; Write-Host '🚀 Deploy in produzione'"
-	@powershell -Command "Write-Host 'make deploy        ' -NoNewline -ForegroundColor Green; Write-Host '🎯 Deploy automatico (rileva OS e usa il server ottimale)'"
-	@powershell -Command "Write-Host 'make waitress      ' -NoNewline -ForegroundColor Green; Write-Host '🪟 Avvia con Waitress (Windows/Cross-platform)'"
-	@powershell -Command "Write-Host 'make gunicorn      ' -NoNewline -ForegroundColor Green; Write-Host '🐧 Avvia con Gunicorn (Unix/Linux/macOS)'"
-	@powershell -Command "Write-Host 'make run-uvicorn   ' -NoNewline -ForegroundColor Green; Write-Host '⚡ Avvia con Uvicorn ASGI (Tutti gli OS) - RACCOMANDATO'"
-	@powershell -Command "Write-Host 'make test-uvicorn-local' -NoNewline -ForegroundColor Green; Write-Host 'Test locale Uvicorn ASGI (debug, singolo worker)'"
-	@powershell -Command "Write-Host 'make open-home     ' -NoNewline -ForegroundColor Green; Write-Host '🌐 Apre la pagina home nel browser'"
-	@powershell -Command "Write-Host 'make collectstatic ' -NoNewline -ForegroundColor Green; Write-Host '📦 Raccoglie i file statici'"
-	@powershell -Command "Write-Host 'make stop-servers  ' -NoNewline -ForegroundColor Yellow; Write-Host '🛑 Ferma tutti i server Django'"
-	@powershell -Command "Write-Host 'make kill-port     ' -NoNewline -ForegroundColor Red; Write-Host '🔪 Termina i processi sulla porta 8000'"
-	@powershell -Command "Write-Host 'make help          ' -NoNewline -ForegroundColor Green; Write-Host 'Mostra questo messaggio di aiuto'"
+	@uv run scripts/help.py
 else
 	@printf "$(CYAN)Deploy Django Template - Comandi disponibili:$(NC)\n"
 	@printf "$(GREEN)make run-server$(NC)    Avvia il server di sviluppo Django\n"
