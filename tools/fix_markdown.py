@@ -14,7 +14,8 @@ from pathlib import Path
 
 def fix_bare_urls(content: str) -> tuple[str, int]:
     """Corregge URL nudi aggiungendo < > attorno.
-    MD034/no-bare-urls
+
+    MD034/no-bare-urls.
     """
     pattern = r"(?<![<\[\(])(https?://[^\s<>\]\)]+)(?![>\]\)])"
     fixes = 0
@@ -38,7 +39,8 @@ def fix_bare_urls(content: str) -> tuple[str, int]:
 
 def fix_code_block_spacing(content: str) -> tuple[str, int]:
     """Aggiunge righe vuote attorno ai code blocks.
-    MD031/blanks-around-fences
+
+    MD031/blanks-around-fences.
     """
     fixes = 0
     lines = content.split("\n")

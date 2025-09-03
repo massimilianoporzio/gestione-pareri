@@ -50,13 +50,54 @@ Write-Host ""
 # Avvia il server Django con Uvicorn
 Write-Host "Avvio server Uvicorn (ASGI)..." -ForegroundColor Cyan
 
-# Esegui uvicorn con gestione pulita degli errori
+# Configura la gestione pulita di Ctrl+C
+$Host.UI.RawUI.FlushInputBuffer()
+
+# Gestione eventi di chiusura del processo
+$null = Register-EngineEvent PowerShell.Exiting -Action {
+    # Pulizia silenziosa
+}
+
+# Avvia uvicorn con output pulito
+$uvicornProcess = $null
 try {
-    & uv run uvicorn home.asgi:application --host $ServerIP --port $Port 2>$null
+    # Avvia il processo in background per catturare meglio l'interruzione
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = "uv"
+    $psi.Arguments = "run uvicorn home.asgi:application --host $ServerIP --port $Port"
+    $psi.UseShellExecute = $false
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError = $true
+    $psi.CreateNoWindow = $true
+
+    $uvicornProcess = [System.Diagnostics.Process]::Start($psi)
+
+    # Attendi l'interruzione o la chiusura del processo
+    do {
+        Start-Sleep -Milliseconds 500
+        if ([Console]::KeyAvailable) {
+            $key = [Console]::ReadKey($true)
+            if ($key.Key -eq "C" -and $key.Modifiers -eq "Control") {
+                break
+            }
+        }
+    } while (-not $uvicornProcess.HasExited)
+
 } catch {
-    # Ignora errori di interruzione normale (Ctrl+C)
+    # Gestione silenziosa degli errori di interruzione
 } finally {
-    Write-Host "Server fermato." -ForegroundColor Yellow
+    # Termina il processo se ancora in esecuzione
+    if ($uvicornProcess -and -not $uvicornProcess.HasExited) {
+        try {
+            $uvicornProcess.Kill()
+            $uvicornProcess.WaitForExit(2000)
+        } catch {
+            # Ignora errori di terminazione
+        }
+    }
+    if ($uvicornProcess) {
+        $uvicornProcess.Dispose()
+    }
 }
 
 Write-Host "Server fermato." -ForegroundColor Yellow

@@ -4,7 +4,7 @@
 param(
     [string]$ServerIP = "192.168.1.100",
     [string]$DeployPath = "C:\inetpub\wwwroot\pratiche-pareri",
-    [string]$SiteName = "GestionePareri", 
+    [string]$SiteName = "GestionePareri",
     [string]$AppPoolName = "GestionePareriPool",
     [string]$GitRepo = "https://github.com/massimilianoporzio/gestione-pareri.git",
     [switch]$SkipClone = $false,
@@ -27,27 +27,27 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 if ($UpdateOnly) {
     Write-Host "🔄 MODALITÀ UPDATE - Solo aggiornamento applicazione esistente" -ForegroundColor Yellow
     Set-Location $DeployPath
-    
+
     # Pull latest changes
     Write-Host "📥 Pull delle modifiche dal repository..." -ForegroundColor Yellow
     git pull origin main
-    
+
     # Update dependencies
     Write-Host "📦 Aggiornamento dipendenze..." -ForegroundColor Yellow
     uv sync
-    
+
     # Run migrations
     Write-Host "🗃️  Esecuzione migrazioni..." -ForegroundColor Yellow
     uv run python src/manage.py migrate --settings=home.settings.prod
-    
+
     # Collect static files
     Write-Host "🎨 Raccolta file statici..." -ForegroundColor Yellow
     uv run python src/manage.py collectstatic --noinput --settings=home.settings.prod
-    
+
     # Restart Application Pool
     Write-Host "♻️  Restart Application Pool..." -ForegroundColor Yellow
     Restart-WebAppPool -Name $AppPoolName
-    
+
     Write-Host "✅ Aggiornamento completato!" -ForegroundColor Green
     exit 0
 }
@@ -59,13 +59,13 @@ if ($UpdateOnly) {
 # 1. Setup Directory e Repository
 if (!$SkipClone) {
     Write-Host "📁 Setup directory di deployment..." -ForegroundColor Yellow
-    
+
     if (Test-Path $DeployPath) {
         $backup = "${DeployPath}_backup_$(Get-Date -Format 'yyyyMMdd_HHmmss')"
         Write-Host "⚠️  Directory esistente, backup in: $backup" -ForegroundColor Yellow
         Move-Item $DeployPath $backup
     }
-    
+
     # Clone repository
     Write-Host "📥 Clone repository da GitHub..." -ForegroundColor Yellow
     git clone $GitRepo $DeployPath

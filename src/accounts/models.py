@@ -1,4 +1,10 @@
 # Create your models here.
+"""Models module.
+
+Questo modulo fornisce funzionalità per models.
+"""
+
+
 from concurrency.fields import IntegerVersionField
 from crum import get_current_user
 from django.conf import settings
@@ -10,7 +16,20 @@ from django.utils.translation import gettext_lazy as _
 
 # Manager personalizzato per il tuo CustomUser
 class CustomUserManager(BaseUserManager):
+    """Custom user manager for CustomUser model.
+
+    Handles user creation with email validation and domain requirements.
+    """
+
     def full_clean(self, email):
+        """Full clean.
+
+        Args:
+            email: Descrizione di email
+
+        Returns:
+            Descrizione del valore restituito
+        """
         # Validazione dominio aziendale
         if not email.endswith("@aslcn1.it"):
             raise ValidationError(
@@ -18,6 +37,16 @@ class CustomUserManager(BaseUserManager):
             )
 
     def create_user(self, email, password=None, **extra_fields):
+        """Create and return a user with email and password.
+
+        Args:
+            email: User's email address
+            password: User's password (optional)
+            **extra_fields: Additional fields for the user
+
+        Returns:
+            CustomUser: The created user instance
+        """
         if not email:
             raise ValueError(_("L'indirizzo email deve essere impostato"))
         # Aggiungi la validazione qui
@@ -29,6 +58,16 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
+        """Create and return a superuser with email and password.
+
+        Args:
+            email: Superuser's email address
+            password: Superuser's password (optional)
+            **extra_fields: Additional fields for the superuser
+
+        Returns:
+            CustomUser: The created superuser instance
+        """
         # Aggiungi la validazione qui
         self.full_clean(email)
         # Imposta i campi necessari per un superuser
@@ -48,6 +87,11 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
+    """Custom user model extending AbstractUser.
+
+    Uses email as the primary identifier and includes additional fields
+    for gender and audit tracking with domain validation.
+    """
     # Rimuovi il campo username se vuoi usare solo l'email per l'autenticazione
     # Non è necessario rimuoverlo esplicitamente, ma puoi renderlo non obbligatorio
     # o semplicemente non usarlo.
@@ -98,6 +142,7 @@ class CustomUser(AbstractUser):
     updated_at = models.DateTimeField(_("updated at"), auto_now=True)
 
     def __str__(self):
+        """Return the full name of the user."""
         return self.get_full_name()
 
     # Assegna il manager personalizzato al tuo modello utente
@@ -126,6 +171,7 @@ class CustomUser(AbstractUser):
         return self.get_short_name()
 
     def clean(self):
+        """Validate the model instance."""
         super().clean()
         # Validazione dominio aziendale
         if self.email and not self.email.endswith("@aslcn1.it"):
@@ -134,6 +180,7 @@ class CustomUser(AbstractUser):
             )
 
     def save(self, *args, **kwargs):
+        """Save the user instance."""
         if not self.username and self.email:
             self.username = self.email_prefix_display
         user = get_current_user()

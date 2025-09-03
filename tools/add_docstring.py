@@ -109,14 +109,12 @@ def _collect_functions_to_modify(tree):
     """Raccoglie tutte le funzioni e metodi senza docstring."""
     functions_to_modify = []
 
+    # Raccoglie solo le funzioni dirette del modulo e i metodi di classe
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef) and ast.get_docstring(node) is None:
-            functions_to_modify.append(node)
-        elif isinstance(node, ast.ClassDef):
-            # Metodi di classe senza docstring
-            for subnode in node.body:
-                if isinstance(subnode, ast.FunctionDef) and ast.get_docstring(subnode) is None:
-                    functions_to_modify.append(subnode)
+            # Verifica che non sia già stata aggiunta
+            if not any(existing.lineno == node.lineno for existing in functions_to_modify):
+                functions_to_modify.append(node)
 
     return functions_to_modify
 
@@ -157,22 +155,27 @@ def _create_docstring_content(node):
 
 def _insert_docstring(lines, node, leading_spaces):
     """Inserisce la docstring per una funzione specifica."""
-    indent = " " * leading_spaces
+    # L'indentazione della docstring deve essere la stessa del contenuto della funzione
+    indent = " " * (leading_spaces + 4)
     docstring_parts = _create_docstring_content(node)
 
     # Costruisce la docstring formattata
     docstring_lines = []
     for part in docstring_parts:
-        if part == "":
-            docstring_lines.append(f"{indent}")
-        elif part.startswith("    "):
+        if part == '"""':  # Prima e ultima riga della docstring
             docstring_lines.append(f"{indent}{part}")
-        else:
+        elif part == "":  # Righe vuote
+            docstring_lines.append("")
+        elif part.startswith("    "):  # Argomenti indentati
+            docstring_lines.append(f"{indent}{part}")
+        else:  # Args:, Returns:, etc.
             docstring_lines.append(f"{indent}{part}")
 
-    # Inserisce tutte le righe della docstring
+    # Inserisce la docstring subito dopo la definizione della funzione
+    # node.lineno è 1-based, quindi per inserire dopo la definizione usiamo node.lineno (non node.lineno-1)
+    insert_position = node.lineno
     for i, docstring_line in enumerate(docstring_lines):
-        lines.insert(node.lineno + i, docstring_line)
+        lines.insert(insert_position + i, docstring_line)
 
 
 def _process_functions(lines, functions_to_modify):

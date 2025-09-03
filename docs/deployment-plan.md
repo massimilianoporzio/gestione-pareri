@@ -47,8 +47,8 @@
 
 ## 🌐 Risultato Finale
 
-**URL Produzione**: http://192.168.1.100/pratiche-pareri/
-**Admin Interface**: http://192.168.1.100/pratiche-pareri/admin/
+**URL Produzione**: <http://192.168.1.100/pratiche-pareri/>
+**Admin Interface**: <http://192.168.1.100/pratiche-pareri/admin/>
 
 ## 📊 Post-Installazione
 

@@ -1,7 +1,7 @@
 # Deploy Django Template - Comandi disponibili con Just
 # Per visualizzare tutti i comandi: just --list o just
 
-# Configura shell per Windows  
+# Configura shell per Windows
 set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
 # Variabili globali
@@ -27,7 +27,7 @@ default:
     @Write-Host "  just setup-all-environments 🔄 Setup tutti ambienti" -ForegroundColor Green
     @Write-Host "  just test               🧪 Esegue test progetto" -ForegroundColor Green
     @Write-Host "  just test-quick         ⚡ Test rapidi quotidiani" -ForegroundColor Green
-    @Write-Host "  just test-security      🔒 Test sicurezza critica" -ForegroundColor Green  
+    @Write-Host "  just test-security      🔒 Test sicurezza critica" -ForegroundColor Green
     @Write-Host "  just test-pre-deploy    🚀 Test completi pre-deploy" -ForegroundColor Green
     @Write-Host "  just test-dev           🔧 Test ambiente DEV" -ForegroundColor Green
     @Write-Host "  just test-test          🧪 Test ambiente TEST" -ForegroundColor Green
@@ -432,9 +432,9 @@ fix-markdown:
 lint-codacy:
     @Write-Host "🔍 Controlli qualità stile Codacy..." -ForegroundColor Cyan
     @Write-Host "1/3 - Ruff check..." -ForegroundColor Yellow
-    @-{{python}} ruff check --output-format=github --exclude=.venv .
+    @-{{python}} ruff check --output-format=github .
     @Write-Host "2/3 - Flake8..." -ForegroundColor Yellow
-    @-{{python}} flake8 --format=default --exclude=.venv .
+    @-{{python}} flake8 --format=default .
     @Write-Host "3/3 - Pylint..." -ForegroundColor Yellow
     @-{{python}} pylint src/home/ --output-format=colorized
     @Write-Host "✅ Controlli completati!" -ForegroundColor Green
@@ -459,7 +459,7 @@ generate-secret-keys-all:
     @$dev_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
     @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key" -ForegroundColor White
     @Write-Host ""
-    @Write-Host "🧪 TEST Environment:" -ForegroundColor Blue  
+    @Write-Host "🧪 TEST Environment:" -ForegroundColor Blue
     @$test_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
     @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key" -ForegroundColor White
     @Write-Host ""
@@ -672,7 +672,7 @@ create-db-script:
 
 # === ENHANCED TESTING COMMANDS ===
 
-# ⚡ Test rapidi quotidiani per sviluppatori  
+# ⚡ Test rapidi quotidiani per sviluppatori
 test-quick:
     @Write-Host "⚡ Test rapidi quotidiani..." -ForegroundColor Yellow
     @Write-Host "🎯 Focus: CustomUser, sicurezza base, autenticazione" -ForegroundColor Gray

@@ -58,10 +58,7 @@ CACHES = {
 }
 
 # Email backend per staging - Può usare SMTP reale o console
-EMAIL_BACKEND = config(
-    "EMAIL_BACKEND_STAGING", 
-    default="django.core.mail.backends.console.EmailBackend"
-)
+EMAIL_BACKEND = config("EMAIL_BACKEND_STAGING", default="django.core.mail.backends.console.EmailBackend")
 
 # Static e Media files per staging
 STATIC_URL = "/static/"

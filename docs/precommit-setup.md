@@ -35,7 +35,7 @@ Il progetto include già una configurazione ottimizzata per UV:
 
 ```yaml
 repos:
-  - repo: https://github.com/astral-sh/ruff-pre-commit
+  - repo: <https://github.com/astral-sh/ruff-pre-commit>
     hooks:
       - id: ruff
       - id: ruff-format
