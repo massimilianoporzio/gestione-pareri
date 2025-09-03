@@ -285,3 +285,4 @@ out/
 # Temporary files
 *.tmp
 *.temp
+.pre-commit-config-corporate.yaml
