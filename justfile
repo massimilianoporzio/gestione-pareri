@@ -257,9 +257,11 @@ format-markdown:
 # 📝 Correzione problemi Markdown
 fix-markdown:
     @Write-Host "📝 Correzione problemi Markdown..." -ForegroundColor Cyan
-    @Write-Host "1/2 - Prettier formatting..." -ForegroundColor Yellow
+    @Write-Host "1/3 - Correzioni automatiche..." -ForegroundColor Yellow
+    @{{python}} tools/fix_markdown.py
+    @Write-Host "2/3 - Prettier formatting..." -ForegroundColor Yellow
     @-pre-commit run prettier --all-files
-    @Write-Host "2/2 - Markdownlint fixes..." -ForegroundColor Yellow
+    @Write-Host "3/3 - Markdownlint validation..." -ForegroundColor Yellow
     @-pre-commit run markdownlint-cli2 --all-files
     @Write-Host "✅ Problemi Markdown corretti!" -ForegroundColor Green
 
