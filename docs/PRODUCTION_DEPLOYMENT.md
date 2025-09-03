@@ -39,7 +39,7 @@ New-Item -ItemType Directory -Force -Path "C:\inetpub\wwwroot\pratiche-pareri"
 Set-Location "C:\inetpub\wwwroot\pratiche-pareri"
 
 # Clone repository
-git clone https://github.com/massimilianoporzio/gestione-pareri.git .
+git clone <https://github.com/massimilianoporzio/gestione-pareri.git> .
 
 # Setup branch per produzione (opzionale)
 git checkout -b production-deploy
@@ -144,8 +144,8 @@ uv run uvicorn home.asgi:application --host localhost --port 8000
 
 ### Test IIS:
 
-- **URL principale**: `http://your-server-ip/pratiche-pareri/`
-- **Admin interface**: `http://your-server-ip/pratiche-pareri/admin/`
+- **URL principale**: `<http://your-server-ip/pratiche-pareri/`>
+- **Admin interface**: `<http://your-server-ip/pratiche-pareri/admin/`>
 
 ## 🔄 PASSO 6: Aggiornamenti Futuri
 

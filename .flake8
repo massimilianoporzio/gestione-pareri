@@ -11,7 +11,10 @@ exclude =
     .pytest_cache,
     build,
     dist,
-    *.egg-info
+    *.egg-info,
+    migrations,
+    */migrations/*,
+    **/migrations/**
 per-file-ignores =
     # Settings Django
     src/home/settings.py:F401,F403

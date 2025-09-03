@@ -239,7 +239,7 @@ just precommit-corporate
 ```yaml
 repos:
   # Ruff (linting veloce)
-  - repo: https://github.com/astral-sh/ruff-pre-commit
+  - repo: <https://github.com/astral-sh/ruff-pre-commit>
     rev: v0.1.6
     hooks:
       - id: ruff

@@ -27,7 +27,7 @@ ALTER USER gestione_pareri_prod WITH PASSWORD 'YOUR_PROD_PASSWORD';
 \echo 'Creazione utente staging...'
 
 -- STAGING password (sostituisci YOUR_STAGING_PASSWORD)
-CREATE USER gestione_pareri_staging WITH 
+CREATE USER gestione_pareri_staging WITH
     PASSWORD 'YOUR_STAGING_PASSWORD'
     CREATEDB
     NOSUPERUSER
@@ -38,7 +38,7 @@ CREATE USER gestione_pareri_staging WITH
 -- 3. CREA NUOVO DATABASE STAGING
 \echo 'Creazione database staging...'
 
-CREATE DATABASE gestione_pareri_staging 
+CREATE DATABASE gestione_pareri_staging
     OWNER gestione_pareri_staging
     ENCODING 'UTF8'
     TEMPLATE template0;
@@ -58,25 +58,25 @@ GRANT ALL PRIVILEGES ON DATABASE gestione_pareri_staging TO gestione_pareri_stag
 \echo '==============================='
 
 \echo 'Utenti PostgreSQL:'
-SELECT usename as "Username", 
+SELECT usename as "Username",
        usecreatedb as "Can Create DB",
        usesuper as "Superuser"
-FROM pg_user 
+FROM pg_user
 WHERE usename LIKE 'gestione_pareri%'
 ORDER BY usename;
 
 \echo ''
 \echo 'Database PostgreSQL:'
-SELECT datname as "Database", 
+SELECT datname as "Database",
        datowner::regrole as "Owner"
-FROM pg_database 
+FROM pg_database
 WHERE datname LIKE 'gestione_pareri%'
 ORDER BY datname;
 
 \echo ''
 \echo 'Setup PostgreSQL completato!'
 \echo 'Ora hai 4 ambienti:'
-\echo '- DEV:     gestione_pareri_dev'  
+\echo '- DEV:     gestione_pareri_dev'
 \echo '- TEST:    gestione_pareri_test'
 \echo '- STAGING: gestione_pareri_staging'
 \echo '- PROD:    gestione_pareri_prod'

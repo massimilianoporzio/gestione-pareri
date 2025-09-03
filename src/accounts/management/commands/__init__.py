@@ -1,1 +1,1 @@
-# Pacchetto commands per comandi personalizzati
+"""Management commands package for accounts app."""

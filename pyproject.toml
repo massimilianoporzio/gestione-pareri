@@ -44,6 +44,18 @@ ignore = "H030,H031"
 line-length = 120
 target-version = "py313"
 
+# Escludi cartelle specifiche
+exclude = [
+    "migrations",
+    "*/migrations/*",
+    "**/migrations/**",
+    ".git",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+]
+
 # Formatter configuration
 [tool.ruff.format]
 quote-style = "double"
@@ -53,9 +65,20 @@ line-ending = "auto"
 
 [tool.black]
 line-length = 120
+exclude = '''
+/(
+    migrations
+    | \.git
+    | \.venv
+    | __pycache__
+    | build
+    | dist
+)/
+'''
 
 [tool.isort]
 line_length = 120
+skip_glob = ["**/migrations/*"]
 
 [tool.autopep8]
 max_line_length = 120
@@ -97,9 +120,20 @@ convention = "google"  # Usa il formato Google per docstring
 "scripts/run_djlint.py" = ["S603"]  # subprocess con argomenti controllati
 "scripts/run_pylint.py" = ["S603"]  # subprocess con argomenti controllati
 "tools/project_stats.py" = ["S603"]  # subprocess con argomenti controllati
+# Test files - ignorare security warnings per password hardcoded (normali nei test)
+"**/test_*.py" = ["S105", "S106", "S110"]  # hardcoded password, secrets in tests
+"**/tests.py" = ["S105", "S106", "S110"]  # hardcoded password, secrets in tests
+"**/tests/*.py" = ["S105", "S106", "S110"]  # hardcoded password, secrets in tests
 
 [tool.pylint.format]
 max-line-length = 120
+
+[tool.pylint.main]
+ignore-paths = [
+    "migrations",
+    "*/migrations/*",
+    "**/migrations/**",
+]
 
 [tool.pylint.messages_control]
 disable = [

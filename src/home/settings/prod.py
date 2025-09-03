@@ -115,7 +115,7 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="noreply@example.com")
 FORCE_SCRIPT_NAME = config("DJANGO_FORCE_SCRIPT_NAME", default="")
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Static e Media files in produzione
 STATIC_URL = f"{FORCE_SCRIPT_NAME}/static/"

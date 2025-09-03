@@ -24,7 +24,7 @@
   },
   "djlint.enableLinting": false,
   "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit",
@@ -81,8 +81,6 @@
   "yaml.validate": true,
   "yaml.format.enable": true,
   "postman.settings.dotenv-detection-notification-visibility": false,
-
-  // Node.js and frontend files exclusions
   "search.exclude": {
     "**/node_modules": true,
     "**/dist": true,
@@ -104,7 +102,6 @@
     "**/build/**": true,
     "**/out/**": true
   },
-  // Test Configuration - Django con pytest
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
   "python.testing.pytestArgs": [
@@ -117,8 +114,6 @@
   "python.testing.autoTestDiscoverOnSaveEnabled": true,
   "python.testing.cwd": "${workspaceFolder}",
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
-  
-  // Configurazione Copilot per ridurre interferenze
   "github.copilot.enable": {
     "*": true,
     "yaml": false,

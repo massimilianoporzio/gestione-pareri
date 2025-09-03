@@ -5,7 +5,7 @@ from home.settings.dev import *  # noqa: F403, F401
 # Database per test - Solo SQLite
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3", 
+        "ENGINE": "django.db.backends.sqlite3",
         "NAME": ":memory:",
     }
 }

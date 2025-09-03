@@ -301,5 +301,5 @@ SELECT version();                -- Versione PostgreSQL
 
 ---
 
-**🔄 Ultimo aggiornamento**: Settembre 2025  
+**🔄 Ultimo aggiornamento**: Settembre 2025
 **📝 Autore**: Sistema di template Django Deploy
