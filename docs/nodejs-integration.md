@@ -71,7 +71,7 @@ Assicurati di avere Node.js installato (solo per installare Tailwind CLI):
 node --version
 npm --version  # oppure yarn --version o pnpm --version
 
-# Se non installato, scarica da: https://nodejs.org/
+# Se non installato, scarica da: <https://nodejs.org/>
 ```
 
 ## 🚀 Setup Tailwind CSS v4

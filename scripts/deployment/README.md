@@ -63,11 +63,13 @@ make collectstatic-prod
 ### Directory Structure:
 
 ```
+
 project/
 ├── src/static/          # File statici dell'app
 ├── staticfiles/         # File raccolti per produzione (auto-generati)
 ├── media/              # File caricati dagli utenti
 └── mediafiles/         # Media files per produzione
+
 ```
 
 ## 🎯 Deployment Step-by-Step
@@ -130,11 +132,11 @@ make waitress      # Windows/Cross-platform
 
 ```bash
 # Verifica che il server risponda
-curl http://localhost:8000/
-curl http://localhost:8000/healthz/
+curl <http://localhost:8000/>
+curl <http://localhost:8000/healthz/>
 
 # Verifica file statici (esempio con file admin Django)
-curl http://localhost:8000/static/admin/css/base.css
+curl <http://localhost:8000/static/admin/css/base.css>
 ```
 
 ## 🔧 Configurazione Avanzata
@@ -146,7 +148,7 @@ curl http://localhost:8000/static/admin/css/base.css
 DJANGO_SECRET_KEY=your-secret-key-here
 DJANGO_ENV=prod
 DJANGO_ALLOWED_HOSTS=yourdomain.com,.yourdomain.com,localhost
-DJANGO_CSRF_TRUSTED_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
+DJANGO_CSRF_TRUSTED_ORIGINS=<https://yourdomain.com,https://www.yourdomain.com>
 
 # Database (PostgreSQL)
 DB_ENGINE=django.db.backends.postgresql

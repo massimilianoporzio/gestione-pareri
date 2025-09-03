@@ -20,7 +20,7 @@ Assicurati di avere Node.js installato (solo per installare Tailwind CLI):
 node --version
 npm --version  # oppure yarn --version o pnpm --version
 
-# Se non installato, scarica da: https://nodejs.org/
+# Se non installato, scarica da: <https://nodejs.org/>
 ```
 
 ## 🚀 Setup Tailwind CSS v4
@@ -350,6 +350,7 @@ make deploy
 ## 📁 Struttura File Essenziale
 
 ```
+
 deploy-django/
 ├── src/
 │   ├── static/
@@ -361,6 +362,7 @@ deploy-django/
 │   └── manage.py
 ├── node_modules/                  # Dipendenze Tailwind (auto-generato)
 └── package.json                   # Solo per installare Tailwind CLI
+
 ```
 
 **File necessari:**

@@ -52,7 +52,7 @@ brew services start nginx
 sudo systemctl status nginx
 
 # Test connessione
-curl http://localhost
+curl <http://localhost>
 ```
 
 ## ⚙️ Configurazione Django + Nginx
@@ -70,7 +70,7 @@ DJANGO_DEBUG=0
 DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,tuodominio.com,www.tuodominio.com
 
 # CSRF trusted origins
-DJANGO_CSRF_TRUSTED_ORIGINS=https://tuodominio.com,https://www.tuodominio.com,http://localhost
+DJANGO_CSRF_TRUSTED_ORIGINS=<https://tuodominio.com,https://www.tuodominio.com,http://localhost>
 
 # Static files per Nginx
 DJANGO_STATIC_URL=/static/
@@ -99,7 +99,7 @@ server {
     server_name tuodominio.com www.tuodominio.com;
 
     # Redirect HTTP to HTTPS
-    return 301 https://$server_name$request_uri;
+    return 301 <https://$server_name$request_uri;>
 }
 
 # HTTPS Server (main)
@@ -150,7 +150,7 @@ server {
 
     # Django application (reverse proxy)
     location / {
-        proxy_pass http://django_backend;
+        proxy_pass <http://django_backend;>
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -175,7 +175,7 @@ server {
 
     # Health check endpoint
     location /health/ {
-        proxy_pass http://django_backend/health/;
+        proxy_pass <http://django_backend/health/;>
         access_log off;
     }
 
@@ -392,7 +392,7 @@ ssl_stapling_verify on;
 sudo systemctl status gestione-pareri
 
 # Verifica connettività
-curl http://127.0.0.1:8000
+curl <http://127.0.0.1:8000>
 
 # Restart services
 sudo systemctl restart gestione-pareri
@@ -441,7 +441,7 @@ upstream django_backend {
 
 ```nginx
 location /health/ {
-    proxy_pass http://django_backend/health/;
+    proxy_pass <http://django_backend/health/;>
     proxy_next_upstream error timeout invalid_header http_502 http_503;
     access_log off;
 }
