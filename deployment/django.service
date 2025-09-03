@@ -1,0 +1,43 @@
+[Unit]
+Description=Gestione Pareri Django Application
+After=network.target
+
+[Service]
+Type=notify
+User=django
+Group=django
+WorkingDirectory=/path/to/your/project
+Environment=PATH=/path/to/your/project/.venv/bin
+Environment=PYTHONPATH=/path/to/your/project/src
+Environment=DJANGO_ENV=prod
+Environment=DJANGO_SETTINGS_MODULE=home.settings.prod
+
+# Uvicorn ASGI server command
+ExecStart=/path/to/your/project/.venv/bin/uvicorn home.asgi:application \
+    --host 127.0.0.1 \
+    --port 8000 \
+    --workers 4 \
+    --log-level info \
+    --access-log \
+    --timeout-keep-alive 2
+
+# Graceful reload
+ExecReload=/bin/kill -s HUP $MAINPID
+
+# Process management
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Security settings
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/path/to/your/project/logs /path/to/your/project/media
+
+[Install]
+WantedBy=multi-user.target
