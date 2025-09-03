@@ -58,23 +58,24 @@ if CSRF_TRUSTED_ORIGINS is None:
         CSRF_TRUSTED_ORIGINS.append(origin)
 
 # Database di produzione
-# Configura il database di produzione, ad esempio PostgreSQL
+# Configura il database PostgreSQL di produzione
 # Se stiamo eseguendo un test, usa SQLite invece di PostgreSQL
-if os.environ.get("DJANGO_TEST_DB", "0") == "1" or not config("DB_NAME", default=""):
-    # Usa SQLite se non è configurato PostgreSQL o se è un test
+if os.environ.get("DJANGO_TEST_DB", "0") == "1":
+    # Usa SQLite per i test di produzione
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": REPO_DIR / "db_prod.sqlite3",  # noqa: F405
+            "NAME": REPO_DIR / "db_prod_test.sqlite3",  # noqa: F405
         }
     }
 else:
+    # PostgreSQL per produzione vera
     DATABASES = {
         "default": {
-            "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
-            "NAME": config("DB_NAME", default="deploy_django"),
-            "USER": config("DB_USER", default="postgres"),
-            "PASSWORD": config("DB_PASSWORD", default=""),
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config("DB_NAME_PROD", default="gestione_pareri_prod"),
+            "USER": config("DB_USER_PROD", default="gestione_pareri_prod"),
+            "PASSWORD": config("DB_PASSWORD_PROD"),
             "HOST": config("DB_HOST", default="localhost"),
             "PORT": config("DB_PORT", default="5432"),
             "CONN_MAX_AGE": config("DB_CONN_MAX_AGE", default=600, cast=int),

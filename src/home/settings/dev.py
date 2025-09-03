@@ -1,5 +1,7 @@
 """Impostazioni di Django per l'ambiente di sviluppo."""
 
+from decouple import config
+
 from home.settings.base import *  # noqa: F403, F401
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -17,13 +19,30 @@ for logger_name in LOGGING["loggers"]:  # noqa: F405
         LOGGING["loggers"][logger_name]["handlers"] = ["console"]  # noqa: F405
 
 # Database di sviluppo
-# Puoi utilizzare SQLite per lo sviluppo o sovrascrivere per usare PostgreSQL/MySQL
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",  # noqa: F405
+# Supporta sia SQLite (rapido) che PostgreSQL (completo)
+if config("USE_POSTGRESQL_DEV", default=False, cast=bool):
+    # PostgreSQL per sviluppo completo
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config("DB_NAME_DEV", default="gestione_pareri_dev"),
+            "USER": config("DB_USER_DEV", default="gestione_pareri_dev"),
+            "PASSWORD": config("DB_PASSWORD_DEV"),
+            "HOST": config("DB_HOST", default="localhost"),
+            "PORT": config("DB_PORT", default="5432"),
+            "OPTIONS": {
+                "charset": "utf8mb4",
+            },
+        }
     }
-}
+else:
+    # SQLite per sviluppo rapido (default)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",  # noqa: F405
+        }
+    }
 
 # Configurazioni per la sicurezza delle email in sviluppo
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

@@ -10,18 +10,23 @@ django_manage := "uv run src/manage.py"
 
 # 📋 Comando default: mostra l'help
 default:
-    @Write-Host "🚀 DEPLOY DJANGO TEMPLATE - COMANDI DISPONIBILI" -ForegroundColor Magenta
+    @Write-Host "🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI" -ForegroundColor Magenta
     @Write-Host "============================================================" -ForegroundColor DarkGray
     @Write-Host ""
     @Write-Host "📊 DJANGO & DATABASE:" -ForegroundColor Green
     @Write-Host "  just run-server         🚀 Server di sviluppo Django" -ForegroundColor Green
     @Write-Host "  just run-dev            🔧 Server sviluppo (DEV)" -ForegroundColor Green
     @Write-Host "  just run-test           🧪 Server sviluppo (TEST)" -ForegroundColor Green
+    @Write-Host "  just run-staging        🎭 Server sviluppo (STAGING)" -ForegroundColor Green
     @Write-Host "  just run-prod           ⚡ Server sviluppo (PROD)" -ForegroundColor Green
     @Write-Host "  just migrate            📦 Migrazioni database" -ForegroundColor Green
     @Write-Host "  just makemigrations     📝 Crea migrazioni" -ForegroundColor Green
     @Write-Host "  just shell              🐚 Shell Django" -ForegroundColor Green
     @Write-Host "  just test               🧪 Esegue test progetto" -ForegroundColor Green
+    @Write-Host "  just test-dev           🔧 Test ambiente DEV" -ForegroundColor Green
+    @Write-Host "  just test-test          🧪 Test ambiente TEST" -ForegroundColor Green
+    @Write-Host "  just test-staging       🎭 Test ambiente STAGING" -ForegroundColor Green
+    @Write-Host "  just test-prod          ⚡ Test ambiente PROD" -ForegroundColor Green
     @Write-Host ""
     @Write-Host "🌐 SERVER & DEPLOY:" -ForegroundColor Cyan
     @Write-Host "  just waitress           🪟 Server Waitress (Windows)" -ForegroundColor Cyan
@@ -44,8 +49,14 @@ default:
     @Write-Host "ℹ️  UTILITY:" -ForegroundColor White
     @Write-Host "  just stats              📊 Statistiche progetto" -ForegroundColor White
     @Write-Host "  just check-env          🔍 Controllo ambiente" -ForegroundColor White
-    @Write-Host "  just check-env-dev      🔍 Controllo ambiente DEV" -ForegroundColor White
+    @Write-Host "  just check-env-dev      � Controllo ambiente DEV" -ForegroundColor White
+    @Write-Host "  just check-env-test     🧪 Controllo ambiente TEST" -ForegroundColor White
+    @Write-Host "  just check-env-staging  🎭 Controllo ambiente STAGING" -ForegroundColor White
+    @Write-Host "  just check-env-prod     ⚡ Controllo ambiente PROD" -ForegroundColor White
     @Write-Host "  just generate-secret-key 🔑 Genera Django SECRET_KEY" -ForegroundColor White
+    @Write-Host "  just generate-secret-keys-all 🔐 Genera SECRET_KEY per tutti e 4 gli ambienti" -ForegroundColor White
+    @Write-Host "  just generate-db-passwords 🔐 Genera password PostgreSQL sicure" -ForegroundColor White
+    @Write-Host "  just create-db-script   🗄️ Crea script SQL con password reali" -ForegroundColor White
     @Write-Host "  just --list             📋 Lista completa comandi" -ForegroundColor White
     @Write-Host ""
     @Write-Host "🏢 INTRANET AZIENDALE:" -ForegroundColor Magenta
@@ -141,6 +152,12 @@ run-test:
     @Write-Host "🧪 Avvio del server di sviluppo in ambiente TEST..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="test"; {{django_manage}} runserver
 
+# 🎭 Server di sviluppo in ambiente STAGING
+run-staging:
+    @Write-Host "🎭 Avvio del server di sviluppo in ambiente STAGING..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa sempre PostgreSQL!" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="staging"; {{django_manage}} runserver
+
 # ⚡ Server di sviluppo in ambiente PROD
 run-prod:
     @Write-Host "⚡ Avvio del server di sviluppo in ambiente PROD..." -ForegroundColor Cyan
@@ -161,6 +178,12 @@ test-test:
     @Write-Host "🧪 Esecuzione dei test in ambiente TEST..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="test"; {{django_manage}} test
 
+# 🧪 Test in ambiente STAGING
+test-staging:
+    @Write-Host "🎭 Esecuzione dei test in ambiente STAGING..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="staging"; {{django_manage}} test
+
 # 🧪 Test in ambiente PROD
 test-prod:
     @Write-Host "🧪 Esecuzione dei test in ambiente PROD..." -ForegroundColor Cyan
@@ -180,6 +203,12 @@ migrate-dev:
 migrate-test:
     @Write-Host "📦 Applicazione delle migrazioni in ambiente TEST..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="test"; {{django_manage}} migrate
+
+# 📦 Migrazioni in ambiente STAGING
+migrate-staging:
+    @Write-Host "🎭 Applicazione delle migrazioni in ambiente STAGING..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="staging"; {{django_manage}} migrate
 
 # 📦 Migrazioni in ambiente PROD
 migrate-prod:
@@ -205,6 +234,12 @@ shell-dev:
 shell-test:
     @Write-Host "🐚 Avvio della shell Django in ambiente TEST..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="test"; {{django_manage}} shell
+
+# 🐚 Shell Django STAGING
+shell-staging:
+    @Write-Host "🎭 Avvio della shell Django in ambiente STAGING..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="staging"; {{django_manage}} shell
 
 # 🐚 Shell Django PROD
 shell-prod:
@@ -292,7 +327,38 @@ stats:
 # 🔑 Genera Django SECRET_KEY
 generate-secret-key:
     @Write-Host "🔑 Generazione Django SECRET_KEY..." -ForegroundColor Cyan
+    @Write-Host "Genero SECRET_KEY generica:" -ForegroundColor Yellow
     @{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+
+# 🔑 Genera SECRET_KEY per tutti i 4 ambienti
+generate-secret-keys-all:
+    @Write-Host "🔐 Generazione SECRET_KEY per tutti gli ambienti..." -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🔧 DEV Environment:" -ForegroundColor Green
+    @$dev_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "🧪 TEST Environment:" -ForegroundColor Blue  
+    @$test_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "🎭 STAGING Environment:" -ForegroundColor Magenta
+    @$staging_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    @Write-Host "DJANGO_SECRET_KEY_STAGING=$staging_key" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "⚡ PROD Environment:" -ForegroundColor Red
+    @$prod_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    @Write-Host "DJANGO_SECRET_KEY_PROD=$prod_key" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "💡 CONFIGURAZIONE .env:" -ForegroundColor Cyan
+    @Write-Host "=======================" -ForegroundColor Cyan
+    @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key"
+    @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key"
+    @Write-Host "DJANGO_SECRET_KEY_STAGING=$staging_key"
+    @Write-Host "DJANGO_SECRET_KEY_PROD=$prod_key"
+    @Write-Host ""
+    @Write-Host "⚠️  IMPORTANTE: Ogni ambiente deve avere la sua SECRET_KEY!" -ForegroundColor Yellow
+    @Write-Host "📖 Vedi docs/environments-guide.md per configurazione completa" -ForegroundColor Gray
 
 # === DEPLOYMENT COMMANDS ===
 
@@ -409,6 +475,12 @@ check-env-test:
     @Write-Host "🔍 Controllo dell'ambiente TEST..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="test"; {{python}} src/test_logging.py
 
+# 🔍 Controllo ambiente STAGING
+check-env-staging:
+    @Write-Host "🎭 Controllo dell'ambiente STAGING..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL e logging su file!" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="staging"; {{python}} src/test_logging.py
+
 # 🔍 Controllo ambiente PROD
 check-env-prod:
     @Write-Host "🔍 Controllo dell'ambiente PROD..." -ForegroundColor Cyan
@@ -457,3 +529,22 @@ quality-corporate:
     @Write-Host "🎯 4. Fix markdown..." -ForegroundColor Cyan
     just fix-markdown
     @Write-Host "✅ Controlli quality corporate completati!" -ForegroundColor Green
+
+# === DATABASE UTILITIES ===
+
+# 🔐 Genera password PostgreSQL sicure per tutti gli ambienti
+generate-db-passwords:
+    @{{python}} tools/generate_db_passwords.py
+
+# 🗄️ Crea script SQL con password reali per setup PostgreSQL
+create-db-script:
+    @Write-Host "🗄️ Creazione script SQL con password reali..." -ForegroundColor Cyan
+    @if (Test-Path "update_postgresql_staging.template.sql") { \
+        Copy-Item "update_postgresql_staging.template.sql" "update_postgresql_staging.sql" -Force; \
+        Write-Host "✅ Script copiato: update_postgresql_staging.sql" -ForegroundColor Green; \
+        Write-Host "🔧 Ora sostituisci manualmente i placeholder YOUR_*_PASSWORD" -ForegroundColor Yellow; \
+        Write-Host "🔐 Usa le password generate da: just generate-db-passwords" -ForegroundColor Yellow; \
+        Write-Host "⚠️  ATTENZIONE: File contiene password - elimina dopo l'uso!" -ForegroundColor Red; \
+    } else { \
+        Write-Host "❌ Template non trovato: update_postgresql_staging.template.sql" -ForegroundColor Red; \
+    }

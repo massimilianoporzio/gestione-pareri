@@ -20,8 +20,14 @@ Un file `.env.example` è fornito come template con i valori predefiniti e comme
 
 ### Configurazioni di Base
 
-- `DJANGO_SECRET_KEY`: La chiave segreta di Django usata per la crittografia
+- `DJANGO_SECRET_KEY`: La chiave segreta di Django generica (fallback)
+- `DJANGO_SECRET_KEY_DEV`: Chiave segreta specifica per ambiente DEV
+- `DJANGO_SECRET_KEY_TEST`: Chiave segreta specifica per ambiente TEST
+- `DJANGO_SECRET_KEY_STAGING`: Chiave segreta specifica per ambiente STAGING
+- `DJANGO_SECRET_KEY_PROD`: Chiave segreta specifica per ambiente PROD
 - `DJANGO_DEBUG`: Controlla la modalità debug (0=False, 1=True)
+
+> 🔐 **Best Practice**: Usa SECRET_KEY diverse per ogni ambiente per massima sicurezza. Genera con: `just generate-secret-keys-all`
 
 ### Host e Origini Affidabili
 
