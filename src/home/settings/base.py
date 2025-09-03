@@ -51,8 +51,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third-party apps
+    "concurrency",
     # App personalizzate
-    # "accounts",  # Aggiungi qui le tue app quando le crei
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -61,11 +63,15 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "crum.CurrentRequestUserMiddleware",  # Must be after AuthenticationMiddleware
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = "home.urls"
+
+# Custom User Model
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 TEMPLATES = [
     {
