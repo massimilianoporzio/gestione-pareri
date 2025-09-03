@@ -171,8 +171,18 @@ activemq-data/
 *.sage.py
 
 # Environments
+# Environment variables and sensitive config
 .env
 .envrc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database scripts with passwords (use templates instead)
+update_postgresql_staging.sql
+*_with_passwords.sql
+database_setup_*.sql
 .venv
 env/
 venv/
