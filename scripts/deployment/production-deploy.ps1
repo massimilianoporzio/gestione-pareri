@@ -81,21 +81,24 @@ Set-Location $DeployPath
 Write-Host "⚙️  Setup file di configurazione..." -ForegroundColor Yellow
 
 if (!(Test-Path "web.config")) {
-    if (Test-Path "web.config.template") {
-        Copy-Item "web.config.template" "web.config"
+    if (Test-Path "config/deployment/web.config.template") {
+        Copy-Item "config/deployment/web.config.template" "web.config"
         Write-Host "✅ web.config creato da template" -ForegroundColor Green
     } else {
-        Write-Host "❌ Template web.config.template non trovato!" -ForegroundColor Red
+        Write-Host "❌ Template config/deployment/web.config.template non trovato!" -ForegroundColor Red
         exit 1
     }
 }
 
 if (!(Test-Path ".env.prod")) {
-    if (Test-Path ".env.prod.template") {
-        Copy-Item ".env.prod.template" ".env.prod"
+    if (Test-Path "config/environments/.env.prod") {
+        Copy-Item "config/environments/.env.prod" ".env.prod"
+        Write-Host "✅ .env.prod copiato da config/environments/" -ForegroundColor Green
+    } elseif (Test-Path "config/environments/.env.prod.template") {
+        Copy-Item "config/environments/.env.prod.template" ".env.prod"
         Write-Host "✅ .env.prod creato da template" -ForegroundColor Green
     } else {
-        Write-Host "❌ Template .env.prod.template non trovato!" -ForegroundColor Red
+        Write-Host "❌ Né .env.prod né template trovati in config/environments/!" -ForegroundColor Red
         exit 1
     }
 }
