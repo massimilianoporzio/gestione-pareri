@@ -10,33 +10,112 @@ django_manage := "uv run src/manage.py"
 
 # 📋 Comando default: mostra l'help
 default:
-    @Write-Host "Deploy Django Template - Comandi disponibili:" -ForegroundColor Cyan
-    @Write-Host "just run-server     🚀 Avvia il server di sviluppo Django" -ForegroundColor Green
-    @Write-Host "just run-dev        🔧 Avvia il server di sviluppo in ambiente DEV" -ForegroundColor Green
-    @Write-Host "just run-test       🧪 Avvia il server di sviluppo in ambiente TEST" -ForegroundColor Green
-    @Write-Host "just run-prod       ⚡ Avvia il server di sviluppo in ambiente PROD" -ForegroundColor Green
-    @Write-Host "just test           🧪 Esegue i test del progetto" -ForegroundColor Green
-    @Write-Host "just add-docstrings 📝 Aggiunge docstring mancanti ai file Python" -ForegroundColor Green
-    @Write-Host "just fix-all        ⭐ CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice" -ForegroundColor Green
-    @Write-Host "just test-precommit 🔍 TEST PRE-COMMIT: Verifica tutti i controlli senza modifiche" -ForegroundColor Green
-    @Write-Host "just quality-corporate 🏢 Controlli qualità per ambiente aziendale" -ForegroundColor Green
-    @Write-Host "just fix-markdown   📝 Corregge problemi di linting Markdown" -ForegroundColor Green
-    @Write-Host "just lint-codacy    🔍 Controlli qualità stile Codacy (senza correzioni)" -ForegroundColor Green
-    @Write-Host "just stats          📊 Genera statistiche complete del progetto" -ForegroundColor Green
+    @Write-Host "🚀 DEPLOY DJANGO TEMPLATE - COMANDI DISPONIBILI" -ForegroundColor Magenta
+    @Write-Host "============================================================" -ForegroundColor DarkGray
+    @Write-Host ""
+    @Write-Host "📊 DJANGO & DATABASE:" -ForegroundColor Green
+    @Write-Host "  just run-server         🚀 Server di sviluppo Django" -ForegroundColor Green
+    @Write-Host "  just run-dev            🔧 Server sviluppo (DEV)" -ForegroundColor Green
+    @Write-Host "  just run-test           🧪 Server sviluppo (TEST)" -ForegroundColor Green
+    @Write-Host "  just run-prod           ⚡ Server sviluppo (PROD)" -ForegroundColor Green
+    @Write-Host "  just migrate            📦 Migrazioni database" -ForegroundColor Green
+    @Write-Host "  just makemigrations     📝 Crea migrazioni" -ForegroundColor Green
+    @Write-Host "  just shell              🐚 Shell Django" -ForegroundColor Green
+    @Write-Host "  just test               🧪 Esegue test progetto" -ForegroundColor Green
+    @Write-Host ""
+    @Write-Host "🌐 SERVER & DEPLOY:" -ForegroundColor Cyan
+    @Write-Host "  just waitress           🪟 Server Waitress (Windows)" -ForegroundColor Cyan
+    @Write-Host "  just run-uvicorn        ⚡ Server Uvicorn ASGI" -ForegroundColor Cyan
+    @Write-Host "  just deploy             🎯 Deploy automatico" -ForegroundColor Cyan
+    @Write-Host "  just deploy-dev         🔧 Deploy development" -ForegroundColor Cyan
+    @Write-Host "  just deploy-staging     🧪 Deploy staging" -ForegroundColor Cyan
+    @Write-Host "  just deploy-prod        🚀 Deploy production" -ForegroundColor Cyan
+    @Write-Host "  just stop-servers       🛑 Ferma tutti i server" -ForegroundColor Cyan
+    @Write-Host "  just kill-port          🔪 Termina processo porta 8000" -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🔧 QUALITY & FORMAT:" -ForegroundColor Yellow
+    @Write-Host "  just fix-all            ⭐ CORREZIONE GLOBALE completa" -ForegroundColor Yellow
+    @Write-Host "  just lint-codacy        🔍 Controlli qualità Codacy" -ForegroundColor Yellow
+    @Write-Host "  just add-docstrings     📝 Aggiunge docstring mancanti" -ForegroundColor Yellow
+    @Write-Host "  just fix-markdown       📝 Corregge problemi Markdown" -ForegroundColor Yellow
+    @Write-Host ""
+    @Write-Host "ℹ️  UTILITY:" -ForegroundColor White
+    @Write-Host "  just stats              📊 Statistiche progetto" -ForegroundColor White
+    @Write-Host "  just check-env          🔍 Controllo ambiente" -ForegroundColor White
+    @Write-Host "  just check-env-dev      🔍 Controllo ambiente DEV" -ForegroundColor White
+    @Write-Host "  just generate-secret-key 🔑 Genera Django SECRET_KEY" -ForegroundColor White
+    @Write-Host "  just --list             📋 Lista completa comandi" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "🪟 WINDOWS IIS DEPLOYMENT:" -ForegroundColor Magenta
+    @Write-Host "  just setup-iis          🌐 Configura IIS reverse proxy" -ForegroundColor Cyan
+    @Write-Host "  just deploy-iis         🚀 Deploy completo con IIS" -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🐧 LINUX/macOS NGINX:" -ForegroundColor Blue
+    @Write-Host "  just setup-nginx        🌐 Configura Nginx reverse proxy" -ForegroundColor Blue
+    @Write-Host "  just deploy-nginx       🚀 Deploy completo con Nginx" -ForegroundColor Blue
+
+# === IIS DEPLOYMENT (Windows Server) ===
+
+# 🌐 Setup IIS reverse proxy per Windows Server
+setup-iis:
+    @Write-Host "🌐 Configurazione IIS reverse proxy..." -ForegroundColor Cyan
+    @Write-Host "⚠️  Richiede privilegi di amministratore!" -ForegroundColor Yellow
+    @PowerShell -ExecutionPolicy Bypass -File "deployment\setup-iis.ps1"
+
+# 🚀 Deploy completo per IIS
+deploy-iis:
+    @Write-Host "🚀 Deploy completo con IIS reverse proxy..." -ForegroundColor Magenta
+    @Write-Host "1/4 - Installazione dipendenze produzione..." -ForegroundColor Yellow
+    @uv sync --frozen
+    @Write-Host "2/4 - Migrazioni database..." -ForegroundColor Yellow
+    @$env:DJANGO_ENV="prod"; {{django_manage}} migrate --no-input
+    @Write-Host "3/4 - Raccolta file statici..." -ForegroundColor Yellow
+    @$env:DJANGO_ENV="prod"; {{django_manage}} collectstatic --no-input --clear
+    @Write-Host "4/4 - Avvio server Uvicorn per IIS..." -ForegroundColor Yellow
+    @Write-Host "🌐 Server disponibile per reverse proxy IIS" -ForegroundColor Green
+    @$env:DJANGO_ENV="prod"; cd src; {{python}} -m uvicorn home.asgi:application --host 127.0.0.1 --port 8000 --workers 1 --log-level info
+
+# === NGINX DEPLOYMENT (Linux/macOS) ===
+
+# 🌐 Setup Nginx per Linux/macOS
+setup-nginx:
+    @Write-Host "🌐 Configurazione Nginx per Linux/macOS..." -ForegroundColor Blue
+    @Write-Host "⚠️  Richiede privilegi sudo!" -ForegroundColor Yellow
+    @Write-Host "1/4 - Copia configurazione Nginx..." -ForegroundColor Yellow
+    sudo cp deployment/nginx.conf /etc/nginx/sites-available/gestione-pareri
+    @Write-Host "2/4 - Abilita sito..." -ForegroundColor Yellow
+    sudo ln -sf /etc/nginx/sites-available/gestione-pareri /etc/nginx/sites-enabled/
+    @Write-Host "3/4 - Test configurazione..." -ForegroundColor Yellow
+    sudo nginx -t
+    @Write-Host "4/4 - Ricarica Nginx..." -ForegroundColor Yellow
+    sudo systemctl reload nginx
+    @Write-Host "✅ Nginx configurato con successo!" -ForegroundColor Green
+    @Write-Host "🌐 Sito disponibile su: http://localhost" -ForegroundColor Green
+
+# 🚀 Deploy completo con Nginx
+deploy-nginx: install-prod
+    @Write-Host "🚀 Deploy completo con Nginx..." -ForegroundColor Blue
+    @Write-Host "1/5 - Installazione dipendenze..." -ForegroundColor Yellow
+    @uv sync --frozen
+    @Write-Host "2/5 - Migrazioni database..." -ForegroundColor Yellow
+    @$env:DJANGO_ENV="prod"; {{django_manage}} migrate --no-input
+    @Write-Host "3/5 - Raccolta file statici..." -ForegroundColor Yellow
+    @$env:DJANGO_ENV="prod"; {{django_manage}} collectstatic --no-input --clear
+    @Write-Host "4/5 - Riavvio Django service..." -ForegroundColor Yellow
+    sudo systemctl restart gestione-pareri || echo "Service gestione-pareri non configurato"
+    @Write-Host "5/5 - Reload Nginx..." -ForegroundColor Yellow
+    sudo systemctl reload nginx
+    @Write-Host "✅ Deploy Nginx completato!" -ForegroundColor Green
+    @Write-Host "🌐 Server disponibile tramite Nginx reverse proxy" -ForegroundColor Green
+
+# 📊 Status servizi Nginx
+status-nginx:
+    @Write-Host "📊 Status servizi Nginx..." -ForegroundColor Blue
+    @Write-Host "=== NGINX STATUS ===" -ForegroundColor Cyan
+    sudo systemctl status nginx --no-pager
     @Write-Host "" -ForegroundColor White
-    @Write-Host "== DEPLOYMENT ==" -ForegroundColor Magenta
-    @Write-Host "just deploy-dev     🔧 Avvia server di sviluppo" -ForegroundColor Green
-    @Write-Host "just deploy-staging 🧪 Deploy in modalità staging/test" -ForegroundColor Green
-    @Write-Host "just deploy-prod    🚀 Deploy in produzione" -ForegroundColor Green
-    @Write-Host "just deploy         🎯 Deploy automatico (rileva OS e usa il server ottimale)" -ForegroundColor Green
-    @Write-Host "just waitress       🪟 Avvia con Waitress (Windows/Cross-platform)" -ForegroundColor Green
-    @Write-Host "just run-uvicorn    ⚡ Avvia con Uvicorn ASGI (Tutti gli OS) - RACCOMANDATO" -ForegroundColor Green
-    @Write-Host "just test-uvicorn-local Test locale Uvicorn ASGI (debug, singolo worker)" -ForegroundColor Green
-    @Write-Host "just open-home      🌐 Apre la pagina home nel browser" -ForegroundColor Green
-    @Write-Host "just collectstatic  📦 Raccoglie i file statici" -ForegroundColor Green
-    @Write-Host "just stop-servers   🛑 Ferma tutti i server Django" -ForegroundColor Yellow
-    @Write-Host "just kill-port      🔪 Termina i processi sulla porta 8000" -ForegroundColor Red
-    @Write-Host "just generate-secret-key 🔑 Genera Django SECRET_KEY" -ForegroundColor Green
+    @Write-Host "=== DJANGO SERVICE STATUS ===" -ForegroundColor Cyan
+    sudo systemctl status gestione-pareri --no-pager || echo "Service gestione-pareri non configurato"
 
 # === DJANGO COMMANDS ===
 
@@ -131,7 +210,6 @@ shell-prod:
 add-docstrings:
     @Write-Host "📝 Aggiunta docstring ai file Python del progetto..." -ForegroundColor Cyan
     @{{python}} tools/add_docstring_batch.py .
-    @Write-Host "✅ Docstring aggiunte con successo!" -ForegroundColor Green
 
 # ⭐ CORREZIONE GLOBALE: Fix all code quality issues
 fix-all:
@@ -163,29 +241,6 @@ test-precommit:
     @Write-Host "🔍 Test di tutti i controlli pre-commit..." -ForegroundColor Cyan
     @pre-commit run --all-files
     @Write-Host "✅ Test pre-commit completato!" -ForegroundColor Green
-
-# 🏢 Pre-commit completo per ambiente aziendale
-precommit-corporate:
-    @Write-Host "🏢 Pre-commit ambiente aziendale (completo)..." -ForegroundColor Cyan
-    @$env:NODE_TLS_REJECT_UNAUTHORIZED="0"; $env:PYTHONHTTPSVERIFY="0"; pre-commit run --all-files
-    @Write-Host "✅ Pre-commit aziendale completato!" -ForegroundColor Green
-
-# 🏢 Controlli qualità per ambiente aziendale (alternativa a pre-commit)
-quality-corporate:
-    @Write-Host "🏢 Controlli qualità ambiente aziendale..." -ForegroundColor Cyan
-    @Write-Host "1/6 - Ruff format..." -ForegroundColor Yellow
-    @-{{python}} ruff format .
-    @Write-Host "2/6 - Ruff check e fix..." -ForegroundColor Yellow
-    @-{{python}} ruff check . --fix --unsafe-fixes
-    @Write-Host "3/6 - Import sorting..." -ForegroundColor Yellow
-    @-{{python}} ruff check --select I --fix .
-    @Write-Host "4/6 - Flake8..." -ForegroundColor Yellow
-    @-{{python}} flake8 --format=default .
-    @Write-Host "5/6 - Correzione script bash..." -ForegroundColor Yellow
-    @just fix-codacy
-    @Write-Host "6/6 - Formattazione Markdown..." -ForegroundColor Yellow
-    @just format-markdown
-    @Write-Host "✅ Controlli qualità completati (ambiente aziendale)!" -ForegroundColor Green
 
 # 🔧 Correzione automatica script bash
 fix-codacy:
@@ -260,12 +315,29 @@ deploy: install-prod
 # 🪟 Waitress server (Windows/Cross-platform)
 waitress: install-prod
     @Write-Host "🪟 Avvio Django con Waitress (Windows)..." -ForegroundColor Green
-    @powershell -ExecutionPolicy Bypass -File scripts/deployment/start-waitress.ps1
+    @Write-Host "🚀 Starting Django with Waitress" -ForegroundColor Green
+    @Write-Host "Environment: prod" -ForegroundColor Cyan
+    @Write-Host "Host: 0.0.0.0:8000" -ForegroundColor Cyan
+    @Write-Host "Threads: 4" -ForegroundColor Cyan
+    @Write-Host "📊 Running migrations..." -ForegroundColor Yellow
+    @{{django_manage}} migrate --no-input
+    @Write-Host "📁 Collecting static files..." -ForegroundColor Yellow
+    @{{django_manage}} collectstatic --no-input --clear
+    @Write-Host "🌟 Starting Waitress server..." -ForegroundColor Green
+    @$env:DJANGO_ENV="prod"; cd src; {{python}} -m waitress --host=0.0.0.0 --port=8000 --threads=4 --connection-limit=1000 --channel-timeout=120 home.wsgi:application
 
 # ⚡ Uvicorn ASGI server - RACCOMANDATO
 run-uvicorn: install-prod
     @Write-Host "⚡ Avvio Django con Uvicorn ASGI (Windows)..." -ForegroundColor Green
-    @powershell -ExecutionPolicy Bypass -File scripts/deployment/start-uvicorn.ps1
+    @Write-Host "🚀 Starting Uvicorn ASGI Server" -ForegroundColor Blue
+    @Write-Host "Environment: prod" -ForegroundColor Yellow
+    @Write-Host "Host: 0.0.0.0:8000" -ForegroundColor Yellow
+    @Write-Host "📊 Running migrations..." -ForegroundColor Yellow
+    @{{django_manage}} migrate --no-input
+    @Write-Host "📁 Collecting static files..." -ForegroundColor Yellow
+    @{{django_manage}} collectstatic --no-input --clear
+    @Write-Host "⚡ Modalità produzione: single worker (Windows optimized)" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="prod"; cd src; {{python}} -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --log-level info --access-log --timeout-keep-alive 2
 
 # 🧪 Test Uvicorn locale (debug)
 test-uvicorn-local:
