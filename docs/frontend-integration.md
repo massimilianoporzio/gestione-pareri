@@ -53,38 +53,36 @@ npx tailwindcss init -p
 ```
 
 **File: `tailwind.config.js`**
+
 ```javascript
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/**/*.html',
-    './src/**/*.js',
-    './src/**/*.py',
-  ],
+  content: ["./src/**/*.html", "./src/**/*.js", "./src/**/*.py"],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};
 ```
 
 ### 3. Webpack Configuration
 
 **File: `webpack.config.js`**
+
 ```javascript
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  entry: './src/static/js/main.js',
+  entry: "./src/static/js/main.js",
   output: {
-    path: path.resolve(__dirname, 'src/static/dist'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "src/static/dist"),
+    filename: "bundle.js",
     clean: true,
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'styles.css',
+      filename: "styles.css",
     }),
   ],
   module: {
@@ -93,19 +91,19 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
+            presets: ["@babel/preset-env"],
+          },
+        },
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
     ],
   },
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: process.env.NODE_ENV === "production" ? "production" : "development",
 };
 ```
 
@@ -177,32 +175,34 @@ just deploy-prod
 ### Template Integration
 
 **File: `src/templates/base.html`**
+
 ```html
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>{% block title %}Deploy Django{% endblock %}</title>
-    
+
     <!-- Tailwind CSS -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
     <!-- Webpack Bundle CSS -->
-    <link href="{% static 'dist/styles.css' %}" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
+    <link href="{% static 'dist/styles.css' %}" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-100">
     {% block content %}{% endblock %}
-    
+
     <!-- Webpack Bundle JS -->
     <script src="{% static 'dist/bundle.js' %}"></script>
-</body>
+  </body>
 </html>
 ```
 
 ### Static Files Settings
 
 **File: `src/home/settings/base.py`**
+
 ```python
 # Static files configuration
 STATIC_URL = '/static/'
@@ -289,27 +289,32 @@ build-all: install-node build-frontend collectstatic-prod
 ### PostCSS Configuration
 
 **File: `postcss.config.js`**
+
 ```javascript
 module.exports = {
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
-    ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {})
-  }
-}
+    ...(process.env.NODE_ENV === "production" ? { cssnano: {} } : {}),
+  },
+};
 ```
 
 ### Babel Configuration
 
 **File: `.babelrc`**
+
 ```json
 {
   "presets": [
-    ["@babel/preset-env", {
-      "targets": {
-        "browsers": ["last 2 versions", "ie >= 11"]
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": ["last 2 versions", "ie >= 11"]
+        }
       }
-    }]
+    ]
   ]
 }
 ```
@@ -385,6 +390,6 @@ npm install --save-dev vue-loader vue-template-compiler
 ## 🔗 File Correlati
 
 - [`docs/nodejs-integration.md`](nodejs-integration.md) - Documentazione Node.js completa
-- [`docs/tailwind-integration.md`](tailwind-integration.md) - Setup Tailwind specifico  
+- [`docs/tailwind-integration.md`](tailwind-integration.md) - Setup Tailwind specifico
 - [`justfile`](../justfile) - Task runner commands
 - [`src/static/README.md`](../src/static/README.md) - Static files management

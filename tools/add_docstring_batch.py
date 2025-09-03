@@ -96,7 +96,7 @@ def main():
 
     print(f"File Python elaborati: {files_processed}")
     print(f"File Python modificati: {files_modified}")
-    
+
     if files_modified > 0:
         print(f"✅ {files_modified} file modificati con successo!")
     else:
