@@ -46,6 +46,18 @@ just shell-dev
 just check-env-dev
 ```
 
+### 🧪 Testing
+
+Per informazioni complete sui test, vedi: [**📋 Guida Testing Completa**](testing-guide.md)
+
+```bash
+# Test rapidi sicurezza
+uv run manage.py test accounts.tests.SecurityTest --settings=home.settings.test_local
+
+# Test completi
+uv run manage.py test accounts --settings=home.settings.test_local
+```
+
 ### 💡 Quando usarlo
 
 - Sviluppo di nuove funzionalità

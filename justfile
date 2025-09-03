@@ -22,7 +22,14 @@ default:
     @Write-Host "  just migrate            📦 Migrazioni database" -ForegroundColor Green
     @Write-Host "  just makemigrations     📝 Crea migrazioni" -ForegroundColor Green
     @Write-Host "  just shell              🐚 Shell Django" -ForegroundColor Green
+    @Write-Host "  just createsuperuser    👤 Crea superuser" -ForegroundColor Green
+    @Write-Host "  just init-groups        🔐 Inizializza gruppi base" -ForegroundColor Green
+    @Write-Host "  just dump-initial-data  💾 Dump dati iniziali" -ForegroundColor Green
+    @Write-Host "  just setup-all-environments 🔄 Setup tutti ambienti" -ForegroundColor Green
     @Write-Host "  just test               🧪 Esegue test progetto" -ForegroundColor Green
+    @Write-Host "  just test-quick         ⚡ Test rapidi quotidiani" -ForegroundColor Green
+    @Write-Host "  just test-security      🔒 Test sicurezza critica" -ForegroundColor Green  
+    @Write-Host "  just test-pre-deploy    🚀 Test completi pre-deploy" -ForegroundColor Green
     @Write-Host "  just test-dev           🔧 Test ambiente DEV" -ForegroundColor Green
     @Write-Host "  just test-test          🧪 Test ambiente TEST" -ForegroundColor Green
     @Write-Host "  just test-staging       🎭 Test ambiente STAGING" -ForegroundColor Green
@@ -166,28 +173,35 @@ run-prod:
 # 🧪 Test del progetto
 test:
     @Write-Host "🧪 Esecuzione dei test..." -ForegroundColor Cyan
-    @{{django_manage}} test
+    @Write-Host "📋 Ambiente: LOCAL con PostgreSQL" -ForegroundColor Gray
+    @uv run python src/manage.py test accounts --settings=home.settings.test_local
 
 # 🧪 Test in ambiente DEV
 test-dev:
     @Write-Host "🧪 Esecuzione dei test in ambiente DEV..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="dev"; {{django_manage}} test
+    @Write-Host "📋 Ambiente: DEV con PostgreSQL" -ForegroundColor Gray
+    @$env:DJANGO_ENV="dev"; uv run python src/manage.py test accounts --settings=home.settings.dev
 
 # 🧪 Test in ambiente TEST
 test-test:
     @Write-Host "🧪 Esecuzione dei test in ambiente TEST..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="test"; {{django_manage}} test
+    @Write-Host "📋 Ambiente: TEST con PostgreSQL" -ForegroundColor Gray
+    @$env:DJANGO_ENV="test"; uv run python src/manage.py test accounts --settings=home.settings.test
 
 # 🧪 Test in ambiente STAGING
 test-staging:
     @Write-Host "🎭 Esecuzione dei test in ambiente STAGING..." -ForegroundColor Cyan
+    @Write-Host "📋 Ambiente: STAGING con PostgreSQL" -ForegroundColor Gray
     @Write-Host "⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} test
+    @$env:DJANGO_ENV="staging"; uv run python src/manage.py test accounts --settings=home.settings.staging --verbosity=2
 
 # 🧪 Test in ambiente PROD
 test-prod:
     @Write-Host "🧪 Esecuzione dei test in ambiente PROD..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="prod"; {{django_manage}} test
+    @Write-Host "📋 Ambiente: PROD con PostgreSQL" -ForegroundColor Gray
+    @Write-Host "🚨 ATTENZIONE: Test in ambiente PRODUZIONE!" -ForegroundColor Red
+    @Write-Host "💡 Usa solo per validazione post-deploy" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="prod"; uv run python src/manage.py test accounts --settings=home.settings.prod --verbosity=2
 
 # 📦 Migrazioni database
 migrate:
@@ -245,6 +259,108 @@ shell-staging:
 shell-prod:
     @Write-Host "🐚 Avvio della shell Django in ambiente PROD..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="prod"; {{django_manage}} shell
+
+# 👤 Crea superuser
+createsuperuser:
+    @Write-Host "👤 Creazione di un superuser..." -ForegroundColor Cyan
+    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
+    @{{django_manage}} createsuperuser
+
+# 👤 Crea superuser in ambiente DEV
+createsuperuser-dev:
+    @Write-Host "👤 Creazione di un superuser in ambiente DEV..." -ForegroundColor Cyan
+    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="dev"; {{django_manage}} createsuperuser
+
+# 👤 Crea superuser in ambiente TEST
+createsuperuser-test:
+    @Write-Host "👤 Creazione di un superuser in ambiente TEST..." -ForegroundColor Cyan
+    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="test"; {{django_manage}} createsuperuser
+
+# 👤 Crea superuser in ambiente STAGING
+createsuperuser-staging:
+    @Write-Host "🎭 Creazione di un superuser in ambiente STAGING..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
+    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="staging"; {{django_manage}} createsuperuser
+
+# 👤 Crea superuser in ambiente PROD
+createsuperuser-prod:
+    @Write-Host "👤 Creazione di un superuser in ambiente PROD..." -ForegroundColor Cyan
+    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="prod"; {{django_manage}} createsuperuser
+
+# === GROUPS & PERMISSIONS ===
+
+# 🔐 Inizializza gruppi e permessi di base
+init-groups:
+    @Write-Host "🔐 Inizializzazione gruppi e permessi di base..." -ForegroundColor Cyan
+    @{{django_manage}} init_groups_permissions
+    @Write-Host "✅ Gruppi e permessi inizializzati" -ForegroundColor Green
+
+# 🔐 Inizializza gruppi in ambiente TEST
+init-groups-test:
+    @Write-Host "🔐 Inizializzazione gruppi in ambiente TEST..." -ForegroundColor Cyan
+    @$env:DJANGO_ENV="test"; {{django_manage}} init_groups_permissions
+    @Write-Host "✅ Gruppi TEST inizializzati" -ForegroundColor Green
+
+# 🔐 Inizializza gruppi in ambiente STAGING
+init-groups-staging:
+    @Write-Host "🔐 Inizializzazione gruppi in ambiente STAGING..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="staging"; {{django_manage}} init_groups_permissions
+    @Write-Host "✅ Gruppi STAGING inizializzati" -ForegroundColor Green
+
+# 🔐 Inizializza gruppi in ambiente PROD
+init-groups-prod:
+    @Write-Host "🔐 Inizializzazione gruppi in ambiente PROD..." -ForegroundColor Cyan
+    @$env:DJANGO_ENV="prod"; {{django_manage}} init_groups_permissions
+    @Write-Host "✅ Gruppi PROD inizializzati" -ForegroundColor Green
+
+# === DATABASE DUMP & LOAD ===
+
+# 💾 Crea dump dei dati iniziali (superuser + gruppi + permessi)
+dump-initial-data:
+    @Write-Host "💾 Creazione dump dei dati iniziali..." -ForegroundColor Cyan
+    @Write-Host "ℹ️  Salva superuser, gruppi e permessi da ambiente DEV" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="dev"; {{django_manage}} dumpdata accounts auth.group auth.permission --format=json --indent=2 --output=fixtures/initial_data.json
+    @Write-Host "✅ Dump salvato in fixtures/initial_data.json" -ForegroundColor Green
+
+# 📥 Carica dati iniziali in ambiente TEST
+load-initial-data-test:
+    @Write-Host "📥 Caricamento dati iniziali in ambiente TEST..." -ForegroundColor Cyan
+    @$env:DJANGO_ENV="test"; {{django_manage}} loaddata fixtures/initial_data.json
+    @Write-Host "✅ Dati caricati in ambiente TEST" -ForegroundColor Green
+
+# 📥 Carica dati iniziali in ambiente STAGING
+load-initial-data-staging:
+    @Write-Host "📥 Caricamento dati iniziali in ambiente STAGING..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
+    @$env:DJANGO_ENV="staging"; {{django_manage}} loaddata fixtures/initial_data.json
+    @Write-Host "✅ Dati caricati in ambiente STAGING" -ForegroundColor Green
+
+# 📥 Carica dati iniziali in ambiente PROD
+load-initial-data-prod:
+    @Write-Host "📥 Caricamento dati iniziali in ambiente PROD..." -ForegroundColor Cyan
+    @Write-Host "⚠️  ATTENZIONE: Stai caricando dati in PRODUZIONE!" -ForegroundColor Red
+    @$env:DJANGO_ENV="prod"; {{django_manage}} loaddata fixtures/initial_data.json
+    @Write-Host "✅ Dati caricati in ambiente PROD" -ForegroundColor Green
+
+# 🔄 Setup completo tutti gli ambienti (migrate + load data)
+setup-all-environments:
+    @Write-Host "🔄 Setup completo di tutti gli ambienti..." -ForegroundColor Cyan
+    @Write-Host "1/4 - Migrazioni ambiente TEST..." -ForegroundColor Yellow
+    @$env:DJANGO_ENV="test"; {{django_manage}} migrate
+    @Write-Host "2/4 - Migrazioni ambiente STAGING..." -ForegroundColor Yellow
+    @$env:DJANGO_ENV="staging"; {{django_manage}} migrate
+    @Write-Host "3/4 - Migrazioni ambiente PROD..." -ForegroundColor Yellow
+    @$env:DJANGO_ENV="prod"; {{django_manage}} migrate
+    @Write-Host "4/4 - Caricamento dati iniziali in tutti gli ambienti..." -ForegroundColor Yellow
+    just load-initial-data-test
+    just load-initial-data-staging
+    just load-initial-data-prod
+    @Write-Host "✅ Setup completo di tutti gli ambienti completato!" -ForegroundColor Green
 
 # === QUALITY COMMANDS ===
 
@@ -548,3 +664,49 @@ create-db-script:
     } else { \
         Write-Host "❌ Template non trovato: update_postgresql_staging.template.sql" -ForegroundColor Red; \
     }
+
+# === ENHANCED TESTING COMMANDS ===
+
+# ⚡ Test rapidi quotidiani per sviluppatori  
+test-quick:
+    @Write-Host "⚡ Test rapidi quotidiani..." -ForegroundColor Yellow
+    @Write-Host "🎯 Focus: CustomUser, sicurezza base, autenticazione" -ForegroundColor Gray
+    @Write-Host "🗄️ Database: SQLite (veloce)" -ForegroundColor Gray
+    @uv run python src/manage.py test accounts.tests.CustomUserModelTest accounts.tests.CustomUserAuthenticationTest accounts.tests.SecurityTest --settings=home.settings.test_local --keepdb --verbosity=1
+
+# 🔒 Test sicurezza critica
+test-security:
+    @Write-Host "🔒 Test sicurezza critica..." -ForegroundColor Red
+    @Write-Host "🎯 Focus: Validazione domini, password, CSRF" -ForegroundColor Gray
+    @Write-Host "🗄️ Database: SQLite (veloce)" -ForegroundColor Gray
+    @uv run python src/manage.py test accounts.tests.SecurityTest accounts.tests.CustomUserFormsTest --settings=home.settings.test_local --keepdb --verbosity=2
+
+# 🚀 Test completi pre-deploy
+test-pre-deploy:
+    @Write-Host "🚀 Test completi pre-deploy..." -ForegroundColor Green
+    @Write-Host "📋 Tutti i 42 test con report dettagliato" -ForegroundColor Gray
+    @Write-Host "⚡ Performance + Sicurezza + Funzionalità" -ForegroundColor Gray
+    @Write-Host "🗄️ Database: PostgreSQL (realistico)" -ForegroundColor Gray
+    @uv run python src/manage.py test accounts --settings=home.settings.test --verbosity=2
+
+# 📊 Test con coverage
+test-coverage:
+    @Write-Host "📊 Test con coverage report..." -ForegroundColor Cyan
+    @Write-Host "📋 Generazione report di copertura" -ForegroundColor Gray
+    @cd src; uv run coverage run --source='.' manage.py test --settings=home.settings.test_local
+    @cd src; uv run coverage report
+    @cd src; uv run coverage html
+    @Write-Host "🌐 Report HTML: src/htmlcov/index.html" -ForegroundColor Green
+
+# 🏥 Test health check
+test-health:
+    @Write-Host "🏥 Health check del sistema..." -ForegroundColor Cyan
+    @Write-Host "1/4 - Verifica ambienti..." -ForegroundColor Yellow
+    just check-env
+    @Write-Host "2/4 - Test rapidi..." -ForegroundColor Yellow
+    just test-quick
+    @Write-Host "3/4 - Verifica migrazioni..." -ForegroundColor Yellow
+    @cd src; {{django_manage}} showmigrations --settings=home.settings.test_local
+    @Write-Host "4/4 - Test connessione database..." -ForegroundColor Yellow
+    @cd src; {{django_manage}} dbshell --settings=home.settings.test_local -c "SELECT 1;"
+    @Write-Host "✅ Health check completato!" -ForegroundColor Green \

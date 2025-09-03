@@ -32,7 +32,7 @@ if config("USE_POSTGRESQL_TEST", default=False, cast=bool):
             "HOST": config("DB_HOST", default="localhost"),
             "PORT": config("DB_PORT", default="5432"),
             "OPTIONS": {
-                "charset": "utf8mb4",
+                # PostgreSQL options (nessun charset necessario)
             },
         }
     }
