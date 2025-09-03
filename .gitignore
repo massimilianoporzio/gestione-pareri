@@ -179,6 +179,22 @@ activemq-data/
 .env.test.local
 .env.production.local
 
+# All environment-specific credential files (NEVER commit these!)
+.env.dev
+.env.test
+.env.staging
+.env.prod
+credentials.txt
+passwords.txt
+db_credentials.md
+*_credentials.*
+
+# IIS Deployment files (NEVER commit these - contain secrets!)
+web.config
+web.*.config
+*.config.local
+deployment.config
+
 # Database scripts with passwords (use templates instead)
 update_postgresql_staging.sql
 *_with_passwords.sql

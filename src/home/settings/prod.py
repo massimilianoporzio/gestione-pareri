@@ -84,9 +84,17 @@ else:
 
 # Configurazione di sicurezza per la produzione
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SECURE_SSL_REDIRECT = config("DJANGO_SECURE_SSL_REDIRECT", default=True, cast=bool)
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+
+# Disabilita SSL redirect durante i test per evitare problemi con i test dell'admin
+if os.environ.get("DJANGO_TEST_DB", "0") == "1":
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+else:
+    SECURE_SSL_REDIRECT = config("DJANGO_SECURE_SSL_REDIRECT", default=True, cast=bool)
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 SECURE_HSTS_SECONDS = 60 * 60 * 24 * 30  # 30 giorni
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
@@ -103,10 +111,16 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="noreply@example.com")
 
+# IIS Subpath configuration
+FORCE_SCRIPT_NAME = config("DJANGO_FORCE_SCRIPT_NAME", default="")
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Static e Media files in produzione
-STATIC_URL = "/static/"
+STATIC_URL = f"{FORCE_SCRIPT_NAME}/static/"
 STATIC_ROOT = REPO_DIR / "staticfiles"  # noqa: F405
-MEDIA_URL = "/media/"
+MEDIA_URL = f"{FORCE_SCRIPT_NAME}/media/"
 MEDIA_ROOT = REPO_DIR / "media"  # noqa: F405
 
 # Configurazione del logging per produzione

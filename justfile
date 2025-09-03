@@ -1,12 +1,12 @@
 # Deploy Django Template - Comandi disponibili con Just
 # Per visualizzare tutti i comandi: just --list o just
 
-# Configura shell per Windows
+# Configura shell per Windows  
 set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
 # Variabili globali
 python := "uv run"
-django_manage := "uv run src/manage.py"
+django_manage := "uv run python src/manage.py"
 
 # 📋 Comando default: mostra l'help
 default:
@@ -38,6 +38,11 @@ default:
     @Write-Host "🌐 SERVER & DEPLOY:" -ForegroundColor Cyan
     @Write-Host "  just waitress           🪟 Server Waitress (Windows)" -ForegroundColor Cyan
     @Write-Host "  just run-uvicorn        ⚡ Server Uvicorn ASGI" -ForegroundColor Cyan
+    @Write-Host "  just iis-test-local     🧪 Test IIS locale" -ForegroundColor Cyan
+    @Write-Host "  just iis-deploy         🚀 Deploy completo IIS" -ForegroundColor Cyan
+    @Write-Host "  just iis-setup          ⚙️  Setup iniziale IIS" -ForegroundColor Cyan
+    @Write-Host "  just production-deploy  🏭 Deploy produzione completo" -ForegroundColor Cyan
+    @Write-Host "  just production-update  🔄 Update produzione esistente" -ForegroundColor Cyan
     @Write-Host "  just deploy             🎯 Deploy automatico" -ForegroundColor Cyan
     @Write-Host "  just deploy-dev         🔧 Deploy development" -ForegroundColor Cyan
     @Write-Host "  just deploy-staging     🧪 Deploy staging" -ForegroundColor Cyan
@@ -178,15 +183,16 @@ test:
 
 # 🧪 Test in ambiente DEV
 test-dev:
-    @Write-Host "🧪 Esecuzione dei test in ambiente DEV..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: DEV con PostgreSQL" -ForegroundColor Gray
-    @$env:DJANGO_ENV="dev"; uv run python src/manage.py test accounts --settings=home.settings.dev
+    @Write-Host "🧪 Test in ambiente DEV..." -ForegroundColor Cyan
+    @Write-Host "📋 Ambiente: DEV con SQLite/PostgreSQL" -ForegroundColor Gray
+    @$env:DJANGO_SETTINGS_MODULE="home.settings.dev"; uv run pytest src/accounts/tests.py -v
 
 # 🧪 Test in ambiente TEST
 test-test:
-    @Write-Host "🧪 Esecuzione dei test in ambiente TEST..." -ForegroundColor Cyan
+    @Write-Host "🧪 Test in ambiente TEST..." -ForegroundColor Cyan
     @Write-Host "📋 Ambiente: TEST con PostgreSQL" -ForegroundColor Gray
-    @$env:DJANGO_ENV="test"; uv run python src/manage.py test accounts --settings=home.settings.test
+    @Write-Host "⚡ PostgreSQL deve essere configurato!" -ForegroundColor Yellow
+    @$env:DJANGO_SETTINGS_MODULE="home.settings.test"; uv run pytest src/accounts/tests.py -v
 
 # 🧪 Test in ambiente STAGING
 test-staging:
@@ -197,11 +203,11 @@ test-staging:
 
 # 🧪 Test in ambiente PROD
 test-prod:
-    @Write-Host "🧪 Esecuzione dei test in ambiente PROD..." -ForegroundColor Cyan
+    @Write-Host "🧪 Test in ambiente PROD..." -ForegroundColor Cyan
     @Write-Host "📋 Ambiente: PROD con PostgreSQL" -ForegroundColor Gray
     @Write-Host "🚨 ATTENZIONE: Test in ambiente PRODUZIONE!" -ForegroundColor Red
     @Write-Host "💡 Usa solo per validazione post-deploy" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="prod"; uv run python src/manage.py test accounts --settings=home.settings.prod --verbosity=2
+    @$env:DJANGO_SETTINGS_MODULE="home.settings.prod"; $env:DJANGO_TEST_DB="1"; uv run pytest src/accounts/tests.py -v
 
 # 📦 Migrazioni database
 migrate:
@@ -709,4 +715,80 @@ test-health:
     @cd src; {{django_manage}} showmigrations --settings=home.settings.test_local
     @Write-Host "4/4 - Test connessione database..." -ForegroundColor Yellow
     @cd src; {{django_manage}} dbshell --settings=home.settings.test_local -c "SELECT 1;"
-    @Write-Host "✅ Health check completato!" -ForegroundColor Green \
+    @Write-Host "✅ Health check completato!" -ForegroundColor Green
+
+# ============================================================================
+# 🌐 IIS DEPLOYMENT COMMANDS
+# ============================================================================
+
+# 🧪 Test IIS locale con subpath
+iis-test-local:
+    @Write-Host "🧪 Avvio test IIS locale..." -ForegroundColor Cyan
+    @Write-Host "📍 URL: http://localhost:8000/pratiche-pareri/" -ForegroundColor Yellow
+    @Write-Host "📊 Admin: http://localhost:8000/pratiche-pareri/admin/" -ForegroundColor Yellow
+    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/test-iis-local.ps1
+
+# ⚙️ Setup iniziale per IIS
+iis-setup:
+    @Write-Host "⚙️ Setup iniziale IIS..." -ForegroundColor Cyan
+    @if (!(Test-Path .env.prod)) { Copy-Item .env.prod.template .env.prod; Write-Host "✅ File .env.prod creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } else { Write-Host "📄 File .env.prod già presente" -ForegroundColor Green }
+    @if (!(Test-Path web.config)) { Copy-Item web.config.template web.config; Write-Host "✅ File web.config creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } else { Write-Host "� File web.config già presente" -ForegroundColor Green }
+    @Write-Host "�📋 Prossimi passi:" -ForegroundColor Yellow
+    @Write-Host "1. Modifica .env.prod con i tuoi valori" -ForegroundColor White
+    @Write-Host "2. Modifica web.config con percorsi e credenziali reali" -ForegroundColor White
+    @Write-Host "3. Configura PostgreSQL per produzione" -ForegroundColor White
+    @Write-Host "4. Esegui: just iis-test-local" -ForegroundColor White
+    @Write-Host "5. Quando tutto funziona: just iis-deploy" -ForegroundColor White
+
+# 🔐 Setup credenziali per tutti gli ambienti
+setup-credentials:
+    @Write-Host "🔐 Setup credenziali per tutti gli ambienti..." -ForegroundColor Cyan
+    @if (!(Test-Path .env.dev)) { Copy-Item .env.dev.template .env.dev; Write-Host "✅ .env.dev creato" -ForegroundColor Green } else { Write-Host "📄 .env.dev già presente" -ForegroundColor Yellow }
+    @if (!(Test-Path .env.test)) { Copy-Item .env.test.template .env.test; Write-Host "✅ .env.test creato" -ForegroundColor Green } else { Write-Host "📄 .env.test già presente" -ForegroundColor Yellow }
+    @if (!(Test-Path .env.staging)) { Copy-Item .env.staging.template .env.staging; Write-Host "✅ .env.staging creato" -ForegroundColor Green } else { Write-Host "📄 .env.staging già presente" -ForegroundColor Yellow }
+    @if (!(Test-Path .env.prod)) { Copy-Item .env.prod.template .env.prod; Write-Host "✅ .env.prod creato" -ForegroundColor Green } else { Write-Host "📄 .env.prod già presente" -ForegroundColor Yellow }
+    @if (!(Test-Path db_credentials.md)) { Copy-Item db_credentials.template.md db_credentials.md; Write-Host "✅ db_credentials.md creato" -ForegroundColor Green } else { Write-Host "📄 db_credentials.md già presente" -ForegroundColor Yellow }
+    @Write-Host "⚠️  IMPORTANTE: Modifica TUTTI i file .env con le password reali!" -ForegroundColor Red
+    @Write-Host "📋 File creati (NON tracciati da git):" -ForegroundColor Yellow
+    @Write-Host "  - .env.dev (password DEV)" -ForegroundColor White
+    @Write-Host "  - .env.test (password TEST)" -ForegroundColor White
+    @Write-Host "  - .env.staging (password STAGING)" -ForegroundColor White
+    @Write-Host "  - .env.prod (password PROD)" -ForegroundColor White
+    @Write-Host "  - db_credentials.md (reference file)" -ForegroundColor White
+
+# 🚀 Deploy completo su IIS
+iis-deploy:
+    @Write-Host "🚀 Deploy completo IIS..." -ForegroundColor Cyan
+    @Write-Host "⚠️  ATTENZIONE: Questo comando richiede privilegi amministratore!" -ForegroundColor Red
+    @Write-Host "Continuare? (Premi Enter per procedere, Ctrl+C per annullare)" -ForegroundColor Yellow
+    @cmd /c "pause > nul"
+    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/deploy-iis.ps1 -ServerIP "192.168.1.100"
+
+# 🔧 Deploy IIS con IP personalizzato
+iis-deploy-custom ip:
+    @Write-Host "🚀 Deploy IIS su {{ip}}..." -ForegroundColor Cyan
+    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/deploy-iis.ps1 -ServerIP "{{ip}}"
+
+# 🏥 Health check IIS
+iis-health:
+    @Write-Host "🏥 Health check IIS..." -ForegroundColor Cyan
+    @$ip = if ($env:IIS_SERVER_IP) { $env:IIS_SERVER_IP } else { "localhost" }
+    @try { $response = Invoke-WebRequest -Uri "http://$ip/pratiche-pareri/admin/" -TimeoutSec 5 -UseBasicParsing; Write-Host "✅ IIS raggiungibile: $($response.StatusCode)" -ForegroundColor Green } catch { Write-Host "❌ IIS non raggiungibile: $($_.Exception.Message)" -ForegroundColor Red }
+
+# 🏭 Deploy produzione completo (installazione da zero)
+production-deploy:
+    @Write-Host "🏭 Deploy produzione completo..." -ForegroundColor Cyan
+    @Write-Host "⚠️  ATTENZIONE: Questo comando installa l'applicazione da zero!" -ForegroundColor Red
+    @Write-Host "Continuare? (Premi Enter per procedere, Ctrl+C per annullare)" -ForegroundColor Yellow
+    @cmd /c "pause > nul"
+    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/production-deploy.ps1
+
+# 🔄 Update produzione esistente
+production-update:
+    @Write-Host "🔄 Update produzione esistente..." -ForegroundColor Cyan
+    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/production-deploy.ps1 -UpdateOnly
+
+# 🏭 Deploy produzione con IP personalizzato
+production-deploy-custom ip:
+    @Write-Host "🏭 Deploy produzione su {{ip}}..." -ForegroundColor Cyan
+    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/production-deploy.ps1 -ServerIP "{{ip}}" \

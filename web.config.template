@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+        <defaultDocument enabled="false" />
+        <httpErrors errorMode="Detailed" />
+        
+        <!-- Handler per Python/Django -->
+        <handlers>
+            <add name="PythonHandler" path="*" verb="*" modules="httpPlatformHandler" resourceType="Unspecified" requireAccess="Script" />
+        </handlers>
+        
+        <!-- Configurazione HTTP Platform Handler -->
+        <httpPlatform processPath="D:\Python\python.exe"
+                      arguments="manage.py runserver --settings=home.settings.prod 0.0.0.0:8000"
+                      startupTimeLimit="60"
+                      stdoutLogEnabled="true"
+                      stdoutLogFile="logs\django.log"
+                      requestTimeout="00:04:00">
+            <environmentVariables>
+                <!-- DATABASE CONFIGURATION (MODIFICA CON I TUOI VALORI REALI!) -->
+                <environmentVariable name="DJANGO_DATABASE_URL" value="postgresql://USERNAME:PASSWORD@localhost:5432/DATABASE_NAME" />
+                
+                <!-- SECURITY SETTINGS (GENERA UNA CHIAVE SICURA!) -->
+                <environmentVariable name="DJANGO_SECRET_KEY" value="YOUR-VERY-LONG-SECRET-KEY-HERE-CHANGE-THIS" />
+                <environmentVariable name="DJANGO_DEBUG" value="False" />
+                <environmentVariable name="DJANGO_ENVIRONMENT" value="PROD" />
+                
+                <!-- HOST CONFIGURATION (MODIFICA CON IP/DOMINI REALI!) -->
+                <environmentVariable name="DJANGO_ALLOWED_HOSTS" value="YOUR-SERVER-IP,YOUR-DOMAIN.COM" />
+                <environmentVariable name="DJANGO_CSRF_TRUSTED_ORIGINS" value="http://YOUR-SERVER-IP,https://YOUR-DOMAIN.COM" />
+                
+                <!-- IIS SUBPATH CONFIGURATION -->
+                <environmentVariable name="DJANGO_FORCE_SCRIPT_NAME" value="/pratiche-pareri" />
+                
+                <!-- SSL CONFIGURATION -->
+                <environmentVariable name="DJANGO_SECURE_SSL_REDIRECT" value="False" />
+                
+                <!-- EMAIL CONFIGURATION (OPZIONALE - MODIFICA SE NECESSARIO) -->
+                <environmentVariable name="EMAIL_HOST" value="smtp.gmail.com" />
+                <environmentVariable name="EMAIL_PORT" value="587" />
+                <environmentVariable name="EMAIL_USE_TLS" value="True" />
+                <environmentVariable name="EMAIL_HOST_USER" value="YOUR-EMAIL@DOMAIN.COM" />
+                <environmentVariable name="EMAIL_HOST_PASSWORD" value="YOUR-EMAIL-PASSWORD" />
+                <environmentVariable name="DEFAULT_FROM_EMAIL" value="noreply@yourcompany.com" />
+                
+                <!-- LOGGING -->
+                <environmentVariable name="DJANGO_LOG_LEVEL" value="INFO" />
+            </environmentVariables>
+        </httpPlatform>
+        
+        <!-- Rewrite rules per subpath -->
+        <rewrite>
+            <rules>
+                <!-- Static files - rewrite to actual static directory -->
+                <rule name="StaticFiles" stopProcessing="true">
+                    <match url="^pratiche-pareri/static/(.*)" />
+                    <action type="Rewrite" url="staticfiles/{R:1}" />
+                </rule>
+                
+                <!-- Media files - rewrite to actual media directory -->
+                <rule name="MediaFiles" stopProcessing="true">
+                    <match url="^pratiche-pareri/media/(.*)" />
+                    <action type="Rewrite" url="media/{R:1}" />
+                </rule>
+                
+                <!-- All other requests to Django -->
+                <rule name="Django" stopProcessing="true">
+                    <match url="^pratiche-pareri/(.*)" />
+                    <action type="Rewrite" url="{R:1}" />
+                </rule>
+            </rules>
+        </rewrite>
+        
+        <!-- Configurazione per file statici -->
+        <staticContent>
+            <mimeMap fileExtension=".json" mimeType="application/json" />
+            <mimeMap fileExtension=".css" mimeType="text/css" />
+            <mimeMap fileExtension=".js" mimeType="application/javascript" />
+        </staticContent>
+        
+        <!-- Security headers -->
+        <httpProtocol>
+            <customHeaders>
+                <add name="X-Content-Type-Options" value="nosniff" />
+                <add name="X-Frame-Options" value="DENY" />
+                <add name="X-XSS-Protection" value="1; mode=block" />
+            </customHeaders>
+        </httpProtocol>
+    </system.webServer>
+</configuration>
