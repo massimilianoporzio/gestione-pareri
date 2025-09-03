@@ -86,16 +86,19 @@ Questo è un **template repository** per progetti Django, già configurato con s
 ## 🚀 Quick Links
 
 ### 📋 **Setup Rapido**
+
 - [Setup iniziale](#-setup-iniziale) - Configurazione progetto
 - [Task Runners](#-task-runners-make--just) - Comandi disponibili (Make & Just)
 - [Integrazione VS Code](#-integrazione-con-vs-code) - Configurazione editor
 
 ### 🌐 **Deployment Guides**
+
 - [🪟 IIS Deployment](docs/iis-deployment.md) - Windows Server & Intranet aziendale
 - [🐧 Nginx Deployment](docs/nginx-deployment.md) - Linux/macOS Production
 - [⚡ Uvicorn Integration](docs/uvicorn-integration.md) - ASGI server configuration
 
 ### 📖 **Documentation**
+
 - [📋 Just Commands](docs/just.md) - Task runner moderno (47 comandi)
 - [🔧 Environment Variables](docs/environment-variables.md) - Configurazione ambienti
 - [📊 Code Quality](tools/quality_dashboard.md) - Pipeline qualità locale
@@ -152,7 +155,7 @@ Puoi anche usare i task runners:
 # Con Just (consigliato)
 just fix-codacy
 
-# Con Make  
+# Con Make
 make fix-codacy
 ```
 
@@ -241,7 +244,7 @@ Con uv, non è necessario attivare l'ambiente virtuale. Basta usare `uv run` seg
 
 ```bash
 # Eseguire uno script Python
-uv run python mio_script.py
+uv run mio_script.py
 
 # Eseguire comandi Django
 uv run python src/manage.py migrate
@@ -292,6 +295,7 @@ Questo template include i seguenti strumenti configurati e pronti all'uso:
 Questo progetto supporta **due task runners** per massima flessibilità:
 
 ### ⚡ **Just (Consigliato)** - Task Runner Moderno
+
 ```bash
 # Mostra help colorato con emoji
 just
@@ -303,7 +307,8 @@ just run-uvicorn     # ⚡ Server ASGI produzione
 just deploy          # 🎯 Deploy automatico multi-platform
 ```
 
-### 🔧 **Make** - Standard Tradizionale  
+### 🔧 **Make** - Standard Tradizionale
+
 ```bash
 # Comandi equivalenti
 make stats
@@ -313,13 +318,15 @@ make deploy
 ```
 
 **Vantaggi Just:**
+
 - ✅ Sintassi moderna e pulita
-- ✅ Supporto nativo Windows PowerShell  
+- ✅ Supporto nativo Windows PowerShell
 - ✅ Output colorato con emoji
 - ✅ 47 comandi disponibili vs 30+ Make
 - ✅ Help system integrato
 
 **Documentazione completa:**
+
 - 📖 [Just Task Runner Guide](docs/just.md) - Documentazione completa Just
 - 📖 [Make Guide](docs/make.md) - Documentazione Make tradizionale
 
@@ -363,12 +370,13 @@ Tutti gli strumenti di sviluppo sono configurati per funzionare in modo identico
 
 Questo template include **configurazioni VS Code ottimizzate** per Django:
 
-✅ **Formattazione automatica** al salvataggio  
-✅ **Error Lens** per evidenziazione errori inline  
-✅ **Run on Save** per template HTML Django  
-✅ **Python + Django** intellisense completo  
+✅ **Formattazione automatica** al salvataggio
+✅ **Error Lens** per evidenziazione errori inline
+✅ **Run on Save** per template HTML Django
+✅ **Python + Django** intellisense completo
 
 ### Quick Setup
+
 1. Apri progetto in VS Code
 2. Installa estensioni consigliate (VS Code chiederà automaticamente)
 3. Sistema pronto! 🚀
@@ -380,11 +388,12 @@ Questo template include **configurazioni VS Code ottimizzate** per Django:
 Questo template include **due sistemi di automazione** per semplificare l'esecuzione di comandi comuni:
 
 ### ⚡ **Just (Consigliato)**
+
 ```bash
 # Avvia il server di sviluppo Django
 just run-server
 
-# Genera dashboard di qualità del codice completa (alternativa locale a Codacy) 
+# Genera dashboard di qualità del codice completa (alternativa locale a Codacy)
 just stats
 
 # Corregge automaticamente tutti i problemi di qualità del codice
@@ -392,14 +401,16 @@ just fix-all
 ```
 
 ### 🔧 **Make (Compatibilità)**
+
 ```bash
 # Comandi equivalenti con Make
 make run-server
-make stats  
+make stats
 make fix-all
 ```
 
 **Documentazione completa:**
+
 - 📖 [Just Task Runner Guide](docs/just.md) - 47 comandi con emoji e colori
 - 📖 [Make Guide](docs/make.md) - Automazione tradizionale
 - 🌐 [IIS Deployment Guide](docs/iis-deployment.md) - Windows Server & Intranet
@@ -486,13 +497,14 @@ chmod +x scripts/install-make-linux.sh
 
 **Formattazione automatica** per documentazione professionale:
 
-🔄 **Auto-format** su salvataggio VS Code  
-✅ **Pre-commit hooks** per consistenza  
-📖 **Prettier + markdownlint** integration  
+🔄 **Auto-format** su salvataggio VS Code
+✅ **Pre-commit hooks** per consistenza
+📖 **Prettier + markdownlint** integration
 
 **📖 [Guida Markdown Dettagliata](docs/markdown-formatting.md)** - Configurazione completa e regole
 
 ### Quick Commands
+
 ```bash
 # Format tutti i markdown
 just format-markdown
@@ -505,18 +517,19 @@ just lint-markdown
 
 Supporto completo per **deployment enterprise** con proxy reverso:
 
-🪟 **Windows Server + IIS** - Configurazione automatica  
-🐧 **Linux/macOS + Nginx** - Setup production-ready  
-⚡ **ASGI/WSGI** servers ottimizzati per OS  
-🔒 **SSL/HTTPS** e sicurezza enterprise  
+🪟 **Windows Server + IIS** - Configurazione automatica
+🐧 **Linux/macOS + Nginx** - Setup production-ready
+⚡ **ASGI/WSGI** servers ottimizzati per OS
+🔒 **SSL/HTTPS** e sicurezza enterprise
 
 ### Quick Deployment
+
 ```bash
 # Setup automatico
 just setup
 
 # Database migration
-just migrate-prod  
+just migrate-prod
 
 # Deploy production
 just deploy
@@ -525,23 +538,23 @@ just deploy
 ### � Guide Complete
 
 - **🪟 [IIS Deployment Guide](docs/iis-deployment.md)** - Windows Server setup completo
-- **🐧 [Nginx Deployment Guide](docs/nginx-deployment.md)** - Linux/macOS production setup  
+- **🐧 [Nginx Deployment Guide](docs/nginx-deployment.md)** - Linux/macOS production setup
 - **� [Scripts Deployment](scripts/deployment/README.md)** - Multi-environment e troubleshooting
 
 ## 🚢 CI/CD Ready
 
 **GitHub Actions** preconfigurati per qualità e testing:
 
-✅ **Pre-commit workflow** - Check automatici su PR  
-🧪 **Django CI** - Test automatici su push  
-📊 **Quality gates** - Linting e formattazione  
+✅ **Pre-commit workflow** - Check automatici su PR
+🧪 **Django CI** - Test automatici su push
+📊 **Quality gates** - Linting e formattazione
 
 ## 📁 Project Structure
 
 ```
 deploy-django/
 ├── docs/                    # 📖 Guide specializzate
-├── scripts/deployment/      # 🚀 Scripts deployment  
+├── scripts/deployment/      # 🚀 Scripts deployment
 ├── src/home/               # 🏠 Django app
 ├── .vscode/                # ⚙️ VS Code config
 ├── justfile                # ⚡ Task runner
@@ -557,21 +570,25 @@ Questo progetto include documentazione dettagliata per aiutarti a comprendere le
 - [Variabili d'ambiente](docs/environment-variables.md): Configurazione delle variabili d'ambiente
 - [Configurazione dei logs](docs/logs_configuration.md): Come funziona il sistema di logging
 - [Make e automazione](docs/make.md): Utilizzo di Make per automatizzare i task
+
 ## 📖 Documentation Hub
 
 Documentazione specializzata per ogni aspetto del progetto:
 
 **📝 Development**
-- [Quick Start Guide](docs/quick-start.md) - Inizia qui! 
+
+- [Quick Start Guide](docs/quick-start.md) - Inizia qui!
 - [Environment Variables](docs/environment-variables.md) - Configurazione sistema
 - [Logging Configuration](docs/logs_configuration.md) - Sistema di log avanzato
 
-**🔧 Quality & Tools**  
+**🔧 Quality & Tools**
+
 - [Markdown Formatting](docs/markdown-formatting.md) - Documentazione professionale
 - [Code Analysis](docs/code_analysis.md) - Analisi qualità codice
 - [Linting Notes](docs/linting_notes.md) - Configurazione linter
 
 **🚀 Advanced**
+
 - [Docstring Generation](docs/docstring_generation.md) - Documentazione automatica
 - [Make Automation](docs/make.md) - Dettagli automazione Make
 
@@ -579,8 +596,8 @@ Documentazione specializzata per ogni aspetto del progetto:
 
 ## 🤝 Contributi & Support
 
-🐛 **Bug Report**: [Apri una Issue](https://github.com/tuousername/deploy-django)  
-⭐ **Feature Request**: [Discussioni](https://github.com/tuousername/deploy-django/discussions)  
-📧 **Support**: [Template Issues](https://github.com/tuousername/deploy-django/issues)  
+🐛 **Bug Report**: [Apri una Issue](https://github.com/tuousername/deploy-django)
+⭐ **Feature Request**: [Discussioni](https://github.com/tuousername/deploy-django/discussions)
+📧 **Support**: [Template Issues](https://github.com/tuousername/deploy-django/issues)
 
 **Made with ❤️ for Django developers**

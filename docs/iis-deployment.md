@@ -24,7 +24,7 @@ Questa guida spiega come configurare **IIS (Internet Information Services)** com
 # Just task runner
 just setup-iis
 
-# Make 
+# Make
 make setup-iis
 ```
 
@@ -67,6 +67,7 @@ Scarica e installa da: https://www.iis.net/downloads/microsoft/url-rewrite
 ### 1. Configurazione Django
 
 **File: `.env`**
+
 ```env
 # Dominio intranet
 DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,gestione-pareri.local,*.intranet.local
@@ -97,6 +98,7 @@ New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gesti
 ### 4. Web.config
 
 **File: `staticfiles/web.config`**
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
@@ -114,7 +116,7 @@ New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gesti
                 </rule>
             </rules>
         </rewrite>
-        
+
         <!-- Headers per Django -->
         <httpProtocol>
             <customHeaders>
@@ -122,7 +124,7 @@ New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gesti
                 <add name="X-Forwarded-Host" value="{HTTP_HOST}" />
             </customHeaders>
         </httpProtocol>
-        
+
         <!-- File statici serviti da IIS -->
         <staticContent>
             <mimeMap fileExtension=".css" mimeType="text/css" />
@@ -136,6 +138,7 @@ New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gesti
 ### 5. DNS/Hosts Configuration
 
 **File: `C:\Windows\System32\drivers\etc\hosts`**
+
 ```
 127.0.0.1    gestione-pareri.local
 ```
@@ -155,6 +158,7 @@ New-WebBinding -Name "GestionePareri" -Protocol https -Port 443 -HostHeader "ges
 ### Enterprise Certificate
 
 Per certificati aziendali, consulta il tuo team IT per:
+
 - **Certificati CA interni**
 - **Wildcard certificates**
 - **Integrazione AD CS** (Active Directory Certificate Services)
@@ -214,11 +218,13 @@ Get-Counter -Counter "\Web Service(_Total)\Bytes Total/Sec"
 ### Problema: "502 Bad Gateway"
 
 **Cause comuni:**
+
 - Django server non avviato
 - Porta 8000 occupata
 - Firewall blocking
 
 **Soluzioni:**
+
 ```bash
 # Verifica Django
 just kill-port
@@ -231,6 +237,7 @@ netstat -an | findstr 8000
 ### Problema: "File statici non caricano"
 
 **Soluzioni:**
+
 ```bash
 # Rigenera file statici
 just collectstatic-prod
@@ -242,6 +249,7 @@ icacls "staticfiles" /grant "IIS_IUSRS:(OI)(CI)F"
 ### Problema: "CSRF token missing or incorrect"
 
 **Verifica configurazione:**
+
 ```env
 # .env
 DJANGO_CSRF_TRUSTED_ORIGINS=http://gestione-pareri.local,https://gestione-pareri.local

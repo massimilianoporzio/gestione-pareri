@@ -106,7 +106,7 @@ Per personalizzare la formattazione, modifica `.vscode/settings.json`:
   "[python]": {
     "editor.formatOnSave": false
   },
-  
+
   // Esempio: cambia lunghezza linea Black
   "black-formatter.args": ["--line-length=100"]
 }

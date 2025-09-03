@@ -22,62 +22,69 @@ just run-uvicorn     # ⚡ Server ASGI produzione
 ## 📋 Comandi Disponibili (47 comandi)
 
 ### 📊 DJANGO & DATABASE
-| Comando | Emoji | Descrizione |
-|---------|-------|-------------|
-| `just run-server` | 🚀 | Server di sviluppo Django |
-| `just run-dev` | 🔧 | Server sviluppo (DEV) |
-| `just run-test` | 🧪 | Server sviluppo (TEST) |
-| `just run-prod` | ⚡ | Server sviluppo (PROD) |
-| `just migrate` | 📦 | Migrazioni database |
-| `just makemigrations` | 📝 | Crea migrazioni |
-| `just shell` | 🐚 | Shell Django |
-| `just test` | 🧪 | Esegue test progetto |
+
+| Comando               | Emoji | Descrizione               |
+| --------------------- | ----- | ------------------------- |
+| `just run-server`     | 🚀    | Server di sviluppo Django |
+| `just run-dev`        | 🔧    | Server sviluppo (DEV)     |
+| `just run-test`       | 🧪    | Server sviluppo (TEST)    |
+| `just run-prod`       | ⚡    | Server sviluppo (PROD)    |
+| `just migrate`        | 📦    | Migrazioni database       |
+| `just makemigrations` | 📝    | Crea migrazioni           |
+| `just shell`          | 🐚    | Shell Django              |
+| `just test`           | 🧪    | Esegue test progetto      |
 
 ### 🌐 SERVER & DEPLOY
-| Comando | Emoji | Descrizione |
-|---------|-------|-------------|
-| `just waitress` | 🪟 | Server Waitress (Windows) |
-| `just run-uvicorn` | ⚡ | Server Uvicorn ASGI |
-| `just deploy` | 🎯 | Deploy automatico |
-| `just deploy-dev` | 🔧 | Deploy development |
-| `just deploy-staging` | 🧪 | Deploy staging |
-| `just deploy-prod` | 🚀 | Deploy production |
-| `just stop-servers` | 🛑 | Ferma tutti i server |
-| `just kill-port` | 🔪 | Termina processo porta 8000 |
+
+| Comando               | Emoji | Descrizione                 |
+| --------------------- | ----- | --------------------------- |
+| `just waitress`       | 🪟    | Server Waitress (Windows)   |
+| `just run-uvicorn`    | ⚡    | Server Uvicorn ASGI         |
+| `just deploy`         | 🎯    | Deploy automatico           |
+| `just deploy-dev`     | 🔧    | Deploy development          |
+| `just deploy-staging` | 🧪    | Deploy staging              |
+| `just deploy-prod`    | 🚀    | Deploy production           |
+| `just stop-servers`   | 🛑    | Ferma tutti i server        |
+| `just kill-port`      | 🔪    | Termina processo porta 8000 |
 
 ### 🔧 QUALITY & FORMAT
-| Comando | Emoji | Descrizione |
-|---------|-------|-------------|
-| `just fix-all` | ⭐ | CORREZIONE GLOBALE completa |
-| `just lint-codacy` | 🔍 | Controlli qualità Codacy |
-| `just add-docstrings` | 📝 | Aggiunge docstring mancanti |
-| `just precommit-corporate` | 🏢 | Pre-commit aziendale |
-| `just quality-corporate` | 🏢 | Quality controlli alternativi |
-| `just fix-markdown` | 📝 | Corregge problemi Markdown |
+
+| Comando                    | Emoji | Descrizione                   |
+| -------------------------- | ----- | ----------------------------- |
+| `just fix-all`             | ⭐    | CORREZIONE GLOBALE completa   |
+| `just lint-codacy`         | 🔍    | Controlli qualità Codacy      |
+| `just add-docstrings`      | 📝    | Aggiunge docstring mancanti   |
+| `just precommit-corporate` | 🏢    | Pre-commit aziendale          |
+| `just quality-corporate`   | 🏢    | Quality controlli alternativi |
+| `just fix-markdown`        | 📝    | Corregge problemi Markdown    |
 
 ### ℹ️ UTILITY
-| Comando | Emoji | Descrizione |
-|---------|-------|-------------|
-| `just stats` | 📊 | Statistiche progetto |
-| `just check-env` | 🔍 | Controllo ambiente |
-| `just generate-secret-key` | 🔑 | Genera Django SECRET_KEY |
+
+| Comando                    | Emoji | Descrizione              |
+| -------------------------- | ----- | ------------------------ |
+| `just stats`               | 📊    | Statistiche progetto     |
+| `just check-env`           | 🔍    | Controllo ambiente       |
+| `just generate-secret-key` | 🔑    | Genera Django SECRET_KEY |
 
 ### 🏢 INTRANET AZIENDALE
-| Comando | Emoji | Descrizione |
-|---------|-------|-------------|
-| `just setup-iis` | 🌐 | Configura IIS per intranet |
-| `just deploy-intranet` | 🚀 | Deploy completo intranet |
+
+| Comando                | Emoji | Descrizione                |
+| ---------------------- | ----- | -------------------------- |
+| `just setup-iis`       | 🌐    | Configura IIS per intranet |
+| `just deploy-intranet` | 🚀    | Deploy completo intranet   |
 
 ### 🐧 LINUX/macOS NGINX
-| Comando | Emoji | Descrizione |
-|---------|-------|-------------|
-| `just setup-nginx` | 🌐 | Configura Nginx reverse proxy |
-| `just deploy-nginx` | 🚀 | Deploy completo con Nginx |
-| `just status-nginx` | 📊 | Status servizi Nginx |
+
+| Comando             | Emoji | Descrizione                   |
+| ------------------- | ----- | ----------------------------- |
+| `just setup-nginx`  | 🌐    | Configura Nginx reverse proxy |
+| `just deploy-nginx` | 🚀    | Deploy completo con Nginx     |
+| `just status-nginx` | 📊    | Status servizi Nginx          |
 
 ## 🔧 Installazione di Just
 
 ### Windows (PowerShell)
+
 ```powershell
 # Tramite cargo (Rust)
 cargo install just
@@ -90,6 +97,7 @@ choco install just
 ```
 
 ### macOS
+
 ```bash
 # Tramite Homebrew
 brew install just
@@ -99,6 +107,7 @@ cargo install just
 ```
 
 ### Linux
+
 ```bash
 # Ubuntu/Debian
 sudo apt install just
@@ -113,6 +122,7 @@ cargo install just
 ## 🎯 Vantaggi di Just rispetto a Make
 
 ### ✅ **Sintassi Moderna**
+
 ```bash
 # Just - Più pulito
 run-server:
@@ -126,17 +136,20 @@ run-server:
 ```
 
 ### ✅ **Supporto Nativo Windows**
+
 - Supporto PowerShell nativo
 - Colori nel terminale Windows
 - Gestione path Windows corretta
 
 ### ✅ **Funzionalità Avanzate**
+
 - Variabili globali
 - Parametri per ricette
 - Dipendenze tra comandi
 - Configurazione per shell specifica
 
 ### ✅ **Help System Integrato**
+
 ```bash
 just           # Mostra help personalizzato
 just --list    # Lista tutti i comandi
@@ -156,7 +169,7 @@ Puoi usare entrambi interscambiabilmente:
 make stats
 just stats
 
-# Stesso risultato  
+# Stesso risultato
 make run-server
 just run-server
 ```
@@ -183,21 +196,25 @@ make fix-all
 ## 🌟 Caratteristiche Principali
 
 ### 🎨 **Interfaccia Colorata**
+
 - Output colorato su Windows/macOS/Linux
 - Emoji per identificazione rapida comandi
 - Progress bar per operazioni lunghe
 
 ### ⚡ **Performance**
+
 - Avvio istantaneo (scritto in Rust)
 - Parallel execution dove possibile
 - Caching intelligente
 
 ### 🔧 **Multi-Environment Support**
+
 - Configurazioni per dev/test/prod
 - Variabili d'ambiente automatiche
 - Server ottimizzati per piattaforma
 
 ### 🏢 **Enterprise Ready**
+
 - Configurazioni corporate
 - IIS reverse proxy support (Windows)
 - Nginx reverse proxy support (Linux/macOS)
@@ -206,6 +223,7 @@ make fix-all
 ## 📚 Documentazione Avanzata
 
 Per configurazioni avanzate, consulta:
+
 - [Multi-environment setup](environment-variables.md)
 - [IIS Deployment Guide](iis-deployment.md) - Windows Server
 - [Nginx Deployment Guide](nginx-deployment.md) - Linux/macOS
