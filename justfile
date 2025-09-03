@@ -14,8 +14,7 @@ default:
     @Write-Host "============================================================" -ForegroundColor DarkGray
     @Write-Host ""
     @Write-Host "📊 DJANGO & DATABASE:" -ForegroundColor Green
-    @Write-Host "  just run-server         🚀 Server di sviluppo Django" -ForegroundColor Green
-    @Write-Host "  just run-dev            🔧 Server sviluppo (DEV)" -ForegroundColor Green
+    @Write-Host "  just run-server         🚀 Server di sviluppo Django" -ForegroundColor Green    @if (!(Test-Path web.config)) { if (Test-Path config/deployment/web.config.template) { Copy-Item config/deployment/web.config.template web.config; Write-Host "✅ web.config creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } } else { Write-Host "📄 File web.config già presente" -ForegroundColor Green }    @Write-Host "  just run-dev            🔧 Server sviluppo (DEV)" -ForegroundColor Green
     @Write-Host "  just run-test           🧪 Server sviluppo (TEST)" -ForegroundColor Green
     @Write-Host "  just run-staging        🎭 Server sviluppo (STAGING)" -ForegroundColor Green
     @Write-Host "  just run-prod           ⚡ Server sviluppo (PROD)" -ForegroundColor Green
@@ -731,7 +730,7 @@ iis-test-local:
 # ⚙️ Setup iniziale per IIS
 iis-setup:
     @Write-Host "⚙️ Setup iniziale IIS..." -ForegroundColor Cyan
-    @if (!(Test-Path .env.prod)) { Copy-Item .env.prod.template .env.prod; Write-Host "✅ File .env.prod creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } else { Write-Host "📄 File .env.prod già presente" -ForegroundColor Green }
+    @if (!(Test-Path .env.prod)) { if (Test-Path config/environments/.env.prod) { Copy-Item config/environments/.env.prod .env.prod; Write-Host "✅ .env.prod copiato da config/environments/" -ForegroundColor Green } elseif (Test-Path config/environments/.env.prod.template) { Copy-Item config/environments/.env.prod.template .env.prod; Write-Host "✅ .env.prod creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } } else { Write-Host "📄 File .env.prod già presente" -ForegroundColor Green }
     @if (!(Test-Path web.config)) { Copy-Item web.config.template web.config; Write-Host "✅ File web.config creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } else { Write-Host "� File web.config già presente" -ForegroundColor Green }
     @Write-Host "�📋 Prossimi passi:" -ForegroundColor Yellow
     @Write-Host "1. Modifica .env.prod con i tuoi valori" -ForegroundColor White
@@ -743,11 +742,11 @@ iis-setup:
 # 🔐 Setup credenziali per tutti gli ambienti
 setup-credentials:
     @Write-Host "🔐 Setup credenziali per tutti gli ambienti..." -ForegroundColor Cyan
-    @if (!(Test-Path .env.dev)) { Copy-Item .env.dev.template .env.dev; Write-Host "✅ .env.dev creato" -ForegroundColor Green } else { Write-Host "📄 .env.dev già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path .env.test)) { Copy-Item .env.test.template .env.test; Write-Host "✅ .env.test creato" -ForegroundColor Green } else { Write-Host "📄 .env.test già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path .env.staging)) { Copy-Item .env.staging.template .env.staging; Write-Host "✅ .env.staging creato" -ForegroundColor Green } else { Write-Host "📄 .env.staging già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path .env.prod)) { Copy-Item .env.prod.template .env.prod; Write-Host "✅ .env.prod creato" -ForegroundColor Green } else { Write-Host "📄 .env.prod già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path db_credentials.md)) { Copy-Item db_credentials.template.md db_credentials.md; Write-Host "✅ db_credentials.md creato" -ForegroundColor Green } else { Write-Host "📄 db_credentials.md già presente" -ForegroundColor Yellow }
+    @if (!(Test-Path .env.dev)) { Copy-Item config/environments/.env.dev.template .env.dev; Write-Host "✅ .env.dev creato" -ForegroundColor Green } else { Write-Host "📄 .env.dev già presente" -ForegroundColor Yellow }
+    @if (!(Test-Path .env.test)) { Copy-Item config/environments/.env.test.template .env.test; Write-Host "✅ .env.test creato" -ForegroundColor Green } else { Write-Host "📄 .env.test già presente" -ForegroundColor Yellow }
+    @if (!(Test-Path .env.staging)) { Copy-Item config/environments/.env.staging.template .env.staging; Write-Host "✅ .env.staging creato" -ForegroundColor Green } else { Write-Host "📄 .env.staging già presente" -ForegroundColor Yellow }
+    @if (!(Test-Path .env.prod)) { Copy-Item config/environments/.env.prod.template .env.prod; Write-Host "✅ .env.prod creato" -ForegroundColor Green } else { Write-Host "📄 .env.prod già presente" -ForegroundColor Yellow }
+    @if (!(Test-Path db_credentials.md)) { Copy-Item config/database/db_credentials.template.md db_credentials.md; Write-Host "✅ db_credentials.md creato" -ForegroundColor Green } else { Write-Host "📄 db_credentials.md già presente" -ForegroundColor Yellow }
     @Write-Host "⚠️  IMPORTANTE: Modifica TUTTI i file .env con le password reali!" -ForegroundColor Red
     @Write-Host "📋 File creati (NON tracciati da git):" -ForegroundColor Yellow
     @Write-Host "  - .env.dev (password DEV)" -ForegroundColor White
