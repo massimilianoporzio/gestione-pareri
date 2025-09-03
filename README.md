@@ -88,7 +88,7 @@ Questo è un **template repository** per progetti Django, già configurato con s
 ### 📋 **Setup Rapido**
 
 - [Setup iniziale](#-setup-iniziale) - Configurazione progetto
-- [Task Runners](#-task-runners-make--just) - Comandi disponibili (Make & Just)
+- [Task Runner Just](#-task-runner-just) - Comandi moderni e cross-platform
 - [Integrazione VS Code](#-integrazione-con-vs-code) - Configurazione editor
 
 ### 🌐 **Deployment Guides**
@@ -149,14 +149,10 @@ Correggi tutti gli script bash di deployment:
 shfmt -w scripts/deployment/*.sh
 ```
 
-Puoi anche usare i task runners:
+Puoi anche usare Just:
 
 ```bash
-# Con Just (consigliato)
 just fix-codacy
-
-# Con Make
-make fix-codacy
 ```
 
 Questo comando applica le correzioni automatiche a tutti gli script bash di deploy.
@@ -290,34 +286,25 @@ Questo template include i seguenti strumenti configurati e pronti all'uso:
 
 > **Nota**: I file del modulo `settings` sono esclusi dai controlli di linting per permettere la massima flessibilità. Per maggiori dettagli, consulta [docs/linting_notes.md](docs/linting_notes.md).
 
-## 🚀 Task Runners: Make & Just
+## 🚀 Task Runner: Just
 
-Questo progetto supporta **due task runners** per massima flessibilità:
+Questo template usa **Just** come task runner moderno per un'esperienza di sviluppo ottimale:
 
-### ⚡ **Just (Consigliato)** - Task Runner Moderno
+### ⚡ **Just - Task Runner Moderno**
 
 ```bash
 # Mostra help colorato con emoji
 just
 
-# Esempi di comandi
-just stats          # 📊 Statistiche progetto (Pylint 10.00/10)
-just fix-all         # ⭐ Pipeline qualità completa (10 step)
-just run-uvicorn     # ⚡ Server ASGI produzione
+# Esempi di comandi più utilizzati
+just setup           # � Setup completo progetto
+just dev             # 🔥 Server sviluppo con hot-reload  
+just fix-all         # ⭐ Pipeline qualità completa
 just deploy          # 🎯 Deploy automatico multi-platform
+just stats           # 📊 Statistiche progetto
 ```
 
-### 🔧 **Make** - Standard Tradizionale
-
-```bash
-# Comandi equivalenti
-make stats
-make fix-all
-make run-uvicorn
-make deploy
-```
-
-**Vantaggi Just:**
+**Perché Just invece di Make?**
 
 - ✅ Sintassi moderna e pulita
 - ✅ Supporto nativo Windows PowerShell
@@ -327,10 +314,31 @@ make deploy
 
 **Documentazione completa:**
 
-- 📖 [Just Task Runner Guide](docs/just.md) - Documentazione completa Just
-- 📖 [Make Guide](docs/make.md) - Documentazione Make tradizionale
+✅ **Cross-platform** nativo (Windows/Linux/macOS)  
+✅ **Sintassi moderna** e leggibile  
+✅ **Help colorato** con emoji  
+✅ **Variabili** e logica avanzata  
+✅ **Performance** superiori  
 
-> **Consiglio**: Usa **Just** per nuovi progetti, **Make** per compatibilità legacy.
+### 📖 **Installazione Just**
+
+Se non hai Just installato:
+
+```bash
+# Windows (Chocolatey)
+choco install just
+
+# macOS (Homebrew)  
+brew install just
+
+# Linux (Snap)
+snap install --edge --classic just
+
+# Oppure usa uv direttamente
+uv run python src/manage.py migrate  # Invece di just migrate
+```
+
+**📖 [Guida Just Completa](docs/just.md)** - Tutti i 47 comandi disponibili
 
 ## 📊 Logging configurato
 
@@ -348,10 +356,8 @@ $env:DJANGO_LOGS_DIR = "E:\percorso\personalizzato\logs"
 # macOS/Linux
 export DJANGO_LOGS_DIR="/percorso/personalizzato/logs"
 
-# Verifica configurazione tramite task runners
+# Verifica configurazione  
 just check-custom-logs LOGS_DIR="/percorso/personalizzato/logs" ENV=dev|test|prod
-# oppure
-make check-custom-logs LOGS_DIR="/percorso/personalizzato/logs" ENV=dev|test|prod
 ```
 
 Per maggiori dettagli, consulta la [documentazione sul logging](docs/logs_configuration.md).
@@ -382,39 +388,6 @@ Questo template include **configurazioni VS Code ottimizzate** per Django:
 3. Sistema pronto! 🚀
 
 **📖 [Guida VS Code Dettagliata](docs/vscode-detailed.md)** - Configurazione completa e troubleshooting
-
-## 🛠️ Automazione con Task Runners
-
-Questo template include **due sistemi di automazione** per semplificare l'esecuzione di comandi comuni:
-
-### ⚡ **Just (Consigliato)**
-
-```bash
-# Avvia il server di sviluppo Django
-just run-server
-
-# Genera dashboard di qualità del codice completa (alternativa locale a Codacy)
-just stats
-
-# Corregge automaticamente tutti i problemi di qualità del codice
-just fix-all
-```
-
-### 🔧 **Make (Compatibilità)**
-
-```bash
-# Comandi equivalenti con Make
-make run-server
-make stats
-make fix-all
-```
-
-**Documentazione completa:**
-
-- 📖 [Just Task Runner Guide](docs/just.md) - 47 comandi con emoji e colori
-- 📖 [Make Guide](docs/make.md) - Automazione tradizionale
-- 🌐 [IIS Deployment Guide](docs/iis-deployment.md) - Windows Server & Intranet
-- 🐧 [Nginx Deployment Guide](docs/nginx-deployment.md) - Linux/macOS Production
 
 ## 🌐 Supporto Frontend (Node.js Ready)
 
@@ -558,7 +531,7 @@ deploy-django/
 ├── src/home/               # 🏠 Django app
 ├── .vscode/                # ⚙️ VS Code config
 ├── justfile                # ⚡ Task runner
-├── Makefile               # 🔧 Make compatibility
+├── justfile                # ⚡ Task runner moderno
 └── pyproject.toml         # 🐍 Python config
 ```
 
@@ -569,7 +542,7 @@ Questo progetto include documentazione dettagliata per aiutarti a comprendere le
 - [Uvicorn ASGI Integration](docs/uvicorn-integration.md): 🎯 **Nuovo!** Server ASGI cross-platform raccomandato
 - [Variabili d'ambiente](docs/environment-variables.md): Configurazione delle variabili d'ambiente
 - [Configurazione dei logs](docs/logs_configuration.md): Come funziona il sistema di logging
-- [Make e automazione](docs/make.md): Utilizzo di Make per automatizzare i task
+- [Just Task Runner](docs/just.md): Task runner moderno con 47 comandi
 
 ## 📖 Documentation Hub
 
@@ -589,8 +562,8 @@ Documentazione specializzata per ogni aspetto del progetto:
 
 **🚀 Advanced**
 
+- [Just Task Runner](docs/just.md) - 47 comandi disponibili  
 - [Docstring Generation](docs/docstring_generation.md) - Documentazione automatica
-- [Make Automation](docs/make.md) - Dettagli automazione Make
 
 ---
 

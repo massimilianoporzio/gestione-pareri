@@ -35,8 +35,8 @@ just deploy-intranet
 
 ### 4️⃣ Accesso tramite browser
 
-- **Sviluppo**: http://gestione-pareri.local
-- **Produzione**: https://gestione-pareri.local (se configurato SSL)
+- **Sviluppo**: <http://gestione-pareri.local>
+- **Produzione**: <https://gestione-pareri.local> (se configurato SSL)
 
 ## ⚙️ Configurazione Avanzata
 
@@ -51,6 +51,7 @@ Per abilitare HTTPS:
    ```
 
 2. **Configura binding HTTPS**:
+
    ```powershell
    New-WebBinding -Name GestionePareri -Protocol https -Port 443 -HostHeader "gestione-pareri.local"
    ```
@@ -60,6 +61,7 @@ Per abilitare HTTPS:
 Se usi PostgreSQL invece di SQLite:
 
 1. Configura `.env`:
+
    ```env
    DB_ENGINE=django.db.backends.postgresql
    DB_NAME=gestione_pareri_prod
