@@ -5,13 +5,14 @@ Guida per configurare il progetto da casa con tutti i 4 ambienti (dev, test, sta
 ## 📋 Prerequisiti
 
 ### Installa Just (Task Runner)
+
 ```bash
 # Windows
 scoop install just
 # oppure
 choco install just
 
-# macOS  
+# macOS
 brew install just
 
 # Linux
@@ -21,6 +22,7 @@ cargo install just
 ```
 
 ### Installa uv (Python Package Manager)
+
 ```bash
 # Windows
 curl -LsSf https://astral.sh/uv/install.ps1 | powershell
@@ -43,6 +45,7 @@ echo "✅ Setup completato per tutti e 4 gli ambienti!"
 ## 🔑 Configurazione Password - 4 Ambienti
 
 ### Setup Automatico (Raccomandato)
+
 ```bash
 cd gestione-pareri
 
@@ -51,12 +54,13 @@ just setup-all-environments
 
 # Verifica configurazioni
 just check-env-dev
-just check-env-test  
+just check-env-test
 just check-env-staging
 just check-env-prod
 ```
 
 ### Setup Manuale
+
 ```bash
 # 1. Genera SECRET_KEY per tutti gli ambienti
 just generate-secret-keys-all
@@ -81,7 +85,7 @@ docker run --name gestione-pareri-dev \
   -p 5432:5432 \
   -d postgres:15
 
-# TEST Environment (porta 5433)  
+# TEST Environment (porta 5433)
 docker run --name gestione-pareri-test \
   -e POSTGRES_DB=gestione_pareri_test \
   -e POSTGRES_USER=gestione_pareri_test \
@@ -109,6 +113,7 @@ docker run --name gestione-pareri-prod \
 ### Opzione B: PostgreSQL Nativo
 
 #### Windows
+
 ```powershell
 # Avvia PostgreSQL
 net start postgresql-x64-15
@@ -127,6 +132,7 @@ CREATE DATABASE gestione_pareri_prod OWNER gestione_pareri_prod;
 ```
 
 #### macOS
+
 ```bash
 # Avvia PostgreSQL
 brew services start postgresql@15
@@ -230,9 +236,10 @@ grep DB_PASSWORD .env.dev .env.test .env.staging .env.prod
 ## 🎯 Struttura File Ambiente
 
 Dopo il setup avrai:
+
 ```
 .env.dev      # Sviluppo - DEBUG=True, database locale
-.env.test     # Test automatici - SQLite in memoria  
+.env.test     # Test automatici - SQLite in memoria
 .env.staging  # Pre-produzione - Come prod ma separato
 .env.prod     # Produzione - DEBUG=False, sicurezza massima
 ```
@@ -252,7 +259,7 @@ Dopo il setup avrai:
 just check-env-dev
 uv run python src/manage.py dbshell --settings=home.settings.dev
 
-# Reset database se necessario  
+# Reset database se necessario
 docker rm -f gestione-pareri-dev
 # Poi ricrea il container
 
