@@ -9,7 +9,7 @@ Questa guida spiega come configurare **IIS (Internet Information Services)** com
 
 **IIS Reverse Proxy** permette di:
 
-- ✅ **Domini personalizzati**: `http://gestione-pareri.local` invece di `IP:8000`
+- ✅ **Domini personalizzati**: `<http://gestione-pareri.local`> invece di `IP:8000`
 - ✅ **SSL/HTTPS nativo**: Certificati Windows integrati
 - ✅ **Load balancing**: Distribuzione carico su più worker Django
 - ✅ **File statici**: Serving diretto da IIS (performance migliori)
@@ -60,7 +60,7 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpCompressionStatic
 
 ### URL Rewrite Module
 
-Scarica e installa da: https://www.iis.net/downloads/microsoft/url-rewrite
+Scarica e installa da: <https://www.iis.net/downloads/microsoft/url-rewrite>
 
 ## ⚙️ Configurazione Manuale
 
@@ -73,7 +73,7 @@ Scarica e installa da: https://www.iis.net/downloads/microsoft/url-rewrite
 DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,gestione-pareri.local,*.intranet.local
 
 # CSRF Origins per reverse proxy
-DJANGO_CSRF_TRUSTED_ORIGINS=http://gestione-pareri.local,https://gestione-pareri.local,http://*.intranet.local,https://*.intranet.local
+DJANGO_CSRF_TRUSTED_ORIGINS=<http://gestione-pareri.local,https://gestione-pareri.local,http://*.intranet.local,https://*.intranet.local>
 ```
 
 ### 2. Application Pool IIS
@@ -112,7 +112,7 @@ New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gesti
                         <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
                         <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
                     </conditions>
-                    <action type="Rewrite" url="http://127.0.0.1:8000/{R:0}" />
+                    <action type="Rewrite" url="<http://127.0.0.1:8000/{R:0}"> />
                 </rule>
             </rules>
         </rewrite>
@@ -183,17 +183,17 @@ just collectstatic-prod
 ```bash
 # Avvia server Django per reverse proxy
 just run-uvicorn
-# Server disponibile su http://127.0.0.1:8000
+# Server disponibile su <http://127.0.0.1:8000>
 ```
 
 ### 3. Test Configuration
 
 ```bash
 # Test connettività Django diretto
-curl http://127.0.0.1:8000
+curl <http://127.0.0.1:8000>
 
 # Test reverse proxy IIS
-curl http://gestione-pareri.local
+curl <http://gestione-pareri.local>
 ```
 
 ## 📊 Monitoring & Logs
@@ -252,7 +252,7 @@ icacls "staticfiles" /grant "IIS_IUSRS:(OI)(CI)F"
 
 ```env
 # .env
-DJANGO_CSRF_TRUSTED_ORIGINS=http://gestione-pareri.local,https://gestione-pareri.local
+DJANGO_CSRF_TRUSTED_ORIGINS=<http://gestione-pareri.local,https://gestione-pareri.local>
 ```
 
 ## 🎯 Best Practices

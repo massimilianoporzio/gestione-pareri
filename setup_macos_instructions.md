@@ -10,7 +10,7 @@ mkdir -p ~/progetti
 cd ~/progetti
 
 # Clona il repository
-git clone https://github.com/massimilianoporzio/deploy-django.git
+git clone <https://github.com/massimilianoporzio/deploy-django.git>
 cd deploy-django
 ```
 
@@ -18,7 +18,7 @@ cd deploy-django
 
 ```bash
 # Installa Homebrew se non l'hai già
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+/bin/bash -c "$(curl -fsSL <https://raw.githubusercontent.com/Homebrew/install/HEAD/install.s>h)"
 
 # Installa Python 3.13 usando Homebrew
 brew install python@3.13
@@ -31,7 +31,7 @@ python3.13 --version
 
 ```bash
 # Installa uv usando curl (metodo consigliato)
-curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -LsSf <https://astral.sh/uv/install.sh> | sh
 
 # Oppure puoi usare Homebrew
 # brew install astral/tap/uv

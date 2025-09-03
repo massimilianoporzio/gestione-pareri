@@ -74,7 +74,7 @@ I file Markdown vengono formattati automaticamente durante i commit grazie ai ho
 
 ```yaml
 # Markdown formatter using Prettier
-- repo: https://github.com/pre-commit/mirrors-prettier
+- repo: <https://github.com/pre-commit/mirrors-prettier>
   rev: v4.0.0-alpha.8
   hooks:
     - id: prettier
@@ -84,7 +84,7 @@ I file Markdown vengono formattati automaticamente durante i commit grazie ai ho
         - prettier@3.2.5
 
 # Markdown linting
-- repo: https://github.com/DavidAnson/markdownlint-cli2
+- repo: <https://github.com/DavidAnson/markdownlint-cli2>
   rev: v0.12.1
   hooks:
     - id: markdownlint-cli2
