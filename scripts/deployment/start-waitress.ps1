@@ -3,7 +3,7 @@
 
 param(
     [string]$DjangoEnv = "prod",
-    [string]$Host = "0.0.0.0",
+    [string]$BindAddress = "0.0.0.0",
     [int]$Port = 8000,
     [int]$Threads = 4,
     [string]$ConnectionLimit = "1000",
@@ -12,6 +12,9 @@ param(
 
 # Configuration
 $ErrorActionPreference = "Stop"
+
+# Set console output encoding to UTF-8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 # Change to project directory
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -23,9 +26,9 @@ if (Test-Path ".venv") {
     & ".venv\Scripts\Activate.ps1"
 }
 
-Write-Host "🚀 Starting Django with Waitress" -ForegroundColor Green
+Write-Host "[WAITRESS] Starting Django with Waitress" -ForegroundColor Green
 Write-Host "Environment: $DjangoEnv" -ForegroundColor Cyan
-Write-Host "Host: $Host" -ForegroundColor Cyan
+Write-Host "Host: $BindAddress" -ForegroundColor Cyan
 Write-Host "Port: $Port" -ForegroundColor Cyan
 Write-Host "Threads: $Threads" -ForegroundColor Cyan
 
@@ -44,11 +47,14 @@ python src/manage.py collectstatic --no-input --clear
 
 # Start Waitress
 Write-Host "🌟 Starting Waitress server..." -ForegroundColor Green
+
+# Change to src directory so Python can find the modules
+Set-Location "src"
+
 waitress-serve `
-    --host=$Host `
+    --host=$BindAddress `
     --port=$Port `
     --threads=$Threads `
     --connection-limit=$ConnectionLimit `
     --channel-timeout=$ChannelTimeout `
-    --call `
-    "src.home.wsgi:application"
+    "home.wsgi:application"
