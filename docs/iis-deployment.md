@@ -73,7 +73,7 @@ Scarica e installa da: <https://www.iis.net/downloads/microsoft/url-rewrite>
 DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,gestione-pareri.local,*.intranet.local
 
 # CSRF Origins per reverse proxy
-DJANGO_CSRF_TRUSTED_ORIGINS=<http://gestione-pareri.local,https://gestione-pareri.local,http://*.intranet.local,https://*.intranet.local>
+DJANGO_CSRF_TRUSTED_ORIGINS=<http://gestione-pareri.local,<https://gestione-pareri.local,<http://*.intranet.local,https://*.intranet.loc>a>l>
 ```
 
 ### 2. Application Pool IIS
@@ -252,7 +252,7 @@ icacls "staticfiles" /grant "IIS_IUSRS:(OI)(CI)F"
 
 ```env
 # .env
-DJANGO_CSRF_TRUSTED_ORIGINS=<http://gestione-pareri.local,https://gestione-pareri.local>
+DJANGO_CSRF_TRUSTED_ORIGINS=<http://gestione-pareri.local,<https://gestione-pareri.loca>l>
 ```
 
 ## 🎯 Best Practices

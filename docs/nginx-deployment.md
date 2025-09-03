@@ -70,7 +70,7 @@ DJANGO_DEBUG=0
 DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,tuodominio.com,www.tuodominio.com
 
 # CSRF trusted origins
-DJANGO_CSRF_TRUSTED_ORIGINS=<https://tuodominio.com,https://www.tuodominio.com,http://localhost>
+DJANGO_CSRF_TRUSTED_ORIGINS=<https://tuodominio.com,<https://www.tuodominio.com,<http://localho>s>t>
 
 # Static files per Nginx
 DJANGO_STATIC_URL=/static/

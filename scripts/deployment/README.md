@@ -148,7 +148,7 @@ curl <http://localhost:8000/static/admin/css/base.css>
 DJANGO_SECRET_KEY=your-secret-key-here
 DJANGO_ENV=prod
 DJANGO_ALLOWED_HOSTS=yourdomain.com,.yourdomain.com,localhost
-DJANGO_CSRF_TRUSTED_ORIGINS=<https://yourdomain.com,https://www.yourdomain.com>
+DJANGO_CSRF_TRUSTED_ORIGINS=<https://yourdomain.com,<https://www.yourdomain.co>m>
 
 # Database (PostgreSQL)
 DB_ENGINE=django.db.backends.postgresql
