@@ -37,6 +37,8 @@ default:
     @Write-Host "  just fix-all            ⭐ CORREZIONE GLOBALE completa" -ForegroundColor Yellow
     @Write-Host "  just lint-codacy        🔍 Controlli qualità Codacy" -ForegroundColor Yellow
     @Write-Host "  just add-docstrings     📝 Aggiunge docstring mancanti" -ForegroundColor Yellow
+    @Write-Host "  just precommit-corporate 🏢 Pre-commit aziendale" -ForegroundColor Yellow
+    @Write-Host "  just quality-corporate  🏢 Quality controlli alternativi" -ForegroundColor Yellow
     @Write-Host "  just fix-markdown       📝 Corregge problemi Markdown" -ForegroundColor Yellow
     @Write-Host ""
     @Write-Host "ℹ️  UTILITY:" -ForegroundColor White
@@ -46,8 +48,13 @@ default:
     @Write-Host "  just generate-secret-key 🔑 Genera Django SECRET_KEY" -ForegroundColor White
     @Write-Host "  just --list             📋 Lista completa comandi" -ForegroundColor White
     @Write-Host ""
-    @Write-Host "🪟 WINDOWS IIS DEPLOYMENT:" -ForegroundColor Magenta
-    @Write-Host "  just setup-iis          🌐 Configura IIS reverse proxy" -ForegroundColor Cyan
+    @Write-Host "🏢 INTRANET AZIENDALE:" -ForegroundColor Magenta
+    @Write-Host "  just setup-iis          🌐 Configura IIS per intranet" -ForegroundColor Cyan
+    @Write-Host "  just deploy-intranet    🚀 Deploy completo intranet" -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🪟 WINDOWS IIS DEPLOYMENT:" -ForegroundColor Blue
+    @Write-Host "  just setup-iis-prod     🌐 Setup IIS produzione" -ForegroundColor Blue
+    @Write-Host "  just deploy-iis         🚀 Deploy completo con IIS" -ForegroundColor Blue
     @Write-Host "  just deploy-iis         🚀 Deploy completo con IIS" -ForegroundColor Cyan
     @Write-Host ""
     @Write-Host "🐧 LINUX/macOS NGINX:" -ForegroundColor Blue
@@ -406,3 +413,47 @@ check-env-test:
 check-env-prod:
     @Write-Host "🔍 Controllo dell'ambiente PROD..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="prod"; {{python}} src/test_logging.py
+
+# === CORPORATE COMMANDS ===
+
+# 🏢 Pre-commit con configurazione corporate
+precommit-corporate:
+    @Write-Host "🏢 Esecuzione pre-commit con configurazione corporate..." -ForegroundColor Magenta
+    @if (Test-Path ".pre-commit-config-corporate.yaml") { \
+        $result = pre-commit run --all-files --config .pre-commit-config-corporate.yaml; \
+        if ($LASTEXITCODE -eq 0) { \
+            Write-Host "✅ Tutti i controlli pre-commit superati!" -ForegroundColor Green \
+        } elseif ($LASTEXITCODE -eq 1) { \
+            Write-Host "🔧 Pre-commit ha corretto automaticamente alcuni problemi!" -ForegroundColor Yellow; \
+            Write-Host "💡 Rivedi le modifiche e committa se necessario." -ForegroundColor Cyan \
+        } else { \
+            Write-Host "❌ Errori durante l'esecuzione pre-commit (exit code: $LASTEXITCODE)" -ForegroundColor Red; \
+            exit $LASTEXITCODE \
+        } \
+    } else { \
+        Write-Host "⚠️  File .pre-commit-config-corporate.yaml non trovato!" -ForegroundColor Red; \
+        Write-Host "💡 Usando configurazione standard..." -ForegroundColor Yellow; \
+        $result = pre-commit run --all-files; \
+        if ($LASTEXITCODE -eq 0) { \
+            Write-Host "✅ Tutti i controlli pre-commit superati!" -ForegroundColor Green \
+        } elseif ($LASTEXITCODE -eq 1) { \
+            Write-Host "🔧 Pre-commit ha corretto automaticamente alcuni problemi!" -ForegroundColor Yellow; \
+            Write-Host "💡 Rivedi le modifiche e committa se necessario." -ForegroundColor Cyan \
+        } else { \
+            Write-Host "❌ Errori durante l'esecuzione pre-commit (exit code: $LASTEXITCODE)" -ForegroundColor Red; \
+            exit $LASTEXITCODE \
+        } \
+    }
+
+# 🏢 Quality checks corporate (alternativi)
+quality-corporate:
+    @Write-Host "🏢 Controlli qualità corporate..." -ForegroundColor Magenta
+    @Write-Host "🔍 1. Controlli pre-commit corporate..." -ForegroundColor Cyan
+    just precommit-corporate
+    @Write-Host "📊 2. Controlli Codacy..." -ForegroundColor Cyan
+    just lint-codacy
+    @Write-Host "📝 3. Aggiunta docstring..." -ForegroundColor Cyan
+    just add-docstrings
+    @Write-Host "🎯 4. Fix markdown..." -ForegroundColor Cyan
+    just fix-markdown
+    @Write-Host "✅ Controlli quality corporate completati!" -ForegroundColor Green

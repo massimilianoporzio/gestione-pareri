@@ -314,10 +314,10 @@ just stats           # 📊 Statistiche progetto
 
 **Documentazione completa:**
 
-✅ **Cross-platform** nativo (Windows/Linux/macOS)  
-✅ **Sintassi moderna** e leggibile  
-✅ **Help colorato** con emoji  
-✅ **Variabili** e logica avanzata  
+✅ **Cross-platform** nativo (Windows/Linux/macOS)
+✅ **Sintassi moderna** e leggibile
+✅ **Help colorato** con emoji
+✅ **Variabili** e logica avanzata
 ✅ **Performance** superiori
 
 ### 📖 **Installazione Just**
