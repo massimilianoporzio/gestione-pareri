@@ -73,7 +73,7 @@ Questo è un **template repository** per progetti Django, già configurato con s
 5. Una volta creato, clona il nuovo repository sulla tua macchina:
 
    ```bash
-   git clone https://github.com/tuousername/tuo-nuovo-repo.git
+   git clone <https://github.com/tuousername/tuo-nuovo-repo.git>
    cd tuo-nuovo-repo
    ```
 
@@ -89,7 +89,7 @@ Questo è un **template repository** per progetti Django, già configurato con s
 
 - [Setup iniziale](#-setup-iniziale) - Configurazione progetto
 - [Task Runner Just](#-task-runner-just) - Comandi moderni e cross-platform
-- [Integrazione VS Code](#-integrazione-con-vs-code) - Configurazione editor
+- [Integrazione VS Code](#-vs-code-integration) - Configurazione editor
 
 ### 🌐 **Deployment Guides**
 
@@ -298,7 +298,7 @@ just
 
 # Esempi di comandi più utilizzati
 just setup           # � Setup completo progetto
-just dev             # 🔥 Server sviluppo con hot-reload  
+just dev             # 🔥 Server sviluppo con hot-reload
 just fix-all         # ⭐ Pipeline qualità completa
 just deploy          # 🎯 Deploy automatico multi-platform
 just stats           # 📊 Statistiche progetto
@@ -318,7 +318,7 @@ just stats           # 📊 Statistiche progetto
 ✅ **Sintassi moderna** e leggibile  
 ✅ **Help colorato** con emoji  
 ✅ **Variabili** e logica avanzata  
-✅ **Performance** superiori  
+✅ **Performance** superiori
 
 ### 📖 **Installazione Just**
 
@@ -328,7 +328,7 @@ Se non hai Just installato:
 # Windows (Chocolatey)
 choco install just
 
-# macOS (Homebrew)  
+# macOS (Homebrew)
 brew install just
 
 # Linux (Snap)
@@ -356,7 +356,7 @@ $env:DJANGO_LOGS_DIR = "E:\percorso\personalizzato\logs"
 # macOS/Linux
 export DJANGO_LOGS_DIR="/percorso/personalizzato/logs"
 
-# Verifica configurazione  
+# Verifica configurazione
 just check-custom-logs LOGS_DIR="/percorso/personalizzato/logs" ENV=dev|test|prod
 ```
 
@@ -562,7 +562,7 @@ Documentazione specializzata per ogni aspetto del progetto:
 
 **🚀 Advanced**
 
-- [Just Task Runner](docs/just.md) - 47 comandi disponibili  
+- [Just Task Runner](docs/just.md) - 47 comandi disponibili
 - [Docstring Generation](docs/docstring_generation.md) - Documentazione automatica
 
 ---
