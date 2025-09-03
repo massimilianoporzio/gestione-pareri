@@ -3,7 +3,7 @@
 
 param(
     [string]$DjangoEnv = $env:DJANGO_ENV ?? "prod",
-    [string]$Host = $env:HOST ?? "0.0.0.0",
+    [string]$BindAddress = $env:HOST ?? "0.0.0.0",
     [int]$Port = [int]($env:PORT ?? 8000),
     [int]$Workers = [int]($env:WORKERS ?? 1),
     [string]$LogLevel = $env:LOG_LEVEL ?? "info",
@@ -15,7 +15,7 @@ param(
 
 Write-Host "🚀 Starting Uvicorn ASGI Server" -ForegroundColor Blue
 Write-Host "Environment: $DjangoEnv" -ForegroundColor Yellow
-Write-Host "Host: ${Host}:${Port}" -ForegroundColor Yellow
+Write-Host "Host: ${BindAddress}:${Port}" -ForegroundColor Yellow
 
 # Verifica che uv sia installato
 try {
@@ -41,15 +41,15 @@ Write-Host "Django Environment: $env:DJANGO_SETTINGS_MODULE" -ForegroundColor Ye
 if ($DjangoEnv -eq "dev") {
     # Modalità sviluppo: single process con reload
     Write-Host "🔄 Modalità sviluppo: hot-reload attivo" -ForegroundColor Yellow
-    uv run uvicorn home.asgi:application --host $Host --port $Port --reload --log-level $LogLevel --access-log --app-dir src
+    uv run uvicorn home.asgi:application --host $BindAddress --port $Port --reload --log-level $LogLevel --access-log --app-dir src
 } else {
     # Modalità produzione
     if ($Workers -eq 1) {
         Write-Host "⚡ Modalità produzione: single worker" -ForegroundColor Yellow
-        uv run uvicorn home.asgi:application --host $Host --port $Port --log-level $LogLevel --access-log --app-dir src --timeout-keep-alive $KeepAlive
+        uv run uvicorn home.asgi:application --host $BindAddress --port $Port --log-level $LogLevel --access-log --app-dir src --timeout-keep-alive $KeepAlive
     } else {
         # Su Windows, multi-worker è più complesso, usiamo single worker ottimizzato
         Write-Host "⚡ Modalità produzione: single worker (Windows optimized)" -ForegroundColor Yellow
-        uv run uvicorn home.asgi:application --host $Host --port $Port --log-level $LogLevel --access-log --app-dir src --timeout-keep-alive $KeepAlive
+        uv run uvicorn home.asgi:application --host $BindAddress --port $Port --log-level $LogLevel --access-log --app-dir src --timeout-keep-alive $KeepAlive
     }
 }
