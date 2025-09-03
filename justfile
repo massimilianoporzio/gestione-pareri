@@ -1,793 +1,319 @@
-# Deploy Django Template - Comandi disponibili con Just
+# Deploy Django Template - Comandi disponibili con Just (Cross-platform)
 # Per visualizzare tutti i comandi: just --list o just
 
-# Configura shell per Windows
+# Configurazione shell cross-platform
 set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
 # Variabili globali
 python := "uv run"
-django_manage := "uv run python src/manage.py"
+django_manage := "uv run src/manage.py"
+
+# Helper per OS detection
+os_type := if os_family() == "windows" { "windows" } else { "unix" }
 
 # 📋 Comando default: mostra l'help
 default:
-    @Write-Host "🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI" -ForegroundColor Magenta
-    @Write-Host "============================================================" -ForegroundColor DarkGray
-    @Write-Host ""
-    @Write-Host "📊 DJANGO & DATABASE:" -ForegroundColor Green
-    @Write-Host "  just run-server         🚀 Server di sviluppo Django" -ForegroundColor Green    @if (!(Test-Path web.config)) { if (Test-Path config/deployment/web.config.template) { Copy-Item config/deployment/web.config.template web.config; Write-Host "✅ web.config creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } } else { Write-Host "📄 File web.config già presente" -ForegroundColor Green }    @Write-Host "  just run-dev            🔧 Server sviluppo (DEV)" -ForegroundColor Green
-    @Write-Host "  just run-test           🧪 Server sviluppo (TEST)" -ForegroundColor Green
-    @Write-Host "  just run-staging        🎭 Server sviluppo (STAGING)" -ForegroundColor Green
-    @Write-Host "  just run-prod           ⚡ Server sviluppo (PROD)" -ForegroundColor Green
-    @Write-Host "  just migrate            📦 Migrazioni database" -ForegroundColor Green
-    @Write-Host "  just makemigrations     📝 Crea migrazioni" -ForegroundColor Green
-    @Write-Host "  just shell              🐚 Shell Django" -ForegroundColor Green
-    @Write-Host "  just createsuperuser    👤 Crea superuser" -ForegroundColor Green
-    @Write-Host "  just init-groups        🔐 Inizializza gruppi base" -ForegroundColor Green
-    @Write-Host "  just dump-initial-data  💾 Dump dati iniziali" -ForegroundColor Green
-    @Write-Host "  just setup-all-environments 🔄 Setup tutti ambienti" -ForegroundColor Green
-    @Write-Host "  just test               🧪 Esegue test progetto" -ForegroundColor Green
-    @Write-Host "  just test-quick         ⚡ Test rapidi quotidiani" -ForegroundColor Green
-    @Write-Host "  just test-security      🔒 Test sicurezza critica" -ForegroundColor Green
-    @Write-Host "  just test-pre-deploy    🚀 Test completi pre-deploy" -ForegroundColor Green
-    @Write-Host "  just test-dev           🔧 Test ambiente DEV" -ForegroundColor Green
-    @Write-Host "  just test-test          🧪 Test ambiente TEST" -ForegroundColor Green
-    @Write-Host "  just test-staging       🎭 Test ambiente STAGING" -ForegroundColor Green
-    @Write-Host "  just test-prod          ⚡ Test ambiente PROD" -ForegroundColor Green
-    @Write-Host ""
-    @Write-Host "🌐 SERVER & DEPLOY:" -ForegroundColor Cyan
-    @Write-Host "  just waitress           🪟 Server Waitress (Windows)" -ForegroundColor Cyan
-    @Write-Host "  just run-uvicorn        ⚡ Server Uvicorn ASGI" -ForegroundColor Cyan
-    @Write-Host "  just iis-test-local     🧪 Test IIS locale" -ForegroundColor Cyan
-    @Write-Host "  just iis-deploy         🚀 Deploy completo IIS" -ForegroundColor Cyan
-    @Write-Host "  just iis-setup          ⚙️  Setup iniziale IIS" -ForegroundColor Cyan
-    @Write-Host "  just production-deploy  🏭 Deploy produzione completo" -ForegroundColor Cyan
-    @Write-Host "  just production-update  🔄 Update produzione esistente" -ForegroundColor Cyan
-    @Write-Host "  just deploy             🎯 Deploy automatico" -ForegroundColor Cyan
-    @Write-Host "  just deploy-dev         🔧 Deploy development" -ForegroundColor Cyan
-    @Write-Host "  just deploy-staging     🧪 Deploy staging" -ForegroundColor Cyan
-    @Write-Host "  just deploy-prod        🚀 Deploy production" -ForegroundColor Cyan
-    @Write-Host "  just stop-servers       🛑 Ferma tutti i server" -ForegroundColor Cyan
-    @Write-Host "  just kill-port          🔪 Termina processo porta 8000" -ForegroundColor Cyan
-    @Write-Host ""
-    @Write-Host "🔧 QUALITY & FORMAT:" -ForegroundColor Yellow
-    @Write-Host "  just fix-all            ⭐ CORREZIONE GLOBALE completa" -ForegroundColor Yellow
-    @Write-Host "  just lint-codacy        🔍 Controlli qualità Codacy" -ForegroundColor Yellow
-    @Write-Host "  just add-docstrings     📝 Aggiunge docstring mancanti" -ForegroundColor Yellow
-    @Write-Host "  just precommit-corporate 🏢 Pre-commit aziendale" -ForegroundColor Yellow
-    @Write-Host "  just quality-corporate  🏢 Quality controlli alternativi" -ForegroundColor Yellow
-    @Write-Host "  just fix-markdown       📝 Corregge problemi Markdown" -ForegroundColor Yellow
-    @Write-Host ""
-    @Write-Host "ℹ️  UTILITY:" -ForegroundColor White
-    @Write-Host "  just stats              📊 Statistiche progetto" -ForegroundColor White
-    @Write-Host "  just check-env          🔍 Controllo ambiente" -ForegroundColor White
-    @Write-Host "  just check-env-dev      � Controllo ambiente DEV" -ForegroundColor White
-    @Write-Host "  just check-env-test     🧪 Controllo ambiente TEST" -ForegroundColor White
-    @Write-Host "  just check-env-staging  🎭 Controllo ambiente STAGING" -ForegroundColor White
-    @Write-Host "  just check-env-prod     ⚡ Controllo ambiente PROD" -ForegroundColor White
-    @Write-Host "  just generate-secret-key 🔑 Genera Django SECRET_KEY" -ForegroundColor White
-    @Write-Host "  just generate-secret-keys-all 🔐 Genera SECRET_KEY per tutti e 4 gli ambienti" -ForegroundColor White
-    @Write-Host "  just generate-db-passwords 🔐 Genera password PostgreSQL sicure" -ForegroundColor White
-    @Write-Host "  just create-db-script   🗄️ Crea script SQL con password reali" -ForegroundColor White
-    @Write-Host "  just --list             📋 Lista completa comandi" -ForegroundColor White
-    @Write-Host ""
-    @Write-Host "🏢 INTRANET AZIENDALE:" -ForegroundColor Magenta
-    @Write-Host "  just setup-iis          🌐 Configura IIS per intranet" -ForegroundColor Cyan
-    @Write-Host "  just deploy-intranet    🚀 Deploy completo intranet" -ForegroundColor Cyan
-    @Write-Host ""
-    @Write-Host "🪟 WINDOWS IIS DEPLOYMENT:" -ForegroundColor Blue
-    @Write-Host "  just setup-iis-prod     🌐 Setup IIS produzione" -ForegroundColor Blue
-    @Write-Host "  just deploy-iis         🚀 Deploy completo con IIS" -ForegroundColor Blue
-    @Write-Host "  just deploy-iis         🚀 Deploy completo con IIS" -ForegroundColor Cyan
-    @Write-Host ""
-    @Write-Host "🐧 LINUX/macOS NGINX:" -ForegroundColor Blue
-    @Write-Host "  just setup-nginx        🌐 Configura Nginx reverse proxy" -ForegroundColor Blue
-    @Write-Host "  just deploy-nginx       🚀 Deploy completo con Nginx" -ForegroundColor Blue
+    #!/usr/bin/env bash
+    just color_print "magenta" "🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI"
+    just color_print "gray" "============================================================"
+    echo ""
+    just color_print "green" "📊 DJANGO & DATABASE:"
+    just color_print "green" "  just run-server         🚀 Server di sviluppo Django"
+    just color_print "green" "  just run-dev            🔧 Server sviluppo (DEV)"
+    just color_print "green" "  just run-test           🧪 Server sviluppo (TEST)"
+    just color_print "green" "  just run-staging        🎭 Server sviluppo (STAGING)"
+    just color_print "green" "  just run-prod           ⚡ Server sviluppo (PROD)"
+    just color_print "green" "  just migrate            📦 Migrazioni database"
+    just color_print "green" "  just makemigrations     📝 Crea migrazioni"
+    just color_print "green" "  just shell              🐚 Shell Django"
+    just color_print "green" "  just createsuperuser    👤 Crea superuser"
+    just color_print "green" "  just test               🧪 Esegue test progetto"
+    echo ""
+    just color_print "cyan" "🌐 SERVER & DEPLOY:"
+    just color_print "cyan" "  just run-uvicorn        ⚡ Server Uvicorn ASGI"
+    just color_print "cyan" "  just deploy-dev         🔧 Deploy development"
+    just color_print "cyan" "  just stop-servers       🛑 Ferma tutti i server"
+    just color_print "cyan" "  just kill-port PORT     🔪 Termina processo su porta"
+    echo ""
+    just color_print "yellow" "🔧 QUALITY & FORMAT:"
+    just color_print "yellow" "  just fix-all            ⭐ CORREZIONE GLOBALE completa"
+    just color_print "yellow" "  just add-docstrings     📝 Aggiunge docstring mancanti"
+    echo ""
+    just color_print "white" "ℹ️  UTILITY:"
+    just color_print "white" "  just check-env          🔍 Controllo ambiente"
+    just color_print "white" "  just generate-secret-key 🔑 Genera Django SECRET_KEY"
+    just color_print "white" "  just --list             📋 Lista completa comandi"
 
-# === IIS DEPLOYMENT (Windows Server) ===
-
-# 🌐 Setup IIS reverse proxy per Windows Server
-setup-iis:
-    @Write-Host "🌐 Configurazione IIS reverse proxy..." -ForegroundColor Cyan
-    @Write-Host "⚠️  Richiede privilegi di amministratore!" -ForegroundColor Yellow
-    @PowerShell -ExecutionPolicy Bypass -File "deployment\setup-iis.ps1"
-
-# 🚀 Deploy completo per IIS
-deploy-iis:
-    @Write-Host "🚀 Deploy completo con IIS reverse proxy..." -ForegroundColor Magenta
-    @Write-Host "1/4 - Installazione dipendenze produzione..." -ForegroundColor Yellow
-    @uv sync --frozen
-    @Write-Host "2/4 - Migrazioni database..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="prod"; {{django_manage}} migrate --no-input
-    @Write-Host "3/4 - Raccolta file statici..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="prod"; {{django_manage}} collectstatic --no-input --clear
-    @Write-Host "4/4 - Avvio server Uvicorn per IIS..." -ForegroundColor Yellow
-    @Write-Host "🌐 Server disponibile per reverse proxy IIS" -ForegroundColor Green
-    @$env:DJANGO_ENV="prod"; cd src; {{python}} -m uvicorn home.asgi:application --host 127.0.0.1 --port 8000 --workers 1 --log-level info
-
-# === NGINX DEPLOYMENT (Linux/macOS) ===
-
-# 🌐 Setup Nginx per Linux/macOS
-setup-nginx:
-    @Write-Host "🌐 Configurazione Nginx per Linux/macOS..." -ForegroundColor Blue
-    @Write-Host "⚠️  Richiede privilegi sudo!" -ForegroundColor Yellow
-    @Write-Host "1/4 - Copia configurazione Nginx..." -ForegroundColor Yellow
-    sudo cp deployment/nginx.conf /etc/nginx/sites-available/gestione-pareri
-    @Write-Host "2/4 - Abilita sito..." -ForegroundColor Yellow
-    sudo ln -sf /etc/nginx/sites-available/gestione-pareri /etc/nginx/sites-enabled/
-    @Write-Host "3/4 - Test configurazione..." -ForegroundColor Yellow
-    sudo nginx -t
-    @Write-Host "4/4 - Ricarica Nginx..." -ForegroundColor Yellow
-    sudo systemctl reload nginx
-    @Write-Host "✅ Nginx configurato con successo!" -ForegroundColor Green
-    @Write-Host "🌐 Sito disponibile su: http://localhost" -ForegroundColor Green
-
-# 🚀 Deploy completo con Nginx
-deploy-nginx: install-prod
-    @Write-Host "🚀 Deploy completo con Nginx..." -ForegroundColor Blue
-    @Write-Host "1/5 - Installazione dipendenze..." -ForegroundColor Yellow
-    @uv sync --frozen
-    @Write-Host "2/5 - Migrazioni database..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="prod"; {{django_manage}} migrate --no-input
-    @Write-Host "3/5 - Raccolta file statici..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="prod"; {{django_manage}} collectstatic --no-input --clear
-    @Write-Host "4/5 - Riavvio Django service..." -ForegroundColor Yellow
-    sudo systemctl restart gestione-pareri || echo "Service gestione-pareri non configurato"
-    @Write-Host "5/5 - Reload Nginx..." -ForegroundColor Yellow
-    sudo systemctl reload nginx
-    @Write-Host "✅ Deploy Nginx completato!" -ForegroundColor Green
-    @Write-Host "🌐 Server disponibile tramite Nginx reverse proxy" -ForegroundColor Green
-
-# 📊 Status servizi Nginx
-status-nginx:
-    @Write-Host "📊 Status servizi Nginx..." -ForegroundColor Blue
-    @Write-Host "=== NGINX STATUS ===" -ForegroundColor Cyan
-    sudo systemctl status nginx --no-pager
-    @Write-Host "" -ForegroundColor White
-    @Write-Host "=== DJANGO SERVICE STATUS ===" -ForegroundColor Cyan
-    sudo systemctl status gestione-pareri --no-pager || echo "Service gestione-pareri non configurato"
+# Helper functions per colori cross-platform
+[private]
+color_print color message:
+    #!/usr/bin/env bash
+    if [[ "$OSTYPE" == "darwin"* ]] || [[ "$OSTYPE" == "linux"* ]]; then
+        # Unix/Linux/macOS - usa codici ANSI
+        case "{{color}}" in
+            "red")     echo -e "\033[31m{{message}}\033[0m" ;;
+            "green")   echo -e "\033[32m{{message}}\033[0m" ;;
+            "yellow")  echo -e "\033[33m{{message}}\033[0m" ;;
+            "blue")    echo -e "\033[34m{{message}}\033[0m" ;;
+            "magenta") echo -e "\033[35m{{message}}\033[0m" ;;
+            "cyan")    echo -e "\033[36m{{message}}\033[0m" ;;
+            "white")   echo -e "\033[37m{{message}}\033[0m" ;;
+            "gray")    echo -e "\033[90m{{message}}\033[0m" ;;
+            *)         echo "{{message}}" ;;
+        esac
+    else
+        # Fallback senza colori
+        echo "{{message}}"
+    fi
 
 # === DJANGO COMMANDS ===
 
 # 🚀 Server di sviluppo
 run-server:
-    @Write-Host "🚀 Avvio del server di sviluppo Django..." -ForegroundColor Cyan
-    @{{django_manage}} runserver
+    #!/usr/bin/env bash
+    just color_print "cyan" "🚀 Avvio del server di sviluppo Django..."
+    {{django_manage}} runserver
 
 # 🔧 Server di sviluppo in ambiente DEV
 run-dev:
-    @Write-Host "🔧 Avvio del server di sviluppo in ambiente DEV..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="dev"; {{django_manage}} runserver
+    #!/usr/bin/env bash
+    just color_print "cyan" "🔧 Avvio del server di sviluppo in ambiente DEV..."
+    export DJANGO_ENV="dev"
+    {{django_manage}} runserver
 
 # 🧪 Server di sviluppo in ambiente TEST
 run-test:
-    @Write-Host "🧪 Avvio del server di sviluppo in ambiente TEST..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="test"; {{django_manage}} runserver
+    #!/usr/bin/env bash
+    just color_print "cyan" "🧪 Avvio del server di sviluppo in ambiente TEST..."
+    export DJANGO_ENV="test"
+    {{django_manage}} runserver
 
 # 🎭 Server di sviluppo in ambiente STAGING
 run-staging:
-    @Write-Host "🎭 Avvio del server di sviluppo in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "⚠️  STAGING usa sempre PostgreSQL!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} runserver
+    #!/usr/bin/env bash
+    just color_print "cyan" "🎭 Avvio del server di sviluppo in ambiente STAGING..."
+    just color_print "yellow" "⚠️  STAGING usa sempre PostgreSQL!"
+    export DJANGO_ENV="staging"
+    {{django_manage}} runserver
 
 # ⚡ Server di sviluppo in ambiente PROD
 run-prod:
-    @Write-Host "⚡ Avvio del server di sviluppo in ambiente PROD..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="prod"; {{django_manage}} runserver
-
-# 🧪 Test del progetto
-test:
-    @Write-Host "🧪 Esecuzione dei test..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: LOCAL con PostgreSQL" -ForegroundColor Gray
-    @uv run python src/manage.py test accounts --settings=home.settings.test_local
-
-# 🧪 Test in ambiente DEV
-test-dev:
-    @Write-Host "🧪 Test in ambiente DEV..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: DEV con SQLite/PostgreSQL" -ForegroundColor Gray
-    @$env:DJANGO_SETTINGS_MODULE="home.settings.dev"; uv run pytest src/accounts/tests.py -v
-
-# 🧪 Test in ambiente TEST
-test-test:
-    @Write-Host "🧪 Test in ambiente TEST..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: TEST con PostgreSQL" -ForegroundColor Gray
-    @Write-Host "⚡ PostgreSQL deve essere configurato!" -ForegroundColor Yellow
-    @$env:DJANGO_SETTINGS_MODULE="home.settings.test"; uv run pytest src/accounts/tests.py -v
-
-# 🧪 Test in ambiente STAGING
-test-staging:
-    @Write-Host "🎭 Esecuzione dei test in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: STAGING con PostgreSQL" -ForegroundColor Gray
-    @Write-Host "⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; uv run python src/manage.py test accounts --settings=home.settings.staging --verbosity=2
-
-# 🧪 Test in ambiente PROD
-test-prod:
-    @Write-Host "🧪 Test in ambiente PROD..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: PROD con PostgreSQL" -ForegroundColor Gray
-    @Write-Host "🚨 ATTENZIONE: Test in ambiente PRODUZIONE!" -ForegroundColor Red
-    @Write-Host "💡 Usa solo per validazione post-deploy" -ForegroundColor Yellow
-    @$env:DJANGO_SETTINGS_MODULE="home.settings.prod"; $env:DJANGO_TEST_DB="1"; uv run pytest src/accounts/tests.py -v
+    #!/usr/bin/env bash
+    just color_print "cyan" "⚡ Avvio del server di sviluppo in ambiente PROD..."
+    export DJANGO_ENV="prod"
+    {{django_manage}} runserver
 
 # 📦 Migrazioni database
 migrate:
-    @Write-Host "📦 Applicazione delle migrazioni..." -ForegroundColor Cyan
-    @{{django_manage}} migrate
-
-# 📦 Migrazioni in ambiente DEV
-migrate-dev:
-    @Write-Host "📦 Applicazione delle migrazioni in ambiente DEV..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="dev"; {{django_manage}} migrate
-
-# 📦 Migrazioni in ambiente TEST
-migrate-test:
-    @Write-Host "📦 Applicazione delle migrazioni in ambiente TEST..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="test"; {{django_manage}} migrate
-
-# 📦 Migrazioni in ambiente STAGING
-migrate-staging:
-    @Write-Host "🎭 Applicazione delle migrazioni in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} migrate
-
-# 📦 Migrazioni in ambiente PROD
-migrate-prod:
-    @Write-Host "📦 Applicazione delle migrazioni in ambiente PROD..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="prod"; {{django_manage}} migrate
+    #!/usr/bin/env bash
+    just color_print "cyan" "📦 Applicazione delle migrazioni..."
+    {{django_manage}} migrate
 
 # 📝 Creazione migrazioni
 makemigrations:
-    @Write-Host "📝 Creazione delle migrazioni..." -ForegroundColor Cyan
-    @{{django_manage}} makemigrations
+    #!/usr/bin/env bash
+    just color_print "cyan" "📝 Creazione delle migrazioni..."
+    {{django_manage}} makemigrations
 
 # 🐚 Shell Django
 shell:
-    @Write-Host "🐚 Avvio della shell Django..." -ForegroundColor Cyan
-    @{{django_manage}} shell
-
-# 🐚 Shell Django DEV
-shell-dev:
-    @Write-Host "🐚 Avvio della shell Django in ambiente DEV..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="dev"; {{django_manage}} shell
-
-# 🐚 Shell Django TEST
-shell-test:
-    @Write-Host "🐚 Avvio della shell Django in ambiente TEST..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="test"; {{django_manage}} shell
-
-# 🐚 Shell Django STAGING
-shell-staging:
-    @Write-Host "🎭 Avvio della shell Django in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} shell
-
-# 🐚 Shell Django PROD
-shell-prod:
-    @Write-Host "🐚 Avvio della shell Django in ambiente PROD..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="prod"; {{django_manage}} shell
+    #!/usr/bin/env bash
+    just color_print "cyan" "🐚 Avvio della shell Django..."
+    {{django_manage}} shell
 
 # 👤 Crea superuser
 createsuperuser:
-    @Write-Host "👤 Creazione di un superuser..." -ForegroundColor Cyan
-    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
-    @{{django_manage}} createsuperuser
+    #!/usr/bin/env bash
+    just color_print "cyan" "👤 Creazione di un superuser..."
+    just color_print "yellow" "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it"
+    {{django_manage}} createsuperuser
 
-# 👤 Crea superuser in ambiente DEV
-createsuperuser-dev:
-    @Write-Host "👤 Creazione di un superuser in ambiente DEV..." -ForegroundColor Cyan
-    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="dev"; {{django_manage}} createsuperuser
+# 🧪 Test del progetto
+test:
+    #!/usr/bin/env bash
+    echo "🧪 Esecuzione dei test..."
+    echo "📋 Ambiente: LOCAL con PostgreSQL"
+    {{python}} src/manage.py test accounts --settings=home.settings.test_local
 
-# 👤 Crea superuser in ambiente TEST
-createsuperuser-test:
-    @Write-Host "👤 Creazione di un superuser in ambiente TEST..." -ForegroundColor Cyan
-    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="test"; {{django_manage}} createsuperuser
+# === SERVER & DEPLOYMENT ===
 
-# 👤 Crea superuser in ambiente STAGING
-createsuperuser-staging:
-    @Write-Host "🎭 Creazione di un superuser in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
-    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} createsuperuser
+# ⚡ Uvicorn ASGI server - RACCOMANDATO
+run-uvicorn:
+    #!/usr/bin/env bash
+    echo "⚡ Avvio Django con Uvicorn ASGI..."
+    echo "🚀 Starting Uvicorn ASGI Server"
+    echo "Environment: prod"
+    echo "Host: 0.0.0.0:8000"
+    echo "📊 Running migrations..."
+    {{django_manage}} migrate --no-input
+    echo "📁 Collecting static files..."
+    {{django_manage}} collectstatic --no-input --clear
+    echo "⚡ Starting server..."
+    export DJANGO_ENV="prod"
+    cd src && {{python}} -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --log-level info --access-log
 
-# 👤 Crea superuser in ambiente PROD
-createsuperuser-prod:
-    @Write-Host "👤 Creazione di un superuser in ambiente PROD..." -ForegroundColor Cyan
-    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="prod"; {{django_manage}} createsuperuser
+# 🔧 Deploy development
+deploy-dev:
+    #!/usr/bin/env bash
+    echo "🔧 Avvio server di sviluppo..."
+    export DJANGO_ENV="dev"
+    {{django_manage}} runserver
 
-# === GROUPS & PERMISSIONS ===
+# 🛑 Ferma tutti i server Django (cross-platform)
+stop-servers:
+    #!/usr/bin/env bash
+    echo "🛑 Arresto di tutti i server Django..."
+    if [[ "$OSTYPE" == "darwin"* ]] || [[ "$OSTYPE" == "linux"* ]]; then
+        # macOS/Linux
+        pkill -f "manage.py runserver" || echo "Nessun server Django trovato"
+        pkill -f "uvicorn" || echo "Nessun server Uvicorn trovato"
+        pkill -f "waitress" || echo "Nessun server Waitress trovato"
+    else
+        # Windows (tramite Git Bash o WSL)
+        taskkill //F //IM python.exe //FI "COMMANDLINE eq *manage.py*" 2>/dev/null || echo "Nessun server Django trovato"
+        taskkill //F //IM python.exe //FI "COMMANDLINE eq *uvicorn*" 2>/dev/null || echo "Nessun server Uvicorn trovato"
+    fi
+    echo "✅ Comando completato"
 
-# 🔐 Inizializza gruppi e permessi di base
-init-groups:
-    @Write-Host "🔐 Inizializzazione gruppi e permessi di base..." -ForegroundColor Cyan
-    @{{django_manage}} init_groups_permissions
-    @Write-Host "✅ Gruppi e permessi inizializzati" -ForegroundColor Green
-
-# 🔐 Inizializza gruppi in ambiente TEST
-init-groups-test:
-    @Write-Host "🔐 Inizializzazione gruppi in ambiente TEST..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="test"; {{django_manage}} init_groups_permissions
-    @Write-Host "✅ Gruppi TEST inizializzati" -ForegroundColor Green
-
-# 🔐 Inizializza gruppi in ambiente STAGING
-init-groups-staging:
-    @Write-Host "🔐 Inizializzazione gruppi in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} init_groups_permissions
-    @Write-Host "✅ Gruppi STAGING inizializzati" -ForegroundColor Green
-
-# 🔐 Inizializza gruppi in ambiente PROD
-init-groups-prod:
-    @Write-Host "🔐 Inizializzazione gruppi in ambiente PROD..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="prod"; {{django_manage}} init_groups_permissions
-    @Write-Host "✅ Gruppi PROD inizializzati" -ForegroundColor Green
-
-# === DATABASE DUMP & LOAD ===
-
-# 💾 Crea dump dei dati iniziali (superuser + gruppi + permessi)
-dump-initial-data:
-    @Write-Host "💾 Creazione dump dei dati iniziali..." -ForegroundColor Cyan
-    @Write-Host "ℹ️  Salva superuser, gruppi e permessi da ambiente DEV" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="dev"; {{django_manage}} dumpdata accounts auth.group auth.permission --format=json --indent=2 --output=fixtures/initial_data.json
-    @Write-Host "✅ Dump salvato in fixtures/initial_data.json" -ForegroundColor Green
-
-# 📥 Carica dati iniziali in ambiente TEST
-load-initial-data-test:
-    @Write-Host "📥 Caricamento dati iniziali in ambiente TEST..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="test"; {{django_manage}} loaddata fixtures/initial_data.json
-    @Write-Host "✅ Dati caricati in ambiente TEST" -ForegroundColor Green
-
-# 📥 Carica dati iniziali in ambiente STAGING
-load-initial-data-staging:
-    @Write-Host "📥 Caricamento dati iniziali in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} loaddata fixtures/initial_data.json
-    @Write-Host "✅ Dati caricati in ambiente STAGING" -ForegroundColor Green
-
-# 📥 Carica dati iniziali in ambiente PROD
-load-initial-data-prod:
-    @Write-Host "📥 Caricamento dati iniziali in ambiente PROD..." -ForegroundColor Cyan
-    @Write-Host "⚠️  ATTENZIONE: Stai caricando dati in PRODUZIONE!" -ForegroundColor Red
-    @$env:DJANGO_ENV="prod"; {{django_manage}} loaddata fixtures/initial_data.json
-    @Write-Host "✅ Dati caricati in ambiente PROD" -ForegroundColor Green
-
-# 🔄 Setup completo tutti gli ambienti (migrate + load data)
-setup-all-environments:
-    @Write-Host "🔄 Setup completo di tutti gli ambienti..." -ForegroundColor Cyan
-    @Write-Host "1/4 - Migrazioni ambiente TEST..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="test"; {{django_manage}} migrate
-    @Write-Host "2/4 - Migrazioni ambiente STAGING..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} migrate
-    @Write-Host "3/4 - Migrazioni ambiente PROD..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="prod"; {{django_manage}} migrate
-    @Write-Host "4/4 - Caricamento dati iniziali in tutti gli ambienti..." -ForegroundColor Yellow
-    just load-initial-data-test
-    just load-initial-data-staging
-    just load-initial-data-prod
-    @Write-Host "✅ Setup completo di tutti gli ambienti completato!" -ForegroundColor Green
+# 🔪 Termina processi su una specifica porta
+kill-port PORT:
+    #!/usr/bin/env bash
+    echo "🔪 Terminazione processi sulla porta {{PORT}}..."
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        lsof -ti:{{PORT}} | xargs kill -9 2>/dev/null || echo "Nessun processo trovato sulla porta {{PORT}}"
+    elif [[ "$OSTYPE" == "linux"* ]]; then
+        # Linux
+        fuser -k {{PORT}}/tcp 2>/dev/null || echo "Nessun processo trovato sulla porta {{PORT}}"
+    else
+        # Windows
+        for /f "tokens=5" %a in ('netstat -aon ^| findstr :{{PORT}}') do taskkill /f /pid %a 2>nul || echo "Nessun processo trovato sulla porta {{PORT}}"
+    fi
 
 # === QUALITY COMMANDS ===
 
 # 📝 Aggiunge docstring mancanti
 add-docstrings:
-    @Write-Host "📝 Aggiunta docstring ai file Python del progetto..." -ForegroundColor Cyan
-    @{{python}} tools/add_docstring_batch.py .
+    #!/usr/bin/env bash
+    echo "📝 Aggiunta docstring ai file Python del progetto..."
+    {{python}} tools/add_docstring_batch.py .
 
 # ⭐ CORREZIONE GLOBALE: Fix all code quality issues
 fix-all:
-    @Write-Host "⭐ Correzione completa di tutti i problemi di qualità del codice..." -ForegroundColor Cyan
-    @Write-Host "1/10 - Rimozione spazi finali..." -ForegroundColor Yellow
-    @-pre-commit run trailing-whitespace --all-files
-    @Write-Host "2/10 - Correzione fine file..." -ForegroundColor Yellow
-    @-pre-commit run end-of-file-fixer --all-files
-    @Write-Host "3/10 - Aggiunta docstring..." -ForegroundColor Yellow
-    @-{{python}} tools/add_docstring_batch.py .
-    @Write-Host "4/10 - Ordinamento import (isort style)..." -ForegroundColor Yellow
-    @-{{python}} ruff check --select I --fix .
-    @Write-Host "5/10 - Formattazione con Ruff..." -ForegroundColor Yellow
-    @-{{python}} ruff format .
-    @Write-Host "6/10 - Correzione automatica con Ruff..." -ForegroundColor Yellow
-    @-{{python}} ruff check . --fix --unsafe-fixes
-    @Write-Host "7/10 - Correzioni aggressive con autopep8..." -ForegroundColor Yellow
-    @-{{python}} autopep8 --in-place --aggressive --aggressive --recursive .
-    @Write-Host "8/10 - Formattazione finale con Ruff..." -ForegroundColor Yellow
-    @-{{python}} ruff format .
-    @Write-Host "9/10 - Formattazione Markdown..." -ForegroundColor Yellow
-    @just format-markdown
-    @Write-Host "10/10 - Correzione problemi Markdown..." -ForegroundColor Yellow
-    @just fix-markdown
-    @Write-Host "✅ Tutti i problemi di qualità del codice sono stati corretti!" -ForegroundColor Green
+    #!/usr/bin/env bash
+    echo "⭐ Correzione completa di tutti i problemi di qualità del codice..."
+    echo "1/6 - Ordinamento import (isort style)..."
+    {{python}} -m ruff check --select I --fix . || true
+    echo "2/6 - Formattazione con Ruff..."
+    {{python}} -m ruff format . || true
+    echo "3/6 - Correzione automatica con Ruff..."
+    {{python}} -m ruff check . --fix || true
+    echo "4/6 - Aggiunta docstring..."
+    {{python}} tools/add_docstring_batch.py . || true
+    echo "5/6 - Formattazione finale con Ruff..."
+    {{python}} -m ruff format . || true
+    echo "6/6 - Controlli finali..."
+    {{python}} -m ruff check . || true
+    echo "✅ Tutti i problemi di qualità del codice sono stati corretti!"
 
-# 🔍 Test pre-commit hooks senza modifiche
-test-precommit:
-    @Write-Host "🔍 Test di tutti i controlli pre-commit..." -ForegroundColor Cyan
-    @pre-commit run --all-files
-    @Write-Host "✅ Test pre-commit completato!" -ForegroundColor Green
-
-# 🔧 Correzione automatica script bash
-fix-codacy:
-    @Write-Host "🔧 Correzione automatica script bash..." -ForegroundColor Cyan
-    @Get-ChildItem -Path "scripts/deployment" -Filter "*.sh" | ForEach-Object { shfmt -w $_.FullName }
-    @Write-Host "✅ Correzioni applicate!" -ForegroundColor Green
-
-# 📝 Formattazione file Markdown
-format-markdown:
-    @Write-Host "📝 Formattazione file Markdown..." -ForegroundColor Cyan
-    @Get-ChildItem -Path . -Include "*.md" -Recurse | ForEach-Object { Write-Host "Formatting" $_.FullName; $content = Get-Content $_.FullName -Raw; if ($content) { $formatted = $content -replace "(?m)^[ \t]+$", "" -replace "(?m)\r?\n{3,}", "`n`n" -replace "(?m)[ \t]+$", ""; Set-Content $_.FullName -Value $formatted -NoNewline } }
-    @Write-Host "✅ File Markdown formattati con successo!" -ForegroundColor Green
-
-# 📝 Correzione problemi Markdown
-fix-markdown:
-    @Write-Host "📝 Correzione problemi Markdown..." -ForegroundColor Cyan
-    @Write-Host "1/3 - Correzioni automatiche..." -ForegroundColor Yellow
-    @{{python}} tools/fix_markdown.py
-    @Write-Host "2/3 - Prettier formatting..." -ForegroundColor Yellow
-    @-pre-commit run prettier --all-files
-    @Write-Host "3/3 - Markdownlint validation..." -ForegroundColor Yellow
-    @-pre-commit run markdownlint-cli2 --all-files
-    @Write-Host "✅ Problemi Markdown corretti!" -ForegroundColor Green
-
-# 🔍 Controlli qualità stile Codacy (semplificato)
-lint-codacy:
-    @Write-Host "🔍 Controlli qualità stile Codacy..." -ForegroundColor Cyan
-    @Write-Host "1/3 - Ruff check..." -ForegroundColor Yellow
-    @-{{python}} ruff check --output-format=github .
-    @Write-Host "2/3 - Flake8..." -ForegroundColor Yellow
-    @-{{python}} flake8 --format=default .
-    @Write-Host "3/3 - Pylint..." -ForegroundColor Yellow
-    @-{{python}} pylint src/home/ --output-format=colorized
-    @Write-Host "✅ Controlli completati!" -ForegroundColor Green
-
-# 📊 Statistiche progetto
-stats:
-    @Write-Host "📊 Generazione statistiche progetto..." -ForegroundColor Cyan
-    @{{python}} tools/project_stats.py
-    @Write-Host "📊 Dashboard disponibile in tools/quality_dashboard.md" -ForegroundColor Green
-
-# 🔑 Genera Django SECRET_KEY
-generate-secret-key:
-    @Write-Host "🔑 Generazione Django SECRET_KEY..." -ForegroundColor Cyan
-    @Write-Host "Genero SECRET_KEY generica:" -ForegroundColor Yellow
-    @{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-
-# 🔑 Genera SECRET_KEY per tutti i 4 ambienti
-generate-secret-keys-all:
-    @Write-Host "🔐 Generazione SECRET_KEY per tutti gli ambienti..." -ForegroundColor Cyan
-    @Write-Host ""
-    @Write-Host "🔧 DEV Environment:" -ForegroundColor Green
-    @$dev_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-    @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key" -ForegroundColor White
-    @Write-Host ""
-    @Write-Host "🧪 TEST Environment:" -ForegroundColor Blue
-    @$test_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-    @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key" -ForegroundColor White
-    @Write-Host ""
-    @Write-Host "🎭 STAGING Environment:" -ForegroundColor Magenta
-    @$staging_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-    @Write-Host "DJANGO_SECRET_KEY_STAGING=$staging_key" -ForegroundColor White
-    @Write-Host ""
-    @Write-Host "⚡ PROD Environment:" -ForegroundColor Red
-    @$prod_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-    @Write-Host "DJANGO_SECRET_KEY_PROD=$prod_key" -ForegroundColor White
-    @Write-Host ""
-    @Write-Host "💡 CONFIGURAZIONE .env:" -ForegroundColor Cyan
-    @Write-Host "=======================" -ForegroundColor Cyan
-    @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key"
-    @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key"
-    @Write-Host "DJANGO_SECRET_KEY_STAGING=$staging_key"
-    @Write-Host "DJANGO_SECRET_KEY_PROD=$prod_key"
-    @Write-Host ""
-    @Write-Host "⚠️  IMPORTANTE: Ogni ambiente deve avere la sua SECRET_KEY!" -ForegroundColor Yellow
-    @Write-Host "📖 Vedi docs/environments-guide.md per configurazione completa" -ForegroundColor Gray
-
-# === DEPLOYMENT COMMANDS ===
-
-# 📦 Installazione dipendenze produzione
-install-prod:
-    @Write-Host "📦 Installazione dipendenze produzione..." -ForegroundColor Cyan
-    @uv sync --group prod
-
-# 🔧 Deploy development
-deploy-dev:
-    @Write-Host "🔧 Avvio server di sviluppo..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="dev"; {{django_manage}} runserver
-
-# 🧪 Deploy staging
-deploy-staging:
-    @Write-Host "🧪 Deploy staging (Windows - Uvicorn)..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="test"; powershell -ExecutionPolicy Bypass -File scripts/deployment/start-uvicorn.ps1 -DjangoEnv test
-
-# 🚀 Deploy production
-deploy-prod: install-prod
-    @Write-Host "🚀 Deploy produzione (Windows - Uvicorn ASGI)..." -ForegroundColor Green
-    @just run-uvicorn
-
-# 🎯 Smart deploy automatico
-deploy: install-prod
-    @Write-Host "🎯 Smart deployment - Windows rilevato, usando Uvicorn ASGI..." -ForegroundColor Cyan
-    @just run-uvicorn
-
-# 🪟 Waitress server (Windows/Cross-platform)
-waitress: install-prod
-    @Write-Host "🪟 Avvio Django con Waitress (Windows)..." -ForegroundColor Green
-    @Write-Host "🚀 Starting Django with Waitress" -ForegroundColor Green
-    @Write-Host "Environment: prod" -ForegroundColor Cyan
-    @Write-Host "Host: 0.0.0.0:8000" -ForegroundColor Cyan
-    @Write-Host "Threads: 4" -ForegroundColor Cyan
-    @Write-Host "📊 Running migrations..." -ForegroundColor Yellow
-    @{{django_manage}} migrate --no-input
-    @Write-Host "📁 Collecting static files..." -ForegroundColor Yellow
-    @{{django_manage}} collectstatic --no-input --clear
-    @Write-Host "🌟 Starting Waitress server..." -ForegroundColor Green
-    @$env:DJANGO_ENV="prod"; cd src; {{python}} -m waitress --host=0.0.0.0 --port=8000 --threads=4 --connection-limit=1000 --channel-timeout=120 home.wsgi:application
-
-# ⚡ Uvicorn ASGI server - RACCOMANDATO
-run-uvicorn: install-prod
-    @Write-Host "⚡ Avvio Django con Uvicorn ASGI (Windows)..." -ForegroundColor Green
-    @Write-Host "🚀 Starting Uvicorn ASGI Server" -ForegroundColor Blue
-    @Write-Host "Environment: prod" -ForegroundColor Yellow
-    @Write-Host "Host: 0.0.0.0:8000" -ForegroundColor Yellow
-    @Write-Host "📊 Running migrations..." -ForegroundColor Yellow
-    @{{django_manage}} migrate --no-input
-    @Write-Host "📁 Collecting static files..." -ForegroundColor Yellow
-    @{{django_manage}} collectstatic --no-input --clear
-    @Write-Host "⚡ Modalità produzione: single worker (Windows optimized)" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="prod"; cd src; {{python}} -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --log-level info --access-log --timeout-keep-alive 2
-
-# 🧪 Test Uvicorn locale (debug)
-test-uvicorn-local:
-    @Write-Host "🧪 Test locale Uvicorn ASGI (debug, singolo worker)..." -ForegroundColor Cyan
-    @bash scripts/deployment/test-uvicorn-local.sh
-
-# 📦 Raccolta file statici
-collectstatic:
-    @Write-Host "📦 Raccolta file statici..." -ForegroundColor Cyan
-    @{{django_manage}} collectstatic --noinput
-
-# 📦 Raccolta file statici DEV
-collectstatic-dev:
-    @Write-Host "📦 Raccolta file statici (DEV)..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="dev"; {{django_manage}} collectstatic --noinput
-
-# 📦 Raccolta file statici TEST
-collectstatic-test:
-    @Write-Host "📦 Raccolta file statici (TEST)..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="test"; {{django_manage}} collectstatic --noinput
-
-# 📦 Raccolta file statici PROD
-collectstatic-prod:
-    @Write-Host "📦 Raccolta file statici (PROD)..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="prod"; {{django_manage}} collectstatic --noinput
-
-# 🌐 Apre la home page nel browser
-open-home:
-    @Write-Host "🌐 Apertura pagina home nel browser..." -ForegroundColor Cyan
-    @Start-Process "http://localhost:8000"
-
-# === SERVER MANAGEMENT ===
-
-# 🛑 Ferma tutti i server Django
-stop-servers:
-    @Write-Host "🛑 Arresto di tutti i server Django..." -ForegroundColor Yellow
-    @Write-Host "ℹ️  Nota: Eseguire da un terminale DIVERSO da quello che esegue il server" -ForegroundColor Cyan
-    @Get-Process | Where-Object {$_.ProcessName -match "python|gunicorn|waitress|uvicorn"} | Where-Object {$_.CommandLine -match "django|manage.py|wsgi|asgi"} | Stop-Process -Force
-
-# 🔪 Termina processi sulla porta 8000
-kill-port:
-    @Write-Host "🔪 Terminazione processi sulla porta 8000..." -ForegroundColor Yellow
-    @Write-Host "ℹ️  Nota: Eseguire da un terminale DIVERSO da quello che esegue il server" -ForegroundColor Cyan
-    @$processes = Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess; if ($processes) { $processes | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; Write-Host "Processi sulla porta 8000 terminati" } else { Write-Host "Nessun processo trovato sulla porta 8000" }
-
-# === ENVIRONMENT CHECKS ===
+# === UTILITY COMMANDS ===
 
 # 🔍 Controllo ambiente corrente
 check-env:
-    @Write-Host "🔍 Controllo dell'ambiente corrente..." -ForegroundColor Cyan
-    @{{python}} src/test_logging.py
+    #!/usr/bin/env bash
+    echo "🔍 Controllo dell'ambiente corrente..."
+    {{python}} src/test_logging.py
 
-# 🔍 Controllo ambiente DEV
-check-env-dev:
-    @Write-Host "🔍 Controllo dell'ambiente DEV..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="dev"; {{python}} src/test_logging.py
+# 🔑 Genera Django SECRET_KEY
+generate-secret-key:
+    #!/usr/bin/env bash
+    echo "🔑 Generazione Django SECRET_KEY..."
+    {{python}} -c "from django.core.management.utils import get_random_secret_key; print('SECRET_KEY:', get_random_secret_key())"
 
-# 🔍 Controllo ambiente TEST
-check-env-test:
-    @Write-Host "🔍 Controllo dell'ambiente TEST..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="test"; {{python}} src/test_logging.py
-
-# 🔍 Controllo ambiente STAGING
-check-env-staging:
-    @Write-Host "🎭 Controllo dell'ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "⚠️  STAGING usa PostgreSQL e logging su file!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{python}} src/test_logging.py
-
-# 🔍 Controllo ambiente PROD
-check-env-prod:
-    @Write-Host "🔍 Controllo dell'ambiente PROD..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="prod"; {{python}} src/test_logging.py
-
-# === CORPORATE COMMANDS ===
-
-# 🏢 Pre-commit con configurazione corporate
-precommit-corporate:
-    @Write-Host "🏢 Esecuzione pre-commit con configurazione corporate..." -ForegroundColor Magenta
-    @if (Test-Path ".pre-commit-config-corporate.yaml") { \
-        $result = pre-commit run --all-files --config .pre-commit-config-corporate.yaml; \
-        if ($LASTEXITCODE -eq 0) { \
-            Write-Host "✅ Tutti i controlli pre-commit superati!" -ForegroundColor Green \
-        } elseif ($LASTEXITCODE -eq 1) { \
-            Write-Host "🔧 Pre-commit ha corretto automaticamente alcuni problemi!" -ForegroundColor Yellow; \
-            Write-Host "💡 Rivedi le modifiche e committa se necessario." -ForegroundColor Cyan \
-        } else { \
-            Write-Host "❌ Errori durante l'esecuzione pre-commit (exit code: $LASTEXITCODE)" -ForegroundColor Red; \
-            exit $LASTEXITCODE \
-        } \
-    } else { \
-        Write-Host "⚠️  File .pre-commit-config-corporate.yaml non trovato!" -ForegroundColor Red; \
-        Write-Host "💡 Usando configurazione standard..." -ForegroundColor Yellow; \
-        $result = pre-commit run --all-files; \
-        if ($LASTEXITCODE -eq 0) { \
-            Write-Host "✅ Tutti i controlli pre-commit superati!" -ForegroundColor Green \
-        } elseif ($LASTEXITCODE -eq 1) { \
-            Write-Host "🔧 Pre-commit ha corretto automaticamente alcuni problemi!" -ForegroundColor Yellow; \
-            Write-Host "💡 Rivedi le modifiche e committa se necessario." -ForegroundColor Cyan \
-        } else { \
-            Write-Host "❌ Errori durante l'esecuzione pre-commit (exit code: $LASTEXITCODE)" -ForegroundColor Red; \
-            exit $LASTEXITCODE \
-        } \
-    }
-
-# 🏢 Quality checks corporate (alternativi)
-quality-corporate:
-    @Write-Host "🏢 Controlli qualità corporate..." -ForegroundColor Magenta
-    @Write-Host "🔍 1. Controlli pre-commit corporate..." -ForegroundColor Cyan
-    just precommit-corporate
-    @Write-Host "📊 2. Controlli Codacy..." -ForegroundColor Cyan
-    just lint-codacy
-    @Write-Host "📝 3. Aggiunta docstring..." -ForegroundColor Cyan
-    just add-docstrings
-    @Write-Host "🎯 4. Fix markdown..." -ForegroundColor Cyan
-    just fix-markdown
-    @Write-Host "✅ Controlli quality corporate completati!" -ForegroundColor Green
-
-# === DATABASE UTILITIES ===
+# 📊 Statistiche progetto
+stats:
+    #!/usr/bin/env bash
+    echo "📊 Generazione statistiche progetto..."
+    {{python}} tools/project_stats.py || echo "⚠️ Strumento statistiche non disponibile"
 
 # 🔐 Genera password PostgreSQL sicure per tutti gli ambienti
 generate-db-passwords:
-    @{{python}} tools/generate_db_passwords.py
+    #!/usr/bin/env bash
+    echo "🔐 Generazione password PostgreSQL sicure..."
+    {{python}} tools/generate_db_passwords.py || echo "⚠️ Strumento password non disponibile"
 
-# 🗄️ Crea script SQL con password reali per setup PostgreSQL
-create-db-script:
-    @Write-Host "🗄️ Creazione script SQL con password reali..." -ForegroundColor Cyan
-    @if (Test-Path "update_postgresql_staging.template.sql") { \
-        Copy-Item "update_postgresql_staging.template.sql" "update_postgresql_staging.sql" -Force; \
-        Write-Host "✅ Script copiato: update_postgresql_staging.sql" -ForegroundColor Green; \
-        Write-Host "🔧 Ora sostituisci manualmente i placeholder YOUR_*_PASSWORD" -ForegroundColor Yellow; \
-        Write-Host "🔐 Usa le password generate da: just generate-db-passwords" -ForegroundColor Yellow; \
-        Write-Host "⚠️  ATTENZIONE: File contiene password - elimina dopo l'uso!" -ForegroundColor Red; \
-    } else { \
-        Write-Host "❌ Template non trovato: update_postgresql_staging.template.sql" -ForegroundColor Red; \
-    }
+# === SYSTEM SPECIFIC COMMANDS ===
 
-# === ENHANCED TESTING COMMANDS ===
+# 🍎 Comandi specifici per macOS/Linux
+[macos]
+[linux]
+setup-nginx:
+    #!/usr/bin/env bash
+    echo "🌐 Configurazione Nginx per Unix/Linux..."
+    echo "⚠️  Richiede privilegi sudo!"
+    if [ ! -f deployment/nginx.conf ]; then
+        echo "❌ File deployment/nginx.conf non trovato!"
+        exit 1
+    fi
+    echo "1/4 - Copia configurazione Nginx..."
+    sudo cp deployment/nginx.conf /etc/nginx/sites-available/gestione-pareri
+    echo "2/4 - Abilita sito..."
+    sudo ln -sf /etc/nginx/sites-available/gestione-pareri /etc/nginx/sites-enabled/
+    echo "3/4 - Test configurazione..."
+    sudo nginx -t
+    echo "4/4 - Ricarica Nginx..."
+    sudo systemctl reload nginx
+    echo "✅ Nginx configurato con successo!"
 
-# ⚡ Test rapidi quotidiani per sviluppatori
-test-quick:
-    @Write-Host "⚡ Test rapidi quotidiani..." -ForegroundColor Yellow
-    @Write-Host "🎯 Focus: CustomUser, sicurezza base, autenticazione" -ForegroundColor Gray
-    @Write-Host "🗄️ Database: SQLite (veloce)" -ForegroundColor Gray
-    @uv run python src/manage.py test accounts.tests.CustomUserModelTest accounts.tests.CustomUserAuthenticationTest accounts.tests.SecurityTest --settings=home.settings.test_local --keepdb --verbosity=1
+# 🪟 Comandi specifici per Windows (solo se necessario)
+[windows]
+setup-iis:
+    @Write-Host "🌐 Configurazione IIS per Windows..." -ForegroundColor Cyan
+    @Write-Host "⚠️  Richiede privilegi di amministratore!" -ForegroundColor Yellow
+    @PowerShell -ExecutionPolicy Bypass -File "scripts\deployment\setup-iis.ps1"
 
-# 🔒 Test sicurezza critica
-test-security:
-    @Write-Host "🔒 Test sicurezza critica..." -ForegroundColor Red
-    @Write-Host "🎯 Focus: Validazione domini, password, CSRF" -ForegroundColor Gray
-    @Write-Host "🗄️ Database: SQLite (veloce)" -ForegroundColor Gray
-    @uv run python src/manage.py test accounts.tests.SecurityTest accounts.tests.CustomUserFormsTest --settings=home.settings.test_local --keepdb --verbosity=2
+# === HELP & INFO ===
 
-# 🚀 Test completi pre-deploy
-test-pre-deploy:
-    @Write-Host "🚀 Test completi pre-deploy..." -ForegroundColor Green
-    @Write-Host "📋 Tutti i 42 test con report dettagliato" -ForegroundColor Gray
-    @Write-Host "⚡ Performance + Sicurezza + Funzionalità" -ForegroundColor Gray
-    @Write-Host "🗄️ Database: PostgreSQL (realistico)" -ForegroundColor Gray
-    @uv run python src/manage.py test accounts --settings=home.settings.test --verbosity=2
+# 📋 Lista comandi con descrizioni estese
+help-extended:
+    #!/usr/bin/env bash
+    echo "📋 GUIDA ESTESA COMANDI JUST"
+    echo "============================================================"
+    echo ""
+    echo "🚀 COMANDI PRINCIPALI PER SVILUPPO:"
+    echo "  just                    - Mostra questo help"
+    echo "  just run-dev            - Avvia server sviluppo (porta 8000)"
+    echo "  just migrate            - Applica migrazioni database"
+    echo "  just makemigrations     - Crea nuove migrazioni"
+    echo "  just test              - Esegue test del progetto"
+    echo ""
+    echo "⚡ COMANDI RAPIDI:"
+    echo "  just shell             - Apre shell Django interattiva"
+    echo "  just createsuperuser   - Crea account amministratore"
+    echo "  just fix-all           - Corregge tutti i problemi di formattazione"
+    echo "  just stop-servers      - Ferma tutti i server in esecuzione"
+    echo ""
+    echo "🔧 TROUBLESHOOTING:"
+    echo "  just kill-port 8000    - Libera la porta 8000 se occupata"
+    echo "  just check-env         - Verifica configurazione ambiente"
+    echo ""
+    echo "💡 Per vedere tutti i comandi disponibili: just --list"
 
-# 📊 Test con coverage
-test-coverage:
-    @Write-Host "📊 Test con coverage report..." -ForegroundColor Cyan
-    @Write-Host "📋 Generazione report di copertura" -ForegroundColor Gray
-    @cd src; uv run coverage run --source='.' manage.py test --settings=home.settings.test_local
-    @cd src; uv run coverage report
-    @cd src; uv run coverage html
-    @Write-Host "🌐 Report HTML: src/htmlcov/index.html" -ForegroundColor Green
-
-# 🏥 Test health check
-test-health:
-    @Write-Host "🏥 Health check del sistema..." -ForegroundColor Cyan
-    @Write-Host "1/4 - Verifica ambienti..." -ForegroundColor Yellow
+# 🎯 Quick start per nuovi sviluppatori
+quick-start:
+    #!/usr/bin/env bash
+    echo "🎯 QUICK START - Setup progetto per sviluppo"
+    echo "============================================================"
+    echo "1/5 - Installazione dipendenze..."
+    uv sync
+    echo "2/5 - Applicazione migrazioni..."
+    just migrate
+    echo "3/5 - Creazione superuser..."
+    echo "⚠️  Inserisci i dati amministratore quando richiesto:"
+    just createsuperuser
+    echo "4/5 - Test configurazione..."
     just check-env
-    @Write-Host "2/4 - Test rapidi..." -ForegroundColor Yellow
-    just test-quick
-    @Write-Host "3/4 - Verifica migrazioni..." -ForegroundColor Yellow
-    @cd src; {{django_manage}} showmigrations --settings=home.settings.test_local
-    @Write-Host "4/4 - Test connessione database..." -ForegroundColor Yellow
-    @cd src; {{django_manage}} dbshell --settings=home.settings.test_local -c "SELECT 1;"
-    @Write-Host "✅ Health check completato!" -ForegroundColor Green
-
-# ============================================================================
-# 🌐 IIS DEPLOYMENT COMMANDS
-# ============================================================================
-
-# 🧪 Test IIS locale con subpath
-iis-test-local:
-    @Write-Host "🧪 Avvio test IIS locale..." -ForegroundColor Cyan
-    @Write-Host "📍 URL: http://localhost:8000/pratiche-pareri/" -ForegroundColor Yellow
-    @Write-Host "📊 Admin: http://localhost:8000/pratiche-pareri/admin/" -ForegroundColor Yellow
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/test-iis-local.ps1
-
-# ⚙️ Setup iniziale per IIS
-iis-setup:
-    @Write-Host "⚙️ Setup iniziale IIS..." -ForegroundColor Cyan
-    @if (!(Test-Path .env.prod)) { if (Test-Path config/environments/.env.prod) { Copy-Item config/environments/.env.prod .env.prod; Write-Host "✅ .env.prod copiato da config/environments/" -ForegroundColor Green } elseif (Test-Path config/environments/.env.prod.template) { Copy-Item config/environments/.env.prod.template .env.prod; Write-Host "✅ .env.prod creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } } else { Write-Host "📄 File .env.prod già presente" -ForegroundColor Green }
-    @if (!(Test-Path web.config)) { Copy-Item web.config.template web.config; Write-Host "✅ File web.config creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } else { Write-Host "� File web.config già presente" -ForegroundColor Green }
-    @Write-Host "�📋 Prossimi passi:" -ForegroundColor Yellow
-    @Write-Host "1. Modifica .env.prod con i tuoi valori" -ForegroundColor White
-    @Write-Host "2. Modifica web.config con percorsi e credenziali reali" -ForegroundColor White
-    @Write-Host "3. Configura PostgreSQL per produzione" -ForegroundColor White
-    @Write-Host "4. Esegui: just iis-test-local" -ForegroundColor White
-    @Write-Host "5. Quando tutto funziona: just iis-deploy" -ForegroundColor White
-
-# 🔐 Setup credenziali per tutti gli ambienti
-setup-credentials:
-    @Write-Host "🔐 Setup credenziali per tutti gli ambienti..." -ForegroundColor Cyan
-    @if (!(Test-Path .env.dev)) { Copy-Item config/environments/.env.dev.template .env.dev; Write-Host "✅ .env.dev creato" -ForegroundColor Green } else { Write-Host "📄 .env.dev già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path .env.test)) { Copy-Item config/environments/.env.test.template .env.test; Write-Host "✅ .env.test creato" -ForegroundColor Green } else { Write-Host "📄 .env.test già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path .env.staging)) { Copy-Item config/environments/.env.staging.template .env.staging; Write-Host "✅ .env.staging creato" -ForegroundColor Green } else { Write-Host "📄 .env.staging già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path .env.prod)) { Copy-Item config/environments/.env.prod.template .env.prod; Write-Host "✅ .env.prod creato" -ForegroundColor Green } else { Write-Host "📄 .env.prod già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path db_credentials.md)) { Copy-Item config/database/db_credentials.template.md db_credentials.md; Write-Host "✅ db_credentials.md creato" -ForegroundColor Green } else { Write-Host "📄 db_credentials.md già presente" -ForegroundColor Yellow }
-    @Write-Host "⚠️  IMPORTANTE: Modifica TUTTI i file .env con le password reali!" -ForegroundColor Red
-    @Write-Host "📋 File creati (NON tracciati da git):" -ForegroundColor Yellow
-    @Write-Host "  - .env.dev (password DEV)" -ForegroundColor White
-    @Write-Host "  - .env.test (password TEST)" -ForegroundColor White
-    @Write-Host "  - .env.staging (password STAGING)" -ForegroundColor White
-    @Write-Host "  - .env.prod (password PROD)" -ForegroundColor White
-    @Write-Host "  - db_credentials.md (reference file)" -ForegroundColor White
-
-# 🚀 Deploy completo su IIS
-iis-deploy:
-    @Write-Host "🚀 Deploy completo IIS..." -ForegroundColor Cyan
-    @Write-Host "⚠️  ATTENZIONE: Questo comando richiede privilegi amministratore!" -ForegroundColor Red
-    @Write-Host "Continuare? (Premi Enter per procedere, Ctrl+C per annullare)" -ForegroundColor Yellow
-    @cmd /c "pause > nul"
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/deploy-iis.ps1 -ServerIP "192.168.1.100"
-
-# 🔧 Deploy IIS con IP personalizzato
-iis-deploy-custom ip:
-    @Write-Host "🚀 Deploy IIS su {{ip}}..." -ForegroundColor Cyan
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/deploy-iis.ps1 -ServerIP "{{ip}}"
-
-# 🏥 Health check IIS
-iis-health:
-    @Write-Host "🏥 Health check IIS..." -ForegroundColor Cyan
-    @$ip = if ($env:IIS_SERVER_IP) { $env:IIS_SERVER_IP } else { "localhost" }
-    @try { $response = Invoke-WebRequest -Uri "http://$ip/pratiche-pareri/admin/" -TimeoutSec 5 -UseBasicParsing; Write-Host "✅ IIS raggiungibile: $($response.StatusCode)" -ForegroundColor Green } catch { Write-Host "❌ IIS non raggiungibile: $($_.Exception.Message)" -ForegroundColor Red }
-
-# 🏭 Deploy produzione completo (installazione da zero)
-production-deploy:
-    @Write-Host "🏭 Deploy produzione completo..." -ForegroundColor Cyan
-    @Write-Host "⚠️  ATTENZIONE: Questo comando installa l'applicazione da zero!" -ForegroundColor Red
-    @Write-Host "Continuare? (Premi Enter per procedere, Ctrl+C per annullare)" -ForegroundColor Yellow
-    @cmd /c "pause > nul"
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/production-deploy.ps1
-
-# 🔄 Update produzione esistente
-production-update:
-    @Write-Host "🔄 Update produzione esistente..." -ForegroundColor Cyan
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/production-deploy.ps1 -UpdateOnly
-
-# 🏭 Deploy produzione con IP personalizzato
-production-deploy-custom ip:
-    @Write-Host "🏭 Deploy produzione su {{ip}}..." -ForegroundColor Cyan
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/production-deploy.ps1 -ServerIP "{{ip}}" \
+    echo "5/5 - Avvio server di sviluppo..."
+    echo "🚀 Il server sarà disponibile su http://localhost:8000"
+    echo "📋 Admin panel: http://localhost:8000/admin"
+    just run-dev
