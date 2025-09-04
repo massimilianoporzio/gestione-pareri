@@ -314,7 +314,6 @@ Got an error creating the test database: ERRORE: permesso di creare il database 
 ```
 
 **Soluzione**: Usa `--settings=home.settings.test_local` (SQLite)
-
 **2. Import Errors**
 
 ```text
@@ -322,7 +321,6 @@ ModuleNotFoundError: No module named 'accounts'
 ```
 
 **Soluzione**: Esegui dalla directory `src/`
-
 **3. CSRF Test Failed**
 
 ```text
@@ -412,7 +410,7 @@ just check-env-dev
 
 Questo progetto integra **Bandit** per il controllo automatico delle vulnerabilità di sicurezza nel codice Python.
 
-### Come eseguire la scansione
+### Come eseguire la scansione Bandit
 
 - Usa la ricetta Just:
 
@@ -422,11 +420,29 @@ Questo progetto integra **Bandit** per il controllo automatico delle vulnerabili
 
 - Bandit analizzerà tutti i file Python e segnalerà eventuali problemi di sicurezza.
 
-### Ignorare falsi positivi
+### Ignorare falsi positivi Bandit
 
 - Puoi aggiungere il commento `# nosec` su una riga per ignorare un warning specifico.
 
-### Documentazione
+### Documentazione Bandit
 
 - [Guida Bandit](https://bandit.readthedocs.io/en/latest/)
 - [Ricetta security-scan](justfile)
+
+## 🔒 Controllo vulnerabilità dipendenze con Safety
+
+Questo progetto integra **Safety** per il controllo automatico delle vulnerabilità nelle dipendenze Python.
+
+### Come eseguire la scansione Safety
+
+- Usa la ricetta Just:
+
+  ```bash
+  just safety-scan
+  ```
+
+- Safety analizzerà le dipendenze e segnalerà eventuali CVE o problemi di sicurezza.
+
+### Documentazione Safety
+
+- [Guida Safety](https://github.com/pyupio/safety)

@@ -12,6 +12,7 @@
 [![Prettier](https://img.shields.io/badge/prettier-markdown-ff69b4)](https://prettier.io/)
 [![markdownlint](https://img.shields.io/badge/markdownlint-enabled-brightgreen)](https://github.com/DavidAnson/markdownlint)
 [![Bandit](https://img.shields.io/badge/Bandit-security--scan-blue?logo=python&logoColor=white)](https://bandit.readthedocs.io/en/latest/)
+[![Safety Scan](https://github.com/massimilianoporzio/gestione-pareri/actions/workflows/safety.yml/badge.svg)](https://github.com/massimilianoporzio/gestione-pareri/actions/workflows/safety.yml)
 
 ## 📖 Documentation
 
@@ -99,7 +100,7 @@
 - [�️ Database Setup](docs/database-setup.md) - PostgreSQL multi-ambiente
 - [�🔧 Environment Variables](docs/environment-variables.md) - Configurazione ambienti
 - [📊 Code Quality](tools/quality_dashboard.md) - Pipeline qualità locale
-- [🔍 VS Code Setup](docs/vscode-configuration.md) - Configurazione editor
+- [🔍 VS Code Setup](docs/vscode-configuration.md) - Configurazione editore
 
 ## 🛠️ Correzione automatica script bash (shfmt)
 
@@ -532,3 +533,30 @@ Documentazione specializzata per ogni aspetto del progetto:
 ⭐ **Feature Request**: [Discussioni](https://github.com/tuousername/deploy-django/discussions)
 📧 **Support**: [Template Issues](https://github.com/tuousername/deploy-django/issues)
 **Made with ❤️ for Django developers**
+
+## 🔒 Controllo vulnerabilità dipendenze con Safety
+
+Safety è installato come dipendenza di sviluppo (`dev`) e viene eseguito automaticamente tramite GitHub Actions su ogni push e pull request.
+
+### Come funziona la scansione automatica
+
+- Il workflow `Safety Scan` esegue:
+  - Installazione ambiente Python
+  - Installazione uv
+  - Sincronizzazione dipendenze con `uv sync`
+  - Scansione delle dipendenze con `uv run safety scan --output screen`
+- Se vengono rilevate vulnerabilità, la Action fallisce e segnala il problema direttamente su GitHub.
+
+### Esecuzione manuale locale
+
+- Puoi comunque eseguire Safety localmente con:
+
+  ```bash
+  uv sync
+  just safety-scan
+  ```
+
+### Documentazione
+
+- [Guida Safety](https://github.com/pyupio/safety)
+- [Workflow Safety Scan](.github/workflows/safety.yml)
