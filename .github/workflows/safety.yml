@@ -21,7 +21,7 @@ jobs:
           python-version: '3.11'
       - name: Install uv and Safety
         run: pip install uv safety
-      - name: Install dependencies
-        run: uv pip install -r requirements.txt
+      - name: Sync dependencies
+        run: uv sync
       - name: Run Safety scan
         run: uv run safety scan --full-report --output screen
