@@ -190,7 +190,9 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
     {% if messages %} {% for message in messages %}
     <div class="django-messages {{ message.tags }}">{{ message }}</div>
     {% endfor %} {% endif %}
-    <div class="container mx-auto px-4 py-8">{% block content %} {% endblock %}</div>
+    <div class="container mx-auto px-4 py-8">
+      {% block content %} {% endblock %}
+    </div>
   </body>
 </html>
 ```
@@ -203,13 +205,19 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 <form method="post" class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
   {% csrf_token %}
   <div class="mb-4">
-    <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+    <label
+      for="{{ form.name.id_for_label }}"
+      class="block text-sm font-medium text-gray-700 mb-2"
+    >
       Nome
     </label>
     {{ form.name|add_class:"form-input" }}
   </div>
   <div class="mb-6">
-    <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+    <label
+      for="{{ form.email.id_for_label }}"
+      class="block text-sm font-medium text-gray-700 mb-2"
+    >
       Email
     </label>
     {{ form.email|add_class:"form-input" }}
@@ -507,7 +515,9 @@ direttamente le classi Tailwind nei template Django per massima flessibilità
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
           <div class="flex items-center">
-            <h1 class="text-xl font-semibold text-gray-900">Django + Tailwind v4</h1>
+            <h1 class="text-xl font-semibold text-gray-900">
+              Django + Tailwind v4
+            </h1>
           </div>
         </div>
       </div>
@@ -534,7 +544,9 @@ direttamente le classi Tailwind nei template Django per massima flessibilità
           class="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center"
         >
           <div class="text-center">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">🚀 Django + Tailwind CSS v4</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+              🚀 Django + Tailwind CSS v4
+            </h2>
             <p class="text-gray-600 mb-6">
               Zero configurazione, auto-discovery, performance ottimizzate
             </p>
