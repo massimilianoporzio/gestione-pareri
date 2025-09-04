@@ -19,7 +19,6 @@ Assicurati di avere Node.js installato (solo per installare Tailwind CLI):
 # Controlla se Node.js è installato
 node --version
 npm --version  # oppure yarn --version o pnpm --version
-
 # Se non installato, scarica da: <https://nodejs.org/>
 ```
 
@@ -30,10 +29,8 @@ npm --version  # oppure yarn --version o pnpm --version
 ```bash
 # Con npm
 npm install tailwindcss @tailwindcss/cli
-
 # Con yarn
 yarn add tailwindcss @tailwindcss/cli
-
 # Con pnpm
 pnpm add tailwindcss @tailwindcss/cli
 ```
@@ -50,10 +47,8 @@ echo '@import "tailwindcss";' > src/static/css/style.css
 ```bash
 # Con npm
 npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
-
 # Con yarn
 yarn @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
-
 # Con pnpm
 pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
 ```
@@ -65,7 +60,6 @@ Il file `src/static/css/style.css` può contenere solo `@import "tailwindcss";` 
 ```css
 /* Solo questa riga è essenziale! Tailwind v4 gestisce tutto automaticamente */
 @import "tailwindcss";
-
 /*
 🎯 ESEMPI OPZIONALI - Componenti personalizzati per Django
 Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue necessità
@@ -75,34 +69,27 @@ Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue nece
   .form-input {
     @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500;
   }
-
   /* Esempio: bottoni con stili coerenti */
   .btn-primary {
     @apply px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500;
   }
-
   /* Esempio: messaggi Django stilizzati (adatta ai tuoi colori/design) */
   .django-messages {
     @apply mb-4 px-4 py-3 rounded-md border;
   }
-
   .django-messages.success {
     @apply bg-green-50 border-green-200 text-green-800;
   }
-
   .django-messages.error {
     @apply bg-red-50 border-red-200 text-red-800;
   }
-
   .django-messages.warning {
     @apply bg-yellow-50 border-yellow-200 text-yellow-800;
   }
-
   .django-messages.info {
     @apply bg-blue-50 border-blue-200 text-blue-800;
   }
 }
-
 /*
 💡 SUGGERIMENTO: Puoi anche usare solo classi utility direttamente nei template
 senza definire componenti personalizzati - dipende dalle tue preferenze!
@@ -110,11 +97,8 @@ senza definire componenti personalizzati - dipende dalle tue preferenze!
 ```
 
 ````
-
 ## 🔗 Inclusione nei Template Django
-
 Includi il CSS compilato nei tuoi template Django:
-
 ```html
 <!-- src/templates/base.html -->
 {% load static %}
@@ -124,7 +108,6 @@ Includi il CSS compilato nei tuoi template Django:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Django + Tailwind v4{% endblock %}</title>
-
     <!-- Includi il CSS compilato da Tailwind -->
     <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
 </head>
@@ -134,7 +117,6 @@ Includi il CSS compilato nei tuoi template Django:
         <h1 class="text-3xl font-bold text-gray-900">
             Django + Tailwind v4
         </h1>
-
         {% if messages %}
             {% for message in messages %}
                 <div class="django-messages {{ message.tags }}">
@@ -142,7 +124,6 @@ Includi il CSS compilato nei tuoi template Django:
                 </div>
             {% endfor %}
         {% endif %}
-
         {% block content %}{% endblock %}
     </div>
 </body>
@@ -173,10 +154,8 @@ Includi il CSS compilato nei tuoi template Django:
 ```bash
 # Ricompila automaticamente quando cambi i template Django
 npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --watch
-
 # Con yarn
 yarn @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --watch
-
 # Con pnpm
 pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --watch
 ```
@@ -186,10 +165,8 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 ```bash
 # Build ottimizzato per produzione
 npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
-
 # Con yarn
 yarn @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
-
 # Con pnpm
 pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
 ```
@@ -205,7 +182,6 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Il mio sito Django{% endblock %}</title>
-
     <!-- Tailwind CSS compilato -->
     <link href="{% static 'css/tailwind.css' %}" rel="stylesheet" />
   </head>
@@ -214,10 +190,7 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
     {% if messages %} {% for message in messages %}
     <div class="django-messages {{ message.tags }}">{{ message }}</div>
     {% endfor %} {% endif %}
-
-    <div class="container mx-auto px-4 py-8">
-      {% block content %} {% endblock %}
-    </div>
+    <div class="container mx-auto px-4 py-8">{% block content %} {% endblock %}</div>
   </body>
 </html>
 ```
@@ -229,27 +202,18 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 {% extends 'base.html' %} {% block content %}
 <form method="post" class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
   {% csrf_token %}
-
   <div class="mb-4">
-    <label
-      for="{{ form.name.id_for_label }}"
-      class="block text-sm font-medium text-gray-700 mb-2"
-    >
+    <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
       Nome
     </label>
     {{ form.name|add_class:"form-input" }}
   </div>
-
   <div class="mb-6">
-    <label
-      for="{{ form.email.id_for_label }}"
-      class="block text-sm font-medium text-gray-700 mb-2"
-    >
+    <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
       Email
     </label>
     {{ form.email|add_class:"form-input" }}
   </div>
-
   <button type="submit" class="btn-primary w-full">Invia</button>
 </form>
 {% endblock %}
@@ -262,7 +226,6 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 ```bash
 # Installa django-tailwind
 pip install django-tailwind[reload]
-
 # Oppure con uv
 uv add django-tailwind[reload]
 ```
@@ -275,7 +238,6 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',  # App generata da tailwind
 ]
-
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = ["127.0.0.1"]
 ```
@@ -285,13 +247,10 @@ INTERNAL_IPS = ["127.0.0.1"]
 ```bash
 # Crea app tailwind
 python manage.py tailwind init
-
 # Installa dipendenze
 python manage.py tailwind install
-
 # Build CSS
 python manage.py tailwind build
-
 # Watch mode per development
 python manage.py tailwind start
 ```
@@ -303,7 +262,6 @@ python manage.py tailwind start
 ```bash
 # Terminal 1: Django server
 make run-server
-
 # Terminal 2: Tailwind watch (ricompila automaticamente)
 npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --watch
 ```
@@ -313,10 +271,8 @@ npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css 
 ```bash
 # 1. Build CSS ottimizzato
 npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
-
 # 2. Collect static files Django
 make collectstatic
-
 # 3. Deploy
 make deploy
 ```
@@ -330,27 +286,20 @@ npm run build:css   # Con npm
 yarn build:css      # Con yarn
 # oppure
 pnpm build:css      # Con pnpm
-
 # 2. Collect static files Django (include il CSS compilato)
 make collectstatic
-
 # 3. Deploy
 make deploy
 ```**🚀 Note Tailwind v4:**
-
 - Non serve più specificare i `content paths` - rileva automaticamente i file
 - Il build è più veloce perché non deve leggere configurazioni complesse
 - Meno file da mantenere nel progetto
-
 **Con django-tailwind:**
-
 ```bash
 # 1. Build CSS per produzione
 python manage.py tailwind build
-
 # 2. Collect static files
 make collectstatic
-
 # 3. Deploy
 make deploy
 ````
@@ -387,36 +336,26 @@ deploy-django/
 npm install tailwindcss @tailwindcss/cli
 # oppure: yarn add tailwindcss @tailwindcss/cli
 # oppure: pnpm add tailwindcss @tailwindcss/cli
-
 # 2. Crea file CSS input
 echo '@import "tailwindcss";' > src/static/css/style.css
-
 # 3. Compila CSS (prima volta)
 npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
-
 # 4. Includi nei template Django
 # <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
-
 # 5. Durante sviluppo (watch mode)
 npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --watch
-
 # 6. Per produzione
 npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
 make collectstatic
 ```
 
-**🎯 Fatto! Zero configurazione, funziona subito con Django.**
-
----
+## **🎯 Fatto! Zero configurazione, funziona subito con Django.**
 
 💡 **Tailwind v4 = Semplicità**: Solo CLI, nessun config file, auto-discovery dei template Django!
 
 ````
-
 ## 🔍 Controlli di Qualità
-
 ### ESLint per JavaScript
-
 ```bash
 npm install --save-dev eslint @eslint/js
 npx eslint --init
@@ -446,11 +385,9 @@ Se vuoi usare Next.js per il frontend:
 # Crea app Next.js in una sottodirectory
 npx create-next-app@latest frontend
 cd frontend
-
 # Build per produzione
 npm run build
 npm run export
-
 # Copia output in Django static
 cp -r out/* ../src/static/
 ```
@@ -460,7 +397,6 @@ cp -r out/* ../src/static/
 ```bash
 # Vue.js
 npm install --save-dev vue @vue/compiler-sfc vue-loader
-
 # React
 npm install --save-dev react react-dom @babel/preset-react
 ```
@@ -479,10 +415,8 @@ npm install --save-dev react react-dom @babel/preset-react
 ```bash
 # Controlla configurazione webpack
 npx webpack --help
-
 # Debug build
 npm run build -- --verbose
-
 # Controlla file generati
 ls -la src/static/dist/
 ```
@@ -510,7 +444,6 @@ ls -la src/static/dist/
 ```css
 /* src/static/css/style.css - Approccio v4 */
 @import "tailwindcss";
-
 /*
 🎯 ESEMPI di componenti Django-specific
 Personalizza questi esempi secondo il tuo design system
@@ -520,42 +453,33 @@ Personalizza questi esempi secondo il tuo design system
   .form-input {
     @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500;
   }
-
   /* ESEMPIO: Button variations - personalizza come preferisci */
   .btn {
     @apply px-4 py-2 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2;
   }
-
   .btn-primary {
     @apply btn bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
   }
-
   .btn-secondary {
     @apply btn bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500;
   }
-
   /* ESEMPIO: Django messages styling - adatta al tuo brand */
   .django-messages {
     @apply px-4 py-3 rounded-md mb-4 border;
   }
-
   .django-messages.success {
     @apply bg-green-50 border-green-200 text-green-800;
   }
-
   .django-messages.error {
     @apply bg-red-50 border-red-200 text-red-800;
   }
-
   .django-messages.warning {
     @apply bg-yellow-50 border-yellow-200 text-yellow-800;
   }
-
   .django-messages.info {
     @apply bg-blue-50 border-blue-200 text-blue-800;
   }
 }
-
 /*
 💡 ALTERNATIVA: Usa solo classi utility nei template
 Molti sviluppatori preferiscono evitare @layer components e usare
@@ -574,7 +498,6 @@ direttamente le classi Tailwind nei template Django per massima flessibilità
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Deploy Django + Tailwind v4{% endblock %}</title>
-
     <!-- Tailwind v4 CSS compilato -->
     <link href="{% static 'css/tailwind.css' %}" rel="stylesheet" />
   </head>
@@ -584,14 +507,11 @@ direttamente le classi Tailwind nei template Django per massima flessibilità
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
           <div class="flex items-center">
-            <h1 class="text-xl font-semibold text-gray-900">
-              Django + Tailwind v4
-            </h1>
+            <h1 class="text-xl font-semibold text-gray-900">Django + Tailwind v4</h1>
           </div>
         </div>
       </div>
     </nav>
-
     <!-- Django Messages (auto-styled) -->
     {% if messages %}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
@@ -606,7 +526,6 @@ direttamente le classi Tailwind nei template Django per massima flessibilità
       {% endfor %}
     </div>
     {% endif %}
-
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       {% block content %}
@@ -615,9 +534,7 @@ direttamente le classi Tailwind nei template Django per massima flessibilità
           class="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center"
         >
           <div class="text-center">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">
-              🚀 Django + Tailwind CSS v4
-            </h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">🚀 Django + Tailwind CSS v4</h2>
             <p class="text-gray-600 mb-6">
               Zero configurazione, auto-discovery, performance ottimizzate
             </p>
@@ -627,7 +544,6 @@ direttamente le classi Tailwind nei template Django per massima flessibilità
       </div>
       {% endblock %}
     </main>
-
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 mt-auto">
       <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
@@ -647,7 +563,6 @@ direttamente le classi Tailwind nei template Django per massima flessibilità
 ```python
 # forms.py
 from django import forms
-
 class ContactForm(forms.Form):
     name = forms.CharField(
         max_length=100,
@@ -663,7 +578,6 @@ class ContactForm(forms.Form):
 ```python
 # forms.py - Approccio utility-first puro
 from django import forms
-
 class ContactForm(forms.Form):
     name = forms.CharField(
         max_length=100,
@@ -672,14 +586,12 @@ class ContactForm(forms.Form):
             'placeholder': 'Il tuo nome'
         })
     )
-
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
             'class': 'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'nome@esempio.com'
         })
     )
-
     message = forms.CharField(
         widget=forms.Textarea(attrs={
             'class': 'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
@@ -696,12 +608,10 @@ class ContactForm(forms.Form):
 - **Ibrido**: Componenti per elementi base + utility per personalizzazioni specifiche
 
 ````
-
 ```html
 <!-- contact_form.html - Usando componenti CSS (se definiti) -->
 <form method="post" class="space-y-6 max-w-lg mx-auto">
     {% csrf_token %}
-
     <div>
         <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
             Nome
@@ -711,16 +621,13 @@ class ContactForm(forms.Form):
             <p class="mt-1 text-sm text-red-600">{{ form.name.errors.0 }}</p>
         {% endif %}
     </div>
-
     <button type="submit" class="btn-primary w-full">
         Invia Messaggio
     </button>
 </form>
-
 <!-- ALTERNATIVA: contact_form.html - Solo utility classes -->
 <form method="post" class="space-y-6 max-w-lg mx-auto">
     {% csrf_token %}
-
     <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">
             Nome
@@ -732,7 +639,6 @@ class ContactForm(forms.Form):
             <p class="mt-1 text-sm text-red-600">{{ form.name.errors.0 }}</p>
         {% endif %}
     </div>
-
     <button type="submit"
             class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
         Invia Messaggio
@@ -752,7 +658,6 @@ build-frontend-v4: ## Build Tailwind v4 assets for production
  @echo "📦 Collecting Django static files..."
  $(MAKE) collectstatic
  @echo "✅ Frontend build completed!"
-
 deploy-prod-v4: build-frontend-v4 ## Deploy with Tailwind v4 frontend
  $(MAKE) deploy
 ```
@@ -790,22 +695,17 @@ npm install tailwindcss @tailwindcss/cli
 yarn add tailwindcss @tailwindcss/cli
 # Con pnpm
 pnpm add tailwindcss @tailwindcss/cli
-
 # 2. Crea file CSS input
 echo '@import "tailwindcss";' > src/static/css/style.css
-
 # 3. Build iniziale
 npm run build:css    # Con npm
 yarn build:css       # Con yarn
 pnpm build:css       # Con pnpm
-
 # 4. Sviluppo (2 terminali)
 make run-server      # Terminal 1: Django
-
 npm run watch:css    # Terminal 2: Tailwind v4 auto-rebuild (npm)
 yarn watch:css       # oppure con yarn
 pnpm watch:css       # oppure con pnpm
-
 # 5. Deploy produzione
 make build-frontend-v4 && make deploy
 ```

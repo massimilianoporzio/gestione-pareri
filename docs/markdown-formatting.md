@@ -82,7 +82,6 @@ I file Markdown vengono formattati automaticamente durante i commit grazie ai ho
       types: [markdown]
       additional_dependencies:
         - prettier@3.2.5
-
 # Markdown linting
 - repo: <https://github.com/DavidAnson/markdownlint-cli2>
   rev: v0.12.1
@@ -99,11 +98,9 @@ Per utilizzare la formattazione automatica in VS Code, è necessario installare 
 ```bash
 # Windows (PowerShell)
 .\scripts\install-markdown-tools.ps1
-
 # macOS/Linux (Bash)
 chmod +x scripts/install-markdown-tools.sh
 ./scripts/install-markdown-tools.sh
-
 # Oppure manualmente su qualsiasi piattaforma
 npm install -g prettier markdownlint-cli2
 ```

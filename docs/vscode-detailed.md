@@ -1,7 +1,6 @@
 # VS Code Configurazione Dettagliata
 
 [![VS Code](https://img.shields.io/badge/VS%20Code-Ready-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
-
 Questo template include configurazioni VS Code ottimizzate per lo sviluppo Django con Python.
 
 ## 🎯 Funzionalità Integrate
@@ -38,7 +37,6 @@ La cartella `.vscode` contiene il file `settings.json` che configura automaticam
   // Configurazione per file HTML e Django templates
   "[html]": { "editor.formatOnSave": false },
   "[django-html]": { "editor.formatOnSave": false },
-
   // Run on Save - esegue formattatori quando si salvano i file
   "emeraldwalk.runonsave": {
     "commands": [
@@ -56,7 +54,6 @@ La cartella `.vscode` contiene il file `settings.json` che configura automaticam
       }
     ]
   },
-
   // Configurazione Python (Black, Pylint, isort)
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter",
@@ -65,7 +62,6 @@ La cartella `.vscode` contiene il file `settings.json` che configura automaticam
   "black-formatter.args": ["--line-length=120"],
   "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
-
   // Configurazione Markdown (Prettier)
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -106,7 +102,6 @@ Per personalizzare la formattazione, modifica `.vscode/settings.json`:
   "[python]": {
     "editor.formatOnSave": false
   },
-
   // Esempio: cambia lunghezza linea Black
   "black-formatter.args": ["--line-length=100"]
 }
@@ -149,7 +144,6 @@ Per aggiungere formattatori per altri linguaggi:
 ```bash
 # Verifica qualità codice completa
 just stats
-
 # Correzione automatica problemi
 just fix-all
 ```

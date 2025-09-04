@@ -1,7 +1,6 @@
 # Utilizzo di Just Task Runner
 
 [![Just](https://img.shields.io/badge/Just-Task%20Runner-blueviolet)](https://github.com/casey/just)
-
 Questo progetto include un `justfile` che fornisce un moderno task runner per semplificare l'esecuzione di comandi comuni. Just è un'alternativa moderna a Make, con sintassi più pulita e funzionalità avanzate.
 
 ## 🚀 Quick Start
@@ -9,10 +8,8 @@ Questo progetto include un `justfile` che fornisce un moderno task runner per se
 ```bash
 # Mostra tutti i comandi disponibili
 just
-
 # Mostra elenco completo
 just --list
-
 # Esempi di comandi
 just stats          # 📊 Statistiche progetto
 just fix-all         # ⭐ Correzione globale
@@ -88,10 +85,8 @@ just run-uvicorn     # ⚡ Server ASGI produzione
 ```powershell
 # Tramite cargo (Rust)
 cargo install just
-
 # Tramite scoop
 scoop install just
-
 # Tramite chocolatey
 choco install just
 ```
@@ -101,7 +96,6 @@ choco install just
 ```bash
 # Tramite Homebrew
 brew install just
-
 # Tramite cargo
 cargo install just
 ```
@@ -111,10 +105,8 @@ cargo install just
 ```bash
 # Ubuntu/Debian
 sudo apt install just
-
 # Arch Linux
 pacman -S just
-
 # Tramite cargo
 cargo install just
 ```
@@ -128,7 +120,6 @@ cargo install just
 run-server:
     @Write-Host "🚀 Avvio server..." -ForegroundColor Cyan
     uv run python src/manage.py runserver
-
 # Make - Più verboso
 run-server:
  @echo "Avvio server..."
@@ -161,14 +152,12 @@ Questo progetto supporta **sia Make che Just**:
 
 - **Make**: Per utenti che preferiscono lo standard tradizionale
 - **Just**: Per chi vuole sintassi moderna e funzionalità avanzate
-
-Puoi usare entrambi interscambiabilmente:
+  Puoi usare entrambi interscambiabilmente:
 
 ```bash
 # Stesso risultato
 make stats
 just stats
-
 # Stesso risultato
 make run-server
 just run-server
@@ -185,7 +174,6 @@ just fix-all
 # ✅ 3/10 - Organizzazione import (isort)...
 # ...
 # 🎉 Pipeline completata: 10/10 step completati!
-
 # Make - output tradizionale
 make fix-all
 # CORREZIONE GLOBALE: Risolve tutti i problemi di qualità del codice

@@ -10,18 +10,14 @@ Questa guida rapida ti aiuterà a iniziare velocemente con questo template Djang
 # Clona il repository
 git clone <url-del-tuo-repository>
 cd <nome-del-tuo-repository>
-
 # Crea un ambiente virtuale con uv
-
 # Attiva l'ambiente virtuale
 # In Windows PowerShell:
 .\.venv\Scripts\Activate.ps1
 # In Linux/macOS:
 source .venv/bin/activate
-
 # Installa le dipendenze
 uv sync
-
 # Installa pre-commit
 uv add pre-commit
 pre-commit install
@@ -34,11 +30,9 @@ Se desideri utilizzare un modello User personalizzato, questo è il momento di c
 ```bash
 # Modifica src/home/settings.py per aggiungere:
 # AUTH_USER_MODEL = 'myapp.User'
-
 # Crea la tua app
 cd src
 python manage.py startapp myapp
-
 # Crea il tuo modello User personalizzato in src/myapp/models.py
 # poi aggiungi l'app a INSTALLED_APPS in settings.py
 ```
@@ -94,7 +88,6 @@ Vai a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) nel tuo browser.
    ```
 
 3. **Definisci modelli** in `src/myapp/models.py`
-
 4. **Crea e applica migrazioni**:
 
    ```bash
@@ -103,13 +96,9 @@ Vai a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) nel tuo browser.
    ```
 
 5. **Crea viste** in `src/myapp/views.py`
-
 6. **Configura URL** in `src/myapp/urls.py` e `src/home/urls.py`
-
 7. **Crea template** in `src/myapp/templates/`
-
 8. **Scrivi test** in `src/myapp/tests.py`
-
 9. **Esegui test**:
 
    ```bash
@@ -130,19 +119,14 @@ Vai a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) nel tuo browser.
 ```bash
 # Avvia shell Django
 python manage.py shell
-
 # Crea superuser
 python manage.py createsuperuser
-
 # Controlla problemi di sicurezza
 python manage.py check --deploy
-
 # Raccogli file statici
 python manage.py collectstatic
-
 # Esegui test
 python manage.py test
-
 # Esegui manualmente pre-commit
 pre-commit run --all-files
 ```

@@ -25,7 +25,6 @@ Questo progetto utilizza una configurazione multi-ambiente per Django. È possib
 $env:DJANGO_ENV="dev"; python manage.py runserver
 $env:DJANGO_ENV="test"; python manage.py test
 $env:DJANGO_ENV="prod"; python manage.py runserver
-
 # Specificare la directory dei log
 $env:DJANGO_LOGS_DIR="C:\path\to\logs"; python manage.py runserver
 ```
@@ -36,7 +35,6 @@ $env:DJANGO_LOGS_DIR="C:\path\to\logs"; python manage.py runserver
 set DJANGO_ENV=dev && python manage.py runserver
 set DJANGO_ENV=test && python manage.py test
 set DJANGO_ENV=prod && python manage.py runserver
-
 :: Specificare la directory dei log
 set DJANGO_LOGS_DIR=C:\path\to\logs && python manage.py runserver
 ```
@@ -47,7 +45,6 @@ set DJANGO_LOGS_DIR=C:\path\to\logs && python manage.py runserver
 DJANGO_ENV=dev python manage.py runserver
 DJANGO_ENV=test python manage.py test
 DJANGO_ENV=prod python manage.py runserver
-
 # Specificare la directory dei log
 DJANGO_LOGS_DIR=/path/to/logs python manage.py runserver
 ```
@@ -61,12 +58,10 @@ Il progetto include target specifici nel Makefile per i diversi ambienti:
 make run-dev       # Ambiente di sviluppo
 make run-test      # Ambiente di test
 make run-prod      # Ambiente di produzione
-
 # Eseguire test in ambienti specifici
 make test-dev      # Test in ambiente di sviluppo
 make test-test     # Test in ambiente di test
 make test-prod     # Test in ambiente di produzione
-
 # Verificare la configurazione corrente
 make check-env-dev   # Verifica ambiente di sviluppo
 make check-env-test  # Verifica ambiente di test
@@ -79,8 +74,7 @@ make check-env-prod  # Verifica ambiente di produzione
 
 - `.env`: Configurazione principale
 - `.env.local`: Configurazione locale (ignorata dal version control)
-
-Esempio di file `.env`:
+  Esempio di file `.env`:
 
 ```
 DJANGO_ENV=dev

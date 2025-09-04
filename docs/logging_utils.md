@@ -23,7 +23,6 @@ Colorama offre diversi vantaggi:
 ```python
 import logging
 from home.logging_utils import ColoramaFormatter
-
 # Configura un logger con colori
 handler = logging.StreamHandler()
 formatter = ColoramaFormatter(
@@ -31,11 +30,9 @@ formatter = ColoramaFormatter(
     datefmt="%Y-%m-%d %H:%M:%S"
 )
 handler.setFormatter(formatter)
-
 logger = logging.getLogger("myapp")
 logger.addHandler(handler)
 logger.setLevel(logging.DEBUG)
-
 # Usa il logger
 logger.debug("Messaggio di debug")
 logger.info("Messaggio informativo")

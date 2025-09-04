@@ -13,7 +13,6 @@ Il progetto utilizza [python-decouple](https://github.com/henriquebastos/python-
 ## File `.env`
 
 Il file `.env` contiene tutte le variabili d'ambiente utilizzate dall'applicazione. Questo file **non deve essere committato** nel repository per ragioni di sicurezza.
-
 Un file `.env.example` è fornito come template con i valori predefiniti e commentati.
 
 ## Variabili d'Ambiente Principali
@@ -26,15 +25,13 @@ Un file `.env.example` è fornito come template con i valori predefiniti e comme
 - `DJANGO_SECRET_KEY_STAGING`: Chiave segreta specifica per ambiente STAGING
 - `DJANGO_SECRET_KEY_PROD`: Chiave segreta specifica per ambiente PROD
 - `DJANGO_DEBUG`: Controlla la modalità debug (0=False, 1=True)
-
-> 🔐 **Best Practice**: Usa SECRET_KEY diverse per ogni ambiente per massima sicurezza. Genera con: `just generate-secret-keys-all`
+  > 🔐 **Best Practice**: Usa SECRET_KEY diverse per ogni ambiente per massima sicurezza. Genera con: `just generate-secret-keys-all`
 
 ### Host e Origini Affidabili
 
 - `DJANGO_ALLOWED_HOSTS`: Lista di host consentiti separati da virgola (usati quando DEBUG=False)
 - `DJANGO_CSRF_TRUSTED_ORIGINS`: Domini affidabili per la protezione CSRF (usati quando DEBUG=False)
-
-Esempio:
+  Esempio:
 
 ```bash
 DJANGO_ALLOWED_HOSTS=example.com,api.example.com,127.0.0.1
@@ -61,16 +58,12 @@ Le variabili d'ambiente possono essere utilizzate nel codice con la funzione `co
 
 ```python
 from decouple import config
-
 # Stringa
 SECRET_KEY = config("DJANGO_SECRET_KEY")
-
 # Boolean
 DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
-
 # Integer
 PORT = config("PORT", default=8000, cast=int)
-
 # Con valore predefinito
 API_KEY = config("API_KEY", default="default-key")
 ```
@@ -82,5 +75,4 @@ In ambienti di produzione, è possibile:
 1. Utilizzare un vero file `.env` sul server
 2. Impostare le variabili d'ambiente direttamente nel sistema
 3. Utilizzare il sistema di configurazione del provider (es. Render, Heroku, ecc.)
-
-Tutte queste opzioni funzioneranno con python-decouple senza modificare il codice.
+   Tutte queste opzioni funzioneranno con python-decouple senza modificare il codice.

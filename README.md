@@ -21,58 +21,43 @@
 - [🔧 Environment Variables](docs/environment-variables.md) - Configurazione ambienti
 - [📊 Code Quality](tools/quality_dashboard.md) - Pipeline qualità locale
 - [🔍 VS Code Setup](docs/vscode-configuration.md) - Configurazione editore
-
-<!-- Framework & Language -->
-
-[![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/)
-[![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/release/python-3130/)
-[![Node.js Ready](https://img.shields.io/badge/Node.js-Ready-green?logo=node.js&logoColor=white)](docs/nodejs-integration.md)
-
-<!-- Package Management & Tools -->
-
-[![uv](https://img.shields.io/badge/uv-Python%20Package%20Manager-blueviolet?logo=python&logoColor=white)](https://github.com/astral-sh/uv)
-[![Make](https://img.shields.io/badge/Make-automation-brightgreen)](https://www.gnu.org/software/make/)
-[![Just](https://img.shields.io/badge/Just-Task%20Runner%20⚡-blueviolet)](https://github.com/casey/just)
-
-<!-- Deployment & Static Files -->
-
-[![Uvicorn](https://img.shields.io/badge/Uvicorn-ASGI%20%E2%9A%A1-blueviolet?logo=fastapi&logoColor=white)](https://www.uvicorn.org/)
-[![Gunicorn](https://img.shields.io/badge/Gunicorn-WSGI%20Server-green?logo=gunicorn&logoColor=white)](https://gunicorn.org/)
-[![Waitress](https://img.shields.io/badge/Waitress-WSGI%20Server-yellow)](https://github.com/Pylons/waitress)
-[![PostgreSQL Ready](https://img.shields.io/badge/PostgreSQL-Ready-blue?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Cross Platform](https://img.shields.io/badge/Cross%20Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen)](scripts/deployment/README.md)
-
-<!-- Development Environment -->
-
-[![VS Code](https://img.shields.io/badge/VS%20Code-Ready-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
-[![Run on Save](https://img.shields.io/badge/Run%20on%20Save-enabled-success)](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
-[![Quality Pipeline](https://img.shields.io/badge/Quality%20Pipeline-Local%20Dashboard-success)](tools/quality_dashboard.md)
-
-<!-- CI/CD & GitHub Actions -->
-
-[![Pre-commit](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml)
-[![Django CI](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml)
-[![CodeQL](https://github.com/massimilianoporzio/deploy-django/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/codeql-analysis.yml)
-[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%20enabled-2088FF)](https://github.com/features/actions)
-
-<!-- AI Code Review -->
-
-[![CodeRabbit](https://img.shields.io/badge/CodeRabbit-AI%20Review-purple?logo=ai&logoColor=white)](https://coderabbit.ai)
-[![Codacy Ready](https://img.shields.io/badge/Codacy-Ready-blue?logo=codacy&logoColor=white)](https://www.codacy.com/)
-[![pre-commit-hooks](https://img.shields.io/badge/pre--commit--hooks-enabled-brightgreen)](https://github.com/pre-commit/pre-commit-hooks)
-
-<!-- Template Features -->
-
-[![Template Ready](https://img.shields.io/badge/Template-Production%20Ready-success?style=flat-square)](https://github.com/massimilianoporzio/deploy-django)
-[![Multi Environment](https://img.shields.io/badge/Environments-Dev%20%7C%20Test%20%7C%20Prod-blue)](src/home/settings/)
-[![Smart Deploy](https://img.shields.io/badge/Deploy-uvicorn%20%7C%20gunicorn%20%7C%20waitress-orange)](justfile)
-[![Server Management](https://img.shields.io/badge/Server%20Management-ASGI%20%7C%20WSGI%20%7C%20Auto-green)](justfile)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Template](https://img.shields.io/badge/Template-Use%20This-brightgreen)](https://github.com/massimilianoporzio/deploy-django/generate)
-[![Stars](https://img.shields.io/github/stars/massimilianoporzio/deploy-django?style=social)](https://github.com/massimilianoporzio/deploy-django/stargazers)
-[![Forks](https://img.shields.io/github/forks/massimilianoporzio/deploy-django?style=social)](https://github.com/massimilianoporzio/deploy-django/network/members)
-
-Questo è un **template repository** per progetti Django, già configurato con strumenti moderni per lo sviluppo, la qualità del codice e il deployment. Questo template è progettato per aiutarti a iniziare rapidamente un nuovo progetto Django con best practices già implementate.
+  <!-- Framework & Language -->
+  [![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/)
+  [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/release/python-3130/)
+  [![Node.js Ready](https://img.shields.io/badge/Node.js-Ready-green?logo=node.js&logoColor=white)](docs/nodejs-integration.md)
+  <!-- Package Management & Tools -->
+  [![uv](https://img.shields.io/badge/uv-Python%20Package%20Manager-blueviolet?logo=python&logoColor=white)](https://github.com/astral-sh/uv)
+  [![Make](https://img.shields.io/badge/Make-automation-brightgreen)](https://www.gnu.org/software/make/)
+  [![Just](https://img.shields.io/badge/Just-Task%20Runner%20⚡-blueviolet)](https://github.com/casey/just)
+  <!-- Deployment & Static Files -->
+  [![Uvicorn](https://img.shields.io/badge/Uvicorn-ASGI%20%E2%9A%A1-blueviolet?logo=fastapi&logoColor=white)](https://www.uvicorn.org/)
+  [![Gunicorn](https://img.shields.io/badge/Gunicorn-WSGI%20Server-green?logo=gunicorn&logoColor=white)](https://gunicorn.org/)
+  [![Waitress](https://img.shields.io/badge/Waitress-WSGI%20Server-yellow)](https://github.com/Pylons/waitress)
+  [![PostgreSQL Ready](https://img.shields.io/badge/PostgreSQL-Ready-blue?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+  [![Cross Platform](https://img.shields.io/badge/Cross%20Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen)](scripts/deployment/README.md)
+  <!-- Development Environment -->
+  [![VS Code](https://img.shields.io/badge/VS%20Code-Ready-007ACC?logo=visual-studio-code)](https://code.visualstudio.com/)
+  [![Run on Save](https://img.shields.io/badge/Run%20on%20Save-enabled-success)](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
+  [![Quality Pipeline](https://img.shields.io/badge/Quality%20Pipeline-Local%20Dashboard-success)](tools/quality_dashboard.md)
+  <!-- CI/CD & GitHub Actions -->
+  [![Pre-commit](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/pre-commit.yml)
+  [![Django CI](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/django.yml)
+  [![CodeQL](https://github.com/massimilianoporzio/deploy-django/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/massimilianoporzio/deploy-django/actions/workflows/codeql-analysis.yml)
+  [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%20enabled-2088FF)](https://github.com/features/actions)
+  <!-- AI Code Review -->
+  [![CodeRabbit](https://img.shields.io/badge/CodeRabbit-AI%20Review-purple?logo=ai&logoColor=white)](https://coderabbit.ai)
+  [![Codacy Ready](https://img.shields.io/badge/Codacy-Ready-blue?logo=codacy&logoColor=white)](https://www.codacy.com/)
+  [![pre-commit-hooks](https://img.shields.io/badge/pre--commit--hooks-enabled-brightgreen)](https://github.com/pre-commit/pre-commit-hooks)
+  <!-- Template Features -->
+  [![Template Ready](https://img.shields.io/badge/Template-Production%20Ready-success?style=flat-square)](https://github.com/massimilianoporzio/deploy-django)
+  [![Multi Environment](https://img.shields.io/badge/Environments-Dev%20%7C%20Test%20%7C%20Prod-blue)](src/home/settings/)
+  [![Smart Deploy](https://img.shields.io/badge/Deploy-uvicorn%20%7C%20gunicorn%20%7C%20waitress-orange)](justfile)
+  [![Server Management](https://img.shields.io/badge/Server%20Management-ASGI%20%7C%20WSGI%20%7C%20Auto-green)](justfile)
+  [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+  [![Template](https://img.shields.io/badge/Template-Use%20This-brightgreen)](https://github.com/massimilianoporzio/deploy-django/generate)
+  [![Stars](https://img.shields.io/github/stars/massimilianoporzio/deploy-django?style=social)](https://github.com/massimilianoporzio/deploy-django/stargazers)
+  [![Forks](https://img.shields.io/github/forks/massimilianoporzio/deploy-django?style=social)](https://github.com/massimilianoporzio/deploy-django/network/members)
+  Questo è un **template repository** per progetti Django, già configurato con strumenti moderni per lo sviluppo, la qualità del codice e il deployment. Questo template è progettato per aiutarti a iniziare rapidamente un nuovo progetto Django con best practices già implementate.
 
 ## 🚀 Come utilizzare questo template
 
@@ -173,7 +158,6 @@ Questo comando applica le correzioni automatiche a tutti gli script bash di depl
 ### Utilizzo degli script di setup automatici
 
 Per un setup completo e automatico, puoi usare gli script forniti:
-
 **Windows (PowerShell):**
 
 ```powershell
@@ -193,10 +177,8 @@ chmod +x scripts/setup.sh  # Rendi lo script eseguibile
 
    ```bash
    uv venv
-
    # In Windows PowerShell:
    .\.venv\Scripts\Activate.ps1
-
    # In Linux/macOS:
    source .venv/bin/activate
    ```
@@ -219,7 +201,6 @@ chmod +x scripts/setup.sh  # Rendi lo script eseguibile
    ```bash
    # Copia il file di esempio
    cp .env.example .env
-
    # Modifica il file .env con i tuoi valori
    code .env
    ```
@@ -227,15 +208,12 @@ chmod +x scripts/setup.sh  # Rendi lo script eseguibile
    Per maggiori dettagli, consulta la [documentazione sulle variabili d'ambiente](docs/environment-variables.md).
 
 5. **Importante**: Se desideri usare un modello User personalizzato, crealo **prima** di eseguire le migrazioni. Consulta la [guida rapida](docs/quick-start.md) per maggiori dettagli.
-
 6. Avvia il server di sviluppo:
 
    ```bash
    cd src
-
    # Usando uv (consigliato):
    uv run python manage.py runserver
-
    # Usando l'ambiente virtuale:
    # Attiva prima l'ambiente (.\.venv\Scripts\Activate.ps1 o source .venv/bin/activate)
    python manage.py runserver
@@ -252,11 +230,9 @@ Con uv, non è necessario attivare l'ambiente virtuale. Basta usare `uv run` seg
 ```bash
 # Eseguire uno script Python
 uv run mio_script.py
-
 # Eseguire comandi Django
 uv run python src/manage.py migrate
 uv run python src/manage.py runserver
-
 # Eseguire altri pacchetti Python
 uv run black .
 uv run pytest
@@ -269,10 +245,8 @@ Se preferisci l'approccio tradizionale, puoi attivare l'ambiente virtuale e poi 
 ```bash
 # Windows PowerShell
 .\.venv\Scripts\Activate.ps1
-
 # Linux/macOS
 source .venv/bin/activate
-
 # Poi esegui i comandi normalmente
 python src/manage.py runserver
 ```
@@ -294,8 +268,7 @@ Questo template include i seguenti strumenti configurati e pronti all'uso:
 - **pre-commit**: Esegue automaticamente tutti i controlli di qualità prima di ogni commit
 - **GitHub Actions**: Pipeline CI/CD preconfigurate per verificare automaticamente la qualità del codice
 - **Pipeline locale**: Dashboard di qualità completa (`just stats` o `make stats`) con analisi dettagliata alternativa a servizi cloud
-
-> **Nota**: I file del modulo `settings` sono esclusi dai controlli di linting per permettere la massima flessibilità. Per maggiori dettagli, consulta [docs/linting_notes.md](docs/linting_notes.md).
+  > **Nota**: I file del modulo `settings` sono esclusi dai controlli di linting per permettere la massima flessibilità. Per maggiori dettagli, consulta [docs/linting_notes.md](docs/linting_notes.md).
 
 ## 🚀 Task Runner: Just
 
@@ -306,7 +279,6 @@ Questo template usa **Just** come task runner moderno per un'esperienza di svilu
 ```bash
 # Mostra help colorato con emoji
 just
-
 # Esempi di comandi più utilizzati
 just setup           # � Setup completo progetto
 just dev             # 🔥 Server sviluppo con hot-reload
@@ -322,14 +294,12 @@ just stats           # 📊 Statistiche progetto
 - ✅ Output colorato con emoji
 - ✅ 47 comandi disponibili vs 30+ Make
 - ✅ Help system integrato
-
-**Documentazione completa:**
-
-✅ **Cross-platform** nativo (Windows/Linux/macOS)
-✅ **Sintassi moderna** e leggibile
-✅ **Help colorato** con emoji
-✅ **Variabili** e logica avanzata
-✅ **Performance** superiori
+  **Documentazione completa:**
+  ✅ **Cross-platform** nativo (Windows/Linux/macOS)
+  ✅ **Sintassi moderna** e leggibile
+  ✅ **Help colorato** con emoji
+  ✅ **Variabili** e logica avanzata
+  ✅ **Performance** superiori
 
 ### 📖 **Installazione Just**
 
@@ -338,13 +308,10 @@ Se non hai Just installato:
 ```bash
 # Windows (Chocolatey)
 choco install just
-
 # macOS (Homebrew)
 brew install just
-
 # Linux (Snap)
 snap install --edge --classic just
-
 # Oppure usa uv direttamente
 uv run python src/manage.py migrate  # Invece di just migrate
 ```
@@ -363,10 +330,8 @@ Il template include un sistema di logging avanzato:
 ```bash
 # Windows PowerShell
 $env:DJANGO_LOGS_DIR = "E:\percorso\personalizzato\logs"
-
 # macOS/Linux
 export DJANGO_LOGS_DIR="/percorso/personalizzato/logs"
-
 # Verifica configurazione
 just check-custom-logs LOGS_DIR="/percorso/personalizzato/logs" ENV=dev|test|prod
 ```
@@ -380,13 +345,11 @@ Questo template è progettato per funzionare su tutte le principali piattaforme:
 - **Windows**: Script PowerShell completi per setup e configurazione
 - **macOS/Linux**: Script Bash equivalenti per tutte le operazioni
 - **CI/CD**: Workflow GitHub Actions che funzionano indipendentemente dalla piattaforma
-
-Tutti gli strumenti di sviluppo sono configurati per funzionare in modo identico su tutte le piattaforme, garantendo un'esperienza di sviluppo coerente per tutti i membri del team.
+  Tutti gli strumenti di sviluppo sono configurati per funzionare in modo identico su tutte le piattaforme, garantendo un'esperienza di sviluppo coerente per tutti i membri del team.
 
 ## 📝 VS Code Integration
 
 Questo template include **configurazioni VS Code ottimizzate** per Django:
-
 ✅ **Formattazione automatica** al salvataggio
 ✅ **Error Lens** per evidenziazione errori inline
 ✅ **Run on Save** per template HTML Django
@@ -397,8 +360,7 @@ Questo template include **configurazioni VS Code ottimizzate** per Django:
 1. Apri progetto in VS Code
 2. Installa estensioni consigliate (VS Code chiederà automaticamente)
 3. Sistema pronto! 🚀
-
-**📖 [Guida VS Code Dettagliata](docs/vscode-detailed.md)** - Configurazione completa e troubleshooting
+   **📖 [Guida VS Code Dettagliata](docs/vscode-detailed.md)** - Configurazione completa e troubleshooting
 
 ## 🌐 Supporto Frontend (Node.js Ready)
 
@@ -415,12 +377,10 @@ Questo template è già predisposto per l'integrazione con Node.js e strumenti f
 ```bash
 # 1. Inizializza package.json
 npm init -y
-
 # 2. Installa dipendenze frontend (esempi)
 npm install --save-dev @tailwindcss/cli autoprefixer
 npm install --save-dev webpack webpack-cli
 npm install --save-dev @babel/core @babel/preset-env
-
 # 3. Build script esempio per package.json
 {
   "scripts": {
@@ -452,8 +412,7 @@ deploy-django/
 - I file compilati da Node.js vanno in `src/static/`
 - Django collectstatic raccoglie tutto in `staticfiles/`
 - WhiteNoise serve i file in produzione con ottimizzazioni
-
-> **📚 Per maggiori dettagli sull'integrazione Node.js**, consulta la [documentazione Node.js](docs/nodejs-integration.md).
+  > **📚 Per maggiori dettagli sull'integrazione Node.js**, consulta la [documentazione Node.js](docs/nodejs-integration.md).
 
 ### Installazione di Make
 
@@ -480,11 +439,9 @@ chmod +x scripts/install-make-linux.sh
 ## 📝 Markdown Formatting
 
 **Formattazione automatica** per documentazione professionale:
-
 🔄 **Auto-format** su salvataggio VS Code
 ✅ **Pre-commit hooks** per consistenza
 📖 **Prettier + markdownlint** integration
-
 **📖 [Guida Markdown Dettagliata](docs/markdown-formatting.md)** - Configurazione completa e regole
 
 ### Quick Commands
@@ -492,7 +449,6 @@ chmod +x scripts/install-make-linux.sh
 ```bash
 # Format tutti i markdown
 just format-markdown
-
 # Linting completo
 just lint-markdown
 ```
@@ -500,7 +456,6 @@ just lint-markdown
 ## 🚀 Deployment & Production
 
 Supporto completo per **deployment enterprise** con proxy reverso:
-
 🪟 **Windows Server + IIS** - Configurazione automatica
 🐧 **Linux/macOS + Nginx** - Setup production-ready
 ⚡ **ASGI/WSGI** servers ottimizzati per OS
@@ -511,10 +466,8 @@ Supporto completo per **deployment enterprise** con proxy reverso:
 ```bash
 # Setup automatico
 just setup
-
 # Database migration
 just migrate-prod
-
 # Deploy production
 just deploy
 ```
@@ -528,7 +481,6 @@ just deploy
 ## 🚢 CI/CD Ready
 
 **GitHub Actions** preconfigurati per qualità e testing:
-
 ✅ **Pre-commit workflow** - Check automatici su PR
 🧪 **Django CI** - Test automatici su push
 📊 **Quality gates** - Linting e formattazione
@@ -558,21 +510,16 @@ Questo progetto include documentazione dettagliata per aiutarti a comprendere le
 ## 📖 Documentation Hub
 
 Documentazione specializzata per ogni aspetto del progetto:
-
 **📝 Development**
 
 - [Quick Start Guide](docs/quick-start.md) - Inizia qui!
 - [Environment Variables](docs/environment-variables.md) - Configurazione sistema
 - [Logging Configuration](docs/logs_configuration.md) - Sistema di log avanzato
-
-**🔧 Quality & Tools**
-
+  **🔧 Quality & Tools**
 - [Markdown Formatting](docs/markdown-formatting.md) - Documentazione professionale
 - [Code Analysis](docs/code_analysis.md) - Analisi qualità codice
 - [Linting Notes](docs/linting_notes.md) - Configurazione linter
-
-**🚀 Advanced**
-
+  **🚀 Advanced**
 - [Just Task Runner](docs/just.md) - 47 comandi disponibili
 - [Docstring Generation](docs/docstring_generation.md) - Documentazione automatica
 
@@ -583,5 +530,4 @@ Documentazione specializzata per ogni aspetto del progetto:
 🐛 **Bug Report**: [Apri una Issue](https://github.com/tuousername/deploy-django)
 ⭐ **Feature Request**: [Discussioni](https://github.com/tuousername/deploy-django/discussions)
 📧 **Support**: [Template Issues](https://github.com/tuousername/deploy-django/issues)
-
 **Made with ❤️ for Django developers**

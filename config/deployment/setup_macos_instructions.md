@@ -8,7 +8,6 @@ Questa guida ti mostrerà come configurare il tuo ambiente di sviluppo su macOS 
 # Crea una directory per i tuoi progetti (se non esiste già)
 mkdir -p ~/progetti
 cd ~/progetti
-
 # Clona il repository
 git clone <https://github.com/massimilianoporzio/deploy-django.git>
 cd deploy-django
@@ -19,10 +18,8 @@ cd deploy-django
 ```bash
 # Installa Homebrew se non l'hai già
 /bin/bash -c "$(curl -fsSL <https://raw.githubusercontent.com/Homebrew/install/HEAD/install.s>h)"
-
 # Installa Python 3.13 usando Homebrew
 brew install python@3.13
-
 # Verifica l'installazione
 python3.13 --version
 ```
@@ -32,20 +29,15 @@ python3.13 --version
 ```bash
 # Installa uv usando curl (metodo consigliato)
 curl -LsSf <https://astral.sh/uv/install.sh> | sh
-
 # Oppure puoi usare Homebrew
 # brew install astral/tap/uv
-
 # Verifica l'installazione
 uv --version
-
 # Crea un ambiente virtuale con uv
 cd ~/progetti/deploy-django
 uv venv
-
 # Attiva l'ambiente virtuale
 source .venv/bin/activate
-
 # Installa le dipendenze del progetto
 uv pip install -e .
 ```
@@ -59,7 +51,6 @@ uv pip install -e .
    - Black Formatter
    - Ruff
    - Material Icon Theme
-
 3. Configura le impostazioni del progetto:
 
 ```bash
@@ -93,15 +84,12 @@ Se vuoi mantenere l'aspetto del terminale con Oh My Posh:
 ```bash
 # Installa Oh My Posh tramite Homebrew
 brew install jandedobbeleer/oh-my-posh/oh-my-posh
-
 # Installa il font Hack Nerd Font
 brew tap homebrew/cask-fonts
 brew install --cask font-hack-nerd-font
-
 # Copia il tuo tema Oh My Posh
 mkdir -p ~/.poshthemes
 cp ~/progetti/deploy-django/powerlevel10k_rainbow.omp.json ~/.poshthemes/
-
 # Configura Oh My Posh nel tuo shell (aggiungi al tuo ~/.zshrc)
 echo 'eval "$(oh-my-posh init zsh --config ~/.poshthemes/powerlevel10k_rainbow.omp.json)"' >> ~/.zshrc
 source ~/.zshrc
@@ -129,15 +117,12 @@ Il file `.pre-commit-config.yaml` è già configurato per funzionare su tutte le
 
 1. `pylint-unified`: Esegue pylint su Windows e passa silenziosamente su macOS/Linux
 2. `pylint-unix-ci`: Esegue pylint su macOS/Linux e passa silenziosamente su Windows
-
-Entrambi gli hook sono progettati per passare automaticamente sulla piattaforma appropriata senza mostrare errori, quindi non è necessario fare alcuna modifica al file di configurazione.
-
-Per eseguire i pre-commit hook:
+   Entrambi gli hook sono progettati per passare automaticamente sulla piattaforma appropriata senza mostrare errori, quindi non è necessario fare alcuna modifica al file di configurazione.
+   Per eseguire i pre-commit hook:
 
 ```bash
 # Installa i pre-commit hooks (una tantum)
 pre-commit install
-
 # Esegui i pre-commit hooks su tutti i file
 pre-commit run --all-files
 ```
@@ -153,13 +138,10 @@ pre-commit run --all-files
 ```bash
 # Installare un nuovo pacchetto
 uv pip install nome-pacchetto
-
 # Aggiornare uv.lock
 uv pip sync
-
 # Visualizzare i pacchetti installati
 uv pip list
-
 # Esportare i requisiti in un file requirements.txt
 uv pip freeze > requirements.txt
 ```

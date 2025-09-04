@@ -62,7 +62,6 @@ Tutte le dipendenze sono già configurate in `pyproject.toml`:
 # Test completi (raccomandato)
 cd e:\progetti\gestione-pareri\src
 uv run manage.py test accounts --settings=home.settings.test_local
-
 # Test specifici
 uv run manage.py test accounts.tests.SecurityTest --settings=home.settings.test_local
 uv run manage.py test accounts.tests.PerformanceTest --settings=home.settings.test_local
@@ -73,13 +72,10 @@ uv run manage.py test accounts.tests.PerformanceTest --settings=home.settings.te
 ```bash
 # Test ambiente DEV (SQLite locale)
 just test-dev
-
 # Test ambiente TEST (configurazione test)
 just test-test
-
 # Test ambiente STAGING (PostgreSQL)
 just test-staging
-
 # Test ambiente PROD (PostgreSQL produzione)
 just test-prod
 ```
@@ -95,7 +91,6 @@ System check identified no issues (0 silenced).
 .......
 ----------------------------------------------------------------------
 Ran 42 tests in 0.665s
-
 OK ✅
 ```
 
@@ -287,7 +282,6 @@ invalid_emails = [
 ```bash
 # Verbosità alta per debug
 uv run manage.py test accounts.tests.SecurityTest --settings=home.settings.test_local --verbosity=2
-
 # Test specifico singolo
 uv run manage.py test accounts.tests.SecurityTest.test_email_domain_validation --settings=home.settings.test_local
 ```
@@ -301,7 +295,6 @@ Got an error creating the test database: ERRORE: permesso di creare il database 
 ```
 
 **Soluzione**: Usa `--settings=home.settings.test_local` (SQLite)
-
 **2. Import Errors**
 
 ```
@@ -309,7 +302,6 @@ ModuleNotFoundError: No module named 'accounts'
 ```
 
 **Soluzione**: Esegui dalla directory `src/`
-
 **3. CSRF Test Failed**
 
 ```
@@ -328,7 +320,6 @@ AssertionError: 200 != 403
   run: |
     cd src
     uv run manage.py test accounts.tests.SecurityTest --settings=home.settings.test_local
-
 - name: Run Performance Tests
   run: |
     cd src
@@ -340,13 +331,10 @@ AssertionError: 200 != 403
 ```bash
 # 1. Test sicurezza
 ✅ SecurityTest (6/6)
-
 # 2. Test performance
 ✅ PerformanceTest (2/2)
-
 # 3. Test integrazione
 ✅ AdminIntegrationTest (3/3)
-
 # 4. Test completi
 ✅ All tests (42/42)
 ```
@@ -376,10 +364,8 @@ I nostri test garantiscono:
 ```bash
 # Test rapido pre-deploy
 just test
-
 # Test completo pre-produzione
 uv run manage.py test accounts --settings=home.settings.test_local
-
 # Verifica configurazione
 just check-env-dev
 ```

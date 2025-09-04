@@ -38,7 +38,6 @@ just iis-setup  # Crea file da template
    - SECRET_KEY sicura (genera con `python -c "import secrets; print(secrets.token_urlsafe(50))")`
    - Server IP/domini reali
    - Percorsi Python corretti
-
 2. Modifica `.env.prod` con valori reali:
    - Credenziali database PostgreSQL
    - Hosts e domains autorizzati

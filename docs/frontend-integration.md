@@ -1,7 +1,6 @@
 # Frontend Integration (Node.js Ready)
 
 [![Node.js Ready](https://img.shields.io/badge/Node.js-Ready-green?logo=node.js&logoColor=white)](docs/nodejs-integration.md)
-
 Questo template è già predisposto per l'integrazione con Node.js e strumenti frontend moderni.
 
 ## 🎯 Overview
@@ -35,7 +34,6 @@ Il template **deploy-django** supporta l'integrazione completa con ecosistemi fr
 ```bash
 # Inizializza package.json
 npm init -y
-
 # Installa dipendenze base
 npm install --save-dev webpack webpack-cli webpack-dev-server
 npm install --save-dev @babel/core @babel/preset-env babel-loader
@@ -47,7 +45,6 @@ npm install --save-dev css-loader mini-css-extract-plugin
 ```bash
 # Installa Tailwind
 npm install --save-dev tailwindcss @tailwindcss/cli autoprefixer postcss
-
 # Inizializza configurazione
 npx tailwindcss init -p
 ```
@@ -72,7 +69,6 @@ module.exports = {
 ```javascript
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
 module.exports = {
   entry: "./src/static/js/main.js",
   output: {
@@ -150,7 +146,6 @@ deploy-django/
 ```bash
 # Terminal 1: Django server
 just run-dev
-
 # Terminal 2: Frontend watch mode
 npm run dev
 # or for Tailwind
@@ -162,10 +157,8 @@ npm run css:watch
 ```bash
 # Build frontend assets
 npm run build
-
 # Django collectstatic
 just collectstatic-prod
-
 # Deploy
 just deploy-prod
 ```
@@ -183,16 +176,13 @@ just deploy-prod
   <head>
     <meta charset="utf-8" />
     <title>{% block title %}Deploy Django{% endblock %}</title>
-
     <!-- Tailwind CSS -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-
     <!-- Webpack Bundle CSS -->
     <link href="{% static 'dist/styles.css' %}" rel="stylesheet" />
   </head>
   <body class="bg-gray-100">
     {% block content %}{% endblock %}
-
     <!-- Webpack Bundle JS -->
     <script src="{% static 'dist/bundle.js' %}"></script>
   </body>
@@ -207,14 +197,11 @@ just deploy-prod
 # Static files configuration
 STATIC_URL = '/static/'
 STATIC_ROOT = REPO_DIR / 'staticfiles'
-
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-
 # WhiteNoise configuration for frontend assets
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 # Compression settings
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_AUTOREFRESH = True  # Only in development
@@ -228,32 +215,26 @@ Aggiungi al `justfile`:
 
 ```bash
 # === FRONTEND COMMANDS ===
-
 # 📦 Install Node.js dependencies
 install-node:
     @Write-Host "📦 Installazione dipendenze Node.js..." -ForegroundColor Cyan
     npm install
-
 # 🔨 Build frontend assets
 build-frontend:
     @Write-Host "🔨 Build frontend assets..." -ForegroundColor Cyan
     npm run build
-
 # 👀 Watch frontend changes
 watch-frontend:
     @Write-Host "👀 Watch mode frontend..." -ForegroundColor Cyan
     npm run dev
-
 # 🎨 Build Tailwind CSS
 build-css:
     @Write-Host "🎨 Build Tailwind CSS..." -ForegroundColor Cyan
     npm run css
-
 # 👀 Watch Tailwind CSS
 watch-css:
     @Write-Host "👀 Watch Tailwind CSS..." -ForegroundColor Cyan
     npm run css:watch
-
 # 🚀 Full build (frontend + Django)
 build-all: install-node build-frontend collectstatic-prod
     @Write-Host "🚀 Build completo completato!" -ForegroundColor Green
@@ -267,19 +248,14 @@ Equivalenti per `Makefile`:
 # Frontend commands
 install-node:
  npm install
-
 build-frontend:
  npm run build
-
 watch-frontend:
  npm run dev
-
 build-css:
  npm run css
-
 watch-css:
  npm run css:watch
-
 build-all: install-node build-frontend collectstatic-prod
  @echo "Build completo completato!"
 ```
@@ -324,7 +300,6 @@ module.exports = {
 ```bash
 # Install dev dependencies
 npm install --save-dev eslint prettier eslint-config-prettier
-
 # .eslintrc.js
 module.exports = {
   env: {
@@ -348,7 +323,6 @@ module.exports = {
 # Install React
 npm install react react-dom
 npm install --save-dev @babel/preset-react
-
 # Update webpack.config.js
 module.exports = {
   // ... existing config
@@ -376,7 +350,6 @@ module.exports = {
 # Install Vue
 npm install vue
 npm install --save-dev vue-loader vue-template-compiler
-
 # Update webpack configuration accordingly
 ```
 

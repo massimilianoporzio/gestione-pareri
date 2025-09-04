@@ -2,7 +2,6 @@
 
 [![Nginx](https://img.shields.io/badge/Nginx-Web%20Server-green)](https://nginx.org/)
 [![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/)
-
 Questa guida spiega come configurare **Nginx** come reverse proxy per Django su Linux e macOS.
 
 ## 🎯 Overview
@@ -50,7 +49,6 @@ brew services start nginx
 ```bash
 # Verifica stato
 sudo systemctl status nginx
-
 # Test connessione
 curl <http://localhost>
 ```
@@ -65,13 +63,10 @@ curl <http://localhost>
 # Production settings
 DJANGO_ENV=prod
 DJANGO_DEBUG=0
-
 # Allowed hosts per reverse proxy
 DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,tuodominio.com,www.tuodominio.com
-
 # CSRF trusted origins
 DJANGO_CSRF_TRUSTED_ORIGINS=<https://tuodominio.com,<https://www.tuodominio.com,<http://localho>s>t>
-
 # Static files per Nginx
 DJANGO_STATIC_URL=/static/
 DJANGO_MEDIA_URL=/media/
@@ -86,27 +81,22 @@ DJANGO_MEDIA_URL=/media/
 upstream django_backend {
     # Single server
     server 127.0.0.1:8000;
-
     # Multiple workers (load balancing)
     # server 127.0.0.1:8000 weight=3;
     # server 127.0.0.1:8001 weight=2;
     # server 127.0.0.1:8002 backup;
 }
-
 # HTTP Server (redirect to HTTPS)
 server {
     listen 80;
     server_name tuodominio.com www.tuodominio.com;
-
     # Redirect HTTP to HTTPS
     return 301 <https://$server_name$request_uri;>
 }
-
 # HTTPS Server (main)
 server {
     listen 443 ssl http2;
     server_name tuodominio.com www.tuodominio.com;
-
     # SSL Configuration
     ssl_certificate /path/to/your/certificate.crt;
     ssl_certificate_key /path/to/your/private.key;
@@ -115,39 +105,32 @@ server {
     ssl_prefer_server_ciphers off;
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 10m;
-
     # Security Headers
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';" always;
-
     # Max file upload size
     client_max_body_size 100M;
-
     # Root directory
     root /path/to/your/project;
-
     # Static files (served by Nginx)
     location /static/ {
         alias /path/to/your/project/staticfiles/;
         expires 1y;
         add_header Cache-Control "public, immutable";
-
         # Gzip compression
         gzip on;
         gzip_vary on;
         gzip_types text/css application/javascript image/svg+xml;
     }
-
     # Media files (user uploads)
     location /media/ {
         alias /path/to/your/project/media/;
         expires 1M;
         add_header Cache-Control "public";
     }
-
     # Django application (reverse proxy)
     location / {
         proxy_pass <http://django_backend;>
@@ -156,42 +139,35 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-Host $host;
-
         # Timeout settings
         proxy_connect_timeout 30s;
         proxy_send_timeout 30s;
         proxy_read_timeout 30s;
-
         # Buffer settings
         proxy_buffer_size 4k;
         proxy_buffers 8 4k;
         proxy_busy_buffers_size 8k;
-
         # WebSocket support (se necessario)
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
     }
-
     # Health check endpoint
     location /health/ {
         proxy_pass <http://django_backend/health/;>
         access_log off;
     }
-
     # Block access to sensitive files
     location ~ /\.(ht|env|git) {
         deny all;
         return 404;
     }
-
     # Favicon
     location = /favicon.ico {
         alias /path/to/your/project/staticfiles/favicon.ico;
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
-
     # Robots.txt
     location = /robots.txt {
         alias /path/to/your/project/staticfiles/robots.txt;
@@ -206,10 +182,8 @@ server {
 ```bash
 # Abilita configurazione
 sudo ln -s /etc/nginx/sites-available/gestione-pareri /etc/nginx/sites-enabled/
-
 # Test configurazione
 sudo nginx -t
-
 # Ricarica Nginx
 sudo systemctl reload nginx
 ```
@@ -235,7 +209,6 @@ sudo dnf install certbot python3-certbot-nginx
 ```bash
 # Certificato automatico per dominio
 sudo certbot --nginx -d tuodominio.com -d www.tuodominio.com
-
 # Solo certificato (configurazione manuale)
 sudo certbot certonly --nginx -d tuodominio.com
 ```
@@ -245,7 +218,6 @@ sudo certbot certonly --nginx -d tuodominio.com
 ```bash
 # Test renewal
 sudo certbot renew --dry-run
-
 # Configura cron per auto-renewal
 echo "0 12 * * * /usr/bin/certbot renew --quiet" | sudo crontab -
 ```
@@ -260,7 +232,6 @@ echo "0 12 * * * /usr/bin/certbot renew --quiet" | sudo crontab -
 [Unit]
 Description=Gestione Pareri Django App
 After=network.target
-
 [Service]
 Type=notify
 User=django
@@ -275,7 +246,6 @@ TimeoutStopSec=5
 PrivateTmp=true
 Restart=always
 RestartSec=10
-
 [Install]
 WantedBy=multi-user.target
 ```
@@ -285,11 +255,9 @@ WantedBy=multi-user.target
 ```bash
 # Ricarica systemd
 sudo systemctl daemon-reload
-
 # Abilita e avvia service
 sudo systemctl enable gestione-pareri
 sudo systemctl start gestione-pareri
-
 # Verifica status
 sudo systemctl status gestione-pareri
 ```
@@ -302,7 +270,6 @@ Aggiungi al `justfile`:
 
 ```bash
 # === NGINX DEPLOYMENT ===
-
 # 🌐 Setup Nginx per Linux/macOS
 setup-nginx:
     @Write-Host "🌐 Configurazione Nginx..." -ForegroundColor Cyan
@@ -315,7 +282,6 @@ setup-nginx:
     @# Reload Nginx
     sudo systemctl reload nginx
     @Write-Host "✅ Nginx configurato!" -ForegroundColor Green
-
 # 🚀 Deploy con Nginx
 deploy-nginx: install-prod
     @Write-Host "🚀 Deploy con Nginx..." -ForegroundColor Magenta
@@ -328,7 +294,6 @@ deploy-nginx: install-prod
     @# Reload Nginx
     sudo systemctl reload nginx
     @Write-Host "✅ Deploy completato!" -ForegroundColor Green
-
 # 📊 Status servizi
 status-nginx:
     @Write-Host "📊 Status servizi..." -ForegroundColor Cyan
@@ -343,10 +308,8 @@ status-nginx:
 ```bash
 # Log Nginx access
 sudo tail -f /var/log/nginx/access.log
-
 # Log Nginx error
 sudo tail -f /var/log/nginx/error.log
-
 # Log Django service
 sudo journalctl -u gestione-pareri -f
 ```
@@ -359,13 +322,11 @@ sudo journalctl -u gestione-pareri -f
 # nginx.conf
 worker_processes auto;
 worker_connections 1024;
-
 # Gzip compression
 gzip on;
 gzip_vary on;
 gzip_min_length 1024;
 gzip_types text/css application/javascript application/json image/svg+xml;
-
 # File caching
 open_file_cache max=1000 inactive=60s;
 open_file_cache_valid 60s;
@@ -377,7 +338,6 @@ open_file_cache_valid 60s;
 # SSL session caching
 ssl_session_cache shared:SSL:50m;
 ssl_session_timeout 1h;
-
 # OCSP stapling
 ssl_stapling on;
 ssl_stapling_verify on;
@@ -390,10 +350,8 @@ ssl_stapling_verify on;
 ```bash
 # Verifica Django service
 sudo systemctl status gestione-pareri
-
 # Verifica connettività
 curl <http://127.0.0.1:8000>
-
 # Restart services
 sudo systemctl restart gestione-pareri
 sudo systemctl reload nginx
@@ -405,7 +363,6 @@ sudo systemctl reload nginx
 # Permissions
 sudo chown -R www-data:www-data /path/to/staticfiles
 sudo chmod -R 644 /path/to/staticfiles
-
 # Regenera static files
 python manage.py collectstatic --clear --no-input
 ```
@@ -415,10 +372,8 @@ python manage.py collectstatic --clear --no-input
 ```bash
 # Test configurazione Nginx
 sudo nginx -t
-
 # Debug mode
 sudo nginx -T
-
 # Check ports
 sudo netstat -tlnp | grep nginx
 ```
@@ -430,7 +385,6 @@ sudo netstat -tlnp | grep nginx
 ```nginx
 upstream django_backend {
     least_conn;  # Load balancing method
-
     server 127.0.0.1:8000 weight=3 max_fails=3 fail_timeout=30s;
     server 127.0.0.1:8001 weight=2 max_fails=3 fail_timeout=30s;
     server 127.0.0.1:8002 backup;

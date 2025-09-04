@@ -7,13 +7,10 @@ Guida rapida per configurare pre-commit utilizzando UV tool installer.
 ```powershell
 # 1. Installa pre-commit via UV (metodo raccomandato)
 uv tool install pre-commit --with pre-commit-uv
-
 # 2. Verifica installazione
 pre-commit --version
-
 # 3. Setup hooks nel progetto (una sola volta)
 pre-commit install
-
 # 4. Test manuale
 pre-commit run --all-files
 ```
@@ -24,7 +21,6 @@ pre-commit run --all-files
 # Controlla che pre-commit sia nel PATH UV
 which pre-commit
 # Output atteso: ~/.local/share/uv/tools/pre-commit/bin/pre-commit
-
 # Test con giustfile
 just precommit-corporate
 ```
@@ -39,7 +35,6 @@ repos:
     hooks:
       - id: ruff
       - id: ruff-format
-
   - repo: local
     hooks:
       - id: django-check
@@ -53,13 +48,10 @@ repos:
 # Durante sviluppo (automatico su git commit)
 git add .
 git commit -m "feature: nuovo modulo"  # Pre-commit si attiva automaticamente
-
 # Controlli manuali prima di push
 just precommit-corporate              # Controlli completi
-
 # Test rapidi
 just test-quick                       # Test essenziali
-
 # Prima del deploy
 just test-pre-deploy                  # Test completi
 ```
@@ -72,7 +64,6 @@ just test-pre-deploy                  # Test completi
 # Soluzione 1: Reinstalla con UV
 uv tool uninstall pre-commit
 uv tool install pre-commit --with pre-commit-uv
-
 # Soluzione 2: Verifica PATH
 echo $env:PATH | grep uv
 ```
@@ -82,12 +73,10 @@ echo $env:PATH | grep uv
 ```powershell
 # Verifica che hooks usino 'uv run'
 cat .pre-commit-config.yaml | grep "uv run"
-
 # Output atteso: entry: uv run python src/manage.py check
 ```
 
 ---
 
 🔗 **Vedi anche**: [UV Guide](uv-guide.md) per documentazione completa UV
-
 ⚡ **Pro Tip**: `uv tool install` è molto più veloce di `pip install` per strumenti globali!

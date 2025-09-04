@@ -39,10 +39,8 @@ Questi script installano Make sulla piattaforma specificata:
 ```powershell
 # Setup completo del progetto
 .\setup.ps1
-
 # Installazione degli strumenti Markdown
 .\install-markdown-tools.ps1
-
 # Installazione di Make
 .\install-make-windows.ps1
 ```
@@ -52,13 +50,10 @@ Questi script installano Make sulla piattaforma specificata:
 ```bash
 # Rendere gli script eseguibili
 chmod +x *.sh
-
 # Setup completo del progetto
 ./setup.sh
-
 # Installazione degli strumenti Markdown
 ./install-markdown-tools.sh
-
 # Installazione di Make
 chmod +x install-make-macos.sh
 ./install-make-macos.sh
@@ -69,13 +64,10 @@ chmod +x install-make-macos.sh
 ```bash
 # Rendere gli script eseguibili
 chmod +x *.sh
-
 # Setup completo del progetto
 ./setup.sh
-
 # Installazione degli strumenti Markdown
 ./install-markdown-tools.sh
-
 # Installazione di Make
 chmod +x install-make-linux.sh
 ./install-make-linux.sh

@@ -32,16 +32,12 @@ Questo progetto è configurato per funzionare con **4 ambienti distinti**, ognun
 ```bash
 # Server di sviluppo
 just run-dev
-
 # Test in ambiente dev
 just test-dev
-
 # Migrazioni
 just migrate-dev
-
 # Shell interattiva
 just shell-dev
-
 # Controllo configurazione
 just check-env-dev
 ```
@@ -53,7 +49,6 @@ Per informazioni complete sui test, vedi: [**📋 Guida Testing Completa**](test
 ```bash
 # Test rapidi sicurezza
 uv run manage.py test accounts.tests.SecurityTest --settings=home.settings.test_local
-
 # Test completi
 uv run manage.py test accounts --settings=home.settings.test_local
 ```
@@ -88,13 +83,10 @@ uv run manage.py test accounts --settings=home.settings.test_local
 ```bash
 # Test automatizzati
 just test-test
-
 # Server per test manuali
 just run-test
-
 # Migrazioni per test
 just migrate-test
-
 # Controllo configurazione test
 just check-env-test
 ```
@@ -131,16 +123,12 @@ just check-env-test
 ```bash
 # Server staging
 just run-staging
-
 # Test in ambiente staging
 just test-staging
-
 # Migrazioni staging
 just migrate-staging
-
 # Shell staging
 just shell-staging
-
 # Controllo ambiente e logging
 just check-env-staging
 ```
@@ -178,13 +166,10 @@ just check-env-staging
 ```bash
 # Server produzione (solo per test locali!)
 just run-prod
-
 # Migrazioni produzione
 just migrate-prod
-
 # Shell produzione (ATTENZIONE!)
 just shell-prod
-
 # Controllo ambiente produzione
 just check-env-prod
 ```
@@ -205,7 +190,6 @@ graph LR
     A[💻 DEV<br/>Sviluppo] --> B[🧪 TEST<br/>Automatici]
     B --> C[🎭 STAGING<br/>UAT]
     C --> D[⚡ PROD<br/>Release]
-
     B -.->|Fix Bug| A
     C -.->|UAT Failed| A
     D -.->|Hotfix| A
@@ -242,10 +226,8 @@ graph LR
 ```bash
 # 1. Genera password sicure per tutti gli ambienti
 just generate-db-passwords
-
 # 2. Configura PostgreSQL (per staging e prod)
 # Segui: docs/database-setup.md
-
 # 3. Testa tutti gli ambienti
 just check-env-dev
 just check-env-test
@@ -258,10 +240,8 @@ just check-env-prod
 ```bash
 # DEV: Passa da SQLite a PostgreSQL
 # Nel file .env: USE_POSTGRESQL_DEV=1
-
 # TEST: Passa da SQLite a PostgreSQL
 # Nel file .env: USE_POSTGRESQL_TEST=1
-
 # STAGING e PROD usano sempre PostgreSQL
 ```
 
