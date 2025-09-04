@@ -311,9 +311,9 @@ fix-markdown:
 lint-codacy:
     @Write-Host "🔍 Controlli qualità stile Codacy..." -ForegroundColor Cyan
     @Write-Host "1/3 - Ruff check..." -ForegroundColor Yellow
-    @-{{python}} ruff check --output-format=github --exclude=.venv .
+    @-{{python}} ruff check --output-format=github --config=pyproject.toml .
     @Write-Host "2/3 - Flake8..." -ForegroundColor Yellow
-    @-{{python}} flake8 --format=default --exclude=.venv .
+    @-{{python}} flake8 --format=default --config=.config/flake8 --exclude=.venv,migrations/*,migrations/**,src/*/migrations/*,src/*/migrations/**,src/**/migrations/*,src/**/migrations/**,src/**/migrations,src/**/migrations/*.py,src/**/migrations/**/*.py .
     @Write-Host "3/3 - Pylint..." -ForegroundColor Yellow
     @-{{python}} pylint src/home/ --output-format=colorized
     @Write-Host "✅ Controlli completati!" -ForegroundColor Green
@@ -338,7 +338,7 @@ generate-secret-keys-all:
     @$dev_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
     @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key" -ForegroundColor White
     @Write-Host ""
-    @Write-Host "🧪 TEST Environment:" -ForegroundColor Blue  
+    @Write-Host "🧪 TEST Environment:" -ForegroundColor Blue
     @$test_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
     @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key" -ForegroundColor White
     @Write-Host ""

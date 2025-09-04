@@ -25,17 +25,17 @@ cargo install just
 
 ```bash
 # Windows
-curl -LsSf https://astral.sh/uv/install.ps1 | powershell
+curl -LsSf <https://astral.sh/uv/install.ps1> | powershell
 
 # macOS/Linux
-curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -LsSf <https://astral.sh/uv/install.sh> | sh
 ```
 
 ## 🚀 Setup Rapido (One-Liner)
 
 ```bash
 # Clone + Setup automatico completo
-git clone https://github.com/massimilianoporzio/gestione-pareri.git && \
+git clone <https://github.com/massimilianoporzio/gestione-pareri.git> && \
 cd gestione-pareri && \
 uv sync && \
 just setup-all-environments && \
@@ -176,10 +176,10 @@ just collectstatic-prod
 
 ```bash
 # Avvia server per ogni ambiente
-just run-dev        # http://localhost:8000 (sviluppo)
+just run-dev        # <http://localhost:8000> (sviluppo)
 just run-test       # Test automatici
-just run-staging    # http://localhost:8002 (pre-produzione)
-just run-prod       # http://localhost:8003 (produzione)
+just run-staging    # <http://localhost:8002> (pre-produzione)
+just run-prod       # <http://localhost:8003> (produzione)
 
 # Test qualità
 just test-quick

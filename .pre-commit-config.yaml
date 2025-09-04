@@ -7,6 +7,8 @@ exclude: |
     ^dist/.*|
     ^build/.*|
     ^out/.*|
+    # Django migrations (exclude all migrations folders)
+    (^|/)migrations/.*|
     # Temporary files
     .*\.tmp$|
     .*\.temp$
