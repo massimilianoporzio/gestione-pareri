@@ -14,15 +14,15 @@ Questa directory contiene script per il deployment in produzione usando diversi 
 
 ### Best Practices
 
-- **src/static/**: File CSS, JS, immagini del tuo progetto → ✅ **Commettere**
-- **staticfiles/**: Directory generata da `collectstatic` → ❌ **Non committere**
-- **media/**: File caricati dagli utenti → ❌ **Non committere il contenuto**
+### Directory Structure (Completa)
 
+`````
 ### Processo di Deployment
 
 1. **Development**: Django serve i file da `src/static/` direttamente
 2. **Production**: `collectstatic` raccoglie tutti i file statici in `staticfiles/`
 3. **WhiteNoise**: Serve i file da `staticfiles/` con compressione e cache headers
+
 
 ### Comandi Utili
 
@@ -58,7 +58,7 @@ make collectstatic
 make collectstatic-dev
 make collectstatic-test
 make collectstatic-prod
-````
+`````
 
 ### Directory Structure
 

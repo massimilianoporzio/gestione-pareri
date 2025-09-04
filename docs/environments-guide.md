@@ -13,13 +13,13 @@ Questo progetto è configurato per funzionare con **4 ambienti distinti**, ognun
 
 ## 🔧 DEV - Ambiente di Sviluppo
 
-### 🎯 Scopo
+### 🎯 Scopo DEV
 
 - **Sviluppo quotidiano** e prototipazione rapida
 - **Debug e sperimentazione** con nuove funzionalità
 - **Test manuali** durante lo sviluppo
 
-### ⚙️ Caratteristiche
+### ⚙️ Caratteristiche DEV
 
 - **Database**: SQLite di default per velocità (switchable a PostgreSQL)
 - **Debug**: Abilitato con toolbar e logging dettagliato
@@ -27,7 +27,7 @@ Questo progetto è configurato per funzionare con **4 ambienti distinti**, ognun
 - **Logging**: Console e file per debug completo
 - **Hot Reload**: Riavvio automatico del server su modifiche
 
-### 🚀 Come usarlo
+### 🚀 Come usarlo DEV
 
 ```bash
 # Server di sviluppo
@@ -58,7 +58,7 @@ uv run manage.py test accounts.tests.SecurityTest --settings=home.settings.test_
 uv run manage.py test accounts --settings=home.settings.test_local
 ```
 
-### 💡 Quando usarlo
+### 💡 Quando usarlo DEV
 
 - Sviluppo di nuove funzionalità
 - Debug di problemi
@@ -69,13 +69,13 @@ uv run manage.py test accounts --settings=home.settings.test_local
 
 ## 🧪 TEST - Ambiente di Test
 
-### 🎯 Scopo
+### 🎯 Scopo TEST
 
 - **Test automatizzati** (unit test, integration test)
 - **Continuous Integration** (CI/CD pipeline)
 - **Validazione** del codice prima del merge
 
-### ⚙️ Caratteristiche
+### ⚙️ Caratteristiche TEST
 
 - **Database**: SQLite in memoria per velocità (switchable a PostgreSQL)
 - **Debug**: Disabilitato per simulare produzione
@@ -83,7 +83,7 @@ uv run manage.py test accounts --settings=home.settings.test_local
 - **Logging**: Minimale per non interferire con i test
 - **Isolamento**: Ogni test ha database pulito
 
-### 🚀 Come usarlo
+### 🚀 Come usarlo TEST
 
 ```bash
 # Test automatizzati
@@ -99,7 +99,7 @@ just migrate-test
 just check-env-test
 ```
 
-### 💡 Quando usarlo
+### 💡 Quando usarlo TEST
 
 - Esecuzione di test automatizzati
 - Pipeline CI/CD
@@ -110,14 +110,14 @@ just check-env-test
 
 ## 🎭 STAGING - Ambiente di Pre-Produzione
 
-### 🎯 Scopo
+### 🎯 Scopo STAGING
 
 - **User Acceptance Testing (UAT)**
 - **Test finali** prima del rilascio
 - **Simulazione produzione** con dati quasi-reali
 - **Demo** per stakeholder e clienti
 
-### ⚙️ Caratteristiche
+### ⚙️ Caratteristiche STAGING
 
 - **Database**: PostgreSQL obbligatorio (simula produzione)
 - **Debug**: Disabilitato (come produzione)
@@ -126,7 +126,7 @@ just check-env-test
 - **Sicurezza**: Impostazioni di sicurezza attive
 - **Cache**: Redis opzionale per test performance
 
-### 🚀 Come usarlo
+### 🚀 Come usarlo STAGING
 
 ```bash
 # Server staging
@@ -145,7 +145,7 @@ just shell-staging
 just check-env-staging
 ```
 
-### 💡 Quando usarlo
+### 💡 Quando usarlo STAGING
 
 - User Acceptance Testing (UAT)
 - Demo per clienti/stakeholder
@@ -157,14 +157,14 @@ just check-env-staging
 
 ## ⚡ PROD - Ambiente di Produzione
 
-### 🎯 Scopo
+### 🎯 Scopo PROD
 
 - **Sistema live** utilizzato dagli utenti finali
 - **Massima stabilità** e performance
 - **Sicurezza** ai massimi livelli
 - **Monitoring** e logging completi
 
-### ⚙️ Caratteristiche
+### ⚙️ Caratteristiche PROD
 
 - **Database**: PostgreSQL con backup automatici
 - **Debug**: Completamente disabilitato
@@ -173,7 +173,7 @@ just check-env-staging
 - **Sicurezza**: HTTPS, HSTS, CSP, e tutte le protezioni attive
 - **Scalabilità**: Configurato per load balancing
 
-### 🚀 Come usarlo
+### 🚀 Come usarlo PROD
 
 ```bash
 # Server produzione (solo per test locali!)
