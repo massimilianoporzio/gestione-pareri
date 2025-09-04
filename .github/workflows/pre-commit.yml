@@ -27,4 +27,4 @@ jobs:
         # Installa anche a livello di sistema per pre-commit
         pip install djlint ruff
     - name: Run pre-commit
-      uses: pre-commit/action@v3.0.0
+      uses: pre-commit/action@v3.0.1
