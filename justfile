@@ -1,279 +1,3 @@
-# Ricetta unica per help colorato cross-platform
-print_help:
-    @if [ "$(uname -s)" != "Windows_NT" ]; then \
-    printf "\033[35m🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI\033[0m\n"; \
-    printf "\033[90m============================================================\033[0m\n"; \
-    printf "\033[32m📊 DJANGO & DATABASE:\033[0m\n"; \
-    printf "\033[32m  just run-server         🚀 Server di sviluppo Django\033[0m\n"; \
-    printf "\033[32m  just run-dev            🔧 Server sviluppo (DEV)\033[0m\n"; \
-    printf "\033[32m  just run-test           🧪 Server sviluppo (TEST)\033[0m\n"; \
-    printf "\033[32m  just run-staging        🎭 Server sviluppo (STAGING)\033[0m\n"; \
-    printf "\033[32m  just run-prod           ⚡ Server sviluppo (PROD)\033[0m\n"; \
-    printf "\033[32m  just migrate            📦 Migrazioni database\033[0m\n"; \
-    printf "\033[32m  just makemigrations     📝 Crea migrazioni\033[0m\n"; \
-    printf "\033[32m  just shell              🐚 Shell Django\033[0m\n"; \
-    printf "\033[32m  just createsuperuser    👤 Crea superuser\033[0m\n"; \
-    printf "\033[32m  just init-groups        🔐 Inizializza gruppi base\033[0m\n"; \
-    printf "\033[32m  just dump-initial-data  💾 Dump dati iniziali\033[0m\n"; \
-    printf "\033[32m  just setup-all-environments 🔄 Setup tutti ambienti\033[0m\n"; \
-    printf "\033[32m  just test               🧪 Esegue test progetto\033[0m\n"; \
-    printf "\033[32m  just test-quick         ⚡ Test rapidi quotidiani\033[0m\n"; \
-    printf "\033[32m  just test-security      🔒 Test sicurezza critica\033[0m\n"; \
-    printf "\033[32m  just test-pre-deploy    🚀 Test completi pre-deploy\033[0m\n"; \
-    printf "\033[32m  just test-dev           🔧 Test ambiente DEV\033[0m\n"; \
-    printf "\033[32m  just test-test          🧪 Test ambiente TEST\033[0m\n"; \
-    printf "\033[32m  just test-staging       🎭 Test ambiente STAGING\033[0m\n"; \
-    printf "\033[32m  just test-prod          ⚡ Test ambiente PROD\033[0m\n"; \
-    printf "\n"; \
-    printf "\033[36m🌐 SERVER & DEPLOY:\033[0m\n"; \
-    printf "\033[36m  just waitress           🪟 Server Waitress (Windows)\033[0m\n"; \
-    printf "\033[36m  just run-uvicorn        ⚡ Server Uvicorn ASGI\033[0m\n"; \
-    printf "\033[36m  just iis-test-local     🧪 Test IIS locale\033[0m\n"; \
-    printf "\033[36m  just iis-deploy         🚀 Deploy completo IIS\033[0m\n"; \
-    printf "\033[36m  just iis-setup          ⚙️  Setup iniziale IIS\033[0m\n"; \
-    printf "\033[36m  just production-deploy  🏭 Deploy produzione completo\033[0m\n"; \
-    printf "\033[36m  just production-update  🔄 Update produzione esistente\033[0m\n"; \
-    printf "\033[36m  just deploy             🎯 Deploy automatico\033[0m\n"; \
-    printf "\033[36m  just deploy-dev         🔧 Deploy development\033[0m\n"; \
-    printf "\033[36m  just deploy-staging     🧪 Deploy staging\033[0m\n"; \
-    printf "\033[36m  just deploy-prod        🚀 Deploy production\033[0m\n"; \
-    printf "\033[36m  just stop-servers       🛑 Ferma tutti i server\033[0m\n"; \
-    printf "\033[36m  just kill-port          🔪 Termina processo porta 8000\033[0m\n"; \
-    printf "\n"; \
-    printf "\033[33m🔧 QUALITY & FORMAT:\033[0m\n"; \
-    printf "\033[33m  just fix-all            ⭐ CORREZIONE GLOBALE completa\033[0m\n"; \
-    printf "\033[33m  just lint-codacy        🔍 Controlli qualità Codacy\033[0m\n"; \
-    printf "\033[33m  just add-docstrings     📝 Aggiunge docstring mancanti\033[0m\n"; \
-    printf "\033[33m  just precommit-corporate 🏢 Pre-commit aziendale\033[0m\n"; \
-    printf "\033[33m  just quality-corporate  🏢 Quality controlli alternativi\033[0m\n"; \
-    printf "\033[33m  just fix-markdown       📝 Corregge problemi Markdown\033[0m\n"; \
-    printf "\n"; \
-    printf "\033[97mℹ️  UTILITY:\033[0m\n"; \
-    printf "\033[97m  just stats              📊 Statistiche progetto\033[0m\n"; \
-    printf "\033[97m  just check-env          🔍 Controllo ambiente\033[0m\n"; \
-    printf "\033[97m  just check-env-dev      🔍 Controllo ambiente DEV\033[0m\n"; \
-    printf "\033[97m  just check-env-test     🧪 Controllo ambiente TEST\033[0m\n"; \
-    printf "\033[97m  just check-env-staging  🎭 Controllo ambiente STAGING\033[0m\n"; \
-    printf "\033[97m  just check-env-prod     ⚡ Controllo ambiente PROD\033[0m\n"; \
-    printf "\033[97m  just generate-secret-key 🔑 Genera Django SECRET_KEY\033[0m\n"; \
-    printf "\033[97m  just generate-secret-keys-all 🔐 Genera tutte le SECRET_KEY\033[0m\n"; \
-    printf "\033[97m  just generate-db-passwords 🔐 Genera password DB\033[0m\n"; \
-    printf "\033[97m  just create-db-script   🗄️ Crea script SQL\033[0m\n"; \
-    printf "\033[97m  just --list             📋 Lista completa comandi\033[0m\n"; \
-    printf "\n"; \
-    printf "\033[90m# Comandi solo Windows/IIS/PowerShell: vedi commenti nel justfile\033[0m\n"; \
-    printf "\033[90m# just iis-test-local, iis-setup, iis-deploy, waitress, open-home, ecc.\033[0m\n"; \
-    else \
-        powershell -Command "Write-Host '🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI' -ForegroundColor Magenta"; \
-        powershell -Command "Write-Host '============================================================' -ForegroundColor Gray"; \
-        powershell -Command "Write-Host '📊 DJANGO & DATABASE:' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just run-server         🚀 Server di sviluppo Django' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just run-dev            🔧 Server sviluppo (DEV)' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just run-test           🧪 Server sviluppo (TEST)' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just run-staging        🎭 Server sviluppo (STAGING)' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just run-prod           ⚡ Server sviluppo (PROD)' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just migrate            📦 Migrazioni database' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just makemigrations     📝 Crea migrazioni' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just shell              🐚 Shell Django' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just createsuperuser    👤 Crea superuser' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just init-groups        🔐 Inizializza gruppi base' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just dump-initial-data  💾 Dump dati iniziali' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just setup-all-environments 🔄 Setup tutti ambienti' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test               🧪 Esegue test progetto' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-quick         ⚡ Test rapidi quotidiani' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-security      🔒 Test sicurezza critica' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-pre-deploy    🚀 Test completi pre-deploy' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-dev           🔧 Test ambiente DEV' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-test          🧪 Test ambiente TEST' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-staging       🎭 Test ambiente STAGING' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-prod          ⚡ Test ambiente PROD' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '🌐 SERVER & DEPLOY:' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just waitress           🪟 Server Waitress (Windows)' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just run-uvicorn        ⚡ Server Uvicorn ASGI' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just iis-test-local     🧪 Test IIS locale' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just iis-deploy         🚀 Deploy completo IIS' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just iis-setup          ⚙️  Setup iniziale IIS' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just production-deploy  🏭 Deploy produzione completo' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just production-update  🔄 Update produzione esistente' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just deploy             🎯 Deploy automatico' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just deploy-dev         🔧 Deploy development' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just deploy-staging     🧪 Deploy staging' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just deploy-prod        🚀 Deploy production' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just stop-servers       🛑 Ferma tutti i server' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just kill-port          🔪 Termina processo porta 8000' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '🔧 QUALITY & FORMAT:' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just fix-all            ⭐ CORREZIONE GLOBALE completa' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just lint-codacy        🔍 Controlli qualità Codacy' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just add-docstrings     📝 Aggiunge docstring mancanti' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just precommit-corporate 🏢 Pre-commit aziendale' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just quality-corporate  🏢 Quality controlli alternativi' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just fix-markdown       📝 Corregge problemi Markdown' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host 'ℹ️  UTILITY:' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just stats              📊 Statistiche progetto' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just check-env          🔍 Controllo ambiente' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just check-env-dev      🔍 Controllo ambiente DEV' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just check-env-test     🧪 Controllo ambiente TEST' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just check-env-staging  🎭 Controllo ambiente STAGING' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just check-env-prod     ⚡ Controllo ambiente PROD' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just generate-secret-key 🔑 Genera Django SECRET_KEY' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just generate-secret-keys-all 🔐 Genera tutte le SECRET_KEY' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just generate-db-passwords 🔐 Genera password DB' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just create-db-script   🗄️ Crea script SQL' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just --list             📋 Lista completa comandi' -ForegroundColor White"; \
-        powershell -Command "Write-Host '# Comandi solo Windows/IIS/PowerShell: vedi commenti nel justfile' -ForegroundColor Gray"; \
-        powershell -Command "Write-Host '# just iis-test-local, iis-setup, iis-deploy, waitress, open-home, ecc.' -ForegroundColor Gray"; \
-    fi
-# Ricette dedicate per stampa colorata
-print_magenta:
-    @if [ "$(uname -s)" != "Windows_NT" ]; then \
-        printf "\033[35m🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI\033[0m\n"; \
-    else \
-        powershell -Command "Write-Host '🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI' -ForegroundColor Magenta"; \
-    fi
-
-print_gray:
-    @if [ "$(uname -s)" != "Windows_NT" ]; then \
-        printf "\033[90m============================================================\033[0m\n"; \
-    else \
-        powershell -Command "Write-Host '============================================================' -ForegroundColor Gray"; \
-    fi
-
-print_green:
-    @if [ "$(uname -s)" != "Windows_NT" ]; then \
-        printf "\033[32m📊 DJANGO & DATABASE:\033[0m\n"; \
-        printf "\033[32m  just run-server         🚀 Server di sviluppo Django\033[0m\n"; \
-        printf "\033[32m  just run-dev            🔧 Server sviluppo (DEV)\033[0m\n"; \
-        printf "\033[32m  just run-test           🧪 Server sviluppo (TEST)\033[0m\n"; \
-        printf "\033[32m  just run-staging        🎭 Server sviluppo (STAGING)\033[0m\n"; \
-        printf "\033[32m  just run-prod           ⚡ Server sviluppo (PROD)\033[0m\n"; \
-        printf "\033[32m  just migrate            📦 Migrazioni database\033[0m\n"; \
-        printf "\033[32m  just makemigrations     📝 Crea migrazioni\033[0m\n"; \
-        printf "\033[32m  just shell              🐚 Shell Django\033[0m\n"; \
-        printf "\033[32m  just createsuperuser    👤 Crea superuser\033[0m\n"; \
-        printf "\033[32m  just init-groups        🔐 Inizializza gruppi base\033[0m\n"; \
-        printf "\033[32m  just dump-initial-data  💾 Dump dati iniziali\033[0m\n"; \
-        printf "\033[32m  just setup-all-environments 🔄 Setup tutti ambienti\033[0m\n"; \
-        printf "\033[32m  just test               🧪 Esegue test progetto\033[0m\n"; \
-        printf "\033[32m  just test-quick         ⚡ Test rapidi quotidiani\033[0m\n"; \
-        printf "\033[32m  just test-security      🔒 Test sicurezza critica\033[0m\n"; \
-        printf "\033[32m  just test-pre-deploy    🚀 Test completi pre-deploy\033[0m\n"; \
-        printf "\033[32m  just test-dev           🔧 Test ambiente DEV\033[0m\n"; \
-        printf "\033[32m  just test-test          🧪 Test ambiente TEST\033[0m\n"; \
-        printf "\033[32m  just test-staging       🎭 Test ambiente STAGING\033[0m\n"; \
-        printf "\033[32m  just test-prod          ⚡ Test ambiente PROD\033[0m\n"; \
-    else \
-        powershell -Command "Write-Host '📊 DJANGO & DATABASE:' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just run-server         🚀 Server di sviluppo Django' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just run-dev            🔧 Server sviluppo (DEV)' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just run-test           🧪 Server sviluppo (TEST)' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just run-staging        🎭 Server sviluppo (STAGING)' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just run-prod           ⚡ Server sviluppo (PROD)' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just migrate            📦 Migrazioni database' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just makemigrations     📝 Crea migrazioni' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just shell              🐚 Shell Django' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just createsuperuser    👤 Crea superuser' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just init-groups        🔐 Inizializza gruppi base' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just dump-initial-data  💾 Dump dati iniziali' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just setup-all-environments 🔄 Setup tutti ambienti' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test               🧪 Esegue test progetto' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-quick         ⚡ Test rapidi quotidiani' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-security      🔒 Test sicurezza critica' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-pre-deploy    🚀 Test completi pre-deploy' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-dev           🔧 Test ambiente DEV' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-test          🧪 Test ambiente TEST' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-staging       🎭 Test ambiente STAGING' -ForegroundColor Green"; \
-        powershell -Command "Write-Host '  just test-prod          ⚡ Test ambiente PROD' -ForegroundColor Green"; \
-    fi
-
-print_cyan:
-    @if [ "$(uname -s)" != "Windows_NT" ]; then \
-        printf "\033[36m🌐 SERVER & DEPLOY:\033[0m\n"; \
-        printf "\033[36m  just waitress           🪟 Server Waitress (Windows)\033[0m\n"; \
-        printf "\033[36m  just run-uvicorn        ⚡ Server Uvicorn ASGI\033[0m\n"; \
-        printf "\033[36m  just iis-test-local     🧪 Test IIS locale\033[0m\n"; \
-        printf "\033[36m  just iis-deploy         🚀 Deploy completo IIS\033[0m\n"; \
-        printf "\033[36m  just iis-setup          ⚙️  Setup iniziale IIS\033[0m\n"; \
-        printf "\033[36m  just production-deploy  🏭 Deploy produzione completo\033[0m\n"; \
-        printf "\033[36m  just production-update  🔄 Update produzione esistente\033[0m\n"; \
-        printf "\033[36m  just deploy             🎯 Deploy automatico\033[0m\n"; \
-        printf "\033[36m  just deploy-dev         🔧 Deploy development\033[0m\n"; \
-        printf "\033[36m  just deploy-staging     🧪 Deploy staging\033[0m\n"; \
-        printf "\033[36m  just deploy-prod        🚀 Deploy production\033[0m\n"; \
-        printf "\033[36m  just stop-servers       🛑 Ferma tutti i server\033[0m\n"; \
-        printf "\033[36m  just kill-port          🔪 Termina processo porta 8000\033[0m\n"; \
-    else \
-        powershell -Command "Write-Host '🌐 SERVER & DEPLOY:' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just waitress           🪟 Server Waitress (Windows)' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just run-uvicorn        ⚡ Server Uvicorn ASGI' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just iis-test-local     🧪 Test IIS locale' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just iis-deploy         🚀 Deploy completo IIS' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just iis-setup          ⚙️  Setup iniziale IIS' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just production-deploy  🏭 Deploy produzione completo' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just production-update  🔄 Update produzione esistente' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just deploy             🎯 Deploy automatico' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just deploy-dev         🔧 Deploy development' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just deploy-staging     🧪 Deploy staging' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just deploy-prod        🚀 Deploy production' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just stop-servers       🛑 Ferma tutti i server' -ForegroundColor Cyan"; \
-        powershell -Command "Write-Host '  just kill-port          🔪 Termina processo porta 8000' -ForegroundColor Cyan"; \
-    fi
-
-print_yellow:
-    @if [ "$(uname -s)" != "Windows_NT" ]; then \
-        printf "\033[33m🔧 QUALITY & FORMAT:\033[0m\n"; \
-        printf "\033[33m  just fix-all            ⭐ CORREZIONE GLOBALE completa\033[0m\n"; \
-        printf "\033[33m  just lint-codacy        🔍 Controlli qualità Codacy\033[0m\n"; \
-        printf "\033[33m  just add-docstrings     📝 Aggiunge docstring mancanti\033[0m\n"; \
-        printf "\033[33m  just precommit-corporate 🏢 Pre-commit aziendale\033[0m\n"; \
-        printf "\033[33m  just quality-corporate  🏢 Quality controlli alternativi\033[0m\n"; \
-        printf "\033[33m  just fix-markdown       📝 Corregge problemi Markdown\033[0m\n"; \
-    else \
-        powershell -Command "Write-Host '🔧 QUALITY & FORMAT:' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just fix-all            ⭐ CORREZIONE GLOBALE completa' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just lint-codacy        🔍 Controlli qualità Codacy' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just add-docstrings     📝 Aggiunge docstring mancanti' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just precommit-corporate 🏢 Pre-commit aziendale' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just quality-corporate  🏢 Quality controlli alternativi' -ForegroundColor Yellow"; \
-        powershell -Command "Write-Host '  just fix-markdown       📝 Corregge problemi Markdown' -ForegroundColor Yellow"; \
-    fi
-
-print_white:
-    @if [ "$(uname -s)" != "Windows_NT" ]; then \
-        printf "\033[97mℹ️  UTILITY:\033[0m\n"; \
-        printf "\033[97m  just stats              📊 Statistiche progetto\033[0m\n"; \
-        printf "\033[97m  just check-env          🔍 Controllo ambiente\033[0m\n"; \
-        printf "\033[97m  just check-env-dev      🔍 Controllo ambiente DEV\033[0m\n"; \
-        printf "\033[97m  just check-env-test     🧪 Controllo ambiente TEST\033[0m\n"; \
-        printf "\033[97m  just check-env-staging  🎭 Controllo ambiente STAGING\033[0m\n"; \
-        printf "\033[97m  just check-env-prod     ⚡ Controllo ambiente PROD\033[0m\n"; \
-        printf "\033[97m  just generate-secret-key 🔑 Genera Django SECRET_KEY\033[0m\n"; \
-        printf "\033[97m  just generate-secret-keys-all 🔐 Genera tutte le SECRET_KEY\033[0m\n"; \
-        printf "\033[97m  just generate-db-passwords 🔐 Genera password DB\033[0m\n"; \
-        printf "\033[97m  just create-db-script   🗄️ Crea script SQL\033[0m\n"; \
-        printf "\033[97m  just --list             📋 Lista completa comandi\033[0m\n"; \
-    else \
-        powershell -Command "Write-Host 'ℹ️  UTILITY:' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just stats              📊 Statistiche progetto' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just check-env          🔍 Controllo ambiente' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just check-env-dev      🔍 Controllo ambiente DEV' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just check-env-test     🧪 Controllo ambiente TEST' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just check-env-staging  🎭 Controllo ambiente STAGING' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just check-env-prod     ⚡ Controllo ambiente PROD' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just generate-secret-key 🔑 Genera Django SECRET_KEY' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just generate-secret-keys-all 🔐 Genera tutte le SECRET_KEY' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just generate-db-passwords 🔐 Genera password DB' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just create-db-script   🗄️ Crea script SQL' -ForegroundColor White"; \
-        powershell -Command "Write-Host '  just --list             📋 Lista completa comandi' -ForegroundColor White"; \
-    fi
-
-print_gray_footer:
-    @if [ "$(uname -s)" != "Windows_NT" ]; then \
-        printf "\033[90m# Comandi solo Windows/IIS/PowerShell: vedi commenti nel justfile\033[0m\n"; \
-        printf "\033[90m# just iis-test-local, iis-setup, iis-deploy, waitress, open-home, ecc.\033[0m\n"; \
-    else \
-        powershell -Command "Write-Host '# Comandi solo Windows/IIS/PowerShell: vedi commenti nel justfile' -ForegroundColor Gray"; \
-        powershell -Command "Write-Host '# just iis-test-local, iis-setup, iis-deploy, waitress, open-home, ecc.' -ForegroundColor Gray"; \
-    fi
 # Deploy Django Template - Comandi disponibili con Just
 # Per visualizzare tutti i comandi: just --list o just
 
@@ -282,30 +6,71 @@ set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
 # Variabili globali
 python := "uv run"
-django_manage := "uv run python src/manage.py"
-
-# Ricetta cross-platform per stampa colorata
-color_print color message:
-    @if [ "$(uname -s)" != "Windows_NT" ]; then \
-        case "$color" in \
-            magenta) code='\033[35m' ;; \
-            green) code='\033[32m' ;; \
-            yellow) code='\033[33m' ;; \
-            cyan) code='\033[36m' ;; \
-            gray) code='\033[90m' ;; \
-            white) code='\033[97m' ;; \
-            *) code='\033[0m' ;; \
-        esac; \
-        echo -e "${code}${message}\033[0m"; \
-    else \
-        powershell -Command "Write-Host '$message' -ForegroundColor $color"; \
-    fi
+django_manage := "uv run src/manage.py"
 
 # 📋 Comando default: mostra l'help
 default:
-    # Cross-platform color print (bash/macOS/Linux/Windows)
-    # Stampa colorata cross-platform
-    @just print_help
+    @Write-Host "🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI" -ForegroundColor Magenta
+    @Write-Host "============================================================" -ForegroundColor DarkGray
+    @Write-Host ""
+    @Write-Host "📊 DJANGO & DATABASE:" -ForegroundColor Green
+    @Write-Host "  just run-server         🚀 Server di sviluppo Django" -ForegroundColor Green
+    @Write-Host "  just run-dev            🔧 Server sviluppo (DEV)" -ForegroundColor Green
+    @Write-Host "  just run-test           🧪 Server sviluppo (TEST)" -ForegroundColor Green
+    @Write-Host "  just run-staging        🎭 Server sviluppo (STAGING)" -ForegroundColor Green
+    @Write-Host "  just run-prod           ⚡ Server sviluppo (PROD)" -ForegroundColor Green
+    @Write-Host "  just migrate            📦 Migrazioni database" -ForegroundColor Green
+    @Write-Host "  just makemigrations     📝 Crea migrazioni" -ForegroundColor Green
+    @Write-Host "  just shell              🐚 Shell Django" -ForegroundColor Green
+    @Write-Host "  just test               🧪 Esegue test progetto" -ForegroundColor Green
+    @Write-Host "  just test-dev           🔧 Test ambiente DEV" -ForegroundColor Green
+    @Write-Host "  just test-test          🧪 Test ambiente TEST" -ForegroundColor Green
+    @Write-Host "  just test-staging       🎭 Test ambiente STAGING" -ForegroundColor Green
+    @Write-Host "  just test-prod          ⚡ Test ambiente PROD" -ForegroundColor Green
+    @Write-Host ""
+    @Write-Host "🌐 SERVER & DEPLOY:" -ForegroundColor Cyan
+    @Write-Host "  just waitress           🪟 Server Waitress (Windows)" -ForegroundColor Cyan
+    @Write-Host "  just run-uvicorn        ⚡ Server Uvicorn ASGI" -ForegroundColor Cyan
+    @Write-Host "  just deploy             🎯 Deploy automatico" -ForegroundColor Cyan
+    @Write-Host "  just deploy-dev         🔧 Deploy development" -ForegroundColor Cyan
+    @Write-Host "  just deploy-staging     🧪 Deploy staging" -ForegroundColor Cyan
+    @Write-Host "  just deploy-prod        🚀 Deploy production" -ForegroundColor Cyan
+    @Write-Host "  just stop-servers       🛑 Ferma tutti i server" -ForegroundColor Cyan
+    @Write-Host "  just kill-port          🔪 Termina processo porta 8000" -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🔧 QUALITY & FORMAT:" -ForegroundColor Yellow
+    @Write-Host "  just fix-all            ⭐ CORREZIONE GLOBALE completa" -ForegroundColor Yellow
+    @Write-Host "  just lint-codacy        🔍 Controlli qualità Codacy" -ForegroundColor Yellow
+    @Write-Host "  just add-docstrings     📝 Aggiunge docstring mancanti" -ForegroundColor Yellow
+    @Write-Host "  just precommit-corporate 🏢 Pre-commit aziendale" -ForegroundColor Yellow
+    @Write-Host "  just quality-corporate  🏢 Quality controlli alternativi" -ForegroundColor Yellow
+    @Write-Host "  just fix-markdown       📝 Corregge problemi Markdown" -ForegroundColor Yellow
+    @Write-Host ""
+    @Write-Host "ℹ️  UTILITY:" -ForegroundColor White
+    @Write-Host "  just stats              📊 Statistiche progetto" -ForegroundColor White
+    @Write-Host "  just check-env          🔍 Controllo ambiente" -ForegroundColor White
+    @Write-Host "  just check-env-dev      � Controllo ambiente DEV" -ForegroundColor White
+    @Write-Host "  just check-env-test     🧪 Controllo ambiente TEST" -ForegroundColor White
+    @Write-Host "  just check-env-staging  🎭 Controllo ambiente STAGING" -ForegroundColor White
+    @Write-Host "  just check-env-prod     ⚡ Controllo ambiente PROD" -ForegroundColor White
+    @Write-Host "  just generate-secret-key 🔑 Genera Django SECRET_KEY" -ForegroundColor White
+    @Write-Host "  just generate-secret-keys-all 🔐 Genera SECRET_KEY per tutti e 4 gli ambienti" -ForegroundColor White
+    @Write-Host "  just generate-db-passwords 🔐 Genera password PostgreSQL sicure" -ForegroundColor White
+    @Write-Host "  just create-db-script   🗄️ Crea script SQL con password reali" -ForegroundColor White
+    @Write-Host "  just --list             📋 Lista completa comandi" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "🏢 INTRANET AZIENDALE:" -ForegroundColor Magenta
+    @Write-Host "  just setup-iis          🌐 Configura IIS per intranet" -ForegroundColor Cyan
+    @Write-Host "  just deploy-intranet    🚀 Deploy completo intranet" -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🪟 WINDOWS IIS DEPLOYMENT:" -ForegroundColor Blue
+    @Write-Host "  just setup-iis-prod     🌐 Setup IIS produzione" -ForegroundColor Blue
+    @Write-Host "  just deploy-iis         🚀 Deploy completo con IIS" -ForegroundColor Blue
+    @Write-Host "  just deploy-iis         🚀 Deploy completo con IIS" -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🐧 LINUX/macOS NGINX:" -ForegroundColor Blue
+    @Write-Host "  just setup-nginx        🌐 Configura Nginx reverse proxy" -ForegroundColor Blue
+    @Write-Host "  just deploy-nginx       🚀 Deploy completo con Nginx" -ForegroundColor Blue
 
 # === IIS DEPLOYMENT (Windows Server) ===
 
@@ -401,36 +166,28 @@ run-prod:
 # 🧪 Test del progetto
 test:
     @Write-Host "🧪 Esecuzione dei test..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: LOCAL con PostgreSQL" -ForegroundColor Gray
-    @uv run python src/manage.py test accounts --settings=home.settings.test_local
+    @{{django_manage}} test
 
 # 🧪 Test in ambiente DEV
 test-dev:
-    @Write-Host "🧪 Test in ambiente DEV..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: DEV con SQLite/PostgreSQL" -ForegroundColor Gray
-    @$env:DJANGO_SETTINGS_MODULE="home.settings.dev"; uv run pytest src/accounts/tests.py -v
+    @Write-Host "🧪 Esecuzione dei test in ambiente DEV..." -ForegroundColor Cyan
+    @$env:DJANGO_ENV="dev"; {{django_manage}} test
 
 # 🧪 Test in ambiente TEST
 test-test:
-    @Write-Host "🧪 Test in ambiente TEST..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: TEST con PostgreSQL" -ForegroundColor Gray
-    @Write-Host "⚡ PostgreSQL deve essere configurato!" -ForegroundColor Yellow
-    @$env:DJANGO_SETTINGS_MODULE="home.settings.test"; uv run pytest src/accounts/tests.py -v
+    @Write-Host "🧪 Esecuzione dei test in ambiente TEST..." -ForegroundColor Cyan
+    @$env:DJANGO_ENV="test"; {{django_manage}} test
 
 # 🧪 Test in ambiente STAGING
 test-staging:
     @Write-Host "🎭 Esecuzione dei test in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: STAGING con PostgreSQL" -ForegroundColor Gray
     @Write-Host "⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; uv run python src/manage.py test accounts --settings=home.settings.staging --verbosity=2
+    @$env:DJANGO_ENV="staging"; {{django_manage}} test
 
 # 🧪 Test in ambiente PROD
 test-prod:
-    @Write-Host "🧪 Test in ambiente PROD..." -ForegroundColor Cyan
-    @Write-Host "📋 Ambiente: PROD con PostgreSQL" -ForegroundColor Gray
-    @Write-Host "🚨 ATTENZIONE: Test in ambiente PRODUZIONE!" -ForegroundColor Red
-    @Write-Host "💡 Usa solo per validazione post-deploy" -ForegroundColor Yellow
-    @$env:DJANGO_SETTINGS_MODULE="home.settings.prod"; $env:DJANGO_TEST_DB="1"; uv run pytest src/accounts/tests.py -v
+    @Write-Host "🧪 Esecuzione dei test in ambiente PROD..." -ForegroundColor Cyan
+    @$env:DJANGO_ENV="prod"; {{django_manage}} test
 
 # 📦 Migrazioni database
 migrate:
@@ -488,108 +245,6 @@ shell-staging:
 shell-prod:
     @Write-Host "🐚 Avvio della shell Django in ambiente PROD..." -ForegroundColor Cyan
     @$env:DJANGO_ENV="prod"; {{django_manage}} shell
-
-# 👤 Crea superuser
-createsuperuser:
-    @Write-Host "👤 Creazione di un superuser..." -ForegroundColor Cyan
-    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
-    @{{django_manage}} createsuperuser
-
-# 👤 Crea superuser in ambiente DEV
-createsuperuser-dev:
-    @Write-Host "👤 Creazione di un superuser in ambiente DEV..." -ForegroundColor Cyan
-    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="dev"; {{django_manage}} createsuperuser
-
-# 👤 Crea superuser in ambiente TEST
-createsuperuser-test:
-    @Write-Host "👤 Creazione di un superuser in ambiente TEST..." -ForegroundColor Cyan
-    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="test"; {{django_manage}} createsuperuser
-
-# 👤 Crea superuser in ambiente STAGING
-createsuperuser-staging:
-    @Write-Host "🎭 Creazione di un superuser in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
-    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} createsuperuser
-
-# 👤 Crea superuser in ambiente PROD
-createsuperuser-prod:
-    @Write-Host "👤 Creazione di un superuser in ambiente PROD..." -ForegroundColor Cyan
-    @Write-Host "ℹ️  Ricorda: l'email deve terminare con @aslcn1.it" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="prod"; {{django_manage}} createsuperuser
-
-# === GROUPS & PERMISSIONS ===
-
-# 🔐 Inizializza gruppi e permessi di base
-init-groups:
-    @Write-Host "🔐 Inizializzazione gruppi e permessi di base..." -ForegroundColor Cyan
-    @{{django_manage}} init_groups_permissions
-    @Write-Host "✅ Gruppi e permessi inizializzati" -ForegroundColor Green
-
-# 🔐 Inizializza gruppi in ambiente TEST
-init-groups-test:
-    @Write-Host "🔐 Inizializzazione gruppi in ambiente TEST..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="test"; {{django_manage}} init_groups_permissions
-    @Write-Host "✅ Gruppi TEST inizializzati" -ForegroundColor Green
-
-# 🔐 Inizializza gruppi in ambiente STAGING
-init-groups-staging:
-    @Write-Host "🔐 Inizializzazione gruppi in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} init_groups_permissions
-    @Write-Host "✅ Gruppi STAGING inizializzati" -ForegroundColor Green
-
-# 🔐 Inizializza gruppi in ambiente PROD
-init-groups-prod:
-    @Write-Host "🔐 Inizializzazione gruppi in ambiente PROD..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="prod"; {{django_manage}} init_groups_permissions
-    @Write-Host "✅ Gruppi PROD inizializzati" -ForegroundColor Green
-
-# === DATABASE DUMP & LOAD ===
-
-# 💾 Crea dump dei dati iniziali (superuser + gruppi + permessi)
-dump-initial-data:
-    @Write-Host "💾 Creazione dump dei dati iniziali..." -ForegroundColor Cyan
-    @Write-Host "ℹ️  Salva superuser, gruppi e permessi da ambiente DEV" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="dev"; {{django_manage}} dumpdata accounts auth.group auth.permission --format=json --indent=2 --output=fixtures/initial_data.json
-    @Write-Host "✅ Dump salvato in fixtures/initial_data.json" -ForegroundColor Green
-
-# 📥 Carica dati iniziali in ambiente TEST
-load-initial-data-test:
-    @Write-Host "📥 Caricamento dati iniziali in ambiente TEST..." -ForegroundColor Cyan
-    @$env:DJANGO_ENV="test"; {{django_manage}} loaddata fixtures/initial_data.json
-    @Write-Host "✅ Dati caricati in ambiente TEST" -ForegroundColor Green
-
-# 📥 Carica dati iniziali in ambiente STAGING
-load-initial-data-staging:
-    @Write-Host "📥 Caricamento dati iniziali in ambiente STAGING..." -ForegroundColor Cyan
-    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} loaddata fixtures/initial_data.json
-    @Write-Host "✅ Dati caricati in ambiente STAGING" -ForegroundColor Green
-
-# 📥 Carica dati iniziali in ambiente PROD
-load-initial-data-prod:
-    @Write-Host "📥 Caricamento dati iniziali in ambiente PROD..." -ForegroundColor Cyan
-    @Write-Host "⚠️  ATTENZIONE: Stai caricando dati in PRODUZIONE!" -ForegroundColor Red
-    @$env:DJANGO_ENV="prod"; {{django_manage}} loaddata fixtures/initial_data.json
-    @Write-Host "✅ Dati caricati in ambiente PROD" -ForegroundColor Green
-
-# 🔄 Setup completo tutti gli ambienti (migrate + load data)
-setup-all-environments:
-    @Write-Host "🔄 Setup completo di tutti gli ambienti..." -ForegroundColor Cyan
-    @Write-Host "1/4 - Migrazioni ambiente TEST..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="test"; {{django_manage}} migrate
-    @Write-Host "2/4 - Migrazioni ambiente STAGING..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="staging"; {{django_manage}} migrate
-    @Write-Host "3/4 - Migrazioni ambiente PROD..." -ForegroundColor Yellow
-    @$env:DJANGO_ENV="prod"; {{django_manage}} migrate
-    @Write-Host "4/4 - Caricamento dati iniziali in tutti gli ambienti..." -ForegroundColor Yellow
-    just load-initial-data-test
-    just load-initial-data-staging
-    just load-initial-data-prod
-    @Write-Host "✅ Setup completo di tutti gli ambienti completato!" -ForegroundColor Green
 
 # === QUALITY COMMANDS ===
 
@@ -656,9 +311,9 @@ fix-markdown:
 lint-codacy:
     @Write-Host "🔍 Controlli qualità stile Codacy..." -ForegroundColor Cyan
     @Write-Host "1/3 - Ruff check..." -ForegroundColor Yellow
-    @-{{python}} ruff check --output-format=github .
+    @-{{python}} ruff check --output-format=github --exclude=.venv .
     @Write-Host "2/3 - Flake8..." -ForegroundColor Yellow
-    @-{{python}} flake8 --format=default .
+    @-{{python}} flake8 --format=default --exclude=.venv .
     @Write-Host "3/3 - Pylint..." -ForegroundColor Yellow
     @-{{python}} pylint src/home/ --output-format=colorized
     @Write-Host "✅ Controlli completati!" -ForegroundColor Green
@@ -683,7 +338,7 @@ generate-secret-keys-all:
     @$dev_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
     @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key" -ForegroundColor White
     @Write-Host ""
-    @Write-Host "🧪 TEST Environment:" -ForegroundColor Blue
+    @Write-Host "🧪 TEST Environment:" -ForegroundColor Blue  
     @$test_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
     @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key" -ForegroundColor White
     @Write-Host ""
@@ -893,125 +548,3 @@ create-db-script:
     } else { \
         Write-Host "❌ Template non trovato: update_postgresql_staging.template.sql" -ForegroundColor Red; \
     }
-
-# === ENHANCED TESTING COMMANDS ===
-
-# ⚡ Test rapidi quotidiani per sviluppatori
-test-quick:
-    @Write-Host "⚡ Test rapidi quotidiani..." -ForegroundColor Yellow
-    @Write-Host "🎯 Focus: CustomUser, sicurezza base, autenticazione" -ForegroundColor Gray
-    @Write-Host "🗄️ Database: SQLite (veloce)" -ForegroundColor Gray
-    @uv run python src/manage.py test accounts.tests.CustomUserModelTest accounts.tests.CustomUserAuthenticationTest accounts.tests.SecurityTest --settings=home.settings.test_local --keepdb --verbosity=1
-
-# 🔒 Test sicurezza critica
-test-security:
-    @Write-Host "🔒 Test sicurezza critica..." -ForegroundColor Red
-    @Write-Host "🎯 Focus: Validazione domini, password, CSRF" -ForegroundColor Gray
-    @Write-Host "🗄️ Database: SQLite (veloce)" -ForegroundColor Gray
-    @uv run python src/manage.py test accounts.tests.SecurityTest accounts.tests.CustomUserFormsTest --settings=home.settings.test_local --keepdb --verbosity=2
-
-# 🚀 Test completi pre-deploy
-test-pre-deploy:
-    @Write-Host "🚀 Test completi pre-deploy..." -ForegroundColor Green
-    @Write-Host "📋 Tutti i 42 test con report dettagliato" -ForegroundColor Gray
-    @Write-Host "⚡ Performance + Sicurezza + Funzionalità" -ForegroundColor Gray
-    @Write-Host "🗄️ Database: PostgreSQL (realistico)" -ForegroundColor Gray
-    @uv run python src/manage.py test accounts --settings=home.settings.test --verbosity=2
-
-# 📊 Test con coverage
-test-coverage:
-    @Write-Host "📊 Test con coverage report..." -ForegroundColor Cyan
-    @Write-Host "📋 Generazione report di copertura" -ForegroundColor Gray
-    @cd src; uv run coverage run --source='.' manage.py test --settings=home.settings.test_local
-    @cd src; uv run coverage report
-    @cd src; uv run coverage html
-    @Write-Host "🌐 Report HTML: src/htmlcov/index.html" -ForegroundColor Green
-
-# 🏥 Test health check
-test-health:
-    @Write-Host "🏥 Health check del sistema..." -ForegroundColor Cyan
-    @Write-Host "1/4 - Verifica ambienti..." -ForegroundColor Yellow
-    just check-env
-    @Write-Host "2/4 - Test rapidi..." -ForegroundColor Yellow
-    just test-quick
-    @Write-Host "3/4 - Verifica migrazioni..." -ForegroundColor Yellow
-    @cd src; {{django_manage}} showmigrations --settings=home.settings.test_local
-    @Write-Host "4/4 - Test connessione database..." -ForegroundColor Yellow
-    @cd src; {{django_manage}} dbshell --settings=home.settings.test_local -c "SELECT 1;"
-    @Write-Host "✅ Health check completato!" -ForegroundColor Green
-
-# ============================================================================
-# 🌐 IIS DEPLOYMENT COMMANDS
-# ============================================================================
-
-# 🧪 Test IIS locale con subpath
-iis-test-local:
-    @Write-Host "🧪 Avvio test IIS locale..." -ForegroundColor Cyan
-    @Write-Host "📍 URL: http://localhost:8000/pratiche-pareri/" -ForegroundColor Yellow
-    @Write-Host "📊 Admin: http://localhost:8000/pratiche-pareri/admin/" -ForegroundColor Yellow
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/test-iis-local.ps1
-
-# ⚙️ Setup iniziale per IIS
-iis-setup:
-    @Write-Host "⚙️ Setup iniziale IIS..." -ForegroundColor Cyan
-    @if (!(Test-Path .env.prod)) { if (Test-Path config/environments/.env.prod) { Copy-Item config/environments/.env.prod .env.prod; Write-Host "✅ .env.prod copiato da config/environments/" -ForegroundColor Green } elseif (Test-Path config/environments/.env.prod.template) { Copy-Item config/environments/.env.prod.template .env.prod; Write-Host "✅ .env.prod creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } } else { Write-Host "📄 File .env.prod già presente" -ForegroundColor Green }
-    @if (!(Test-Path web.config)) { Copy-Item web.config.template web.config; Write-Host "✅ File web.config creato da template - MODIFICA I VALORI!" -ForegroundColor Yellow } else { Write-Host "� File web.config già presente" -ForegroundColor Green }
-    @Write-Host "�📋 Prossimi passi:" -ForegroundColor Yellow
-    @Write-Host "1. Modifica .env.prod con i tuoi valori" -ForegroundColor White
-    @Write-Host "2. Modifica web.config con percorsi e credenziali reali" -ForegroundColor White
-    @Write-Host "3. Configura PostgreSQL per produzione" -ForegroundColor White
-    @Write-Host "4. Esegui: just iis-test-local" -ForegroundColor White
-    @Write-Host "5. Quando tutto funziona: just iis-deploy" -ForegroundColor White
-
-# 🔐 Setup credenziali per tutti gli ambienti
-setup-credentials:
-    @Write-Host "🔐 Setup credenziali per tutti gli ambienti..." -ForegroundColor Cyan
-    @if (!(Test-Path .env.dev)) { Copy-Item config/environments/.env.dev.template .env.dev; Write-Host "✅ .env.dev creato" -ForegroundColor Green } else { Write-Host "📄 .env.dev già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path .env.test)) { Copy-Item config/environments/.env.test.template .env.test; Write-Host "✅ .env.test creato" -ForegroundColor Green } else { Write-Host "📄 .env.test già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path .env.staging)) { Copy-Item config/environments/.env.staging.template .env.staging; Write-Host "✅ .env.staging creato" -ForegroundColor Green } else { Write-Host "📄 .env.staging già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path .env.prod)) { Copy-Item config/environments/.env.prod.template .env.prod; Write-Host "✅ .env.prod creato" -ForegroundColor Green } else { Write-Host "📄 .env.prod già presente" -ForegroundColor Yellow }
-    @if (!(Test-Path db_credentials.md)) { Copy-Item config/database/db_credentials.template.md db_credentials.md; Write-Host "✅ db_credentials.md creato" -ForegroundColor Green } else { Write-Host "📄 db_credentials.md già presente" -ForegroundColor Yellow }
-    @Write-Host "⚠️  IMPORTANTE: Modifica TUTTI i file .env con le password reali!" -ForegroundColor Red
-    @Write-Host "📋 File creati (NON tracciati da git):" -ForegroundColor Yellow
-    @Write-Host "  - .env.dev (password DEV)" -ForegroundColor White
-    @Write-Host "  - .env.test (password TEST)" -ForegroundColor White
-    @Write-Host "  - .env.staging (password STAGING)" -ForegroundColor White
-    @Write-Host "  - .env.prod (password PROD)" -ForegroundColor White
-    @Write-Host "  - db_credentials.md (reference file)" -ForegroundColor White
-
-# 🚀 Deploy completo su IIS
-iis-deploy:
-    @Write-Host "🚀 Deploy completo IIS..." -ForegroundColor Cyan
-    @Write-Host "⚠️  ATTENZIONE: Questo comando richiede privilegi amministratore!" -ForegroundColor Red
-    @Write-Host "Continuare? (Premi Enter per procedere, Ctrl+C per annullare)" -ForegroundColor Yellow
-    @cmd /c "pause > nul"
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/deploy-iis.ps1 -ServerIP "192.168.1.100"
-
-# 🔧 Deploy IIS con IP personalizzato
-iis-deploy-custom ip:
-    @Write-Host "🚀 Deploy IIS su {{ip}}..." -ForegroundColor Cyan
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/deploy-iis.ps1 -ServerIP "{{ip}}"
-
-# 🏥 Health check IIS
-iis-health:
-    @Write-Host "🏥 Health check IIS..." -ForegroundColor Cyan
-    @$ip = if ($env:IIS_SERVER_IP) { $env:IIS_SERVER_IP } else { "localhost" }
-    @try { $response = Invoke-WebRequest -Uri "http://$ip/pratiche-pareri/admin/" -TimeoutSec 5 -UseBasicParsing; Write-Host "✅ IIS raggiungibile: $($response.StatusCode)" -ForegroundColor Green } catch { Write-Host "❌ IIS non raggiungibile: $($_.Exception.Message)" -ForegroundColor Red }
-
-# 🏭 Deploy produzione completo (installazione da zero)
-production-deploy:
-    @Write-Host "🏭 Deploy produzione completo..." -ForegroundColor Cyan
-    @Write-Host "⚠️  ATTENZIONE: Questo comando installa l'applicazione da zero!" -ForegroundColor Red
-    @Write-Host "Continuare? (Premi Enter per procedere, Ctrl+C per annullare)" -ForegroundColor Yellow
-    @cmd /c "pause > nul"
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/production-deploy.ps1
-
-# 🔄 Update produzione esistente
-production-update:
-    @Write-Host "🔄 Update produzione esistente..." -ForegroundColor Cyan
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/production-deploy.ps1 -UpdateOnly
-
-# 🏭 Deploy produzione con IP personalizzato
-production-deploy-custom ip:
-    @Write-Host "🏭 Deploy produzione su {{ip}}..." -ForegroundColor Cyan
-    PowerShell -ExecutionPolicy Bypass -File scripts/deployment/production-deploy.ps1 -ServerIP "{{ip}}" \
