@@ -2,18 +2,25 @@
 
 ## Esclusione del Modulo `settings`
 
-I file nel modulo `home/settings/` sono stati esclusi dai controlli di linting automatici (`black`, `flake8`, `isort`, `pylint`, `ruff`) per i seguenti motivi:
+I file nel modulo `home/settings/` sono stati esclusi dai controlli di linting automatici (`black`,
+`flake8`, `isort`, `pylint`, `ruff`) per i seguenti motivi:
 
-1. **Importazioni con Asterisco**: I file di impostazioni di Django tipicamente usano `from .base import *` per ereditare le impostazioni base, causando errori di lint come F403 (importazione con asterisco) e F405 (variabili importate ma non definite).
-2. **Struttura Specifica di Django**: I moduli di impostazioni di Django seguono convenzioni specifiche che spesso entrano in conflitto con le regole generali di linting Python.
-3. **Modifiche Frequenti**: I file di impostazioni richiedono frequenti modifiche per adattarsi a diversi ambienti di sviluppo e deployment, rendendo più pratico evitare vincoli di formattazione rigidi.
-4. **Compatibilità tra Ambienti**: L'uso di importazioni dinamiche e strutture condizionali per supportare diversi ambienti può generare falsi positivi nei controlli di lint.
+1. **Importazioni con Asterisco**: I file di impostazioni di Django tipicamente usano
+   `from .base import *` per ereditare le impostazioni base, causando errori di lint come F403
+   (importazione con asterisco) e F405 (variabili importate ma non definite).
+2. **Struttura Specifica di Django**: I moduli di impostazioni di Django seguono convenzioni
+   specifiche che spesso entrano in conflitto con le regole generali di linting Python.
+3. **Modifiche Frequenti**: I file di impostazioni richiedono frequenti modifiche per adattarsi a
+   diversi ambienti di sviluppo e deployment, rendendo più pratico evitare vincoli di formattazione
+   rigidi.
+4. **Compatibilità tra Ambienti**: L'uso di importazioni dinamiche e strutture condizionali per
+   supportare diversi ambienti può generare falsi positivi nei controlli di lint.
 
 ## Hook di Pylint Disabilitato
 
-I hook di pylint sono stati temporaneamente disabilitati in pre-commit a causa di problemi di configurazione.
-Questo non significa che pylint non debba essere usato, ma che non viene eseguito automaticamente durante i commit.
-È possibile eseguire pylint manualmente con:
+I hook di pylint sono stati temporaneamente disabilitati in pre-commit a causa di problemi di
+configurazione. Questo non significa che pylint non debba essere usato, ma che non viene eseguito
+automaticamente durante i commit. È possibile eseguire pylint manualmente con:
 
 ```bash
 # Windows
@@ -33,4 +40,5 @@ Anche se esclusi dai controlli automatici, è comunque consigliabile seguire que
 
 ## Configurazione Pre-commit
 
-L'esclusione è implementata nel file `.pre-commit-config.yaml` con il pattern `exclude: ^src/home/settings/` per ciascun hook di linting.
+L'esclusione è implementata nel file `.pre-commit-config.yaml` con il pattern
+`exclude: ^src/home/settings/` per ciascun hook di linting.

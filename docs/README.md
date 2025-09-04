@@ -56,8 +56,8 @@ cd src && uv run manage.py test accounts.tests.PerformanceTest --settings=home.s
 - [ ] **SecurityTest** (6/6) - validazione domini @aslcn1.it
 - [ ] **PerformanceTest** (2/2) - ottimizzazione per IIS
 - [ ] **AdminIntegrationTest** (3/3) - interfaccia funzionante
-- [ ] **Database configurato** per ambiente target
-      📋 **Guida completa**: [Testing Guide](testing-guide.md)
+- [ ] **Database configurato** per ambiente target 📋 **Guida completa**:
+      [Testing Guide](testing-guide.md)
 
 ## 🎯 Flusso di Lavoro Consigliato
 
@@ -156,4 +156,5 @@ just run-dev
 
 ---
 
-> **⚠️ IMPORTANTE**: Prima di ogni deploy in produzione, tutti i test devono passare. La documentazione testing è **OBBLIGATORIA** per deployment su IIS in ambiente ospedaliero.
+> **⚠️ IMPORTANTE**: Prima di ogni deploy in produzione, tutti i test devono passare. La
+> documentazione testing è **OBBLIGATORIA** per deployment su IIS in ambiente ospedaliero.

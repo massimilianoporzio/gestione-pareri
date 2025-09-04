@@ -342,18 +342,15 @@ chmod +x scripts/deployment/start-gunicorn.sh
 - Usa sempre HTTPS in produzione (`DJANGO_SECURE_SSL_REDIRECT=True`)
 - Configura `ALLOWED_HOSTS` con domini specifici
 - Non usare mai `DEBUG=True` in produzione
-- Usa password complesse per database
-  **⚡ Performance:**
+- Usa password complesse per database **⚡ Performance:**
 - Usa Redis per cache sessioni
 - Configura CDN per file media pesanti
 - Monitora memoria e CPU dei worker
-- Usa connection pooling per database
-  **📊 Monitoring:**
+- Usa connection pooling per database **📊 Monitoring:**
 - Configura logging centralizzato
 - Monitora metriche applicazione (tempo risposta, errori)
 - Setup health checks automatici
-- Backup regolari database
-  **🚀 Deployment:**
+- Backup regolari database **🚀 Deployment:**
 - Usa deployment blue/green per zero downtime
 - Testa sempre in staging prima della produzione
 - Versiona le release per rollback facili

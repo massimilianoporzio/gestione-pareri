@@ -1,6 +1,7 @@
 # 🚀 Guida UV - Python Package Manager
 
-UV è il moderno package manager per Python che abbiamo scelto per questo progetto. È incredibilmente veloce (scritto in Rust) e compatibile con pip/virtualenv.
+UV è il moderno package manager per Python che abbiamo scelto per questo progetto. È incredibilmente
+veloce (scritto in Rust) e compatibile con pip/virtualenv.
 
 ## 📋 Indice
 
@@ -228,7 +229,9 @@ repos:
         pass_filenames: false
       - id: django-test-quick
         name: Django Quick Tests
-        entry: uv run python src/manage.py test --settings=home.settings.test_local accounts.tests.SecurityTest --keepdb -v 0
+        entry:
+          uv run python src/manage.py test --settings=home.settings.test_local
+          accounts.tests.SecurityTest --keepdb -v 0
         language: system
         pass_filenames: false
         stages: [pre-push]
@@ -333,5 +336,6 @@ just test-quick  # Usa SQLite + keepdb per velocità
 
 ---
 
-💡 **Tip**: UV è velocissimo! Un `uv sync` completo richiede ~5 secondi vs ~60 secondi con pip tradizionale.
-🎯 **Prossimo Passo**: Leggi `docs/testing-guide.md` per il workflow test completo con UV.
+💡 **Tip**: UV è velocissimo! Un `uv sync` completo richiede ~5 secondi vs ~60 secondi con pip
+tradizionale. 🎯 **Prossimo Passo**: Leggi `docs/testing-guide.md` per il workflow test completo con
+UV.

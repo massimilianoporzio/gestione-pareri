@@ -60,7 +60,9 @@
   [![Template](https://img.shields.io/badge/Template-Use%20This-brightgreen)](https://github.com/massimilianoporzio/deploy-django/generate)
   [![Stars](https://img.shields.io/github/stars/massimilianoporzio/deploy-django?style=social)](https://github.com/massimilianoporzio/deploy-django/stargazers)
   [![Forks](https://img.shields.io/github/forks/massimilianoporzio/deploy-django?style=social)](https://github.com/massimilianoporzio/deploy-django/network/members)
-  Questo è un **template repository** per progetti Django, già configurato con strumenti moderni per lo sviluppo, la qualità del codice e il deployment. Questo template è progettato per aiutarti a iniziare rapidamente un nuovo progetto Django con best practices già implementate.
+  Questo è un **template repository** per progetti Django, già configurato con strumenti moderni per
+  lo sviluppo, la qualità del codice e il deployment. Questo template è progettato per aiutarti a
+  iniziare rapidamente un nuovo progetto Django con best practices già implementate.
 
 ## 🚀 Come utilizzare questo template
 
@@ -105,7 +107,8 @@
 
 ## 🛠️ Correzione automatica script bash (shfmt)
 
-Per correggere automaticamente la formattazione e alcune best practice degli script bash (es. variabili non quotate, word splitting), usa **shfmt**.
+Per correggere automaticamente la formattazione e alcune best practice degli script bash (es.
+variabili non quotate, word splitting), usa **shfmt**.
 
 ### Installazione shfmt
 
@@ -160,8 +163,7 @@ Questo comando applica le correzioni automatiche a tutti gli script bash di depl
 
 ### Utilizzo degli script di setup automatici
 
-Per un setup completo e automatico, puoi usare gli script forniti:
-**Windows (PowerShell):**
+Per un setup completo e automatico, puoi usare gli script forniti: **Windows (PowerShell):**
 
 ```powershell
 .\scripts\setup.ps1
@@ -208,9 +210,11 @@ chmod +x scripts/setup.sh  # Rendi lo script eseguibile
    code .env
    ```
 
-   Per maggiori dettagli, consulta la [documentazione sulle variabili d'ambiente](docs/environment-variables.md).
+   Per maggiori dettagli, consulta la
+   [documentazione sulle variabili d'ambiente](docs/environment-variables.md).
 
-5. **Importante**: Se desideri usare un modello User personalizzato, crealo **prima** di eseguire le migrazioni. Consulta la [guida rapida](docs/quick-start.md) per maggiori dettagli.
+5. **Importante**: Se desideri usare un modello User personalizzato, crealo **prima** di eseguire le
+   migrazioni. Consulta la [guida rapida](docs/quick-start.md) per maggiori dettagli.
 6. Avvia il server di sviluppo:
 
    ```bash
@@ -224,7 +228,8 @@ chmod +x scripts/setup.sh  # Rendi lo script eseguibile
 
 ## 💻 Esecuzione di comandi Python
 
-Questo template utilizza [uv](https://github.com/astral-sh/uv) come gestore di pacchetti e ambiente virtuale. Ci sono due modi per eseguire comandi Python:
+Questo template utilizza [uv](https://github.com/astral-sh/uv) come gestore di pacchetti e ambiente
+virtuale. Ci sono due modi per eseguire comandi Python:
 
 ### 1. Usando uv direttamente (consigliato)
 
@@ -254,7 +259,8 @@ source .venv/bin/activate
 python src/manage.py runserver
 ```
 
-> **Nota**: Gli script nella cartella `examples/` sono progettati per funzionare con entrambi gli approcci.
+> **Nota**: Gli script nella cartella `examples/` sono progettati per funzionare con entrambi gli
+> approcci.
 
 ## 🛠️ Strumenti di sviluppo integrati
 
@@ -269,9 +275,13 @@ Questo template include i seguenti strumenti configurati e pronti all'uso:
 - **prettier**: Formattore per file Markdown e altri linguaggi
 - **markdownlint**: Linter specifico per file Markdown
 - **pre-commit**: Esegue automaticamente tutti i controlli di qualità prima di ogni commit
-- **GitHub Actions**: Pipeline CI/CD preconfigurate per verificare automaticamente la qualità del codice
-- **Pipeline locale**: Dashboard di qualità completa (`just stats` o `make stats`) con analisi dettagliata alternativa a servizi cloud
-  > **Nota**: I file del modulo `settings` sono esclusi dai controlli di linting per permettere la massima flessibilità. Per maggiori dettagli, consulta [docs/linting_notes.md](docs/linting_notes.md).
+- **GitHub Actions**: Pipeline CI/CD preconfigurate per verificare automaticamente la qualità del
+  codice
+- **Pipeline locale**: Dashboard di qualità completa (`just stats` o `make stats`) con analisi
+  dettagliata alternativa a servizi cloud
+  > **Nota**: I file del modulo `settings` sono esclusi dai controlli di linting per permettere la
+  > massima flessibilità. Per maggiori dettagli, consulta
+  > [docs/linting_notes.md](docs/linting_notes.md).
 
 ## 🚀 Task Runner: Just
 
@@ -296,13 +306,9 @@ just stats           # 📊 Statistiche progetto
 - ✅ Supporto nativo Windows PowerShell
 - ✅ Output colorato con emoji
 - ✅ 47 comandi disponibili vs 30+ Make
-- ✅ Help system integrato
-  **Documentazione completa:**
-  ✅ **Cross-platform** nativo (Windows/Linux/macOS)
-  ✅ **Sintassi moderna** e leggibile
-  ✅ **Help colorato** con emoji
-  ✅ **Variabili** e logica avanzata
-  ✅ **Performance** superiori
+- ✅ Help system integrato **Documentazione completa:** ✅ **Cross-platform** nativo
+  (Windows/Linux/macOS) ✅ **Sintassi moderna** e leggibile ✅ **Help colorato** con emoji ✅
+  **Variabili** e logica avanzata ✅ **Performance** superiori
 
 ### 📖 **Installazione Just**
 
@@ -325,10 +331,12 @@ uv run python src/manage.py migrate  # Invece di just migrate
 
 Il template include un sistema di logging avanzato:
 
-- **Log colorati in console**: Durante lo sviluppo (DEBUG=True), i log vengono visualizzati in console con colori per ogni livello di severità
+- **Log colorati in console**: Durante lo sviluppo (DEBUG=True), i log vengono visualizzati in
+  console con colori per ogni livello di severità
 - **Log su file**: In produzione, i log vengono salvati automaticamente in file con rotazione
 - **Facile integrazione**: Logger già configurati per l'uso immediato nei tuoi moduli
-- **Directory dei log personalizzabile**: Puoi specificare una directory personalizzata per i log tramite la variabile d'ambiente `DJANGO_LOGS_DIR`
+- **Directory dei log personalizzabile**: Puoi specificare una directory personalizzata per i log
+  tramite la variabile d'ambiente `DJANGO_LOGS_DIR`
 
 ```bash
 # Windows PowerShell
@@ -347,23 +355,22 @@ Questo template è progettato per funzionare su tutte le principali piattaforme:
 
 - **Windows**: Script PowerShell completi per setup e configurazione
 - **macOS/Linux**: Script Bash equivalenti per tutte le operazioni
-- **CI/CD**: Workflow GitHub Actions che funzionano indipendentemente dalla piattaforma
-  Tutti gli strumenti di sviluppo sono configurati per funzionare in modo identico su tutte le piattaforme, garantendo un'esperienza di sviluppo coerente per tutti i membri del team.
+- **CI/CD**: Workflow GitHub Actions che funzionano indipendentemente dalla piattaforma Tutti gli
+  strumenti di sviluppo sono configurati per funzionare in modo identico su tutte le piattaforme,
+  garantendo un'esperienza di sviluppo coerente per tutti i membri del team.
 
 ## 📝 VS Code Integration
 
-Questo template include **configurazioni VS Code ottimizzate** per Django:
-✅ **Formattazione automatica** al salvataggio
-✅ **Error Lens** per evidenziazione errori inline
-✅ **Run on Save** per template HTML Django
-✅ **Python + Django** intellisense completo
+Questo template include **configurazioni VS Code ottimizzate** per Django: ✅ **Formattazione
+automatica** al salvataggio ✅ **Error Lens** per evidenziazione errori inline ✅ **Run on Save**
+per template HTML Django ✅ **Python + Django** intellisense completo
 
 ### Quick Setup
 
 1. Apri progetto in VS Code
 2. Installa estensioni consigliate (VS Code chiederà automaticamente)
-3. Sistema pronto! 🚀
-   **📖 [Guida VS Code Dettagliata](docs/vscode-detailed.md)** - Configurazione completa e troubleshooting
+3. Sistema pronto! 🚀 **📖 [Guida VS Code Dettagliata](docs/vscode-detailed.md)** - Configurazione
+   completa e troubleshooting
 
 ## 🌐 Supporto Frontend (Node.js Ready)
 
@@ -415,7 +422,8 @@ deploy-django/
 - I file compilati da Node.js vanno in `src/static/`
 - Django collectstatic raccoglie tutto in `staticfiles/`
 - WhiteNoise serve i file in produzione con ottimizzazioni
-  > **📚 Per maggiori dettagli sull'integrazione Node.js**, consulta la [documentazione Node.js](docs/nodejs-integration.md).
+  > **📚 Per maggiori dettagli sull'integrazione Node.js**, consulta la
+  > [documentazione Node.js](docs/nodejs-integration.md).
 
 ### Installazione di Make
 
@@ -441,11 +449,9 @@ chmod +x scripts/install-make-linux.sh
 
 ## 📝 Markdown Formatting
 
-**Formattazione automatica** per documentazione professionale:
-🔄 **Auto-format** su salvataggio VS Code
-✅ **Pre-commit hooks** per consistenza
-📖 **Prettier + markdownlint** integration
-**📖 [Guida Markdown Dettagliata](docs/markdown-formatting.md)** - Configurazione completa e regole
+**Formattazione automatica** per documentazione professionale: 🔄 **Auto-format** su salvataggio VS
+Code ✅ **Pre-commit hooks** per consistenza 📖 **Prettier + markdownlint** integration **📖
+[Guida Markdown Dettagliata](docs/markdown-formatting.md)** - Configurazione completa e regole
 
 ### Quick Commands
 
@@ -458,11 +464,9 @@ just lint-markdown
 
 ## 🚀 Deployment & Production
 
-Supporto completo per **deployment enterprise** con proxy reverso:
-🪟 **Windows Server + IIS** - Configurazione automatica
-🐧 **Linux/macOS + Nginx** - Setup production-ready
-⚡ **ASGI/WSGI** servers ottimizzati per OS
-🔒 **SSL/HTTPS** e sicurezza enterprise
+Supporto completo per **deployment enterprise** con proxy reverso: 🪟 **Windows Server + IIS** -
+Configurazione automatica 🐧 **Linux/macOS + Nginx** - Setup production-ready ⚡ **ASGI/WSGI**
+servers ottimizzati per OS 🔒 **SSL/HTTPS** e sicurezza enterprise
 
 ### Quick Deployment
 
@@ -483,10 +487,9 @@ just deploy
 
 ## 🚢 CI/CD Ready
 
-**GitHub Actions** preconfigurati per qualità e testing:
-✅ **Pre-commit workflow** - Check automatici su PR
-🧪 **Django CI** - Test automatici su push
-📊 **Quality gates** - Linting e formattazione
+**GitHub Actions** preconfigurati per qualità e testing: ✅ **Pre-commit workflow** - Check
+automatici su PR 🧪 **Django CI** - Test automatici su push 📊 **Quality gates** - Linting e
+formattazione
 
 ## 📁 Project Structure
 
@@ -503,26 +506,26 @@ deploy-django/
 
 ## 📚 Documentazione tecnica
 
-Questo progetto include documentazione dettagliata per aiutarti a comprendere le funzionalità e le configurazioni:
+Questo progetto include documentazione dettagliata per aiutarti a comprendere le funzionalità e le
+configurazioni:
 
-- [Uvicorn ASGI Integration](docs/uvicorn-integration.md): 🎯 **Nuovo!** Server ASGI cross-platform raccomandato
+- [Uvicorn ASGI Integration](docs/uvicorn-integration.md): 🎯 **Nuovo!** Server ASGI cross-platform
+  raccomandato
 - [Variabili d'ambiente](docs/environment-variables.md): Configurazione delle variabili d'ambiente
 - [Configurazione dei logs](docs/logs_configuration.md): Come funziona il sistema di logging
 - [Just Task Runner](docs/just.md): Task runner moderno con 47 comandi
 
 ## 📖 Documentazione Hub
 
-Documentazione specializzata per ogni aspetto del progetto:
-**📝 Development**
+Documentazione specializzata per ogni aspetto del progetto: **📝 Development**
 
 - [Quick Start Guide](docs/quick-start.md) - Inizia qui!
 - [Environment Variables](docs/environment-variables.md) - Configurazione sistema
-- [Logging Configuration](docs/logs_configuration.md) - Sistema di log avanzato
-  **🔧 Quality & Tools**
+- [Logging Configuration](docs/logs_configuration.md) - Sistema di log avanzato **🔧 Quality &
+  Tools**
 - [Markdown Formatting](docs/markdown-formatting.md) - Documentazione professionale
 - [Code Analysis](docs/code_analysis.md) - Analisi qualità codice
-- [Linting Notes](docs/linting_notes.md) - Configurazione linter
-  **🚀 Advanced**
+- [Linting Notes](docs/linting_notes.md) - Configurazione linter **🚀 Advanced**
 - [Just Task Runner](docs/just.md) - 47 comandi disponibili
 - [Docstring Generation](docs/docstring_generation.md) - Documentazione automatica
 
@@ -530,14 +533,15 @@ Documentazione specializzata per ogni aspetto del progetto:
 
 ## 🤝 Contributi & Support
 
-🐛 **Bug Report**: [Apri una Issue](https://github.com/tuousername/deploy-django)
-⭐ **Feature Request**: [Discussioni](https://github.com/tuousername/deploy-django/discussions)
-📧 **Support**: [Template Issues](https://github.com/tuousername/deploy-django/issues)
-**Made with ❤️ for Django developers**
+🐛 **Bug Report**: [Apri una Issue](https://github.com/tuousername/deploy-django) ⭐ **Feature
+Request**: [Discussioni](https://github.com/tuousername/deploy-django/discussions) 📧 **Support**:
+[Template Issues](https://github.com/tuousername/deploy-django/issues) **Made with ❤️ for Django
+developers**
 
 ## 🔒 Controllo vulnerabilità dipendenze con Safety
 
-Safety è installato come dipendenza di sviluppo (`dev`) e viene eseguito automaticamente tramite GitHub Actions su ogni push e pull request.
+Safety è installato come dipendenza di sviluppo (`dev`) e viene eseguito automaticamente tramite
+GitHub Actions su ogni push e pull request.
 
 ### Come funziona la scansione automatica
 
@@ -546,7 +550,8 @@ Safety è installato come dipendenza di sviluppo (`dev`) e viene eseguito automa
   - Installazione uv
   - Sincronizzazione dipendenze con `uv sync`
   - Scansione delle dipendenze con `uv run safety scan --output screen`
-- Se vengono rilevate vulnerabilità, la Action fallisce e segnala il problema direttamente su GitHub.
+- Se vengono rilevate vulnerabilità, la Action fallisce e segnala il problema direttamente su
+  GitHub.
 
 ### Esecuzione manuale locale
 
@@ -563,7 +568,8 @@ Safety è installato come dipendenza di sviluppo (`dev`) e viene eseguito automa
 
 ## 🔄 Aggiornamento automatico dipendenze con Dependabot
 
-Questo progetto usa **Dependabot** per mantenere aggiornate le dipendenze Python e le GitHub Actions.
+Questo progetto usa **Dependabot** per mantenere aggiornate le dipendenze Python e le GitHub
+Actions.
 
 - Dependabot controlla settimanalmente se esistono nuove versioni o patch di sicurezza.
 - Crea pull request automatiche per ogni aggiornamento rilevante.
@@ -619,7 +625,8 @@ env:
   SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
 ```
 
-- Workflow di esempio e guida ufficiale: [Safety CLI GitHub Actions Docs](https://docs.safetycli.com/ci/github-actions/)
+- Workflow di esempio e guida ufficiale:
+  [Safety CLI GitHub Actions Docs](https://docs.safetycli.com/ci/github-actions/)
 
 ### Note
 
@@ -630,8 +637,10 @@ env:
 
 Per garantire risultati coerenti tra locale e CI, è consigliato:
 
-- Fissare la versione di tutti i tool di linting, formatting e sicurezza (es. djlint, ruff, flake8, bandit, safety) nelle dipendenze e nella configurazione pre-commit.
+- Fissare la versione di tutti i tool di linting, formatting e sicurezza (es. djlint, ruff, flake8,
+  bandit, safety) nelle dipendenze e nella configurazione pre-commit.
 - Aggiornare la versione solo dopo aver testato e validato le nuove regole.
 - Evitare update automatici per questi tool, per non introdurre breaking change o falsi positivi.
 
-Questa strategia riduce i problemi di divergenza tra ambienti e assicura una pipeline di qualità affidabile.
+Questa strategia riduce i problemi di divergenza tra ambienti e assicura una pipeline di qualità
+affidabile.

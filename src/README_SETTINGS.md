@@ -1,6 +1,7 @@
 # Configurazione Ambienti Django
 
-Questo progetto utilizza una configurazione multi-ambiente per Django. È possibile selezionare l'ambiente utilizzando la variabile d'ambiente `DJANGO_ENV`.
+Questo progetto utilizza una configurazione multi-ambiente per Django. È possibile selezionare
+l'ambiente utilizzando la variabile d'ambiente `DJANGO_ENV`.
 
 ## Ambienti Disponibili
 
@@ -70,11 +71,11 @@ make check-env-prod  # Verifica ambiente di produzione
 
 ## Configurazione dei file .env
 
-È possibile configurare gli ambienti tramite file `.env`. Crea uno dei seguenti file nella root del progetto:
+È possibile configurare gli ambienti tramite file `.env`. Crea uno dei seguenti file nella root del
+progetto:
 
 - `.env`: Configurazione principale
-- `.env.local`: Configurazione locale (ignorata dal version control)
-  Esempio di file `.env`:
+- `.env.local`: Configurazione locale (ignorata dal version control) Esempio di file `.env`:
 
 ```
 DJANGO_ENV=dev

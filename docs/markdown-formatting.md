@@ -1,17 +1,20 @@
 # Formattazione Markdown
 
-Questo progetto utilizza strumenti automatici per garantire la consistenza e la qualità dei file Markdown.
+Questo progetto utilizza strumenti automatici per garantire la consistenza e la qualità dei file
+Markdown.
 
 ## Strumenti utilizzati
 
 - **Prettier**: Formatta automaticamente i file Markdown per garantire uno stile coerente
-- **markdownlint-cli2**: Verifica la conformità dei file Markdown alle best practice e corregge problemi automaticamente
+- **markdownlint-cli2**: Verifica la conformità dei file Markdown alle best practice e corregge
+  problemi automaticamente
 
 ## Configurazione
 
 ### Prettier
 
-La configurazione di Prettier si trova nel file `.prettierrc.json` nella root del progetto. Le principali impostazioni per Markdown sono:
+La configurazione di Prettier si trova nel file `.prettierrc.json` nella root del progetto. Le
+principali impostazioni per Markdown sono:
 
 ```json
 {
@@ -30,7 +33,8 @@ La configurazione di Prettier si trova nel file `.prettierrc.json` nella root de
 
 ### markdownlint-cli2
 
-La configurazione di markdownlint-cli2 si trova nel file `.markdownlint-cli2.jsonc` nella root del progetto. Le principali regole configurate sono:
+La configurazione di markdownlint-cli2 si trova nel file `.markdownlint-cli2.jsonc` nella root del
+progetto. Le principali regole configurate sono:
 
 ```jsonc
 {
@@ -49,7 +53,8 @@ La configurazione di markdownlint-cli2 si trova nel file `.markdownlint-cli2.jso
 
 ### In VS Code
 
-I file Markdown vengono formattati automaticamente al salvataggio grazie all'estensione "Run on Save". La configurazione si trova in `.vscode/settings.json`:
+I file Markdown vengono formattati automaticamente al salvataggio grazie all'estensione "Run on
+Save". La configurazione si trova in `.vscode/settings.json`:
 
 ```json
 {
@@ -70,7 +75,8 @@ I file Markdown vengono formattati automaticamente al salvataggio grazie all'est
 
 ### Con pre-commit
 
-I file Markdown vengono formattati automaticamente durante i commit grazie ai hook di pre-commit configurati in `.pre-commit-config.yaml`:
+I file Markdown vengono formattati automaticamente durante i commit grazie ai hook di pre-commit
+configurati in `.pre-commit-config.yaml`:
 
 ```yaml
 # Markdown formatter using Prettier
@@ -93,7 +99,8 @@ I file Markdown vengono formattati automaticamente durante i commit grazie ai ho
 
 ## Installazione degli strumenti
 
-Per utilizzare la formattazione automatica in VS Code, è necessario installare gli strumenti a livello globale:
+Per utilizzare la formattazione automatica in VS Code, è necessario installare gli strumenti a
+livello globale:
 
 ```bash
 # Windows (PowerShell)
