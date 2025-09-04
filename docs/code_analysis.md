@@ -35,12 +35,10 @@ Questo progetto utilizza diversi strumenti per l'analisi statica e la valutazion
 ## Come utilizzare questi strumenti
 
 1. **Per visualizzare i risultati**:
-
    - Visita la tab "Actions" nel repository GitHub per vedere l'esecuzione dei workflow.
    - Accedi alle dashboard specifiche di SonarCloud e Codacy per analisi dettagliate.
 
 2. **Per configurare i segreti necessari**:
-
    - Per SonarCloud: Aggiungi `SONAR_TOKEN` nelle impostazioni del repository GitHub (Settings > Secrets).
    - Per Codacy: Aggiungi `CODACY_PROJECT_TOKEN` nelle impostazioni del repository.
 

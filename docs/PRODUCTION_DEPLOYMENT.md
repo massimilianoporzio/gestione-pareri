@@ -2,13 +2,13 @@
 
 ## 📋 Panoramica Deployment Strategy
 
-### Architettura Target:
+### Architettura Target
 
 ```
 GitHub Repository → Clone Server Produzione → IIS Configuration → Database Setup
 ```
 
-### Directory Structure Produzione:
+### Directory Structure Produzione
 
 ```
 C:\inetpub\wwwroot\pratiche-pareri\     # IIS Root Directory
@@ -23,7 +23,7 @@ C:\inetpub\wwwroot\pratiche-pareri\     # IIS Root Directory
 
 ## 🔧 PASSO 1: Setup Server Produzione
 
-### Prerequisiti Server:
+### Prerequisiti Server
 
 - [x] Windows Server con IIS installato
 - [x] PostgreSQL installato e configurato
@@ -31,7 +31,7 @@ C:\inetpub\wwwroot\pratiche-pareri\     # IIS Root Directory
 - [x] Git installato
 - [x] uv package manager installato
 
-### Setup Directory Produzione:
+### Setup Directory Produzione
 
 ```powershell
 # Crea directory base
@@ -47,7 +47,7 @@ git checkout -b production-deploy
 
 ## 🔧 PASSO 2: Configurazione Credenziali
 
-### Setup Files di Configurazione:
+### Setup Files di Configurazione
 
 ```powershell
 # Crea file configurazione da template
@@ -57,16 +57,16 @@ Copy-Item .env.prod.template .env.prod
 # IMPORTANTE: Modifica manualmente i file con valori reali!
 ```
 
-### File da configurare:
+### File da configurare
 
-#### A) `web.config` - Configurazione IIS:
+#### A) `web.config` - Configurazione IIS
 
 - **processPath**: Percorso corretto a Python/uv
 - **DJANGO_DATABASE_URL**: Credenziali database produzione
 - **DJANGO_SECRET_KEY**: Chiave sicura generata per produzione
 - **DJANGO_ALLOWED_HOSTS**: IP/domini del server reale
 
-#### B) `.env.prod` - Variabili ambiente:
+#### B) `.env.prod` - Variabili ambiente
 
 - **Database credentials**: Username/password PostgreSQL reali
 - **Security settings**: SECRET_KEY, SSL settings
@@ -74,7 +74,7 @@ Copy-Item .env.prod.template .env.prod
 
 ## 🔧 PASSO 3: Database Setup
 
-### Configurazione PostgreSQL Produzione:
+### Configurazione PostgreSQL Produzione
 
 ```sql
 -- Crea utente e database per produzione
@@ -83,7 +83,7 @@ CREATE DATABASE gestione_pareri_prod OWNER gestione_pareri_prod;
 GRANT ALL PRIVILEGES ON DATABASE gestione_pareri_prod TO gestione_pareri_prod;
 ```
 
-### Migrazioni e Setup:
+### Migrazioni e Setup
 
 ```powershell
 # Installa dipendenze
@@ -101,7 +101,7 @@ uv run python src/manage.py createsuperuser --settings=home.settings.prod
 
 ## 🔧 PASSO 4: Configurazione IIS
 
-### Setup Application Pool:
+### Setup Application Pool
 
 ```powershell
 # Crea Application Pool dedicato
@@ -109,7 +109,7 @@ New-WebAppPool -Name "GestionePareriPool"
 Set-ItemProperty -Path "IIS:\AppPools\GestionePareriPool" -Name "processModel.identityType" -Value "ApplicationPoolIdentity"
 ```
 
-### Setup Website:
+### Setup Website
 
 ```powershell
 # Crea sito IIS
@@ -119,7 +119,7 @@ New-Website -Name "GestionePareri" -PhysicalPath "C:\inetpub\wwwroot\pratiche-pa
 New-WebApplication -Site "Default Web Site" -Name "pratiche-pareri" -PhysicalPath "C:\inetpub\wwwroot\pratiche-pareri" -ApplicationPool "GestionePareriPool"
 ```
 
-### Configurazione Permessi:
+### Configurazione Permessi
 
 ```powershell
 # Imposta permessi directory per IIS
@@ -132,7 +132,7 @@ Set-Acl -Path "C:\inetpub\wwwroot\pratiche-pareri" -AclObject $acl
 
 ## 🔧 PASSO 5: Test e Verifica
 
-### Test Locali:
+### Test Locali
 
 ```powershell
 # Test configurazione Django
@@ -142,14 +142,14 @@ uv run python src/manage.py check --settings=home.settings.prod
 uv run uvicorn home.asgi:application --host localhost --port 8000
 ```
 
-### Test IIS:
+### Test IIS
 
 - **URL principale**: `<http://your-server-ip/pratiche-pareri/`>
 - **Admin interface**: `<http://your-server-ip/pratiche-pareri/admin/`>
 
 ## 🔄 PASSO 6: Aggiornamenti Futuri
 
-### Script Update Produzione:
+### Script Update Produzione
 
 ```powershell
 # Pull latest changes
@@ -170,14 +170,14 @@ Restart-WebAppPool -Name "GestionePareriPool"
 
 ## 🔐 SICUREZZA
 
-### File da NON committare mai:
+### File da NON committare mai
 
 - `web.config` (contiene credenziali)
 - `.env.prod` (contiene password)
 - `logs/` directory
 - `media/` files utenti
 
-### Backup Strategy:
+### Backup Strategy
 
 - Database backup automatico
 - Backup file configurazione in location sicura
@@ -185,13 +185,13 @@ Restart-WebAppPool -Name "GestionePareriPool"
 
 ## 🆘 Troubleshooting
 
-### Log Files da controllare:
+### Log Files da controllare
 
 - **Django logs**: `logs/django.log`
 - **IIS logs**: `C:\inetpub\logs\LogFiles\`
 - **Event Viewer**: Windows Application logs
 
-### Comandi diagnosi:
+### Comandi diagnosi
 
 ```powershell
 # Check IIS status

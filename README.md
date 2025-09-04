@@ -2,7 +2,17 @@
 
 <!-- Code Quality & Linting -->
 
-[![pre-commit](https://### 📖 **Documentation**
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat)](https://pycqa.github.io/isort/)
+[![flake8](https://img.shields.io/badge/linting-flake8-yellowgreen)](https://github.com/PyCQA/flake8)
+[![ruff](https://img.shields.io/badge/ruff-enabled-blueviolet)](https://github.com/charliermarsh/ruff)
+[![pylint](https://img.shields.io/badge/pylint-enabled-orange)](https://github.com/PyCQA/pylint)
+[![djlint](https://img.shields.io/badge/djlint-HTML%20linting-blue)](https://github.com/Riverside-Healthcare/djlint)
+[![Prettier](https://img.shields.io/badge/prettier-markdown-ff69b4)](https://prettier.io/)
+[![markdownlint](https://img.shields.io/badge/markdownlint-enabled-brightgreen)](https://github.com/DavidAnson/markdownlint)
+
+## 📖 Documentation
 
 - [🌍 Environments Guide](docs/environments-guide.md) - **Guida completa ai 4 ambienti**
 - [📋 Just Commands](docs/just.md) - Task runner moderno (47 comandi)
@@ -10,15 +20,7 @@
 - [🔐 Database Security](docs/database-security.md) - Gestione sicura password
 - [🔧 Environment Variables](docs/environment-variables.md) - Configurazione ambienti
 - [📊 Code Quality](tools/quality_dashboard.md) - Pipeline qualità locale
-- [🔍 VS Code Setup](docs/vscode-configuration.md) - Configurazione editorelds.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
-  [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-  [![isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat)](https://pycqa.github.io/isort/)
-  [![flake8](https://img.shields.io/badge/linting-flake8-yellowgreen)](https://github.com/PyCQA/flake8)
-  [![ruff](https://img.shields.io/badge/ruff-enabled-blueviolet)](https://github.com/charliermarsh/ruff)
-  [![pylint](https://img.shields.io/badge/pylint-enabled-orange)](https://github.com/PyCQA/pylint)
-  [![djlint](https://img.shields.io/badge/djlint-HTML%20linting-blue)](https://github.com/Riverside-Healthcare/djlint)
-  [![Prettier](https://img.shields.io/badge/prettier-markdown-ff69b4)](https://prettier.io/)
-  [![markdownlint](https://img.shields.io/badge/markdownlint-enabled-brightgreen)](https://github.com/DavidAnson/markdownlint)
+- [🔍 VS Code Setup](docs/vscode-configuration.md) - Configurazione editore
 
 <!-- Framework & Language -->
 

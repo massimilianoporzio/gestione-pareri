@@ -8,15 +8,15 @@ psql -U postgres -h localhost
 
 # 2. AGGIORNA PASSWORD ESISTENTI (usa le password dal comando: just generate-db-passwords)
 
-# DEV password (sostituisci YOUR_DEV_PASSWORD con la password generata):
+# DEV password (sostituisci YOUR_DEV_PASSWORD con la password generata)
 
 ALTER USER gestione_pareri_dev WITH PASSWORD 'YOUR_DEV_PASSWORD';
 
-# TEST password (sostituisci YOUR_TEST_PASSWORD con la password generata):
+# TEST password (sostituisci YOUR_TEST_PASSWORD con la password generata)
 
 ALTER USER gestione_pareri_test WITH PASSWORD 'YOUR_TEST_PASSWORD';
 
-# PROD password (sostituisci YOUR_PROD_PASSWORD con la password generata):
+# PROD password (sostituisci YOUR_PROD_PASSWORD con la password generata)
 
 ALTER USER gestione_pareri_prod WITH PASSWORD 'YOUR_PROD_PASSWORD';
 
@@ -54,7 +54,7 @@ ORDER BY datname;
 
 \q
 
-# NOTE:
+# NOTE
 
 # - Le password vengono generate con: just generate-db-passwords
 

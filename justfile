@@ -299,11 +299,13 @@ format-markdown:
 # 📝 Correzione problemi Markdown
 fix-markdown:
     @Write-Host "📝 Correzione problemi Markdown..." -ForegroundColor Cyan
-    @Write-Host "1/3 - Correzioni automatiche..." -ForegroundColor Yellow
+    @Write-Host "1/4 - Correzioni automatiche..." -ForegroundColor Yellow
     @{{python}} tools/fix_markdown.py
-    @Write-Host "2/3 - Prettier formatting..." -ForegroundColor Yellow
-    @-pre-commit run prettier --all-files
-    @Write-Host "3/3 - Markdownlint validation..." -ForegroundColor Yellow
+    @Write-Host "2/4 - Prettier formatting..." -ForegroundColor Yellow
+    @pnpm exec prettier --write "**/*.md"
+    @Write-Host "3/4 - Markdownlint auto-fix..." -ForegroundColor Yellow
+    @pnpm exec markdownlint-cli2 --fix "**/*.md" "!**/node_modules/**/*.md" --ignore-path .markdownlintignore --config .config/.markdownlint-cli2.jsonc
+    @Write-Host "4/4 - Markdownlint validation..." -ForegroundColor Yellow
     @-pre-commit run markdownlint-cli2 --all-files
     @Write-Host "✅ Problemi Markdown corretti!" -ForegroundColor Green
 

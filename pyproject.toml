@@ -55,6 +55,8 @@ exclude = [
     "src/**/migrations",
     "src/**/migrations/*.py",
     "src/**/migrations/**/*.py",
+    "node_modules/*",
+    "node_modules/**",
 ]
 
 # Formatter configuration
