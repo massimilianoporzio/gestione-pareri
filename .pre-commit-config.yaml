@@ -51,16 +51,13 @@ repos:
         args: ["--config=.config/flake8"]
 
   # Hook per djlint cross-platform
-  - repo: local
+  - repo: https://github.com/Riverside-Healthcare/djlint
+    rev: v1.36.4
     hooks:
-      - id: djlint-cross-platform
+      - id: djlint
         name: Format Django HTML templates
-        entry: python scripts/run_djlint.py
-        language: python
-        additional_dependencies: [djlint]
-        pass_filenames: false
-        files: \.html$
-        always_run: true
+        files: \.(html|jinja|j2)$
+        additional_dependencies: [djlint==1.36.4]
 
   # Hook unificato per pylint che funziona su tutte le piattaforme
   - repo: local

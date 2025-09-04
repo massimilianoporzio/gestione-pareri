@@ -625,3 +625,13 @@ env:
 
 - Safety richiede la registrazione e login anche per l’uso base.
 - La scansione delle dipendenze funziona solo se la chiave è valida.
+
+## 🛡️ Best practice: versioni fisse per tool di linting
+
+Per garantire risultati coerenti tra locale e CI, è consigliato:
+
+- Fissare la versione di tutti i tool di linting, formatting e sicurezza (es. djlint, ruff, flake8, bandit, safety) nelle dipendenze e nella configurazione pre-commit.
+- Aggiornare la versione solo dopo aver testato e validato le nuove regole.
+- Evitare update automatici per questi tool, per non introdurre breaking change o falsi positivi.
+
+Questa strategia riduce i problemi di divergenza tra ambienti e assicura una pipeline di qualità affidabile.
