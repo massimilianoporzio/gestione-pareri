@@ -1,6 +1,7 @@
 # Esempi di Utilizzo
 
-Questa directory contiene esempi pratici per aiutarti a comprendere come utilizzare le funzionalità integrate in questo template Django.
+Questa directory contiene esempi pratici per aiutarti a comprendere come utilizzare le funzionalità
+integrate in questo template Django.
 
 ## File di esempio disponibili
 
@@ -39,8 +40,7 @@ L'esempio di logging mostra come utilizzare il sistema di logging configurato in
 - Log su file (quando DEBUG=False)
 - Diversi livelli di logging (DEBUG, INFO, WARNING, ERROR, CRITICAL)
 - Logging di eccezioni con traceback
-- Logging strutturato con informazioni aggiuntive
-  Per modificare la modalità DEBUG:
+- Logging strutturato con informazioni aggiuntive Per modificare la modalità DEBUG:
 
 1. Modifica il file `.env` nella radice del progetto
 2. Imposta `DJANGO_DEBUG=1` per la modalità sviluppo (log colorati in console)

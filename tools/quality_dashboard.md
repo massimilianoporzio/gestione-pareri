@@ -95,5 +95,5 @@
 
 ---
 
-**📝 Report generato da pipeline locale - Più veloce e preciso di Codacy**
-**🔄 Ultimo aggiornamento: 03/09/2025 09:56**
+**📝 Report generato da pipeline locale - Più veloce e preciso di Codacy** **🔄 Ultimo
+aggiornamento: 03/09/2025 09:56**

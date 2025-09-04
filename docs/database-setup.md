@@ -150,7 +150,8 @@ Le configurazioni database sono già impostate in:
 - **TEST**: SQLite di default per test veloci (switch a PostgreSQL con `USE_POSTGRESQL_TEST=1`)
 - **STAGING**: PostgreSQL obbligatorio per simulare produzione
 - **PROD**: PostgreSQL obbligatorio per ambiente live
-  > 📖 **Per una spiegazione dettagliata** di cosa serve ogni ambiente e quando usarlo, consulta la [Guida agli Ambienti](environments-guide.md).
+  > 📖 **Per una spiegazione dettagliata** di cosa serve ogni ambiente e quando usarlo, consulta la
+  > [Guida agli Ambienti](environments-guide.md).
 
 ### 3. Installazione Driver PostgreSQL
 
@@ -283,5 +284,4 @@ SELECT version();                -- Versione PostgreSQL
 
 ---
 
-**🔄 Ultimo aggiornamento**: Settembre 2025
-**📝 Autore**: Sistema di template Django Deploy
+**🔄 Ultimo aggiornamento**: Settembre 2025 **📝 Autore**: Sistema di template Django Deploy

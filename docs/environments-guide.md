@@ -1,6 +1,7 @@
 # 🌍 Ambienti di Sviluppo - Guida Completa
 
-Questo progetto è configurato per funzionare con **4 ambienti distinti**, ognuno con il proprio scopo specifico nel ciclo di sviluppo software.
+Questo progetto è configurato per funzionare con **4 ambienti distinti**, ognuno con il proprio
+scopo specifico nel ciclo di sviluppo software.
 
 ## 📋 Panoramica Ambienti
 

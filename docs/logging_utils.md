@@ -1,19 +1,22 @@
 # Logging Utilities
 
-Questo modulo (`logging_utils.py`) contiene implementazioni alternative dei formattatori di log, in particolare una versione basata su `colorama` per la compatibilità cross-platform.
+Questo modulo (`logging_utils.py`) contiene implementazioni alternative dei formattatori di log, in
+particolare una versione basata su `colorama` per la compatibilità cross-platform.
 
 ## Contenuti
 
 Il modulo fornisce:
 
-1. **ColoramaFormatter**: Un formattatore basato su colorama per log colorati con supporto nativo per Windows
+1. **ColoramaFormatter**: Un formattatore basato su colorama per log colorati con supporto nativo
+   per Windows
 2. **Funzioni di utility**: Helper per creare handler della console con colorama
 
 ## Vantaggi di colorama rispetto a colorlog
 
 Colorama offre diversi vantaggi:
 
-- **Compatibilità nativa con Windows**: Funziona in modo nativo su Command Prompt e PowerShell di Windows
+- **Compatibilità nativa con Windows**: Funziona in modo nativo su Command Prompt e PowerShell di
+  Windows
 - **Zero dipendenze**: Colorama è una libreria leggera con zero dipendenze
 - **Cross-platform**: Stesso comportamento su Windows, macOS e Linux
 - **Ampio supporto per stili**: Colori, background, stili di testo (bright, dim, etc.)
@@ -55,4 +58,5 @@ I colori utilizzati per i diversi livelli di log sono:
 
 ## Note implementative
 
-Il modulo gestisce automaticamente l'inizializzazione di colorama con `init(autoreset=False)` per garantire che i colori vengano resettati dopo ogni messaggio di log.
+Il modulo gestisce automaticamente l'inizializzazione di colorama con `init(autoreset=False)` per
+garantire che i colori vengano resettati dopo ogni messaggio di log.

@@ -1,6 +1,8 @@
 # Generazione automatica di docstring
 
-Il progetto include un sistema automatico per aggiungere docstring ai file Python che ne sono privi. Questo sistema utilizza l'estensione "Run on Save" di VS Code per eseguire uno script personalizzato ogni volta che un file Python viene salvato.
+Il progetto include un sistema automatico per aggiungere docstring ai file Python che ne sono privi.
+Questo sistema utilizza l'estensione "Run on Save" di VS Code per eseguire uno script personalizzato
+ogni volta che un file Python viene salvato.
 
 ## Come funziona
 
@@ -13,7 +15,8 @@ Il progetto include un sistema automatico per aggiungere docstring ai file Pytho
 
 ## Configurazione
 
-La configurazione è già impostata nel file `.vscode/settings.json`. Se desideri modificare il comportamento dello script, puoi modificare:
+La configurazione è già impostata nel file `.vscode/settings.json`. Se desideri modificare il
+comportamento dello script, puoi modificare:
 
 - `tools/add_docstring.py`: Lo script Python principale che genera le docstring
 - `tools/add_docstring.bat`: Script batch per Windows
@@ -21,7 +24,8 @@ La configurazione è già impostata nel file `.vscode/settings.json`. Se desider
 
 ## Personalizzazione
 
-Per personalizzare il formato delle docstring generate, modifica la funzione `add_module_docstring` nel file `tools/add_docstring.py`. Puoi modificare:
+Per personalizzare il formato delle docstring generate, modifica la funzione `add_module_docstring`
+nel file `tools/add_docstring.py`. Puoi modificare:
 
 - Il formato della docstring
 - Le informazioni incluse nella docstring
@@ -40,8 +44,8 @@ Questo comando:
 - Cerca ricorsivamente tutti i file Python nel progetto
 - Aggiunge docstring a tutti i file che ne sono privi
 - Esclude i file `__init__.py` e i file in directory come `.venv`, `migrations`, ecc.
-- Funziona su tutte le piattaforme (Windows, Linux, macOS)
-  Puoi anche eseguire lo script direttamente con opzioni aggiuntive:
+- Funziona su tutte le piattaforme (Windows, Linux, macOS) Puoi anche eseguire lo script
+  direttamente con opzioni aggiuntive:
 
 ```bash
 # Mostra informazioni dettagliate durante l'elaborazione

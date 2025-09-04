@@ -1,7 +1,9 @@
 # Utilizzo di Just Task Runner
 
 [![Just](https://img.shields.io/badge/Just-Task%20Runner-blueviolet)](https://github.com/casey/just)
-Questo progetto include un `justfile` che fornisce un moderno task runner per semplificare l'esecuzione di comandi comuni. Just è un'alternativa moderna a Make, con sintassi più pulita e funzionalità avanzate.
+Questo progetto include un `justfile` che fornisce un moderno task runner per semplificare
+l'esecuzione di comandi comuni. Just è un'alternativa moderna a Make, con sintassi più pulita e
+funzionalità avanzate.
 
 ## 🚀 Quick Start
 
@@ -151,8 +153,8 @@ just --list    # Lista tutti i comandi
 Questo progetto supporta **sia Make che Just**:
 
 - **Make**: Per utenti che preferiscono lo standard tradizionale
-- **Just**: Per chi vuole sintassi moderna e funzionalità avanzate
-  Puoi usare entrambi interscambiabilmente:
+- **Just**: Per chi vuole sintassi moderna e funzionalità avanzate Puoi usare entrambi
+  interscambiabilmente:
 
 ```bash
 # Stesso risultato
@@ -210,7 +212,9 @@ make fix-all
 
 ## 🖥️ Justfile Cross-Platform
 
-Il `justfile` di questo progetto è stato progettato per funzionare su Windows, macOS e Linux. La selezione della shell e la gestione dei comandi avvengono in modo automatico, garantendo output colorato e compatibilità su tutte le piattaforme.
+Il `justfile` di questo progetto è stato progettato per funzionare su Windows, macOS e Linux. La
+selezione della shell e la gestione dei comandi avvengono in modo automatico, garantendo output
+colorato e compatibilità su tutte le piattaforme.
 
 ### Esempio di ricetta cross-platform
 
@@ -247,18 +251,21 @@ run-server:
 
 Tutti gli strumenti di linting e test sono configurati per ignorare directory di dipendenze e cache:
 
-- `node_modules`, `.venv`, `venv`, `build`, `dist`, `__pycache__`, `.pytest_cache`, `*.egg-info`, `migrations`
-  Consulta i file di configurazione (`.flake8`, `.pylintrc`, `pytest.ini`, `ruff.toml`, `djlintrc`, `.pre-commit-config.yaml`) per i dettagli.
+- `node_modules`, `.venv`, `venv`, `build`, `dist`, `__pycache__`, `.pytest_cache`, `*.egg-info`,
+  `migrations` Consulta i file di configurazione (`.flake8`, `.pylintrc`, `pytest.ini`, `ruff.toml`,
+  `djlintrc`, `.pre-commit-config.yaml`) per i dettagli.
 
 ## 🛠️ Troubleshooting
 
-- Se vedi errori di linting su file di dipendenze, verifica che le directory siano escluse nei file di configurazione.
+- Se vedi errori di linting su file di dipendenze, verifica che le directory siano escluse nei file
+  di configurazione.
 - Se un comando non funziona su un OS, controlla la logica di shell nel justfile.
 - Per output colorato, assicurati che la ricetta usi PowerShell su Windows e ANSI su Linux/macOS.
 
 ## 🔒 Controlli di Sicurezza Python
 
-Per analizzare la sicurezza del codice Python viene utilizzato **Bandit**. Assicurati che Bandit sia installato nel tuo ambiente:
+Per analizzare la sicurezza del codice Python viene utilizzato **Bandit**. Assicurati che Bandit sia
+installato nel tuo ambiente:
 
 ```bash
 uv add bandit
@@ -274,21 +281,24 @@ La ricetta è cross-platform e ignora le directory di dipendenze e cache.
 
 ### Gestione dei warning nei test e negli script
 
-- Nei test, le password hardcoded sono accettabili. Per evitare warning Bandit, aggiungi il commento `# nosec` accanto alle stringhe di password:
+- Nei test, le password hardcoded sono accettabili. Per evitare warning Bandit, aggiungi il commento
+  `# nosec` accanto alle stringhe di password:
 
   ```python
   self.password = "testpass123"  # nosec
   user = authenticate(username=self.valid_email, password="wrongpass")  # nosec
   ```
 
-- Negli script che usano `subprocess` in modo sicuro, aggiungi `# nosec` accanto all'import e alle chiamate:
+- Negli script che usano `subprocess` in modo sicuro, aggiungi `# nosec` accanto all'import e alle
+  chiamate:
 
   ```python
   import subprocess  # nosec
   result = subprocess.run(cmd_args, ...)  # nosec
   ```
 
-  Consulta la documentazione di Bandit per interpretare i risultati: [Bandit documentation](https://bandit.readthedocs.io/en/latest/).
+  Consulta la documentazione di Bandit per interpretare i risultati:
+  [Bandit documentation](https://bandit.readthedocs.io/en/latest/).
 
 ## 📚 Documentazione Avanzata
 

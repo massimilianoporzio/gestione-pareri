@@ -2,7 +2,8 @@
 
 [![IIS](https://img.shields.io/badge/IIS-Windows%20Server-blue)](https://www.iis.net/)
 [![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/)
-Questa guida spiega come configurare **IIS (Internet Information Services)** come reverse proxy per Django in ambienti Windows Server o intranet aziendali.
+Questa guida spiega come configurare **IIS (Internet Information Services)** come reverse proxy per
+Django in ambienti Windows Server o intranet aziendali.
 
 ## 🎯 Overview
 
@@ -209,8 +210,7 @@ Get-Counter -Counter "\Web Service(_Total)\Bytes Total/Sec"
 
 - Django server non avviato
 - Porta 8000 occupata
-- Firewall blocking
-  **Soluzioni:**
+- Firewall blocking **Soluzioni:**
 
 ```bash
 # Verifica Django

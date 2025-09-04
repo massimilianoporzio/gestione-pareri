@@ -1,6 +1,7 @@
 # 🔐 Database Setup - Sicurezza Password
 
-Questo progetto utilizza un sistema sicuro per gestire le password PostgreSQL senza esporle nel repository.
+Questo progetto utilizza un sistema sicuro per gestire le password PostgreSQL senza esporle nel
+repository.
 
 ## 📋 File e Sicurezza
 

@@ -55,11 +55,12 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 
 ## 🎨 File CSS di Input (Opzionale)
 
-Il file `src/static/css/style.css` può contenere solo `@import "tailwindcss";` oppure puoi aggiungere componenti personalizzati:
+Il file `src/static/css/style.css` può contenere solo `@import "tailwindcss";` oppure puoi
+aggiungere componenti personalizzati:
 
 ```css
 /* Solo questa riga è essenziale! Tailwind v4 gestisce tutto automaticamente */
-@import "tailwindcss";
+@import 'tailwindcss';
 /*
 🎯 ESEMPI OPZIONALI - Componenti personalizzati per Django
 Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue necessità
