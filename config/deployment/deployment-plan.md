@@ -37,7 +37,7 @@
 .\scripts\deployment\production-deploy.ps1 -UpdateOnly -DeployPath "E:\prod\gestione-pareri"
 ```
 
-### ✅ Cosa fa automaticamente
+### ✅ Azioni automatiche aggiornamento
 
 - Pull delle modifiche da GitHub
 - Aggiornamento dipendenze Python

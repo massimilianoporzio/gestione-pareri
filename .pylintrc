@@ -2,7 +2,7 @@
 # Specifica il modo in cui Pylint tratta i file e le cartelle
 load-plugins=pylint_django
 django-settings-module=home.settings
-ignore=CVS,src/home/settings,src/home/settings.py
+ignore=CVS,src/home/settings,src/home/settings.py,node_modules,build,dist,.venv,venv,__pycache__,.pytest_cache,*.egg-info
 ignore-patterns = ^\.#
 
 [FORMAT]

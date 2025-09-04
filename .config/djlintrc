@@ -6,5 +6,6 @@
   "extension": "html",
   "format_js": true,
   "format_css": true,
-  "ignore": "H030"
+  "ignore": "H030",
+  "exclude": "node_modules,build,dist,.venv,venv,__pycache__,.pytest_cache,*.egg-info"
 }

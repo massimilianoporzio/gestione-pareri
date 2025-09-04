@@ -4,7 +4,7 @@ Questa directory contiene script per il deployment in produzione usando diversi 
 
 ## � Gestione File Statici
 
-### Directory Structure
+### Struttura Directory Statici
 
 ```
 ├── src/static/          # File statici sorgente (committare in Git)
@@ -14,7 +14,7 @@ Questa directory contiene script per il deployment in produzione usando diversi 
 
 ### Best Practices
 
-### Directory Structure (Completa)
+### Directory Structure Completa
 
 `````
 ### Processo di Deployment
@@ -48,7 +48,7 @@ make collectstatic-test
 make collectstatic-prod
 `````
 
-### Directory Structure
+### Struttura Directory Produzione
 
 ```
 

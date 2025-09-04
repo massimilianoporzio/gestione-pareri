@@ -208,6 +208,55 @@ make fix-all
 - Nginx reverse proxy support (Linux/macOS)
 - SSL bypass per ambienti aziendali
 
+## 🖥️ Justfile Cross-Platform
+
+Il `justfile` di questo progetto è stato progettato per funzionare su Windows, macOS e Linux. La selezione della shell e la gestione dei comandi avvengono in modo automatico, garantendo output colorato e compatibilità su tutte le piattaforme.
+
+### Esempio di ricetta cross-platform
+
+```just
+run-server:
+  if [ "$OS" = "Windows_NT" ]; then
+    Write-Host "🚀 Avvio server..." -ForegroundColor Cyan
+    uv run python src/manage.py runserver
+  else
+    printf "\033[36m🚀 Avvio server...\033[0m\n"
+    uv run python src/manage.py runserver
+  fi
+```
+
+### Best practice per ricette cross-platform
+
+- Usa variabili per rilevare l'OS (`$OS` o logica shell)
+- Gestisci output colorato con PowerShell su Windows e ANSI su Linux/macOS
+- Escludi directory di dipendenze e cache in tutti gli strumenti di linting e test
+- Documenta le differenze tra ambienti nelle ricette
+
+### Tabella compatibilità ricette
+
+| Ricetta           | Windows | macOS | Linux |
+| ----------------- | ------- | ----- | ----- |
+| run-server        | ✅      | ✅    | ✅    |
+| setup-iis         | ✅      | ❌    | ❌    |
+| setup-nginx       | ❌      | ✅    | ✅    |
+| quality-corporate | ✅      | ✅    | ✅    |
+| deploy-intranet   | ✅      | ❌    | ❌    |
+| deploy-nginx      | ❌      | ✅    | ✅    |
+
+## 🔧 Directory da ignorare
+
+Tutti gli strumenti di linting e test sono configurati per ignorare directory di dipendenze e cache:
+
+- `node_modules`, `.venv`, `venv`, `build`, `dist`, `__pycache__`, `.pytest_cache`, `*.egg-info`, `migrations`
+
+Consulta i file di configurazione (`.flake8`, `.pylintrc`, `pytest.ini`, `ruff.toml`, `djlintrc`, `.pre-commit-config.yaml`) per i dettagli.
+
+## 🛠️ Troubleshooting
+
+- Se vedi errori di linting su file di dipendenze, verifica che le directory siano escluse nei file di configurazione.
+- Se un comando non funziona su un OS, controlla la logica di shell nel justfile.
+- Per output colorato, assicurati che la ricetta usi PowerShell su Windows e ANSI su Linux/macOS.
+
 ## 📚 Documentazione Avanzata
 
 Per configurazioni avanzate, consulta:

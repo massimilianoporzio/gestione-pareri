@@ -561,7 +561,7 @@ lint-codacy:
     else \
         Write-Host "2/3 - Flake8..." -ForegroundColor Yellow; \
     fi
-    @-{{python}} flake8 --format=default --config=.config/flake8 --exclude=.venv,migrations/*,migrations/**,src/*/migrations/*,src/*/migrations/**,src/**/migrations/*,src/**/migrations/**,src/**/migrations,src/**/migrations/*.py,src/**/migrations/**/*.py .
+    @-{{python}} flake8 --format=default --config=.config/flake8 --exclude=.venv,migrations/*,migrations/**,src/*/migrations/*,src/*/migrations/**,src/**/migrations/*,src/**/migrations/**,src/**/migrations,src/**/migrations/*.py,src/**/migrations/**/*.py,node_modules .
     @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
         printf "\033[33m3/3 - Pylint...\033[0m\n"; \
     else \
@@ -862,45 +862,49 @@ check-env-prod:
 
 # 🏢 Pre-commit con configurazione corporate
 precommit-corporate:
-    @Write-Host "🏢 Esecuzione pre-commit con configurazione corporate..." -ForegroundColor Magenta
-    @if (Test-Path ".pre-commit-config-corporate.yaml") { \
-        $result = pre-commit run --all-files --config .pre-commit-config-corporate.yaml; \
-        if ($LASTEXITCODE -eq 0) { \
-            Write-Host "✅ Tutti i controlli pre-commit superati!" -ForegroundColor Green \
-        } elseif ($LASTEXITCODE -eq 1) { \
-            Write-Host "🔧 Pre-commit ha corretto automaticamente alcuni problemi!" -ForegroundColor Yellow; \
-            Write-Host "💡 Rivedi le modifiche e committa se necessario." -ForegroundColor Cyan \
-        } else { \
-            Write-Host "❌ Errori durante l'esecuzione pre-commit (exit code: $LASTEXITCODE)" -ForegroundColor Red; \
-            exit $LASTEXITCODE \
-        } \
-    } else { \
-        Write-Host "⚠️  File .pre-commit-config-corporate.yaml non trovato!" -ForegroundColor Red; \
-        Write-Host "💡 Usando configurazione standard..." -ForegroundColor Yellow; \
-        $result = pre-commit run --all-files; \
-        if ($LASTEXITCODE -eq 0) { \
-            Write-Host "✅ Tutti i controlli pre-commit superati!" -ForegroundColor Green \
-        } elseif ($LASTEXITCODE -eq 1) { \
-            Write-Host "🔧 Pre-commit ha corretto automaticamente alcuni problemi!" -ForegroundColor Yellow; \
-            Write-Host "💡 Rivedi le modifiche e committa se necessario." -ForegroundColor Cyan \
-        } else { \
-            Write-Host "❌ Errori durante l'esecuzione pre-commit (exit code: $LASTEXITCODE)" -ForegroundColor Red; \
-            exit $LASTEXITCODE \
-        } \
-    }
+    @printf "\033[35m🏢 Esecuzione pre-commit con configurazione corporate...\033[0m\n"
+    @if [ -f .pre-commit-config-corporate.yaml ]; then \
+        pre-commit run --all-files --config .pre-commit-config-corporate.yaml; result=$?; \
+    else \
+        printf "\033[31m⚠️  File .pre-commit-config-corporate.yaml non trovato!\033[0m\n"; \
+        printf "\033[33m💡 Usando configurazione standard...\033[0m\n"; \
+        pre-commit run --all-files; result=$?; \
+    fi; \
+    if [ $result -eq 0 ]; then \
+        printf "\033[32m✅ Tutti i controlli pre-commit superati!\033[0m\n"; \
+    elif [ $result -eq 1 ]; then \
+        printf "\033[33m🔧 Pre-commit ha corretto automaticamente alcuni problemi!\033[0m\n"; \
+        printf "\033[36m💡 Rivedi le modifiche e committa se necessario.\033[0m\n"; \
+    else \
+        printf "\033[31m❌ Errori durante l'esecuzione pre-commit (exit code: $result)\033[0m\n"; \
+        exit $result; \
+    fi
 
 # 🏢 Quality checks corporate (alternativi)
 quality-corporate:
-    @Write-Host "🏢 Controlli qualità corporate..." -ForegroundColor Magenta
-    @Write-Host "🔍 1. Controlli pre-commit corporate..." -ForegroundColor Cyan
-    just precommit-corporate
-    @Write-Host "📊 2. Controlli Codacy..." -ForegroundColor Cyan
-    just lint-codacy
-    @Write-Host "📝 3. Aggiunta docstring..." -ForegroundColor Cyan
-    just add-docstrings
-    @Write-Host "🎯 4. Fix markdown..." -ForegroundColor Cyan
-    just fix-markdown
-    @Write-Host "✅ Controlli quality corporate completati!" -ForegroundColor Green
+    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
+        printf "\033[35m🏢 Controlli qualità corporate...\033[0m\n"; \
+        printf "\033[36m🔍 1. Controlli pre-commit corporate...\033[0m\n"; \
+        just precommit-corporate; \
+        printf "\033[36m📊 2. Controlli Codacy...\033[0m\n"; \
+        just lint-codacy; \
+        printf "\033[36m📝 3. Aggiunta docstring...\033[0m\n"; \
+        just add-docstrings; \
+        printf "\033[36m🎯 4. Fix markdown...\033[0m\n"; \
+        just fix-markdown; \
+        printf "\033[32m✅ Controlli quality corporate completati!\033[0m\n"; \
+    else \
+        Write-Host "🏢 Controlli qualità corporate..." -ForegroundColor Magenta; \
+        Write-Host "🔍 1. Controlli pre-commit corporate..." -ForegroundColor Cyan; \
+        just precommit-corporate; \
+        Write-Host "📊 2. Controlli Codacy..." -ForegroundColor Cyan; \
+        just lint-codacy; \
+        Write-Host "📝 3. Aggiunta docstring..." -ForegroundColor Cyan; \
+        just add-docstrings; \
+        Write-Host "🎯 4. Fix markdown..." -ForegroundColor Cyan; \
+        just fix-markdown; \
+        Write-Host "✅ Controlli quality corporate completati!" -ForegroundColor Green; \
+    fi
 
 # === DATABASE UTILITIES ===
 

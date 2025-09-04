@@ -14,7 +14,8 @@ exclude =
     *.egg-info,
     migrations,
     */migrations/*,
-    **/migrations/**
+    **/migrations/**,
+    node_modules
 per-file-ignores =
     # Settings Django
     src/home/settings.py:F401,F403

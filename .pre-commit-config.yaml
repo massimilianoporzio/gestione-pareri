@@ -7,11 +7,20 @@ exclude: |
     ^dist/.*|
     ^build/.*|
     ^out/.*|
+    # Python virtualenvs
+    ^\.venv/.*|
+    ^venv/.*|
+    # Python cache
+    ^__pycache__/.*|
+    # Egg info
+    ^.*\.egg-info/.*|
     # Django migrations (exclude all migrations folders)
     (^|/)migrations/.*|
     # Temporary files
     .*\.tmp$|
     .*\.temp$
+    # pytest cache
+    ^\.pytest_cache/.*
   )
 
 repos:
