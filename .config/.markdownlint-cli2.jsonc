@@ -3,8 +3,8 @@
   "config": {
     // Regole di default
     "default": true,
-  // Imposta la lunghezza massima della riga a 120 caratteri
-  "MD013": { "line_length": 120 },
+  // Disabilita il controllo della lunghezza della riga
+  "MD013": false,
     // Consenti più righe vuote consecutive
     "MD012": false,
     // Permetti diversi stili di titoli
