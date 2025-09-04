@@ -951,3 +951,7 @@ create-db-script:
             Write-Host "❌ Template non trovato: update_postgresql_staging.template.sql" -ForegroundColor Red; \
         } \
     fi
+
+# Ricetta Just per scansione Safety
+safety-scan:
+    @uv run safety scan --full-report --output screen

@@ -248,8 +248,7 @@ run-server:
 Tutti gli strumenti di linting e test sono configurati per ignorare directory di dipendenze e cache:
 
 - `node_modules`, `.venv`, `venv`, `build`, `dist`, `__pycache__`, `.pytest_cache`, `*.egg-info`, `migrations`
-
-Consulta i file di configurazione (`.flake8`, `.pylintrc`, `pytest.ini`, `ruff.toml`, `djlintrc`, `.pre-commit-config.yaml`) per i dettagli.
+  Consulta i file di configurazione (`.flake8`, `.pylintrc`, `pytest.ini`, `ruff.toml`, `djlintrc`, `.pre-commit-config.yaml`) per i dettagli.
 
 ## 🛠️ Troubleshooting
 
@@ -289,7 +288,7 @@ La ricetta è cross-platform e ignora le directory di dipendenze e cache.
   result = subprocess.run(cmd_args, ...)  # nosec
   ```
 
-Consulta la documentazione di Bandit per interpretare i risultati: [Bandit documentation](https://bandit.readthedocs.io/en/latest/).
+  Consulta la documentazione di Bandit per interpretare i risultati: [Bandit documentation](https://bandit.readthedocs.io/en/latest/).
 
 ## 📚 Documentazione Avanzata
 
