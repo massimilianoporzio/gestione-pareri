@@ -18,8 +18,9 @@ dependencies = [
     "whitenoise>=6.8.2",
 ]
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
+    "djlint==1.36.4",
     "autopep8>=2.0.4",
     "flake8>=7.3.0",
     "pylint>=3.3.8",

@@ -1,0 +1,4 @@
+[djlint]
+ignore = node_modules,staticfiles,media,.venv
+preserve_blank_lines = true
+require_load = static
