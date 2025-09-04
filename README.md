@@ -11,6 +11,7 @@
 [![djlint](https://img.shields.io/badge/djlint-HTML%20linting-blue)](https://github.com/Riverside-Healthcare/djlint)
 [![Prettier](https://img.shields.io/badge/prettier-markdown-ff69b4)](https://prettier.io/)
 [![markdownlint](https://img.shields.io/badge/markdownlint-enabled-brightgreen)](https://github.com/DavidAnson/markdownlint)
+[![Bandit](https://img.shields.io/badge/Bandit-security--scan-blue?logo=python&logoColor=white)](https://bandit.readthedocs.io/en/latest/)
 
 ## 📖 Documentation
 

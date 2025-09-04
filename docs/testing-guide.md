@@ -407,3 +407,26 @@ just check-env-dev
 ---
 
 > **⚠️ IMPORTANTE**: Prima di ogni deploy su IIS in produzione, TUTTI i 42 test devono passare. Zero tolleranza per errori di sicurezza in ambiente ospedaliero ASL.
+
+## 🔒 Security Scan con Bandit
+
+Questo progetto integra **Bandit** per il controllo automatico delle vulnerabilità di sicurezza nel codice Python.
+
+### Come eseguire la scansione
+
+- Usa la ricetta Just:
+
+  ```bash
+  just security-scan
+  ```
+
+- Bandit analizzerà tutti i file Python e segnalerà eventuali problemi di sicurezza.
+
+### Ignorare falsi positivi
+
+- Puoi aggiungere il commento `# nosec` su una riga per ignorare un warning specifico.
+
+### Documentazione
+
+- [Guida Bandit](https://bandit.readthedocs.io/en/latest/)
+- [Ricetta security-scan](justfile)
