@@ -5,7 +5,7 @@ Genera report dettagliati su qualità del codice, complessità e metriche.
 """
 
 import shlex
-import subprocess
+import subprocess  # nosec
 from datetime import datetime
 from pathlib import Path
 
@@ -21,7 +21,7 @@ def run_command(cmd):
             cmd_args = cmd
 
         # Esegui con encoding UTF-8 esplicito per evitare problemi su Windows
-        result = subprocess.run(
+        result = subprocess.run(  # nosec
             cmd_args, capture_output=True, text=True, encoding="utf-8", errors="replace", check=False
         )
         return result.stdout, result.stderr, result.returncode

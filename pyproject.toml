@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "bandit>=1.8.6",
     "colorama>=0.4.6",
     "django===5.2.0",
     "django-concurrency>=2.7",
