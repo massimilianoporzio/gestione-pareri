@@ -46,14 +46,15 @@ target-version = "py313"
 
 # Escludi cartelle specifiche
 exclude = [
-    "migrations",
-    "*/migrations/*",
-    "**/migrations/**",
-    ".git",
-    ".venv",
-    "__pycache__",
-    "build",
-    "dist",
+    "migrations/*",
+    "migrations/**",
+    "src/*/migrations/*",
+    "src/*/migrations/**",
+    "src/**/migrations/*",
+    "src/**/migrations/**",
+    "src/**/migrations",
+    "src/**/migrations/*.py",
+    "src/**/migrations/**/*.py",
 ]
 
 # Formatter configuration
