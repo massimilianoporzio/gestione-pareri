@@ -257,6 +257,40 @@ Consulta i file di configurazione (`.flake8`, `.pylintrc`, `pytest.ini`, `ruff.t
 - Se un comando non funziona su un OS, controlla la logica di shell nel justfile.
 - Per output colorato, assicurati che la ricetta usi PowerShell su Windows e ANSI su Linux/macOS.
 
+## 🔒 Controlli di Sicurezza Python
+
+Per analizzare la sicurezza del codice Python viene utilizzato **Bandit**. Assicurati che Bandit sia installato nel tuo ambiente:
+
+```bash
+uv add bandit
+```
+
+Puoi eseguire la scansione di sicurezza con:
+
+```bash
+just security-scan
+```
+
+La ricetta è cross-platform e ignora le directory di dipendenze e cache.
+
+### Gestione dei warning nei test e negli script
+
+- Nei test, le password hardcoded sono accettabili. Per evitare warning Bandit, aggiungi il commento `# nosec` accanto alle stringhe di password:
+
+  ```python
+  self.password = "testpass123"  # nosec
+  user = authenticate(username=self.valid_email, password="wrongpass")  # nosec
+  ```
+
+- Negli script che usano `subprocess` in modo sicuro, aggiungi `# nosec` accanto all'import e alle chiamate:
+
+  ```python
+  import subprocess  # nosec
+  result = subprocess.run(cmd_args, ...)  # nosec
+  ```
+
+Consulta la documentazione di Bandit per interpretare i risultati: [Bandit documentation](https://bandit.readthedocs.io/en/latest/).
+
 ## 📚 Documentazione Avanzata
 
 Per configurazioni avanzate, consulta:

@@ -34,7 +34,7 @@ class CustomUserModelTest(TestCase):
         """Setup per i test."""
         self.valid_email = "test.user@aslcn1.it"
         self.invalid_email = "test@gmail.com"
-        self.password = "testpass123"
+        self.password = "testpass123"  # nosec
 
     def test_create_user_valid_email(self):
         """Test creazione utente con email valida."""
@@ -113,7 +113,7 @@ class CustomUserAuthenticationTest(TestCase):
     def setUp(self):
         """Setup per i test."""
         self.valid_email = "auth.test@aslcn1.it"
-        self.password = "authtest123"
+        self.password = "authtest123"  # nosec
         self.user = CustomUser.objects.create_user(email=self.valid_email, password=self.password)
 
     def test_authenticate_with_email(self):
@@ -123,7 +123,7 @@ class CustomUserAuthenticationTest(TestCase):
 
     def test_authenticate_with_wrong_password(self):
         """Test autenticazione con password sbagliata."""
-        user = authenticate(username=self.valid_email, password="wrongpass")
+        user = authenticate(username=self.valid_email, password="wrongpass")  # nosec
         self.assertIsNone(user)
 
     def test_authenticate_with_invalid_email(self):
@@ -147,7 +147,7 @@ class CustomUserFormsTest(TestCase):
         """Setup per i test."""
         self.valid_email = "form.test@aslcn1.it"
         self.invalid_email = "form@gmail.com"
-        self.password = "formtest123"
+        self.password = "formtest123"  # nosec
 
     def test_custom_authentication_form_valid(self):
         """Test form di autenticazione con dati validi."""
@@ -225,7 +225,7 @@ class GroupsPermissionsTest(TestCase):
     def setUp(self):
         """Setup per i test."""
         self.user_email = "groups.test@aslcn1.it"
-        self.password = "groupstest123"
+        self.password = "groupstest123"  # nosec
         self.user = CustomUser.objects.create_user(email=self.user_email, password=self.password)
 
     def test_full_access_group_creation(self):
@@ -287,7 +287,7 @@ class AdminIntegrationTest(TestCase):
     def setUp(self):
         """Setup per i test."""
         self.admin_email = "admin.test@aslcn1.it"
-        self.password = "admintest123"
+        self.password = "admintest123"  # nosec
         self.admin_user = CustomUser.objects.create_superuser(email=self.admin_email, password=self.password)
         self.client = Client()
 
@@ -382,7 +382,7 @@ class SecurityTest(TestCase):
     def setUp(self):
         """Setup per i test."""
         self.user_email = "security.test@aslcn1.it"
-        self.password = "securitytest123"
+        self.password = "securitytest123"  # nosec
         self.user = CustomUser.objects.create_user(email=self.user_email, password=self.password)
         self.client = Client()
 
@@ -462,7 +462,7 @@ class PerformanceTest(TestCase):
         self.users = []
         for i in range(10):
             user = CustomUser.objects.create_user(
-                email=f"perf.user{i}@aslcn1.it", password="perftest123", first_name=f"User{i}", last_name="Test"
+                email=f"perf.user{i}@aslcn1.it", password="perftest123", first_name=f"User{i}", last_name="Test"  # nosec
             )
             self.users.append(user)
 

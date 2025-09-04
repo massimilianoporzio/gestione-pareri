@@ -1,3 +1,12 @@
+# Controllo sicurezza Python (Bandit)
+security-scan:
+    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
+        printf "\033[33m🔒 Controllo sicurezza Bandit...\033[0m\n"; \
+        uv run bandit -r src tools examples --exclude node_modules,.venv,venv,build,dist,__pycache__,.pytest_cache,*.egg-info; \
+    else \
+        Write-Host "🔒 Controllo sicurezza Bandit..." -ForegroundColor Yellow; \
+        uv run bandit -r src tools examples --exclude node_modules,.venv,venv,build,dist,__pycache__,.pytest_cache,*.egg-info; \
+    fi
 # Deploy Django Template - Comandi disponibili con Just
 # Per visualizzare tutti i comandi: just --list o just
 
