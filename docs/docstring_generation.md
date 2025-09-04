@@ -7,7 +7,6 @@ Il progetto include un sistema automatico per aggiungere docstring ai file Pytho
 1. Quando salvi un file Python, l'estensione "Run on Save" esegue automaticamente:
    - isort per ordinare gli import
    - lo script `add_docstring.py` che aggiunge una docstring a livello di modulo se non è presente
-
 2. Lo script analizza il file e aggiunge una docstring in formato standard che include:
    - Un titolo basato sul nome del file
    - Una descrizione generale delle funzionalità del modulo
@@ -42,16 +41,13 @@ Questo comando:
 - Aggiunge docstring a tutti i file che ne sono privi
 - Esclude i file `__init__.py` e i file in directory come `.venv`, `migrations`, ecc.
 - Funziona su tutte le piattaforme (Windows, Linux, macOS)
-
-Puoi anche eseguire lo script direttamente con opzioni aggiuntive:
+  Puoi anche eseguire lo script direttamente con opzioni aggiuntive:
 
 ```bash
 # Mostra informazioni dettagliate durante l'elaborazione
 python tools/add_docstring_batch.py --verbose
-
 # Simula l'esecuzione senza apportare modifiche
 python tools/add_docstring_batch.py --dry-run
-
 # Elabora solo una directory specifica
 python tools/add_docstring_batch.py src/app
 ```

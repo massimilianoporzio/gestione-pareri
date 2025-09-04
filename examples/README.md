@@ -25,10 +25,8 @@ uv run python examples/logging_example.py
 # Attiva l'ambiente virtuale
 # Windows:
 .\.venv\Scripts\Activate.ps1
-
 # macOS/Linux:
 source .venv/bin/activate
-
 # Esegui l'esempio
 python examples/logging_example.py
 ```
@@ -42,8 +40,7 @@ L'esempio di logging mostra come utilizzare il sistema di logging configurato in
 - Diversi livelli di logging (DEBUG, INFO, WARNING, ERROR, CRITICAL)
 - Logging di eccezioni con traceback
 - Logging strutturato con informazioni aggiuntive
-
-Per modificare la modalità DEBUG:
+  Per modificare la modalità DEBUG:
 
 1. Modifica il file `.env` nella radice del progetto
 2. Imposta `DJANGO_DEBUG=1` per la modalità sviluppo (log colorati in console)

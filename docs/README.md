@@ -44,10 +44,8 @@ Documentazione completa per il sistema di gestione pratiche e pareri in ambiente
 ```bash
 # Test completi (SEMPRE prima del deploy)
 cd src && uv run manage.py test accounts --settings=home.settings.test_local
-
 # Test specifici sicurezza (CRITICO per IIS)
 cd src && uv run manage.py test accounts.tests.SecurityTest --settings=home.settings.test_local
-
 # Test performance (IMPORTANTE per Windows Server)
 cd src && uv run manage.py test accounts.tests.PerformanceTest --settings=home.settings.test_local
 ```
@@ -59,8 +57,7 @@ cd src && uv run manage.py test accounts.tests.PerformanceTest --settings=home.s
 - [ ] **PerformanceTest** (2/2) - ottimizzazione per IIS
 - [ ] **AdminIntegrationTest** (3/3) - interfaccia funzionante
 - [ ] **Database configurato** per ambiente target
-
-📋 **Guida completa**: [Testing Guide](testing-guide.md)
+      📋 **Guida completa**: [Testing Guide](testing-guide.md)
 
 ## 🎯 Flusso di Lavoro Consigliato
 
@@ -96,13 +93,10 @@ cd src && uv run manage.py test accounts.tests.PerformanceTest --settings=home.s
 ```bash
 # Validazione domini aziendali
 test_email_domain_validation: ✅
-
 # Protezione CSRF per sicurezza web
 test_csrf_protection: ✅
-
 # Hashing password sicuro
 test_password_hashing: ✅
-
 # Performance bulk operations
 test_bulk_user_creation: ✅
 ```
@@ -114,16 +108,12 @@ test_bulk_user_creation: ✅
 ```bash
 # Setup ambiente
 just check-env-dev
-
 # Test rapidi
 just test
-
 # Test completi pre-deploy
 cd src && uv run manage.py test accounts --settings=home.settings.test_local
-
 # Deploy staging
 just setup-all-environments
-
 # Server sviluppo
 just run-dev
 ```

@@ -2,7 +2,6 @@
 
 [![IIS](https://img.shields.io/badge/IIS-Windows%20Server-blue)](https://www.iis.net/)
 [![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/)
-
 Questa guida spiega come configurare **IIS (Internet Information Services)** come reverse proxy per Django in ambienti Windows Server o intranet aziendali.
 
 ## 🎯 Overview
@@ -23,7 +22,6 @@ Questa guida spiega come configurare **IIS (Internet Information Services)** com
 ```bash
 # Just task runner
 just setup-iis
-
 # Make
 make setup-iis
 ```
@@ -33,7 +31,6 @@ make setup-iis
 ```bash
 # Deploy con IIS reverse proxy
 just deploy-intranet
-
 # Make equivalente
 make deploy-intranet
 ```
@@ -52,7 +49,6 @@ make deploy-intranet
 ```powershell
 # Abilita IIS su Windows
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole
-
 # Abilita funzionalità avanzate
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpRedirect
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpCompressionStatic
@@ -71,7 +67,6 @@ Scarica e installa da: <https://www.iis.net/downloads/microsoft/url-rewrite>
 ```env
 # Dominio intranet
 DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,gestione-pareri.local,*.intranet.local
-
 # CSRF Origins per reverse proxy
 DJANGO_CSRF_TRUSTED_ORIGINS=<http://gestione-pareri.local,<https://gestione-pareri.local,<http://*.intranet.local,<https://*.intranet.lo>c>a>l>
 ```
@@ -90,7 +85,6 @@ Set-ItemProperty -Path "IIS:\AppPools\GestionePareri" -Name recycling.periodicRe
 ```powershell
 # Crea sito web
 New-Website -Name "GestionePareri" -Port 80 -PhysicalPath "C:\inetpub\wwwroot\gestione-pareri" -ApplicationPool "GestionePareri"
-
 # Configura binding dominio personalizzato
 New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gestione-pareri.local"
 ```
@@ -116,7 +110,6 @@ New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gesti
                 </rule>
             </rules>
         </rewrite>
-
         <!-- Headers per Django -->
         <httpProtocol>
             <customHeaders>
@@ -124,7 +117,6 @@ New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gesti
                 <add name="X-Forwarded-Host" value="{HTTP_HOST}" />
             </customHeaders>
         </httpProtocol>
-
         <!-- File statici serviti da IIS -->
         <staticContent>
             <mimeMap fileExtension=".css" mimeType="text/css" />
@@ -150,7 +142,6 @@ New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gesti
 ```powershell
 # Genera certificato self-signed
 New-SelfSignedCertificate -DnsName "gestione-pareri.local" -CertStoreLocation "cert:\LocalMachine\My"
-
 # Configura binding HTTPS
 New-WebBinding -Name "GestionePareri" -Protocol https -Port 443 -HostHeader "gestione-pareri.local"
 ```
@@ -170,10 +161,8 @@ Per certificati aziendali, consulta il tuo team IT per:
 ```bash
 # Installa dipendenze
 uv sync --frozen
-
 # Migrazioni database
 just migrate-prod
-
 # Raccolta file statici
 just collectstatic-prod
 ```
@@ -191,7 +180,6 @@ just run-uvicorn
 ```bash
 # Test connettività Django diretto
 curl <http://127.0.0.1:8000>
-
 # Test reverse proxy IIS
 curl <http://gestione-pareri.local>
 ```
@@ -222,14 +210,12 @@ Get-Counter -Counter "\Web Service(_Total)\Bytes Total/Sec"
 - Django server non avviato
 - Porta 8000 occupata
 - Firewall blocking
-
-**Soluzioni:**
+  **Soluzioni:**
 
 ```bash
 # Verifica Django
 just kill-port
 just run-uvicorn
-
 # Verifica porte
 netstat -an | findstr 8000
 ```
@@ -241,7 +227,6 @@ netstat -an | findstr 8000
 ```bash
 # Rigenera file statici
 just collectstatic-prod
-
 # Verifica permessi
 icacls "staticfiles" /grant "IIS_IUSRS:(OI)(CI)F"
 ```

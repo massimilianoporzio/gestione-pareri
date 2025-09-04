@@ -43,7 +43,6 @@ GRANT ALL PRIVILEGES ON DATABASE gestione_pareri_staging TO gestione_pareri_stag
 
 -- Lista tutti gli utenti
 \du+
-
 -- Lista database del progetto
 SELECT datname as "Database", datowner::regrole as "Owner"
 FROM pg_database

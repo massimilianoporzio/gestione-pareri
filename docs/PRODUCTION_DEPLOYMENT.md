@@ -37,10 +37,8 @@ C:\inetpub\wwwroot\pratiche-pareri\     # IIS Root Directory
 # Crea directory base
 New-Item -ItemType Directory -Force -Path "C:\inetpub\wwwroot\pratiche-pareri"
 Set-Location "C:\inetpub\wwwroot\pratiche-pareri"
-
 # Clone repository
 git clone <https://github.com/massimilianoporzio/gestione-pareri.git> .
-
 # Setup branch per produzione (opzionale)
 git checkout -b production-deploy
 ```
@@ -53,7 +51,6 @@ git checkout -b production-deploy
 # Crea file configurazione da template
 Copy-Item web.config.template web.config
 Copy-Item .env.prod.template .env.prod
-
 # IMPORTANTE: Modifica manualmente i file con valori reali!
 ```
 
@@ -88,13 +85,10 @@ GRANT ALL PRIVILEGES ON DATABASE gestione_pareri_prod TO gestione_pareri_prod;
 ```powershell
 # Installa dipendenze
 uv sync
-
 # Esegui migrazioni
 uv run python src/manage.py migrate --settings=home.settings.prod
-
 # Raccogli file statici
 uv run python src/manage.py collectstatic --noinput --settings=home.settings.prod
-
 # Crea superuser
 uv run python src/manage.py createsuperuser --settings=home.settings.prod
 ```
@@ -114,7 +108,6 @@ Set-ItemProperty -Path "IIS:\AppPools\GestionePareriPool" -Name "processModel.id
 ```powershell
 # Crea sito IIS
 New-Website -Name "GestionePareri" -PhysicalPath "C:\inetpub\wwwroot\pratiche-pareri" -ApplicationPool "GestionePareriPool" -Port 80
-
 # Oppure come Application sotto existing site:
 New-WebApplication -Site "Default Web Site" -Name "pratiche-pareri" -PhysicalPath "C:\inetpub\wwwroot\pratiche-pareri" -ApplicationPool "GestionePareriPool"
 ```
@@ -137,7 +130,6 @@ Set-Acl -Path "C:\inetpub\wwwroot\pratiche-pareri" -AclObject $acl
 ```powershell
 # Test configurazione Django
 uv run python src/manage.py check --settings=home.settings.prod
-
 # Test server locale
 uv run uvicorn home.asgi:application --host localhost --port 8000
 ```
@@ -154,16 +146,12 @@ uv run uvicorn home.asgi:application --host localhost --port 8000
 ```powershell
 # Pull latest changes
 git pull origin main
-
 # Update dependencies
 uv sync
-
 # Run migrations
 uv run python src/manage.py migrate --settings=home.settings.prod
-
 # Collect static files
 uv run python src/manage.py collectstatic --noinput --settings=home.settings.prod
-
 # Restart IIS Application Pool
 Restart-WebAppPool -Name "GestionePareriPool"
 ```
@@ -197,10 +185,8 @@ Restart-WebAppPool -Name "GestionePareriPool"
 # Check IIS status
 Get-Website -Name "GestionePareri"
 Get-WebAppPool -Name "GestionePareriPool"
-
 # Check processes
 Get-Process | Where-Object {$_.Name -like "*python*"}
-
 # Test database connection
 uv run python src/manage.py dbshell --settings=home.settings.prod
 ```

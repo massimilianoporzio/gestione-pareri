@@ -17,7 +17,6 @@ Puoi specificare una directory dei log personalizzata impostando la variabile d'
 ```bash
 # Windows PowerShell
 $env:DJANGO_LOGS_DIR = "E:\percorso\personalizzato\logs"
-
 # macOS/Linux
 export DJANGO_LOGS_DIR="/percorso/personalizzato/logs"
 ```

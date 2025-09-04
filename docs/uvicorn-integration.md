@@ -33,7 +33,6 @@ make deploy-staging # 🧪 Deploy test/staging (Uvicorn)
 ```bash
 # Controlla che Uvicorn sia installato
 uv run uvicorn --version
-
 # Test rapido
 make uvicorn
 ```
@@ -48,9 +47,7 @@ make uvicorn
 - `HOST`: Indirizzo bind (default: `0.0.0.0`)
 - `PORT`: Porta (default: `8000`)
 - `LOG_LEVEL`: `debug`, `info`, `warning`, `error` (default: `info`)
-
-**Unix/Linux/macOS specifiche:**
-
+  **Unix/Linux/macOS specifiche:**
 - `WORKERS`: Numero di worker (default: `4`)
 - `TIMEOUT`: Timeout in secondi (default: `30`)
 - `KEEP_ALIVE`: Keep-alive timeout (default: `2`)
@@ -183,7 +180,6 @@ make kill-port     # Termina processi sulla porta 8000
 ```bash
 # Controlla che non ci siano altri processi sulla porta
 make kill-port
-
 # Verifica la configurazione Django
 DJANGO_ENV=dev uv run python src/manage.py check
 ```
@@ -262,8 +258,7 @@ tail -f logs/django.log
 - HTTP/2 server push
 - Background tasks asincrone
 - Server-Sent Events (SSE)
-
-**Esempio view asincrona:**
+  **Esempio view asincrona:**
 
 ```python
 # In views.py - già supportata!

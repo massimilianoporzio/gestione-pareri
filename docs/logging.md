@@ -34,10 +34,8 @@ Per utilizzare il sistema di logging nelle tue applicazioni:
 
 ```python
 import logging
-
 # Ottieni un logger per il tuo modulo
 logger = logging.getLogger(__name__)
-
 # Usa i vari livelli di log
 logger.debug("Informazione di debug dettagliata")
 logger.info("Informazione generale")
@@ -60,7 +58,6 @@ La configurazione del logging è definita in `settings.py`. Puoi personalizzarla
 ## Directory dei log
 
 I file di log vengono salvati nella directory `logs/` nella root del progetto. Questa directory viene creata automaticamente se non esiste.
-
 I file di log principali sono:
 
 - `django.log`: Log principale dell'applicazione (codificato in UTF-8 per supportare caratteri speciali e accentati)
@@ -76,8 +73,7 @@ Il sistema utilizza due approcci per i log colorati:
 
 1. **Colorama**: Libreria leggera che fornisce supporto per ANSI colors su Windows, macOS e Linux in modo trasparente
 2. **Colorlog**: Libreria alternativa che viene utilizzata come fallback
-
-L'implementazione basata su colorama assicura che i log colorati funzionino correttamente su tutte le piattaforme, incluso Windows dove i colori ANSI standard potrebbero non essere supportati da tutti i terminali.
+   L'implementazione basata su colorama assicura che i log colorati funzionino correttamente su tutte le piattaforme, incluso Windows dove i colori ANSI standard potrebbero non essere supportati da tutti i terminali.
 
 ## Nota sulle performance
 

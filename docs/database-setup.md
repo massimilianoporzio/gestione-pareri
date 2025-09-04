@@ -24,7 +24,6 @@ Guida completa per configurare PostgreSQL per tutti gli ambienti del progetto **
 ```bash
 # Windows
 psql -U postgres -h localhost
-
 # Se hai problemi di encoding (Windows)
 chcp 1252
 psql -U postgres -h localhost
@@ -36,7 +35,6 @@ psql -U postgres -h localhost
 -- Disconnetti connessioni attive
 SELECT pg_terminate_backend(pid) FROM pg_stat_activity
 WHERE datname IN ('old_database_name') AND pid <> pg_backend_pid();
-
 -- Rimuovi vecchi database e utenti
 DROP DATABASE IF EXISTS old_database_name;
 DROP USER IF EXISTS old_user_name;
@@ -75,12 +73,10 @@ Questo comando genera:
 CREATE USER gestione_pareri_dev WITH PASSWORD 'password_generata_dev';
 CREATE USER gestione_pareri_test WITH PASSWORD 'password_generata_test';
 CREATE USER gestione_pareri_prod WITH PASSWORD 'password_generata_prod';
-
 -- 2. Crea database per ogni ambiente
 CREATE DATABASE gestione_pareri_dev OWNER gestione_pareri_dev;
 CREATE DATABASE gestione_pareri_test OWNER gestione_pareri_test;
 CREATE DATABASE gestione_pareri_prod OWNER gestione_pareri_prod;
-
 -- 3. Concedi privilegi completi
 GRANT ALL PRIVILEGES ON DATABASE gestione_pareri_dev TO gestione_pareri_dev;
 GRANT ALL PRIVILEGES ON DATABASE gestione_pareri_test TO gestione_pareri_test;
@@ -92,10 +88,8 @@ GRANT ALL PRIVILEGES ON DATABASE gestione_pareri_prod TO gestione_pareri_prod;
 ```sql
 -- Limita connessioni simultanee per produzione
 ALTER USER gestione_pareri_prod CONNECTION LIMIT 20;
-
 -- Imposta scadenza password (opzionale)
 ALTER USER gestione_pareri_prod VALID UNTIL '2025-12-31';
-
 -- Verifica configurazione
 \du+
 ```
@@ -119,25 +113,21 @@ Crea/aggiorna il file `.env` nella root del progetto:
 # Database Configuration
 DB_HOST=localhost
 DB_PORT=5432
-
 # Password generate con: just generate-db-passwords
 DB_PASSWORD_DEV=your_generated_dev_password
 DB_PASSWORD_TEST=your_generated_test_password
 DB_PASSWORD_STAGING=your_generated_staging_password
 DB_PASSWORD_PROD=your_generated_prod_password
-
 # Database Names
 DB_NAME_DEV=gestione_pareri_dev
 DB_NAME_TEST=gestione_pareri_test
 DB_NAME_STAGING=gestione_pareri_staging
 DB_NAME_PROD=gestione_pareri_prod
-
 # Database Users
 DB_USER_DEV=gestione_pareri_dev
 DB_USER_TEST=gestione_pareri_test
 DB_USER_STAGING=gestione_pareri_staging
 DB_USER_PROD=gestione_pareri_prod
-
 # Switches per PostgreSQL per ambiente
 USE_POSTGRESQL_DEV=0          # SQLite per dev rapido
 USE_POSTGRESQL_TEST=0         # SQLite per test veloci
@@ -160,8 +150,7 @@ Le configurazioni database sono già impostate in:
 - **TEST**: SQLite di default per test veloci (switch a PostgreSQL con `USE_POSTGRESQL_TEST=1`)
 - **STAGING**: PostgreSQL obbligatorio per simulare produzione
 - **PROD**: PostgreSQL obbligatorio per ambiente live
-
-> 📖 **Per una spiegazione dettagliata** di cosa serve ogni ambiente e quando usarlo, consulta la [Guida agli Ambienti](environments-guide.md).
+  > 📖 **Per una spiegazione dettagliata** di cosa serve ogni ambiente e quando usarlo, consulta la [Guida agli Ambienti](environments-guide.md).
 
 ### 3. Installazione Driver PostgreSQL
 
@@ -175,10 +164,8 @@ uv add psycopg2-binary
 ```bash
 # Ambiente DEV
 just migrate-dev
-
 # Ambiente TEST
 just migrate-test
-
 # Ambiente PROD
 just migrate-prod
 ```
@@ -200,10 +187,8 @@ just check-env-prod
 -- Connettiti a ogni database e verifica
 \c gestione_pareri_dev
 \dt  -- Mostra tabelle
-
 \c gestione_pareri_test
 \dt
-
 \c gestione_pareri_prod
 \dt
 ```
@@ -255,12 +240,10 @@ SELECT datname, encoding, datcollate, datctype FROM pg_database;
 ```bash
 # Password sicure
 just generate-db-passwords
-
 # Migrazioni per ambiente
 just migrate-dev
 just migrate-test
 just migrate-prod
-
 # Test ambienti
 just check-env-dev
 just check-env-test
@@ -276,7 +259,6 @@ just check-env-prod
 \c database_name            -- Cambia database
 \dt                         -- Lista tabelle
 \q                          -- Esci da psql
-
 -- Monitoring
 SELECT * FROM pg_stat_activity;  -- Connessioni attive
 SELECT version();                -- Versione PostgreSQL

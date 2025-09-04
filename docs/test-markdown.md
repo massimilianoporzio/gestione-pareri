@@ -23,7 +23,6 @@ Markdownlint controllerà:
 # Blocco di codice
 def esempio():
     print("Hello world")
-
 ```
 
 ## Tabella non formattata correttamente

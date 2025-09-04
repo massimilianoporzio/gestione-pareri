@@ -62,7 +62,6 @@
 2. **Verifica logs**:
    - IIS Logs: C:\inetpub\logs\LogFiles\
    - Django Logs: E:\prod\gestione-pareri\logs\
-
 3. **Monitoraggio**:
    - IIS Manager per stato Application Pool
    - Event Viewer per errori sistema

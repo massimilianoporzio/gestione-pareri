@@ -1,0 +1,75 @@
+# Deploy Django Template - Comandi disponibili con Just
+# Per visualizzare tutti i comandi: just --list o just
+
+# Configura shell per Windows
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+
+# Variabili globali
+python := "uv run"
+django_manage := "uv run src/manage.py"
+
+# 📋 Comando default: mostra l'help
+default:
+    @Write-Host "🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI" -ForegroundColor Magenta
+    @Write-Host "============================================================" -ForegroundColor DarkGray
+    @Write-Host ""
+    @Write-Host "📊 DJANGO & DATABASE:" -ForegroundColor Green
+    @Write-Host "  just run-server         🚀 Server di sviluppo Django" -ForegroundColor Green
+    @Write-Host "  just run-dev            🔧 Server sviluppo (DEV)" -ForegroundColor Green
+    @Write-Host "  just run-test           🧪 Server sviluppo (TEST)" -ForegroundColor Green
+    @Write-Host "  just run-staging        🎭 Server sviluppo (STAGING)" -ForegroundColor Green
+    @Write-Host "  just run-prod           ⚡ Server sviluppo (PROD)" -ForegroundColor Green
+    @Write-Host "  just migrate            📦 Migrazioni database" -ForegroundColor Green
+    @Write-Host "  just makemigrations     📝 Crea migrazioni" -ForegroundColor Green
+    @Write-Host "  just shell              🐚 Shell Django" -ForegroundColor Green
+    @Write-Host "  just test               🧪 Esegue test progetto" -ForegroundColor Green
+    @Write-Host "  just test-dev           🔧 Test ambiente DEV" -ForegroundColor Green
+    @Write-Host "  just test-test          🧪 Test ambiente TEST" -ForegroundColor Green
+    @Write-Host "  just test-staging       🎭 Test ambiente STAGING" -ForegroundColor Green
+    @Write-Host "  just test-prod          ⚡ Test ambiente PROD" -ForegroundColor Green
+    @Write-Host ""
+    @Write-Host "🌐 SERVER & DEPLOY:" -ForegroundColor Cyan
+    @Write-Host "  just waitress           🪟 Server Waitress (Windows)" -ForegroundColor Cyan
+    @Write-Host "  just run-uvicorn        ⚡ Server Uvicorn ASGI" -ForegroundColor Cyan
+    @Write-Host "  just deploy             🎯 Deploy automatico" -ForegroundColor Cyan
+    @Write-Host "  just deploy-dev         🔧 Deploy development" -ForegroundColor Cyan
+    @Write-Host "  just deploy-staging     🧪 Deploy staging" -ForegroundColor Cyan
+    @Write-Host "  just deploy-prod        🚀 Deploy production" -ForegroundColor Cyan
+    @Write-Host "  just stop-servers       🛑 Ferma tutti i server" -ForegroundColor Cyan
+    @Write-Host "  just kill-port          🔪 Termina processo porta 8000" -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🔧 QUALITY & FORMAT:" -ForegroundColor Yellow
+    @Write-Host "  just fix-all            ⭐ CORREZIONE GLOBALE completa" -ForegroundColor Yellow
+    @Write-Host "  just lint-codacy        🔍 Controlli qualità Codacy" -ForegroundColor Yellow
+    @Write-Host "  just add-docstrings     📝 Aggiunge docstring mancanti" -ForegroundColor Yellow
+    @Write-Host "  just precommit-corporate 🏢 Pre-commit aziendale" -ForegroundColor Yellow
+    @Write-Host "  just quality-corporate  🏢 Quality controlli alternativi" -ForegroundColor Yellow
+    @Write-Host "  just fix-markdown       📝 Corregge problemi Markdown" -ForegroundColor Yellow
+    @Write-Host ""
+    @Write-Host "ℹ️  UTILITY:" -ForegroundColor White
+    @Write-Host "  just stats              📊 Statistiche progetto" -ForegroundColor White
+    @Write-Host "  just check-env          🔍 Controllo ambiente" -ForegroundColor White
+    @Write-Host "  just check-env-dev      � Controllo ambiente DEV" -ForegroundColor White
+    @Write-Host "  just check-env-test     🧪 Controllo ambiente TEST" -ForegroundColor White
+    @Write-Host "  just check-env-staging  🎭 Controllo ambiente STAGING" -ForegroundColor White
+    @Write-Host "  just check-env-prod     ⚡ Controllo ambiente PROD" -ForegroundColor White
+    @Write-Host "  just generate-secret-key 🔑 Genera Django SECRET_KEY" -ForegroundColor White
+    @Write-Host "  just generate-secret-keys-all 🔐 Genera SECRET_KEY per tutti e 4 gli ambienti" -ForegroundColor White
+    @Write-Host "  just generate-db-passwords 🔐 Genera password PostgreSQL sicure" -ForegroundColor White
+    @Write-Host "  just create-db-script   🗄️ Crea script SQL con password reali" -ForegroundColor White
+    @Write-Host "  just --list             📋 Lista completa comandi" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "🏢 INTRANET AZIENDALE:" -ForegroundColor Magenta
+    @Write-Host "  just setup-iis          🌐 Configura IIS per intranet" -ForegroundColor Cyan
+    @Write-Host "  just deploy-intranet    🚀 Deploy completo intranet" -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🪟 WINDOWS IIS DEPLOYMENT:" -ForegroundColor Blue
+    @Write-Host "  just setup-iis-prod     🌐 Setup IIS produzione" -ForegroundColor Blue
+    @Write-Host "  just deploy-iis         🚀 Deploy completo con IIS" -ForegroundColor Blue
+    @Write-Host "  just deploy-iis         🚀 Deploy completo con IIS" -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🐧 LINUX/macOS NGINX:" -ForegroundColor Blue
+    @Write-Host "  just setup-nginx        🌐 Configura Nginx reverse proxy" -ForegroundColor Blue
+    @Write-Host "  just deploy-nginx       🚀 Deploy completo con Nginx" -ForegroundColor Blue
+
+# ...existing code...

@@ -41,7 +41,6 @@ Questo comando:
 ```bash
 # Opzione A: Script automatico
 psql -U postgres -h localhost -f update_postgresql_staging.sql
-
 # Opzione B: Comandi manuali
 # Usa i comandi da docs/postgresql-setup-commands.md
 ```
@@ -91,7 +90,6 @@ Dopo il setup PostgreSQL hai 4 ambienti:
 ```bash
 # Una sola SECRET_KEY generica
 just generate-secret-key
-
 # SECRET_KEY per tutti e 4 gli ambienti (RACCOMANDATO)
 just generate-secret-keys-all
 ```
@@ -117,17 +115,14 @@ I file settings devono essere aggiornati per usare SECRET_KEY specifiche:
 SECRET_KEY = config("DJANGO_SECRET_KEY_DEV",
                    default=config("DJANGO_SECRET_KEY",
                                  default=get_random_secret_key()))
-
 # In src/home/settings/test.py
 SECRET_KEY = config("DJANGO_SECRET_KEY_TEST",
                    default=config("DJANGO_SECRET_KEY",
                                  default=get_random_secret_key()))
-
 # In src/home/settings/staging.py
 SECRET_KEY = config("DJANGO_SECRET_KEY_STAGING",
                    default=config("DJANGO_SECRET_KEY",
                                  default=get_random_secret_key()))
-
 # In src/home/settings/prod.py
 SECRET_KEY = config("DJANGO_SECRET_KEY_PROD",
                    default=config("DJANGO_SECRET_KEY",
