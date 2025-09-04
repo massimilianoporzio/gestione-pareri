@@ -1,0 +1,18 @@
+{
+  "default": true,
+  "MD013": false,
+  "MD012": false,
+  "MD003": { "style": "consistent" },
+  "MD049": { "style": "consistent" },
+  "MD050": { "style": "consistent" },
+  "MD026": false,
+  "MD040": false,
+  "MD010": false,
+  "MD036": false,
+  "ignores": [
+    "node_modules/**",
+    ".venv/**",
+    "staticfiles/**",
+    "media/**"
+  ]
+}

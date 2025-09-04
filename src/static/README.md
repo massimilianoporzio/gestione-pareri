@@ -50,7 +50,11 @@ WhiteNoise automatically:
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
     <script src="{% static 'js/main.js' %}"></script>
   </head>
   <body>

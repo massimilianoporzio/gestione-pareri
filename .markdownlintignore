@@ -1,7 +1,0 @@
-node_modules/
-.venv/
-__pycache__/
-staticfiles/
-**/LICENSE.md
-**/LICENSE-SELECT2.md
-**/THIRD-PARTY-NOTICES.md

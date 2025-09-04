@@ -1,5 +1,6 @@
 [lint]
 ignore = []
+exclude = ["node_modules", "build", "dist", ".venv", "venv", "__pycache__", ".pytest_cache", "*.egg-info"]
 
 [lint.per-file-ignores]
 "src/home/settings.py" = ["F401", "F403"]
