@@ -5,7 +5,6 @@ Il progetto include un sistema automatico per aggiungere docstring ai file Pytho
 ## Come funziona
 
 1. Quando salvi un file Python, l'estensione "Run on Save" esegue automaticamente:
-
    - isort per ordinare gli import
    - lo script `add_docstring.py` che aggiunge una docstring a livello di modulo se non è presente
 

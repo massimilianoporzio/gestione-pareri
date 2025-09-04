@@ -131,8 +131,8 @@ run-server:
 
 # Make - Più verboso
 run-server:
-	@echo "Avvio server..."
-	uv run python src/manage.py runserver
+ @echo "Avvio server..."
+ uv run python src/manage.py runserver
 ```
 
 ### ✅ **Supporto Nativo Windows**

@@ -19,7 +19,7 @@
   -AppPoolName "GestionePareriPool"
 ```
 
-### ✅ Cosa fa automaticamente:
+### ✅ Cosa fa automaticamente
 
 - Clone del repository in E:\prod\gestione-pareri
 - Setup ambiente Python con uv
@@ -37,7 +37,7 @@
 .\scripts\deployment\production-deploy.ps1 -UpdateOnly -DeployPath "E:\prod\gestione-pareri"
 ```
 
-### ✅ Cosa fa automaticamente:
+### ✅ Cosa fa automaticamente
 
 - Pull delle modifiche da GitHub
 - Aggiornamento dipendenze Python
@@ -60,7 +60,6 @@
    ```
 
 2. **Verifica logs**:
-
    - IIS Logs: C:\inetpub\logs\LogFiles\
    - Django Logs: E:\prod\gestione-pareri\logs\
 

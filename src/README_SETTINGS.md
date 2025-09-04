@@ -19,7 +19,7 @@ Questo progetto utilizza una configurazione multi-ambiente per Django. È possib
 
 ### Utilizzando la riga di comando
 
-#### Istruzioni per PowerShell:
+#### Istruzioni per PowerShell
 
 ```powershell
 $env:DJANGO_ENV="dev"; python manage.py runserver
@@ -30,7 +30,7 @@ $env:DJANGO_ENV="prod"; python manage.py runserver
 $env:DJANGO_LOGS_DIR="C:\path\to\logs"; python manage.py runserver
 ```
 
-#### Istruzioni per Windows Command Line:
+#### Istruzioni per Windows Command Line
 
 ```cmd
 set DJANGO_ENV=dev && python manage.py runserver
@@ -41,7 +41,7 @@ set DJANGO_ENV=prod && python manage.py runserver
 set DJANGO_LOGS_DIR=C:\path\to\logs && python manage.py runserver
 ```
 
-#### Istruzioni per Linux/macOS:
+#### Istruzioni per Linux/macOS
 
 ```bash
 DJANGO_ENV=dev python manage.py runserver

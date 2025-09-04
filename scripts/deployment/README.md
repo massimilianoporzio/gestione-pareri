@@ -60,7 +60,7 @@ make collectstatic-test
 make collectstatic-prod
 ````
 
-### Directory Structure:
+### Directory Structure
 
 ```
 
@@ -175,14 +175,14 @@ DJANGO_SECURE_SSL_REDIRECT=True
 
 ## 🚀 Gunicorn (Linux/macOS/WSL)
 
-### Utilizzo Base:
+### Utilizzo Base
 
 ```bash
 chmod +x scripts/deployment/start-gunicorn.sh
 ./scripts/deployment/start-gunicorn.sh
 ```
 
-### Configurazione Avanzata:
+### Configurazione Avanzata
 
 ```bash
 # Personalizza l'ambiente e i parametri
@@ -193,7 +193,7 @@ WORKERS=4 \
 ./scripts/deployment/start-gunicorn.sh
 ```
 
-### Variabili Disponibili:
+### Variabili Disponibili
 
 - `DJANGO_ENV`: dev/test/prod (default: prod)
 - `HOST`: Bind address (default: 0.0.0.0)
@@ -206,19 +206,19 @@ WORKERS=4 \
 
 ## 🪟 Waitress (Windows/Cross-platform)
 
-### Utilizzo Waitress:
+### Utilizzo Waitress
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/deployment/start-waitress.ps1
 ```
 
-### Configurazione Waitress:
+### Configurazione Waitress
 
 ```powershell
 scripts/deployment/start-waitress.ps1 -DjangoEnv prod -Host 0.0.0.0 -Port 8000 -Threads 4
 ```
 
-### Parametri Disponibili:
+### Parametri Disponibili
 
 - `-DjangoEnv`: dev/test/prod (default: prod)
 - `-Host`: Bind address (default: 0.0.0.0)
@@ -232,7 +232,6 @@ scripts/deployment/start-waitress.ps1 -DjangoEnv prod -Host 0.0.0.0 -Port 8000 -
 Entrambi gli script:
 
 1. **Impostano DJANGO_ENV** che determina quale settings usare:
-
    - `DJANGO_ENV=dev` → `home.settings.dev`
    - `DJANGO_ENV=test` → `home.settings.test`
    - `DJANGO_ENV=prod` → `home.settings.prod`
@@ -243,7 +242,7 @@ Entrambi gli script:
 
 ## 📋 Pre-requisiti
 
-### Per Gunicorn:
+### Per Gunicorn
 
 ```bash
 uv add gunicorn
@@ -251,7 +250,7 @@ uv add gunicorn
 pip install gunicorn
 ```
 
-### Per Waitress:
+### Per Waitress
 
 ```bash
 uv add waitress
@@ -300,7 +299,7 @@ WantedBy=multi-user.target
 
 ## 🎯 Best Practices
 
-### Produzione:
+### Produzione
 
 - Usa **reverse proxy** (nginx/Apache) davanti a Gunicorn/Waitress
 - Configura **SSL termination** nel proxy
@@ -309,12 +308,12 @@ WantedBy=multi-user.target
 - Configura **logging** appropriato
 - Monitora con **supervisord** o **systemd**
 
-### Staging:
+### Staging
 
 - Usa **DJANGO_ENV=test** con dati di test
 - Stessi parametri di produzione ma risorse ridotte
 
-### Sviluppo:
+### Sviluppo
 
 - Continua a usare `python manage.py runserver`
 - Usa **DJANGO_ENV=dev** per debug attivo

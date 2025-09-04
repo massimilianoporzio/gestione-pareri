@@ -54,7 +54,6 @@ uv pip install -e .
 
 1. Scarica e installa VS Code da [code.visualstudio.com](https://code.visualstudio.com/)
 2. Installa le seguenti estensioni:
-
    - Python
    - Django
    - Black Formatter

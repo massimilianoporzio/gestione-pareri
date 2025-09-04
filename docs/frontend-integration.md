@@ -266,22 +266,22 @@ Equivalenti per `Makefile`:
 ```makefile
 # Frontend commands
 install-node:
-	npm install
+ npm install
 
 build-frontend:
-	npm run build
+ npm run build
 
 watch-frontend:
-	npm run dev
+ npm run dev
 
 build-css:
-	npm run css
+ npm run css
 
 watch-css:
-	npm run css:watch
+ npm run css:watch
 
 build-all: install-node build-frontend collectstatic-prod
-	@echo "Build completo completato!"
+ @echo "Build completo completato!"
 ```
 
 ## 🔧 Advanced Configurations

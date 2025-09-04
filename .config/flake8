@@ -1,7 +1,7 @@
 [flake8]
 max-line-length = 120
 extend-ignore = E203
-exclude = .git,__pycache__,docs/conf.py,old,build,dist,.venv, migrations/*, migrations/**, src/*/migrations/*, src/*/migrations/**, src/**/migrations/*, src/**/migrations/**, src/**/migrations, src/**/migrations/*.py, src/**/migrations/**/*.py
+exclude = .git,__pycache__,docs/conf.py,old,build,dist,.venv, migrations/*, migrations/**, src/*/migrations/*, src/*/migrations/**, src/**/migrations/*, src/**/migrations/**, src/**/migrations, src/**/migrations/*.py, src/**/migrations/**/*.py,node_modules/*,node_modules/**
 per-file-ignores =
     examples/logging_example.py:E402
     examples/check_logging.py:E402

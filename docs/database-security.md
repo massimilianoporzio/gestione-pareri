@@ -4,13 +4,13 @@ Questo progetto utilizza un sistema sicuro per gestire le password PostgreSQL se
 
 ## 📋 File e Sicurezza
 
-### ✅ File SICURI (committati nel repo):
+### ✅ File SICURI (committati nel repo)
 
 - `update_postgresql_staging.template.sql` - Template senza password
 - `docs/postgresql-setup-commands.md` - Guida con placeholder
 - `tools/generate_db_passwords.py` - Generatore password sicure
 
-### ❌ File SENSIBILI (ignorati da git):
+### ❌ File SENSIBILI (ignorati da git)
 
 - `update_postgresql_staging.sql` - Script con password reali
 - `.env` - Configurazioni ambiente con password

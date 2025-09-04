@@ -13,7 +13,6 @@ Questa directory contiene i file di configurazione per integrare agenti AI per l
    ```
 
 2. **Installa le GitHub Apps** (nessun token necessario):
-
    - [CodeRabbit](https://coderabbit.ai) - Review dettagliate AI
    - [Sourcery](https://sourcery.ai) - Refactoring Python automatico
 

@@ -154,7 +154,7 @@ Le configurazioni database sono già impostate in:
 - **`src/home/settings/staging.py`**: PostgreSQL per pre-produzione
 - **`src/home/settings/prod.py`**: PostgreSQL per produzione
 
-### Struttura degli Ambienti:
+### Struttura degli Ambienti
 
 - **DEV**: SQLite di default per sviluppo rapido (switch a PostgreSQL con `USE_POSTGRESQL_DEV=1`)
 - **TEST**: SQLite di default per test veloci (switch a PostgreSQL con `USE_POSTGRESQL_TEST=1`)

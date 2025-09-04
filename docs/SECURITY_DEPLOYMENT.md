@@ -2,14 +2,14 @@
 
 ## ⚠️ FILE DA NON COMMITTARE MAI
 
-### File di configurazione con credenziali:
+### File di configurazione con credenziali
 
 - `web.config` - Contiene password database, secret keys, percorsi server
 - `.env.prod` - Variabili d'ambiente di produzione
 - `.env.staging` - Variabili d'ambiente di staging
 - `deployment.config` - Configurazioni specifiche del deployment
 
-### File generati durante il deployment:
+### File generati durante il deployment
 
 - `logs/` - Directory con log dell'applicazione
 - `staticfiles/` - File statici raccolti da Django
@@ -17,7 +17,7 @@
 
 ## ✅ FILE TEMPLATE SICURI (Commitabili)
 
-### Template di configurazione:
+### Template di configurazione
 
 - `web.config.template` - Template per web.config senza credenziali
 - `.env.prod.template` - Template per variabili d'ambiente
@@ -34,7 +34,6 @@ just iis-setup  # Crea file da template
 ### Passo 2: Configurazione (MANUALE)
 
 1. Modifica `web.config` con valori reali:
-
    - Database credentials
    - SECRET_KEY sicura (genera con `python -c "import secrets; print(secrets.token_urlsafe(50))")`
    - Server IP/domini reali
