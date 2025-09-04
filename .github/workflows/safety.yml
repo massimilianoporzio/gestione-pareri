@@ -1,6 +1,9 @@
 name: Safety Scan
 
+# Documentazione ufficiale: https://docs.safetycli.com/ci/github-actions/
+
 on:
+  workflow_dispatch:
   push:
     branches: [main]
   pull_request:
@@ -8,15 +11,17 @@ on:
 jobs:
   safety:
     runs-on: ubuntu-latest
+    env:
+      SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
-      - name: Install uv
-        run: pip install uv
-      - name: Sync dependencies
-        run: uv sync
-      - name: Run Safety
-        run: uv run safety scan --output screen
+          python-version: '3.11'
+      - name: Install uv and Safety
+        run: pip install uv safety
+      - name: Install dependencies
+        run: uv pip install -r requirements.txt
+      - name: Run Safety scan
+        run: uv run safety scan --full-report --output screen

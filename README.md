@@ -13,8 +13,9 @@
 [![markdownlint](https://img.shields.io/badge/markdownlint-enabled-brightgreen)](https://github.com/DavidAnson/markdownlint)
 [![Bandit](https://img.shields.io/badge/Bandit-security--scan-blue?logo=python&logoColor=white)](https://bandit.readthedocs.io/en/latest/)
 [![Safety Scan](https://github.com/massimilianoporzio/gestione-pareri/actions/workflows/safety.yml/badge.svg)](https://github.com/massimilianoporzio/gestione-pareri/actions/workflows/safety.yml)
+[![Dependabot](https://img.shields.io/badge/dependabot-enabled-brightgreen?logo=dependabot)](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically)
 
-## 📖 Documentation
+## 📖 Documentazione principale
 
 - [🌍 Environments Guide](docs/environments-guide.md) - **Guida completa ai 4 ambienti**
 - [📋 Just Commands](docs/just.md) - Task runner moderno (47 comandi)
@@ -94,7 +95,7 @@
 - [🐧 Nginx Deployment](docs/nginx-deployment.md) - Linux/macOS Production
 - [⚡ Uvicorn Integration](docs/uvicorn-integration.md) - ASGI server configuration
 
-### 📖 **Documentation**
+### 📖 **Documentazione Just & Quality**
 
 - [📋 Just Commands](docs/just.md) - Task runner moderno (47 comandi)
 - [�️ Database Setup](docs/database-setup.md) - PostgreSQL multi-ambiente
@@ -500,7 +501,7 @@ deploy-django/
 └── pyproject.toml         # 🐍 Python config
 ```
 
-## 📚 Documentazione
+## 📚 Documentazione tecnica
 
 Questo progetto include documentazione dettagliata per aiutarti a comprendere le funzionalità e le configurazioni:
 
@@ -509,7 +510,7 @@ Questo progetto include documentazione dettagliata per aiutarti a comprendere le
 - [Configurazione dei logs](docs/logs_configuration.md): Come funziona il sistema di logging
 - [Just Task Runner](docs/just.md): Task runner moderno con 47 comandi
 
-## 📖 Documentation Hub
+## 📖 Documentazione Hub
 
 Documentazione specializzata per ogni aspetto del progetto:
 **📝 Development**
@@ -556,7 +557,71 @@ Safety è installato come dipendenza di sviluppo (`dev`) e viene eseguito automa
   just safety-scan
   ```
 
-### Documentazione
+### Documentazione Safety
 
 - [Guida Safety](https://github.com/pyupio/safety)
-- [Workflow Safety Scan](.github/workflows/safety.yml)
+
+## 🔄 Aggiornamento automatico dipendenze con Dependabot
+
+Questo progetto usa **Dependabot** per mantenere aggiornate le dipendenze Python e le GitHub Actions.
+
+- Dependabot controlla settimanalmente se esistono nuove versioni o patch di sicurezza.
+- Crea pull request automatiche per ogni aggiornamento rilevante.
+- Puoi gestire le PR direttamente da GitHub, revisionare e fare merge.
+- La configurazione si trova in `.github/dependabot.yml`.
+
+### Documentazione Dependabot
+
+- [Guida Dependabot](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically)
+
+## 🔒 Come usare Safety CLI e API Key
+
+### Registrazione e login
+
+1. Vai su [Safety CLI](https://app.safetycli.com/) e registrati gratuitamente.
+2. Dopo la registrazione, accedi e vai sul tuo profilo/account.
+3. Trova la sezione “API Key” o “Account Settings” e copia la tua chiave.
+
+### Creazione della secret su GitHub
+
+1. Vai su GitHub, nella pagina del tuo repository.
+2. Clicca su **Settings** > **Secrets and variables** > **Actions**.
+3. Clicca su **New repository secret**.
+4. Inserisci come nome: `SAFETY_API_KEY`
+5. Incolla la tua API Key come valore.
+6. Salva con **Add secret**.
+
+### Uso in locale
+
+- Per usare Safety CLI localmente, esegui:
+
+  ```bash
+  safety login
+  # oppure
+  safety auth login
+  ```
+
+- Incolla la tua API Key quando richiesto.
+- Ora puoi eseguire:
+
+  ```bash
+  uv run safety scan --output screen
+  ```
+
+### Uso in GitHub Actions
+
+- La scansione automatica userà la secret `SAFETY_API_KEY`.
+- Non serve login interattivo: la chiave viene letta dal secret tramite la variabile d'ambiente.
+- Esempio di configurazione:
+
+```yaml
+env:
+  SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
+```
+
+- Workflow di esempio e guida ufficiale: [Safety CLI GitHub Actions Docs](https://docs.safetycli.com/ci/github-actions/)
+
+### Note
+
+- Safety richiede la registrazione e login anche per l’uso base.
+- La scansione delle dipendenze funziona solo se la chiave è valida.
