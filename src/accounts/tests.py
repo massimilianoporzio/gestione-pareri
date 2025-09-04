@@ -462,7 +462,10 @@ class PerformanceTest(TestCase):
         self.users = []
         for i in range(10):
             user = CustomUser.objects.create_user(
-                email=f"perf.user{i}@aslcn1.it", password="perftest123", first_name=f"User{i}", last_name="Test"  # nosec
+                email=f"perf.user{i}@aslcn1.it",
+                password="perftest123",
+                first_name=f"User{i}",
+                last_name="Test",  # nosec
             )
             self.users.append(user)
 
