@@ -20,46 +20,46 @@ default:
     just default-macos
 
 default-macos:
-    @ printf "\033[35m🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI\033[0m\n"; 
-    @ printf "\033[90m============================================================\033[0m\n"; 
-    @ printf "\n"; 
-    @ printf "\033[32m📊 DJANGO & DATABASE:\033[0m\n"; 
-    @ printf "\033[32m  just run-server         🚀 Server di sviluppo Django\033[0m\n"; 
-    @ printf "\033[32m  just run-dev            🔧 Server sviluppo (DEV)\033[0m\n"; 
-    @ printf "\033[32m  just run-test           🧪 Server sviluppo (TEST)\033[0m\n"; 
-    @ printf "\033[32m  just run-staging        🎭 Server sviluppo (STAGING)\033[0m\n"; 
-    @ printf "\033[32m  just run-prod           ⚡ Server sviluppo (PROD)\033[0m\n"; 
-    @ printf "\033[32m  just migrate            📦 Migrazioni database\033[0m\n"; 
-    @ printf "\033[32m  just makemigrations     📝 Crea migrazioni\033[0m\n"; 
-    @ printf "\033[32m  just shell              🐚 Shell Django\033[0m\n"; 
-    @ printf "\033[32m  just test               🧪 Esegue test progetto\033[0m\n"; 
-    @ printf "\033[32m  just test-dev           🔧 Test ambiente DEV\033[0m\n"; 
-    @ printf "\033[32m  just test-test          🧪 Test ambiente TEST\033[0m\n"; 
-    @ printf "\033[32m  just test-staging       🎭 Test ambiente STAGING\033[0m\n"; 
-    @ printf "\033[32m  just test-prod          ⚡ Test ambiente PROD\033[0m\n"; 
-    @ printf "\n"; 
-    @ printf "\033[36m🌐 SERVER & DEPLOY:\033[0m\n"; 
-    @ printf "\033[36m  just waitress           🪟 Server Waitress (Windows)\033[0m\n"; 
-    @ printf "\033[36m  just run-uvicorn        ⚡ Server Uvicorn ASGI\033[0m\n"; 
-    @ printf "\033[36m  just deploy             🎯 Deploy automatico\033[0m\n"; 
-    @ printf "\033[36m  just deploy-dev         🔧 Deploy development\033[0m\n"; 
-    @ printf "\033[36m  just deploy-staging     🧪 Deploy staging\033[0m\n"; 
-    @ printf "\033[36m  just deploy-prod        🚀 Deploy production\033[0m\n"; 
-    @ printf "\033[36m  just stop-servers       🛑 Ferma tutti i server\033[0m\n"; 
-    @ printf "\033[36m  just kill-port          🔪 Termina processo porta 8000\033[0m\n"; 
-    @ printf "\n"; 
-    @ printf "\033[33m🔧 QUALITY & FORMAT:\033[0m\n"; 
-    @ printf "\033[33m  just fix-all            ⭐ CORREZIONE GLOBALE completa\033[0m\n"; 
-    @ printf "\033[33m  just lint-codacy        🔍 Controlli qualità Codacy\033[0m\n"; 
-    @ printf "\033[33m  just add-docstrings     📝 Aggiunge docstring mancanti\033[0m\n"; 
-    @ printf "\033[33m  just precommit-corporate 🏢 Pre-commit aziendale\033[0m\n"; 
-    @ printf "\033[33m  just quality-corporate  🏢 Quality controlli alternativi\033[0m\n"; 
-    @ printf "\033[33m  just fix-markdown       📝 Corregge problemi Markdown\033[0m\n"; 
-    @ printf "\n"; 
-    @ printf "\033[97mℹ️  UTILITY:\033[0m\n"; 
-    @ printf "\033[97m  just stats              📊 Statistiche progetto\033[0m\n"; 
-    @ printf "\033[97m  just check-env          🔍 Controllo ambiente\033[0m\n"; 
-    @ printf "\033[97m  just check-env-dev      🔍 Controllo ambiente DEV\033[0m\n"; 
+    @ printf "\033[35m🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI\033[0m\n";
+    @ printf "\033[90m============================================================\033[0m\n";
+    @ printf "\n";
+    @ printf "\033[32m📊 DJANGO & DATABASE:\033[0m\n";
+    @ printf "\033[32m  just run-server         🚀 Server di sviluppo Django\033[0m\n";
+    @ printf "\033[32m  just run-dev            🔧 Server sviluppo (DEV)\033[0m\n";
+    @ printf "\033[32m  just run-test           🧪 Server sviluppo (TEST)\033[0m\n";
+    @ printf "\033[32m  just run-staging        🎭 Server sviluppo (STAGING)\033[0m\n";
+    @ printf "\033[32m  just run-prod           ⚡ Server sviluppo (PROD)\033[0m\n";
+    @ printf "\033[32m  just migrate            📦 Migrazioni database\033[0m\n";
+    @ printf "\033[32m  just makemigrations     📝 Crea migrazioni\033[0m\n";
+    @ printf "\033[32m  just shell              🐚 Shell Django\033[0m\n";
+    @ printf "\033[32m  just test               🧪 Esegue test progetto\033[0m\n";
+    @ printf "\033[32m  just test-dev           🔧 Test ambiente DEV\033[0m\n";
+    @ printf "\033[32m  just test-test          🧪 Test ambiente TEST\033[0m\n";
+    @ printf "\033[32m  just test-staging       🎭 Test ambiente STAGING\033[0m\n";
+    @ printf "\033[32m  just test-prod          ⚡ Test ambiente PROD\033[0m\n";
+    @ printf "\n";
+    @ printf "\033[36m🌐 SERVER & DEPLOY:\033[0m\n";
+    @ printf "\033[36m  just waitress           🪟 Server Waitress (Windows)\033[0m\n";
+    @ printf "\033[36m  just run-uvicorn        ⚡ Server Uvicorn ASGI\033[0m\n";
+    @ printf "\033[36m  just deploy             🎯 Deploy automatico\033[0m\n";
+    @ printf "\033[36m  just deploy-dev         🔧 Deploy development\033[0m\n";
+    @ printf "\033[36m  just deploy-staging     🧪 Deploy staging\033[0m\n";
+    @ printf "\033[36m  just deploy-prod        🚀 Deploy production\033[0m\n";
+    @ printf "\033[36m  just stop-servers       🛑 Ferma tutti i server\033[0m\n";
+    @ printf "\033[36m  just kill-port          🔪 Termina processo porta 8000\033[0m\n";
+    @ printf "\n";
+    @ printf "\033[33m🔧 QUALITY & FORMAT:\033[0m\n";
+    @ printf "\033[33m  just fix-all            ⭐ CORREZIONE GLOBALE completa\033[0m\n";
+    @ printf "\033[33m  just lint-codacy        🔍 Controlli qualità Codacy\033[0m\n";
+    @ printf "\033[33m  just add-docstrings     📝 Aggiunge docstring mancanti\033[0m\n";
+    @ printf "\033[33m  just precommit-corporate 🏢 Pre-commit aziendale\033[0m\n";
+    @ printf "\033[33m  just quality-corporate  🏢 Quality controlli alternativi\033[0m\n";
+    @ printf "\033[33m  just fix-markdown       📝 Corregge problemi Markdown\033[0m\n";
+    @ printf "\n";
+    @ printf "\033[97mℹ️  UTILITY:\033[0m\n";
+    @ printf "\033[97m  just stats              📊 Statistiche progetto\033[0m\n";
+    @ printf "\033[97m  just check-env          🔍 Controllo ambiente\033[0m\n";
+    @ printf "\033[97m  just check-env-dev      🔍 Controllo ambiente DEV\033[0m\n";
 
 default-windows:
     @Write-Host "🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI" -ForegroundColor Magenta;
@@ -123,7 +123,7 @@ default-windows:
     @Write-Host "🐧 LINUX/macOS NGINX:" -ForegroundColor Blue;
     @Write-Host "  just setup-nginx        🌐 Configura Nginx reverse proxy" -ForegroundColor Blue;
     @Write-Host "  just deploy-nginx       🚀 Deploy completo con Nginx" -ForegroundColor Blue;
-    
+
 
 # Controllo sicurezza Python (Bandit)
 # Ricetta cross-platform per security-scan
@@ -359,36 +359,82 @@ run-prod-windows:
 
 test-macos:
     @ printf "\033[36m🧪 Esecuzione dei test (macOS)...\033[0m\n"
-    @uv run src/manage.py test
+    @ cd src && uv run manage.py test
 
 test-linux:
     @ printf "\033[36m🧪 Esecuzione dei test (Linux)...\033[0m\n"
-    @ uv run src/manage.py test
+    @ cd src && uv run manage.py test
 
 test-windows:
     @Write-Host "🧪 Esecuzione dei test (Windows)..." -ForegroundColor Cyan
-    @uv run src/manage.py test
+    @cd src; uv run manage.py test
 
 # 🧪 Test in ambiente DEV
 test-dev:
-    @printf "\033[36m🧪 Esecuzione dei test in ambiente DEV...\033[0m\n"
-    @DJANGO_ENV="dev" {{django_manage}} test
+    just test-dev-{{os()}}
+
+test-dev-macos:
+    @ printf "\033[36m🧪 Esecuzione dei test in ambiente DEV (macOS)...\033[0m\n"
+    @ cd src && DJANGO_ENV="dev" uv run manage.py test
+
+test-dev-linux:
+    @ printf "\033[36m🧪 Esecuzione dei test in ambiente DEV (Linux)...\033[0m\n"
+    @ cd src && DJANGO_ENV="dev" uv run manage.py test
+
+test-dev-windows:
+    @Write-Host "🧪 Esecuzione dei test in ambiente DEV (Windows)..." -ForegroundColor Cyan
+    cd src; $env:DJANGO_ENV="dev"; uv run manage.py test
 
 # 🧪 Test in ambiente TEST
 test-test:
-    @printf "\033[36m🧪 Esecuzione dei test in ambiente TEST...\033[0m\n"
-    @DJANGO_ENV="test" {{django_manage}} test
+    just test-test-{{os()}}
+
+test-test-macos:
+    @ printf "\033[36m🧪 Esecuzione dei test in ambiente TEST (macOS)...\033[0m\n"
+    @ cd src && DJANGO_ENV="test" uv run manage.py test
+
+test-test-linux:
+    @ printf "\033[36m🧪 Esecuzione dei test in ambiente TEST (Linux)...\033[0m\n"
+    @ cd src && DJANGO_ENV="test" uv run manage.py test
+
+test-test-windows:
+    @Write-Host "🧪 Esecuzione dei test in ambiente TEST (Windows)..." -ForegroundColor Cyan
+    cd src; $env:DJANGO_ENV="test"; uv run manage.py test
 
 # 🧪 Test in ambiente STAGING
 test-staging:
-    @printf "\033[36m🎭 Esecuzione dei test in ambiente STAGING...\033[0m\n"
-    @printf "\033[33m⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!\033[0m\n"
-    @DJANGO_ENV="staging" {{django_manage}} test
+    just test-staging-{{os()}}
+
+test-staging-macos:
+    @ printf "\033[36m🎭 Esecuzione dei test in ambiente STAGING (macOS)...\033[0m\n"
+    @ printf "\033[33m⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!\033[0m\n"
+    @ cd src && DJANGO_ENV="staging" uv run manage.py test
+
+test-staging-linux:
+    @ printf "\033[36m🎭 Esecuzione dei test in ambiente STAGING (Linux)...\033[0m\n"
+    @ printf "\033[33m⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!\033[0m\n"
+    @ cd src && DJANGO_ENV="staging" uv run manage.py test
+
+test-staging-windows:
+    @Write-Host "🎭 Esecuzione dei test in ambiente STAGING (Windows)..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!" -ForegroundColor Yellow
+    cd src; $env:DJANGO_ENV="staging"; uv run manage.py test
 
 # 🧪 Test in ambiente PROD
 test-prod:
-    @printf "\033[36m🧪 Esecuzione dei test in ambiente PROD...\033[0m\n"
-    @DJANGO_ENV="prod" {{django_manage}} test
+    just test-prod-{{os()}}
+
+test-prod-macos:
+    @ printf "\033[36m🧪 Esecuzione dei test in ambiente PROD (macOS)...\033[0m\n"
+    @ cd src && DJANGO_ENV="prod" uv run manage.py test
+
+test-prod-linux:
+    @ printf "\033[36m🧪 Esecuzione dei test in ambiente PROD (Linux)...\033[0m\n"
+    @ cd src && DJANGO_ENV="prod" uv run manage.py test
+
+test-prod-windows:
+    @Write-Host "🧪 Esecuzione dei test in ambiente PROD (Windows)..." -ForegroundColor Cyan
+    cd src; $env:DJANGO_ENV="prod"; uv run manage.py test
 
 # 📦 Migrazioni database
 migrate:
@@ -463,55 +509,96 @@ shell-prod:
 
 # 📝 Aggiunge docstring mancanti
 add-docstrings:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m📝 Aggiunta docstring ai file Python del progetto...\033[0m\n"; \
-    else \
-        @Write-Host "📝 Aggiunta docstring ai file Python del progetto..." -ForegroundColor Cyan; \
-    fi
-    @{{python}} tools/add_docstring_batch.py .
+    just add-docstrings-{{os()}}
+add-docstrings-macos:
+    @ printf "\033[36m📝 Aggiunta docstring ai file Python del progetto (macOS)...\033[0m\n"
+    @ {{python}} tools/add_docstring_batch.py .
+    @ printf "\033[32m✅ Docstring aggiunte con successo!\033[0m\n"
+
+add-docstrings-linux:
+    @ printf "\033[36m📝 Aggiunta docstring ai file Python del progetto (Linux)...\033[0m\n"
+    @ {{python}} tools/add_docstring_batch.py .
+    @ printf "\033[32m✅ Docstring aggiunte con successo!\033[0m\n"
+
+add-docstrings-windows:
+    @Write-Host "📝 Aggiunta docstring ai file Python del progetto (Windows)..." -ForegroundColor Cyan
+    {{python}} tools/add_docstring_batch.py .
+    @Write-Host "✅ Docstring aggiunte con successo!" -ForegroundColor Green
 
 # ⭐ CORREZIONE GLOBALE: Fix all code quality issues
 fix-all:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m⭐ Correzione completa di tutti i problemi di qualità del codice...\033[0m\n"; \
-        @printf "\033[33m1/10 - Rimozione spazi finali...\033[0m\n"; \
-    else \
-        @Write-Host "⭐ Correzione completa di tutti i problemi di qualità del codice..." -ForegroundColor Cyan; \
-        @Write-Host "1/10 - Rimozione spazi finali..." -ForegroundColor Yellow; \
-    fi
-    @-pre-commit run trailing-whitespace --all-files
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m2/10 - Correzione fine file...\033[0m\n"; \
-    else \
-        @Write-Host "2/10 - Correzione fine file..." -ForegroundColor Yellow; \
-    fi
-    @-pre-commit run end-of-file-fixer --all-files
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m3/10 - Aggiunta docstring...\033[0m\n"; \
-    else \
-        @Write-Host "3/10 - Aggiunta docstring..." -ForegroundColor Yellow; \
-    fi
-    @-{{python}} tools/add_docstring_batch.py .
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m4/10 - Ordinamento import (isort style)...\033[0m\n"; \
-    else \
-        @Write-Host "4/10 - Ordinamento import (isort style)..." -ForegroundColor Yellow; \
-    fi
-    @-{{python}} ruff check --select I --fix .
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m5/10 - Formattazione con Ruff...\033[0m\n"; \
-    else \
-        @Write-Host "5/10 - Formattazione con Ruff..." -ForegroundColor Yellow; \
-    fi
-    @-{{python}} ruff format .
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m6/10 - Correzione automatica con Ruff...\033[0m\n"; \
-    else \
-        @Write-Host "6/10 - Correzione automatica con Ruff..." -ForegroundColor Yellow; \
-    fi
-    @-{{python}} ruff check . --fix --unsafe-fixes
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m7/10 - Correzioni aggressive con autopep8...\033[0m\n"; \
+    just fix-all-{{os()}}
+fix-all-macos:
+    @ printf "\033[36m⭐ Correzione completa di tutti i problemi di qualità del codice (macOS)...\033[0m\n"
+    @ printf "\033[33m1/10 - Rimozione spazi finali...\033[0m\n"
+    @ pre-commit run trailing-whitespace --all-files
+    @ printf "\033[33m2/10 - Correzione fine file...\033[0m\n"
+    @ pre-commit run end-of-file-fixer --all-files
+    @ printf "\033[33m3/10 - Aggiunta docstring...\033[0m\n"
+    @ {{python}} tools/add_docstring_batch.py .
+    @ printf "\033[33m4/10 - Ordinamento import (isort style)...\033[0m\n"
+    @ {{python}} ruff check --select I --fix .
+    @ printf "\033[33m5/10 - Formattazione con Ruff...\033[0m\n"
+    @ {{python}} ruff format .
+    @ printf "\033[33m6/10 - Correzione automatica con Ruff...\033[0m\n"
+    @ {{python}} ruff check . --fix --unsafe-fixes
+    @ printf "\033[33m7/10 - Correzioni aggressive con autopep8...\033[0m\n"
+    @ {{python}} autopep8 --in-place --aggressive --aggressive --recursive .
+    @ printf "\033[33m8/10 - Formattazione finale con Ruff...\033[0m\n"
+    @ {{python}} ruff format .
+    @ printf "\033[33m9/10 - Formattazione Markdown...\033[0m\n"
+    @ just format-markdown
+    @ printf "\033[33m10/10 - Correzione problemi Markdown...\033[0m\n"
+    @ just fix-markdown
+    @ printf "\033[32m✅ Tutti i problemi di qualità del codice sono stati corretti!\033[0m\n"
+
+fix-all-linux:
+    @ printf "\033[36m⭐ Correzione completa di tutti i problemi di qualità del codice (Linux)...\033[0m\n"
+    @ printf "\033[33m1/10 - Rimozione spazi finali...\033[0m\n"
+    @ pre-commit run trailing-whitespace --all-files
+    @ printf "\033[33m2/10 - Correzione fine file...\033[0m\n"
+    @ pre-commit run end-of-file-fixer --all-files
+    @ printf "\033[33m3/10 - Aggiunta docstring...\033[0m\n"
+    @ {{python}} tools/add_docstring_batch.py .
+    @ printf "\033[33m4/10 - Ordinamento import (isort style)...\033[0m\n"
+    @ {{python}} ruff check --select I --fix .
+    @ printf "\033[33m5/10 - Formattazione con Ruff...\033[0m\n"
+    @ {{python}} ruff format .
+    @ printf "\033[33m6/10 - Correzione automatica con Ruff...\033[0m\n"
+    @ {{python}} ruff check . --fix --unsafe-fixes
+    @ printf "\033[33m7/10 - Correzioni aggressive con autopep8...\033[0m\n"
+    @ {{python}} autopep8 --in-place --aggressive --aggressive --recursive .
+    @ printf "\033[33m8/10 - Formattazione finale con Ruff...\033[0m\n"
+    @ {{python}} ruff format .
+    @ printf "\033[33m9/10 - Formattazione Markdown...\033[0m\n"
+    @ just format-markdown
+    @ printf "\033[33m10/10 - Correzione problemi Markdown...\033[0m\n"
+    @ just fix-markdown
+    @ printf "\033[32m✅ Tutti i problemi di qualità del codice sono stati corretti!\033[0m\n"
+
+fix-all-windows:
+    @Write-Host "⭐ Correzione completa di tutti i problemi di qualità del codice (Windows)..." -ForegroundColor Cyan
+    @Write-Host "1/10 - Rimozione spazi finali..." -ForegroundColor Yellow
+    pre-commit run trailing-whitespace --all-files
+    @Write-Host "2/10 - Correzione fine file..." -ForegroundColor Yellow
+    pre-commit run end-of-file-fixer --all-files
+    @Write-Host "3/10 - Aggiunta docstring..." -ForegroundColor Yellow
+    {{python}} tools/add_docstring_batch.py .
+    @Write-Host "4/10 - Ordinamento import (isort style)..." -ForegroundColor Yellow
+    {{python}} ruff check --select I --fix .
+    @Write-Host "5/10 - Formattazione con Ruff..." -ForegroundColor Yellow
+    {{python}} ruff format .
+    @Write-Host "6/10 - Correzione automatica con Ruff..." -ForegroundColor Yellow
+    {{python}} ruff check . --fix --unsafe-fixes
+    @Write-Host "7/10 - Correzioni aggressive con autopep8..." -ForegroundColor Yellow
+    {{python}} autopep8 --in-place --aggressive --aggressive --recursive .
+    @Write-Host "8/10 - Formattazione finale con Ruff..." -ForegroundColor Yellow
+    {{python}} ruff format .
+    @Write-Host "9/10 - Formattazione Markdown..." -ForegroundColor Yellow
+    just format-markdown
+    @Write-Host "10/10 - Correzione problemi Markdown..." -ForegroundColor Yellow
+    just fix-markdown
+    @Write-Host "✅ Tutti i problemi di qualità del codice sono stati corretti!" -ForegroundColor Green
     else \
         @Write-Host "7/10 - Correzioni aggressive con autopep8..." -ForegroundColor Yellow; \
     fi
@@ -602,31 +689,36 @@ fix-markdown:
 
 # 🔍 Controlli qualità stile Codacy (semplificato)
 lint-codacy:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🔍 Controlli qualità stile Codacy...\033[0m\n"; \
-        @printf "\033[33m1/3 - Ruff check...\033[0m\n"; \
-    else \
-        @Write-Host "🔍 Controlli qualità stile Codacy..." -ForegroundColor Cyan; \
-        @Write-Host "1/3 - Ruff check..." -ForegroundColor Yellow; \
-    fi
-    @-{{python}} ruff check --output-format=github --config=pyproject.toml .
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m2/3 - Flake8...\033[0m\n"; \
-    else \
-        @Write-Host "2/3 - Flake8..." -ForegroundColor Yellow; \
-    fi
-    @-{{python}} flake8 --format=default --config=.config/flake8 --exclude=.venv,migrations/*,migrations/**,src/*/migrations/*,src/*/migrations/**,src/**/migrations/*,src/**/migrations/**,src/**/migrations,src/**/migrations/*.py,src/**/migrations/**/*.py,node_modules .
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m3/3 - Pylint...\033[0m\n"; \
-    else \
-        @Write-Host "3/3 - Pylint..." -ForegroundColor Yellow; \
-    fi
-    @-{{python}} pylint src/home/ --output-format=colorized
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[32m✅ Controlli completati!\033[0m\n"; \
-    else \
-        @Write-Host "✅ Controlli completati!" -ForegroundColor Green; \
-    fi
+    just lint-codacy-{{os()}}
+lint-codacy-macos:
+    @ printf "\033[36m🔍 Controlli qualità stile Codacy (macOS)...\033[0m\n"
+    @ printf "\033[33m1/3 - Ruff check...\033[0m\n"
+    @ {{python}} ruff check --output-format=github --config=pyproject.toml .
+    @ printf "\033[33m2/3 - Flake8...\033[0m\n"
+    @ {{python}} flake8 --format=default --config=.config/flake8 --exclude=.venv,migrations/*,migrations/**,src/*/migrations/*,src/*/migrations/**,src/**/migrations/*,src/**/migrations/**,src/**/migrations,src/**/migrations/*.py,src/**/migrations/**/*.py,node_modules .
+    @ printf "\033[33m3/3 - Pylint...\033[0m\n"
+    @ {{python}} pylint src/home/ --output-format=colorized
+    @ printf "\033[32m✅ Controlli completati!\033[0m\n"
+
+lint-codacy-linux:
+    @ printf "\033[36m🔍 Controlli qualità stile Codacy (Linux)...\033[0m\n"
+    @ printf "\033[33m1/3 - Ruff check...\033[0m\n"
+    @ {{python}} ruff check --output-format=github --config=pyproject.toml .
+    @ printf "\033[33m2/3 - Flake8...\033[0m\n"
+    @ {{python}} flake8 --format=default --config=.config/flake8 --exclude=.venv,migrations/*,migrations/**,src/*/migrations/*,src/*/migrations/**,src/**/migrations/*,src/**/migrations/**,src/**/migrations,src/**/migrations/*.py,src/**/migrations/**/*.py,node_modules .
+    @ printf "\033[33m3/3 - Pylint...\033[0m\n"
+    @ {{python}} pylint src/home/ --output-format=colorized
+    @ printf "\033[32m✅ Controlli completati!\033[0m\n"
+
+lint-codacy-windows:
+    @Write-Host "🔍 Controlli qualità stile Codacy (Windows)..." -ForegroundColor Cyan
+    @Write-Host "1/3 - Ruff check..." -ForegroundColor Yellow
+    {{python}} ruff check --output-format=github --config=pyproject.toml .
+    @Write-Host "2/3 - Flake8..." -ForegroundColor Yellow
+    {{python}} flake8 --format=default --config=.config/flake8 --exclude=.venv,migrations/*,migrations/**,src/*/migrations/*,src/*/migrations/**,src/**/migrations/*,src/**/migrations/**,src/**/migrations,src/**/migrations/*.py,src/**/migrations/**/*.py,node_modules .
+    @Write-Host "3/3 - Pylint..." -ForegroundColor Yellow
+    {{python}} pylint src/home/ --output-format=colorized
+    @Write-Host "✅ Controlli completati!" -ForegroundColor Green
 
 # 📊 Statistiche progetto
 stats:
@@ -915,31 +1007,95 @@ check-env-prod:
 # === CORPORATE COMMANDS ===
 
 # 🏢 Pre-commit con configurazione corporate
-precommit-corporate:
-    @printf "\033[35m🏢 Esecuzione pre-commit con configurazione corporate...\033[0m\n"
-    @if [ -f .pre-commit-config-corporate.yaml ]; then \
+@precommit-corporate:
+    just precommit-corporate-{{os()}}
+
+precommit-corporate-macos:
+    @ printf "\033[35m🏢 Esecuzione pre-commit con configurazione corporate (macOS)...\033[0m\n"
+    @ if [ -f .pre-commit-config-corporate.yaml ]; then \
         pre-commit run --all-files --config .pre-commit-config-corporate.yaml; result=$?; \
     else \
-        @printf "\033[31m⚠️  File .pre-commit-config-corporate.yaml non trovato!\033[0m\n"; \
-        @printf "\033[33m💡 Usando configurazione standard...\033[0m\n"; \
+        printf "\033[31m⚠️  File .pre-commit-config-corporate.yaml non trovato!\033[0m\n"; \
+        printf "\033[33m💡 Usando configurazione standard...\033[0m\n"; \
         pre-commit run --all-files; result=$?; \
     fi; \
     if [ $result -eq 0 ]; then \
-        @printf "\033[32m✅ Tutti i controlli pre-commit superati!\033[0m\n"; \
+        printf "\033[32m✅ Tutti i controlli pre-commit superati!\033[0m\n"; \
     elif [ $result -eq 1 ]; then \
-        @printf "\033[33m🔧 Pre-commit ha corretto automaticamente alcuni problemi!\033[0m\n"; \
-        @printf "\033[36m💡 Rivedi le modifiche e committa se necessario.\033[0m\n"; \
+        printf "\033[33m🔧 Pre-commit ha corretto automaticamente alcuni problemi!\033[0m\n"; \
+        printf "\033[36m💡 Rivedi le modifiche e committa se necessario.\033[0m\n"; \
     else \
-        @printf "\033[31m❌ Errori durante l'esecuzione pre-commit (exit code: $result)\033[0m\n"; \
+        printf "\033[31m❌ Errori durante l'esecuzione pre-commit (exit code: $result)\033[0m\n"; \
         exit $result; \
     fi
 
+precommit-corporate-linux:
+    @ printf "\033[35m🏢 Esecuzione pre-commit con configurazione corporate (Linux)...\033[0m\n"
+    @ if [ -f .pre-commit-config-corporate.yaml ]; then \
+        pre-commit run --all-files --config .pre-commit-config-corporate.yaml; result=$?; \
+    else \
+        printf "\033[31m⚠️  File .pre-commit-config-corporate.yaml non trovato!\033[0m\n"; \
+        printf "\033[33m💡 Usando configurazione standard...\033[0m\n"; \
+        pre-commit run --all-files; result=$?; \
+    fi; \
+    if [ $result -eq 0 ]; then \
+        printf "\033[32m✅ Tutti i controlli pre-commit superati!\033[0m\n"; \
+    elif [ $result -eq 1 ]; then \
+        printf "\033[33m🔧 Pre-commit ha corretto automaticamente alcuni problemi!\033[0m\n"; \
+        printf "\033[36m💡 Rivedi le modifiche e committa se necessario.\033[0m\n"; \
+    else \
+        printf "\033[31m❌ Errori durante l'esecuzione pre-commit (exit code: $result)\033[0m\n"; \
+        exit $result; \
+    fi
+
+precommit-corporate-windows:
+    @Write-Host "🏢 Esecuzione pre-commit con configurazione corporate (Windows)..." -ForegroundColor Magenta
+    if (Test-Path ".pre-commit-config-corporate.yaml") {
+    pre-commit run --all-files --config .pre-commit-config-corporate.yaml
+    $result = $LASTEXITCODE
+    } else {
+    Write-Host "⚠️  File .pre-commit-config-corporate.yaml non trovato!" -ForegroundColor Red
+    Write-Host "💡 Usando configurazione standard..." -ForegroundColor Yellow
+    pre-commit run --all-files
+    $result = $LASTEXITCODE
+    }
+    if ($result -eq 0) {
+    Write-Host "✅ Tutti i controlli pre-commit superati!" -ForegroundColor Green
+    } elseif ($result -eq 1) {
+    Write-Host "🔧 Pre-commit ha corretto automaticamente alcuni problemi!" -ForegroundColor Yellow
+    Write-Host "💡 Rivedi le modifiche e committa se necessario." -ForegroundColor Cyan
+    } else {
+    Write-Host "❌ Errori durante l'esecuzione pre-commit (exit code: $result)" -ForegroundColor Red
+    exit $result
+    }
+
 # 🏢 Quality checks corporate (alternativi)
-quality-corporate:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[35m🏢 Controlli qualità corporate...\033[0m\n"; \
-        @printf "\033[36m🔍 1. Controlli pre-commit corporate...\033[0m\n"; \
-        just precommit-corporate; \
-        @printf "\033[36m📊 2. Controlli Codacy...\033[0m\n"; \
-        just lint-codacy; \
-        @printf "\033[36m📝 3. Aggiunta docstring...\033
+@quality-corporate:
+    just quality-corporate-{{os()}}
+
+quality-corporate-macos:
+    @ printf "\033[35m🏢 Controlli qualità corporate (macOS)...\033[0m\n"
+    @ printf "\033[36m🔍 1. Controlli pre-commit corporate...\033[0m\n"
+    just precommit-corporate
+    @ printf "\033[36m📊 2. Controlli Codacy...\033[0m\n"
+    just lint-codacy
+    @ printf "\033[36m📝 3. Aggiunta docstring...\033[0m\n"
+    just add-docstrings
+
+quality-corporate-linux:
+    @ printf "\033[35m🏢 Controlli qualità corporate (Linux)...\033[0m\n"
+    @ printf "\033[36m🔍 1. Controlli pre-commit corporate...\033[0m\n"
+    just precommit-corporate
+    @ printf "\033[36m📊 2. Controlli Codacy...\033[0m\n"
+    just lint-codacy
+    @ printf "\033[36m📝 3. Aggiunta docstring...\033[0m\n"
+    just add-docstrings
+
+quality-corporate-windows:
+    @Write-Host "🏢 Controlli qualità corporate (Windows)..." -ForegroundColor Magenta
+    @Write-Host "🔍 1. Controlli pre-commit corporate..." -ForegroundColor Cyan
+    just precommit-corporate
+    @Write-Host "📊 2. Controlli Codacy..." -ForegroundColor Cyan
+    just lint-codacy
+    @Write-Host "📝 3. Aggiunta docstring..." -ForegroundColor Cyan
+    just add-docstrings

@@ -229,8 +229,7 @@ repos:
         pass_filenames: false
       - id: django-test-quick
         name: Django Quick Tests
-        entry:
-          uv run python src/manage.py test --settings=home.settings.test_local
+        entry: uv run python src/manage.py test --settings=home.settings.test_local
           accounts.tests.SecurityTest --keepdb -v 0
         language: system
         pass_filenames: false
