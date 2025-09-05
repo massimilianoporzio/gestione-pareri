@@ -1,3 +1,4 @@
+
 # Configura shell per Windows
 set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
@@ -267,60 +268,106 @@ status-nginx:
 # === DJANGO COMMANDS ===
 
 # 🚀 Server di sviluppo
-run-server:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🚀 Avvio del server di sviluppo Django...\033[0m\n"; \
-    else \
-        @Write-Host "🚀 Avvio del server di sviluppo Django..." -ForegroundColor Cyan; \
-    fi
-    @{{django_manage}} runserver
+# Ricetta cross-platform per run-server
+@run-server:
+    just run-server-{{os()}}
+
+run-server-macos:
+    @ printf "\033[32m🚀 Avvio server di sviluppo Django (macOS)...\033[0m\n"
+    @ uv run src/manage.py runserver
+
+run-server-linux:
+    @ printf "\033[32m🚀 Avvio server di sviluppo Django (Linux)...\033[0m\n"
+    @ uv run src/manage.py runserver
+
+run-server-windows:
+    @Write-Host "🚀 Avvio server di sviluppo Django (Windows)..." -ForegroundColor Green
+    @uv run src/manage.py runserver
 
 # 🔧 Server di sviluppo in ambiente DEV
-run-dev:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🔧 Avvio del server di sviluppo in ambiente DEV...\033[0m\n"; \
-    else \
-        @Write-Host "🔧 Avvio del server di sviluppo in ambiente DEV..." -ForegroundColor Cyan; \
-    fi
-    @DJANGO_ENV="dev" {{django_manage}} runserver
+# Ricetta cross-platform per run-dev
+@run-dev:
+    just run-dev-{{os()}}
+
+run-dev-macos:
+    @ printf "\033[32m🔧 Avvio server sviluppo (DEV) su macOS...\033[0m\n"
+    @ uv run src/manage.py runserver --settings=home.settings.dev
+
+run-dev-linux:
+    @ printf "\033[32m🔧 Avvio server sviluppo (DEV) su Linux...\033[0m\n"
+    @ uv run src/manage.py runserver --settings=home.settings.dev
+
+run-dev-windows:
+    @Write-Host "🔧 Avvio server sviluppo (DEV) su Windows..." -ForegroundColor Green
+    @uv run src/manage.py runserver --settings=home.settings.dev
+
 
 # 🧪 Server di sviluppo in ambiente TEST
-run-test:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🧪 Avvio del server di sviluppo in ambiente TEST...\033[0m\n"; \
-    else \
-        @Write-Host "🧪 Avvio del server di sviluppo in ambiente TEST..." -ForegroundColor Cyan; \
-    fi
-    @DJANGO_ENV="test" {{django_manage}} runserver
+@run-test:
+    just run-test-{{os()}}
+
+run-test-macos:
+    @ printf "\033[36m🧪 Avvio del server di sviluppo in ambiente TEST (macOS)...\033[0m\n"
+    @DJANGO_ENV="test" uv run src/manage.py runserver
+
+run-test-linux:
+    @ printf "\033[36m🧪 Avvio del server di sviluppo in ambiente TEST (Linux)...\033[0m\n"
+    @DJANGO_ENV="test" uv run src/manage.py runserver
+
+run-test-windows:
+    @Write-Host "🧪 Avvio del server di sviluppo in ambiente TEST (Windows)..." -ForegroundColor Cyan
+    @DJANGO_ENV="test" uv run src/manage.py runserver
 
 # 🎭 Server di sviluppo in ambiente STAGING
-run-staging:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🎭 Avvio del server di sviluppo in ambiente STAGING...\033[0m\n"; \
-        @printf "\033[33m⚠️  STAGING usa sempre PostgreSQL!\033[0m\n"; \
-    else \
-        @Write-Host "🎭 Avvio del server di sviluppo in ambiente STAGING..." -ForegroundColor Cyan; \
-        @Write-Host "⚠️  STAGING usa sempre PostgreSQL!" -ForegroundColor Yellow; \
-    fi
-    @DJANGO_ENV="staging" {{django_manage}} runserver
+@run-staging:
+    just run-staging-{{os()}}
+
+run-staging-macos:
+    @ printf "\033[36m🎭 Avvio del server di sviluppo in ambiente STAGING (macOS)...\033[0m\n"
+    @ printf "\033[33m⚠️  STAGING usa sempre PostgreSQL!\033[0m\n"
+    @ DJANGO_ENV="staging" uv run src/manage.py runserver
+
+run-staging-linux:
+    @ printf "\033[36m🎭 Avvio del server di sviluppo in ambiente STAGING (Linux)...\033[0m\n"
+    @ printf "\033[33m⚠️  STAGING usa sempre PostgreSQL!\033[0m\n"
+    @ DJANGO_ENV="staging" uv run src/manage.py runserver
+
+run-staging-windows:
+    @Write-Host "🎭 Avvio del server di sviluppo in ambiente STAGING (Windows)..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa sempre PostgreSQL!" -ForegroundColor Yellow
+    @DJANGO_ENV="staging" uv run src/manage.py runserver
 
 # ⚡ Server di sviluppo in ambiente PROD
-run-prod:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m⚡ Avvio del server di sviluppo in ambiente PROD...\033[0m\n"; \
-    else \
-        @Write-Host "⚡ Avvio del server di sviluppo in ambiente PROD..." -ForegroundColor Cyan; \
-    fi
-    @DJANGO_ENV="prod" {{django_manage}} runserver
+@run-prod:
+    just run-prod-{{os()}}
+
+run-prod-macos:
+    @ printf "\033[36m⚡ Avvio del server di sviluppo in ambiente PROD (macOS)...\033[0m\n"
+    @ DJANGO_ENV="prod" uv run src/manage.py runserver
+
+run-prod-linux:
+    @ printf "\033[36m⚡ Avvio del server di sviluppo in ambiente PROD (Linux)...\033[0m\n"
+    @ DJANGO_ENV="prod" uv run src/manage.py runserver
+
+run-prod-windows:
+    @Write-Host "⚡ Avvio del server di sviluppo in ambiente PROD (Windows)..." -ForegroundColor Cyan
+    @DJANGO_ENV="prod" uv run src/manage.py runserver
 
 # 🧪 Test del progetto
-test:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🧪 Esecuzione dei test...\033[0m\n"; \
-    else \
-        @Write-Host "🧪 Esecuzione dei test..." -ForegroundColor Cyan; \
-    fi
-    @{{django_manage}} test
+@test:
+    just test-{{os()}}
+
+test-macos:
+    @ printf "\033[36m🧪 Esecuzione dei test (macOS)...\033[0m\n"
+    @uv run src/manage.py test
+
+test-linux:
+    @ printf "\033[36m🧪 Esecuzione dei test (Linux)...\033[0m\n"
+    @ uv run src/manage.py test
+
+test-windows:
+    @Write-Host "🧪 Esecuzione dei test (Windows)..." -ForegroundColor Cyan
+    @uv run src/manage.py test
 
 # 🧪 Test in ambiente DEV
 test-dev:
