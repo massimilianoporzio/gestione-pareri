@@ -1,21 +1,34 @@
-# Controllo sicurezza Python (Bandit)
-security-scan:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        printf "\033[33m🔒 Controllo sicurezza Bandit...\033[0m\n"; \
-        uv run bandit -r src tools examples --exclude node_modules,.venv,venv,build,dist,__pycache__,.pytest_cache,*.egg-info; \
-    else \
-        Write-Host "🔒 Controllo sicurezza Bandit..." -ForegroundColor Yellow; \
-        uv run bandit -r src tools examples --exclude node_modules,.venv,venv,build,dist,__pycache__,.pytest_cache,*.egg-info; \
-    fi
-# Deploy Django Template - Comandi disponibili con Just
-# Per visualizzare tutti i comandi: just --list o just
-
 # Configura shell per Windows
 set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
 # Variabili globali
 python := "uv run"
 django_manage := "uv run src/manage.py"
+
+
+
+# Controllo sicurezza Python (Bandit)
+# Ricetta cross-platform per security-scan
+
+@security-scan:
+    just security-scan-{{os()}}
+
+security-scan-windows:
+    @Write-Host "🔒 Controllo sicurezza Bandit..." -ForegroundColor Yellow
+    @uv run bandit -r src tools examples --exclude node_modules,.venv,venv,build,dist,__pycache__,.pytest_cache,*.egg-info
+
+security-scan-macos:
+    @printf "\033[33m🔒 Controllo sicurezza Bandit...\033[0m\n"
+    @uv run bandit -r src tools examples --exclude node_modules,.venv,venv,build,dist,__pycache__,.pytest_cache,*.egg-info
+
+security-scan-linux:
+    @printf "\033[33m🔒 Controllo sicurezza Bandit...\033[0m\n"
+    @uv run bandit -r src tools examples --exclude node_modules,.venv,venv,build,dist,__pycache__,.pytest_cache,*.egg-info
+
+# Deploy Django Template - Comandi disponibili con Just
+# Per visualizzare tutti i comandi: just --list o just
+
+
 
 default:
     @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
@@ -897,61 +910,4 @@ quality-corporate:
         just precommit-corporate; \
         printf "\033[36m📊 2. Controlli Codacy...\033[0m\n"; \
         just lint-codacy; \
-        printf "\033[36m📝 3. Aggiunta docstring...\033[0m\n"; \
-        just add-docstrings; \
-        printf "\033[36m🎯 4. Fix markdown...\033[0m\n"; \
-        just fix-markdown; \
-        printf "\033[32m✅ Controlli quality corporate completati!\033[0m\n"; \
-    else \
-        Write-Host "🏢 Controlli qualità corporate..." -ForegroundColor Magenta; \
-        Write-Host "🔍 1. Controlli pre-commit corporate..." -ForegroundColor Cyan; \
-        just precommit-corporate; \
-        Write-Host "📊 2. Controlli Codacy..." -ForegroundColor Cyan; \
-        just lint-codacy; \
-        Write-Host "📝 3. Aggiunta docstring..." -ForegroundColor Cyan; \
-        just add-docstrings; \
-        Write-Host "🎯 4. Fix markdown..." -ForegroundColor Cyan; \
-        just fix-markdown; \
-        Write-Host "✅ Controlli quality corporate completati!" -ForegroundColor Green; \
-    fi
-
-# === DATABASE UTILITIES ===
-
-# 🔐 Genera password PostgreSQL sicure per tutti gli ambienti
-generate-db-passwords:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        printf "\033[36m🔐 Generazione password PostgreSQL sicure per tutti gli ambienti...\033[0m\n"; \
-    else \
-        Write-Host "🔐 Generazione password PostgreSQL sicure per tutti gli ambienti..." -ForegroundColor Cyan; \
-    fi
-    @{{python}} tools/generate_db_passwords.py
-
-# 🗄️ Crea script SQL con password reali per setup PostgreSQL
-create-db-script:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        printf "\033[36m🗄️ Creazione script SQL con password reali...\033[0m\n"; \
-        if [ -f "update_postgresql_staging.template.sql" ]; then \
-            cp update_postgresql_staging.template.sql update_postgresql_staging.sql; \
-            printf "\033[32m✅ Script copiato: update_postgresql_staging.sql\033[0m\n"; \
-            printf "\033[33m🔧 Ora sostituisci manualmente i placeholder YOUR_*_PASSWORD\033[0m\n"; \
-            printf "\033[33m🔐 Usa le password generate da: just generate-db-passwords\033[0m\n"; \
-            printf "\033[31m⚠️  ATTENZIONE: File contiene password - elimina dopo l'uso!\033[0m\n"; \
-        else \
-            printf "\033[31m❌ Template non trovato: update_postgresql_staging.template.sql\033[0m\n"; \
-        fi; \
-    else \
-        Write-Host "🗄️ Creazione script SQL con password reali..." -ForegroundColor Cyan; \
-        if (Test-Path "update_postgresql_staging.template.sql") { \
-            Copy-Item "update_postgresql_staging.template.sql" "update_postgresql_staging.sql"; \
-            Write-Host "✅ Script copiato: update_postgresql_staging.sql" -ForegroundColor Green; \
-            Write-Host "🔧 Ora sostituisci manualmente i placeholder YOUR_*_PASSWORD" -ForegroundColor Yellow; \
-            Write-Host "🔐 Usa le password generate da: just generate-db-passwords" -ForegroundColor Yellow; \
-            Write-Host "⚠️  ATTENZIONE: File contiene password - elimina dopo l'uso!" -ForegroundColor Red; \
-        } else { \
-            Write-Host "❌ Template non trovato: update_postgresql_staging.template.sql" -ForegroundColor Red; \
-        } \
-    fi
-
-# Ricetta Just per scansione Safety
-safety-scan:
-    @uv run safety scan --full-report --output screen
+        printf "\033[36m📝 3. Aggiunta docstring...\033
