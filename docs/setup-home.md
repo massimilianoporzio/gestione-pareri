@@ -215,7 +215,7 @@ grep DB_PASSWORD .env.dev .env.test .env.staging .env.prod
 
 Dopo il setup avrai:
 
-```
+```text
 .env.dev      # Sviluppo - DEBUG=True, database locale
 .env.test     # Test automatici - SQLite in memoria
 .env.staging  # Pre-produzione - Come prod ma separato

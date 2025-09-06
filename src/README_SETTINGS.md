@@ -54,10 +54,11 @@ DJANGO_LOGS_DIR=/path/to/logs python manage.py runserver
 
 Il progetto include target specifici nel Makefile per i diversi ambienti:
 
-```bash
+````bash
 # Avviare il server in ambienti specifici
 make run-dev       # Ambiente di sviluppo
 make run-test      # Ambiente di test
+```bash
 make run-prod      # Ambiente di produzione
 # Eseguire test in ambienti specifici
 make test-dev      # Test in ambiente di sviluppo
@@ -67,7 +68,7 @@ make test-prod     # Test in ambiente di produzione
 make check-env-dev   # Verifica ambiente di sviluppo
 make check-env-test  # Verifica ambiente di test
 make check-env-prod  # Verifica ambiente di produzione
-```
+````
 
 ## Configurazione dei file .env
 
@@ -76,7 +77,7 @@ make check-env-prod  # Verifica ambiente di produzione
 - `.env`: Configurazione principale
 - `.env.local`: Configurazione locale (ignorata dal version control) Esempio di file `.env`:
 
-```
+```env
 DJANGO_ENV=dev
 DJANGO_SECRET_KEY=your-secret-key
 DJANGO_DEBUG=1
