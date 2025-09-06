@@ -19,7 +19,8 @@ settings_module = f"home.settings.{DJANGO_ENV}"
 if "DJANGO_SETTINGS_MODULE" not in os.environ:
     os.environ["DJANGO_SETTINGS_MODULE"] = settings_module
 elif (
-    "home.settings" in os.environ["DJANGO_SETTINGS_MODULE"] and os.environ["DJANGO_SETTINGS_MODULE"] != settings_module
+    "home.settings" in os.environ["DJANGO_SETTINGS_MODULE"]
+    and os.environ["DJANGO_SETTINGS_MODULE"] != settings_module
 ):
     # Se DJANGO_SETTINGS_MODULE è già impostato ma è diverso, aggiorniamo DJANGO_ENV per coerenza
     module_parts = os.environ["DJANGO_SETTINGS_MODULE"].split(".")

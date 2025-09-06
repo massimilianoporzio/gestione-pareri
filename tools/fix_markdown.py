@@ -53,7 +53,11 @@ def fix_code_block_spacing(content: str) -> tuple[str, int]:
         # Rileva inizio code block
         if re.match(r"^[ \t]*```", line):
             # Assicura riga vuota prima (se non siamo all'inizio)
-            if result_lines and result_lines[-1].strip() != "" and not re.match(r"^[ \t]*```", result_lines[-1]):
+            if (
+                result_lines
+                and result_lines[-1].strip() != ""
+                and not re.match(r"^[ \t]*```", result_lines[-1])
+            ):
                 result_lines.append("")
                 fixes += 1
 
@@ -68,7 +72,11 @@ def fix_code_block_spacing(content: str) -> tuple[str, int]:
                 if re.match(r"^[ \t]*```[ \t]*$", line):
                     # Fine code block trovata
                     # Assicura riga vuota dopo (se non siamo alla fine)
-                    if i + 1 < len(lines) and lines[i + 1].strip() != "" and not re.match(r"^[ \t]*```", lines[i + 1]):
+                    if (
+                        i + 1 < len(lines)
+                        and lines[i + 1].strip() != ""
+                        and not re.match(r"^[ \t]*```", lines[i + 1])
+                    ):
                         result_lines.append("")
                         fixes += 1
                     break
@@ -152,7 +160,9 @@ def main():
             if result["total_fixes"] > 0:
                 total_files_fixed += 1
                 total_fixes += result["total_fixes"]
-                print(f"✅ {result['file']}: {result['url_fixes']} URLs, {result['spacing_fixes']} spacing fixes")
+                print(
+                    f"✅ {result['file']}: {result['url_fixes']} URLs, {result['spacing_fixes']} spacing fixes"
+                )
         else:
             print(f"❌ Errore in {result['file']}: {result['error']}")
 

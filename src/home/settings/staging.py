@@ -8,7 +8,12 @@ from home.settings.base import *  # noqa: F403, F401
 DEBUG = config("DJANGO_DEBUG_STAGING", default=False, cast=bool)
 
 # ALLOWED_HOSTS per staging
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "staging.gestione-pareri.local", "*.staging.local"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "staging.gestione-pareri.local",
+    "*.staging.local",
+]
 
 # WhiteNoise per servire file statici in staging
 MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")  # noqa: F405
@@ -45,7 +50,11 @@ for logger_name in LOGGING["loggers"]:  # noqa: F405
         # Manteniamo mail_admins dove è presente per staging
         handlers = LOGGING["loggers"][logger_name]["handlers"]  # noqa: F405
         if "mail_admins" in handlers:
-            LOGGING["loggers"][logger_name]["handlers"] = ["file", "mail_admins", "console"]  # noqa: F405
+            LOGGING["loggers"][logger_name]["handlers"] = [
+                "file",
+                "mail_admins",
+                "console",
+            ]  # noqa: F405
         else:
             LOGGING["loggers"][logger_name]["handlers"] = ["file", "console"]  # noqa: F405
 
@@ -53,12 +62,16 @@ for logger_name in LOGGING["loggers"]:  # noqa: F405
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": config("REDIS_URL", default="redis://127.0.0.1:6379/2"),  # Database Redis diverso da prod
+        "LOCATION": config(
+            "REDIS_URL", default="redis://127.0.0.1:6379/2"
+        ),  # Database Redis diverso da prod
     }
 }
 
 # Email backend per staging - Può usare SMTP reale o console
-EMAIL_BACKEND = config("EMAIL_BACKEND_STAGING", default="django.core.mail.backends.console.EmailBackend")
+EMAIL_BACKEND = config(
+    "EMAIL_BACKEND_STAGING", default="django.core.mail.backends.console.EmailBackend"
+)
 
 # Static e Media files per staging
 STATIC_URL = "/static/"
@@ -68,9 +81,15 @@ MEDIA_ROOT = REPO_DIR / "media_staging"  # noqa: F405
 
 # Configurazioni di sicurezza per staging (simili a prod ma meno rigide)
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SECURE_SSL_REDIRECT = config("DJANGO_SECURE_SSL_REDIRECT_STAGING", default=False, cast=bool)
-SESSION_COOKIE_SECURE = config("DJANGO_SESSION_COOKIE_SECURE_STAGING", default=False, cast=bool)
-CSRF_COOKIE_SECURE = config("DJANGO_CSRF_COOKIE_SECURE_STAGING", default=False, cast=bool)
+SECURE_SSL_REDIRECT = config(
+    "DJANGO_SECURE_SSL_REDIRECT_STAGING", default=False, cast=bool
+)
+SESSION_COOKIE_SECURE = config(
+    "DJANGO_SESSION_COOKIE_SECURE_STAGING", default=False, cast=bool
+)
+CSRF_COOKIE_SECURE = config(
+    "DJANGO_CSRF_COOKIE_SECURE_STAGING", default=False, cast=bool
+)
 
 # Meno restrittive per testing
 SECURE_HSTS_SECONDS = 0  # Disabilita HSTS in staging

@@ -25,8 +25,7 @@ In production, these files are:
 
 ## Best Practices
 
-✅ **DO commit** files in this directory ❌ **DON'T commit** the `staticfiles/` directory (it's
-auto-generated)
+✅ **DO commit** files in this directory ❌ **DON'T commit** the `staticfiles/` directory (it's auto-generated)
 
 ## Adding New Static Files
 

@@ -79,20 +79,28 @@ def process_directory(directory, verbose=False, dry_run=False):
 
 def main():
     """Funzione principale che gestisce gli argomenti da linea di comando."""
-    parser = argparse.ArgumentParser(description="Aggiunge docstring a tutti i file Python in una directory")
+    parser = argparse.ArgumentParser(
+        description="Aggiunge docstring a tutti i file Python in una directory"
+    )
     parser.add_argument(
         "directory",
         nargs="?",
         default=".",
         help="Directory da elaborare (default: directory corrente)",
     )
-    parser.add_argument("-v", "--verbose", action="store_true", help="Visualizza messaggi dettagliati")
-    parser.add_argument("--dry-run", action="store_true", help="Esegui senza apportare modifiche")
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Visualizza messaggi dettagliati"
+    )
+    parser.add_argument(
+        "--dry-run", action="store_true", help="Esegui senza apportare modifiche"
+    )
 
     args = parser.parse_args()
 
     print(f"Aggiunta docstring ai file Python in: {args.directory}")
-    files_processed, files_modified = process_directory(args.directory, args.verbose, args.dry_run)
+    files_processed, files_modified = process_directory(
+        args.directory, args.verbose, args.dry_run
+    )
 
     print(f"File Python elaborati: {files_processed}")
     print(f"File Python modificati: {files_modified}")

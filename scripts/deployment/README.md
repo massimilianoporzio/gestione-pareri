@@ -1,8 +1,10 @@
-# 🛠️ Troubleshooting
+# Deployment Scripts
 
-Consulta la guida [Environments Guide](../../docs/environments-guide.md) e la sezione FAQ per problemi comuni.
+## 🛠️ Troubleshooting
 
-# 🛡️ Best Practices Sicurezza
+Consulta la guida [Environments Guide](../../docs/environments-guide.md) e la sezione [FAQ](#faq) per problemi comuni.
+
+## 🛡️ Best Practices Sicurezza
 
 - Usa sempre HTTPS in produzione
 - Configura ALLOWED_HOSTS con domini specifici
@@ -12,14 +14,12 @@ Consulta la guida [Environments Guide](../../docs/environments-guide.md) e la se
 - Monitora metriche e log
 - Usa secrets e variabili d'ambiente, mai hardcoded
 
-# 🔗 Cross-link documentazione
+## 🔗 Cross-link documentazione
 
 Consulta anche:
 
 - [Environments Guide](../../docs/environments-guide.md)
 - [Database Security](../../docs/database-security.md)
-
-# Deployment Scripts
 
 Questa directory contiene script per il deployment in produzione usando diversi server WSGI.
 
@@ -27,7 +27,7 @@ Questa directory contiene script per il deployment in produzione usando diversi 
 
 ### Struttura Directory Statici
 
-```
+```text
 ├── src/static/          # File statici sorgente (committare in Git)
 ├── staticfiles/         # File processati per produzione (NON committare)
 └── media/              # File caricati dagli utenti (NON committare contenuto)
@@ -37,7 +37,7 @@ Questa directory contiene script per il deployment in produzione usando diversi 
 
 ### Directory Structure Completa
 
-`````
+`````text
 ### Processo di Deployment
 1. **Development**: Django serve i file da `src/static/` direttamente
 2. **Production**: `collectstatic` raccoglie tutti i file statici in `staticfiles/`
@@ -71,7 +71,7 @@ make collectstatic-prod
 
 ### Struttura Directory Produzione
 
-```
+```text
 
 project/
 ├── src/static/          # File statici dell'app
@@ -379,8 +379,13 @@ chmod +x scripts/deployment/start-gunicorn.sh
 
 ## 📚 Risorse Utili
 
-- [Django Deployment Checklist](https://docs.djangoproject.com/en/stable/howto/deployment/checklist/)
-- [WhiteNoise Documentation](https://whitenoise.readthedocs.io/)
-- [Gunicorn Documentation](https://docs.gunicorn.org/)
-- [Waitress Documentation](https://docs.pylonsproject.org/projects/waitress/)
-- [PostgreSQL + Django Guide](https://docs.djangoproject.com/en/stable/ref/databases/#postgresql-notes)
+## FAQ
+
+### Domande frequenti
+
+- Come risolvo errori comuni di deployment?
+  - Consulta la sezione Troubleshooting sopra.
+- Dove trovo la documentazione sugli ambienti?
+  - Vedi [Environments Guide](../../docs/environments-guide.md).
+- Come gestisco i file statici?
+  - Segui le istruzioni nella sezione Gestione File Statici.

@@ -15,8 +15,7 @@ Una guida comprensiva su come, quando e perché utilizzare i test nel progetto.
 
 ## Overview
 
-Il sistema di test garantisce la qualità e affidabilità del codice prima del deploy su IIS in
-ambiente aziendale ASL.
+Il sistema di test garantisce la qualità e affidabilità del codice prima del deploy su IIS in ambiente aziendale ASL.
 
 ## Perché i Test Sono Critici
 
@@ -403,13 +402,12 @@ just check-env-dev
 
 ---
 
-> **⚠️ IMPORTANTE**: Prima di ogni deploy su IIS in produzione, TUTTI i 42 test devono passare. Zero
-> tolleranza per errori di sicurezza in ambiente ospedaliero ASL.
+> **⚠️ IMPORTANTE**: Prima di ogni deploy su IIS in produzione, TUTTI i 42 test devono passare. Zero tolleranza per
+> errori di sicurezza in ambiente ospedaliero ASL.
 
 ## 🔒 Security Scan con Bandit
 
-Questo progetto integra **Bandit** per il controllo automatico delle vulnerabilità di sicurezza nel
-codice Python.
+Questo progetto integra **Bandit** per il controllo automatico delle vulnerabilità di sicurezza nel codice Python.
 
 ### Come eseguire la scansione Bandit
 
@@ -432,8 +430,7 @@ codice Python.
 
 ## 🔒 Controllo vulnerabilità dipendenze con Safety
 
-Questo progetto integra **Safety** per il controllo automatico delle vulnerabilità nelle dipendenze
-Python.
+Questo progetto integra **Safety** per il controllo automatico delle vulnerabilità nelle dipendenze Python.
 
 ### Come eseguire la scansione Safety
 

@@ -13,20 +13,15 @@ Questo template include configurazioni VS Code ottimizzate per lo sviluppo Djang
 
 ## 📦 Estensioni VS Code Consigliate
 
-Il progetto è configurato per funzionare con le seguenti estensioni:
-
-| Estensione      | ID                               | Descrizione                                       |
-| --------------- | -------------------------------- | ------------------------------------------------- |
-| Black Formatter | `ms-python.black-formatter`      | Formatta il codice Python utilizzando Black       |
-| isort           | `ms-python.isort`                | Organizza automaticamente gli import Python       |
-| Pylint          | `ms-python.pylint`               | Analizzatore di codice Python per rilevare errori |
-| Ruff            | `charliermarsh.ruff`             | Linter Python ultrarapido                         |
-| Error Lens      | `usernamehw.errorlens`           | Evidenzia errori e avvisi direttamente nel codice |
-| Git Graph       | `mhutchie.git-graph`             | Visualizza il grafico dei commit di Git           |
-| markdownlint    | `davidanson.vscode-markdownlint` | Linting per file Markdown                         |
-| Prettier        | `esbenp.prettier-vscode`         | Formattore di codice per vari linguaggi           |
-| Run On Save     | `emeraldwalk.RunOnSave`          | Esegue comandi quando si salva un file            |
-| Django          | `batisteo.vscode-django`         | Supporto per template e sintassi Django           |
+Il progetto è configurato per funzionare con le seguenti estensioni: | Estensione | ID | Descrizione | | ---------------
+| -------------------------------- | ------------------------------------------------- | | Black Formatter |
+`ms-python.black-formatter` | Formatta il codice Python utilizzando Black | | isort | `ms-python.isort` | Organizza
+automaticamente gli import Python | | Pylint | `ms-python.pylint` | Analizzatore di codice Python per rilevare errori |
+| Ruff | `charliermarsh.ruff` | Linter Python ultrarapido | | Error Lens | `usernamehw.errorlens` | Evidenzia errori e
+avvisi direttamente nel codice | | Git Graph | `mhutchie.git-graph` | Visualizza il grafico dei commit di Git | |
+markdownlint | `davidanson.vscode-markdownlint` | Linting per file Markdown | | Prettier | `esbenp.prettier-vscode` |
+Formattore di codice per vari linguaggi | | Run On Save | `emeraldwalk.RunOnSave` | Esegue comandi quando si salva un
+file | | Django | `batisteo.vscode-django` | Supporto per template e sintassi Django |
 
 ## ⚙️ Configurazione `.vscode/settings.json`
 

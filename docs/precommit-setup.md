@@ -78,5 +78,5 @@ cat .pre-commit-config.yaml | grep "uv run"
 
 ---
 
-🔗 **Vedi anche**: [UV Guide](uv-guide.md) per documentazione completa UV ⚡ **Pro Tip**:
-`uv tool install` è molto più veloce di `pip install` per strumenti globali!
+🔗 **Vedi anche**: [UV Guide](uv-guide.md) per documentazione completa UV ⚡ **Pro Tip**: `uv tool install` è molto più
+veloce di `pip install` per strumenti globali!

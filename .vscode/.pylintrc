@@ -1,0 +1,11 @@
+[MASTER]
+load-plugins=pylint_django
+django-settings-module=home.settings
+ignore=home/settings home/settings.py tools/add_docstring.py
+
+[MESSAGES CONTROL]
+disable=all
+
+[REPORTS]
+output-format=text
+reports=no

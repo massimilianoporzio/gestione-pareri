@@ -153,3 +153,8 @@ disable = [
     "wrong-import-position",
     "import-outside-toplevel",
 ]
+
+[dependency-groups]
+dev = [
+    "coverage>=7.10.6",
+]

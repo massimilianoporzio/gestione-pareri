@@ -1,7 +1,7 @@
 # Esempi di Utilizzo
 
-Questa directory contiene esempi pratici per aiutarti a comprendere come utilizzare le funzionalità
-integrate in questo template Django.
+Questa directory contiene esempi pratici per aiutarti a comprendere come utilizzare le funzionalità integrate in questo
+template Django.
 
 ## File di esempio disponibili
 

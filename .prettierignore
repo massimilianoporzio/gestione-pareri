@@ -2,3 +2,4 @@ node_modules/
 .venv/
 staticfiles/
 media/
+.secrets

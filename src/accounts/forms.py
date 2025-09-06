@@ -17,9 +17,11 @@ class CustomAuthenticationForm(forms.Form):
     """Custom authentication form for email-based login."""
 
     username = forms.CharField(max_length=254)
-    password = forms.CharField(label=_("Password"), strip=False, widget=forms.PasswordInput)
+    password = forms.CharField(
+        label=_("Password"), strip=False, widget=forms.PasswordInput
+    )
 
-    def __init__(self, request=None, *args, **kwargs):
+    def __init__(self, *args, request=None, **kwargs):
         """Initialize form with request object.
 
         Args:
@@ -51,18 +53,26 @@ class CustomAuthenticationForm(forms.Form):
             # Verifica il formato dell'email
             validate_email(username)
         except ValidationError as exc:
-            raise ValidationError(_("Per favore, inserisci un indirizzo email valido come username.")) from exc
+            raise ValidationError(
+                _("Per favore, inserisci un indirizzo email valido come username.")
+            ) from exc
 
         # Verifica il dominio - Dominio aziendale richiesto
         if not username.endswith("@aslcn1.it"):
-            raise ValidationError(_("Il dominio dell'indirizzo email deve essere '@aslcn1.it'."))
+            raise ValidationError(
+                _("Il dominio dell'indirizzo email deve essere '@aslcn1.it'.")
+            )
 
         # SECONDO STEP: Autenticazione (solo se la validazione del formato e del dominio passano)
         if password:
-            self.user_cache = authenticate(self.request, username=username, password=password)
+            self.user_cache = authenticate(
+                self.request, username=username, password=password
+            )
             if self.user_cache is None:
                 raise ValidationError(
-                    _("Inserisci un indirizzo email aziendale e password corretti per un account di staff.")
+                    _(
+                        "Inserisci un indirizzo email aziendale e password corretti per un account di staff."
+                    )
                 )
         else:
             raise ValidationError(_("La password non può essere vuota."))

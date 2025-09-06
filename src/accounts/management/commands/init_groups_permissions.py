@@ -51,11 +51,17 @@ class Command(BaseCommand):
                 self._create_base_groups()
 
             self.stdout.write("=" * 60)
-            self.stdout.write(self.style.SUCCESS("✅ Inizializzazione completata con successo!"))
-            self.stdout.write(f"ℹ️  Il gruppo 'Full Access Admin' ha {full_access_group.permissions.count()} permessi")
+            self.stdout.write(
+                self.style.SUCCESS("✅ Inizializzazione completata con successo!")
+            )
+            self.stdout.write(
+                f"ℹ️  Il gruppo 'Full Access Admin' ha {full_access_group.permissions.count()} permessi"
+            )
 
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f"❌ Errore durante l'inizializzazione: {e}"))
+            self.stdout.write(
+                self.style.ERROR(f"❌ Errore durante l'inizializzazione: {e}")
+            )
             raise
 
     def _reset_groups(self):
@@ -75,19 +81,33 @@ class Command(BaseCommand):
         group, created = Group.objects.get_or_create(name=full_access_group_name)
 
         if created:
-            self.stdout.write(self.style.SUCCESS(f"✅ Gruppo '{full_access_group_name}' creato con successo"))
+            self.stdout.write(
+                self.style.SUCCESS(
+                    f"✅ Gruppo '{full_access_group_name}' creato con successo"
+                )
+            )
         else:
-            self.stdout.write(self.style.WARNING(f"ℹ️  Gruppo '{full_access_group_name}' già esistente"))
+            self.stdout.write(
+                self.style.WARNING(
+                    f"ℹ️  Gruppo '{full_access_group_name}' già esistente"
+                )
+            )
 
         # Ottieni tutti i permessi disponibili
         all_permissions = Permission.objects.all()
 
-        self.stdout.write(f"🔑 Assegnazione di {all_permissions.count()} permessi al gruppo...")
+        self.stdout.write(
+            f"🔑 Assegnazione di {all_permissions.count()} permessi al gruppo..."
+        )
 
         # Assegna tutti i permessi al gruppo
         group.permissions.set(all_permissions)
 
-        self.stdout.write(self.style.SUCCESS(f"✅ Tutti i permessi assegnati al gruppo '{full_access_group_name}'"))
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"✅ Tutti i permessi assegnati al gruppo '{full_access_group_name}'"
+            )
+        )
 
         return group
 
@@ -112,12 +132,22 @@ class Command(BaseCommand):
             group, created = Group.objects.get_or_create(name=group_info["name"])
 
             if created:
-                self.stdout.write(self.style.SUCCESS(f"✅ Gruppo '{group_info['name']}' creato"))
+                self.stdout.write(
+                    self.style.SUCCESS(f"✅ Gruppo '{group_info['name']}' creato")
+                )
 
                 # Assegna permessi specifici se definiti
                 if group_info["permissions"]:
-                    permissions = Permission.objects.filter(codename__in=group_info["permissions"])
+                    permissions = Permission.objects.filter(
+                        codename__in=group_info["permissions"]
+                    )
                     group.permissions.set(permissions)
-                    self.stdout.write(f"🔑 Assegnati {permissions.count()} permessi specifici")
+                    self.stdout.write(
+                        f"🔑 Assegnati {permissions.count()} permessi specifici"
+                    )
             else:
-                self.stdout.write(self.style.WARNING(f"ℹ️  Gruppo '{group_info['name']}' già esistente"))
+                self.stdout.write(
+                    self.style.WARNING(
+                        f"ℹ️  Gruppo '{group_info['name']}' già esistente"
+                    )
+                )

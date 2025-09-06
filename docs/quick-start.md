@@ -25,8 +25,8 @@ pre-commit install
 
 ### Personalizzazione del modello User (opzionale, ma consigliato farlo prima)
 
-Se desideri utilizzare un modello User personalizzato, questo è il momento di configurarlo **prima**
-di eseguire qualsiasi migrazione:
+Se desideri utilizzare un modello User personalizzato, questo è il momento di configurarlo **prima** di eseguire
+qualsiasi migrazione:
 
 ```bash
 # Modifica src/home/settings.py per aggiungere:

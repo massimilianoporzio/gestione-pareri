@@ -68,17 +68,23 @@ def demo_basic_logging():
     logger.info("INFO: Utente autenticato correttamente")
 
     # Messaggi di WARNING (colore GIALLO)
-    logger.warning("Questo è un messaggio di WARNING - segnala situazioni potenzialmente problematiche")
+    logger.warning(
+        "Questo è un messaggio di WARNING - segnala situazioni potenzialmente problematiche"
+    )
     logger.warning("WARNING: Spazio su disco inferiore al 10%")
     logger.warning("WARNING: Funzionalità deprecata in uso")
 
     # Messaggi di ERROR (colore ROSSO)
-    logger.error("Questo è un messaggio di ERROR - segnala errori che impediscono il corretto funzionamento")
+    logger.error(
+        "Questo è un messaggio di ERROR - segnala errori che impediscono il corretto funzionamento"
+    )
     logger.error("ERROR: Impossibile connettersi al database")
     logger.error("ERROR: Errore durante l'elaborazione della richiesta")
 
     # Messaggi di CRITICAL (colore ROSSO BRILLANTE o SFONDO ROSSO)
-    logger.critical("Questo è un messaggio di CRITICAL - segnala errori critici che richiedono attenzione immediata")
+    logger.critical(
+        "Questo è un messaggio di CRITICAL - segnala errori critici che richiedono attenzione immediata"
+    )
     logger.critical("CRITICAL: Sistema in stato di emergenza")
     logger.critical("CRITICAL: Errore irreversibile nell'applicazione")
 
@@ -169,6 +175,8 @@ if __name__ == "__main__":
     print("\nDemo completata! Controlla i log generati.")
 
     if not django.conf.settings.DEBUG:
-        print(f"I log sono stati salvati nel file: {project_root / 'logs' / 'django.log'}")
+        print(
+            f"I log sono stati salvati nel file: {project_root / 'logs' / 'django.log'}"
+        )
     else:
         print("I log colorati sono stati mostrati nella console qui sopra.")
