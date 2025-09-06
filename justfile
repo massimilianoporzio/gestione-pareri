@@ -845,7 +845,7 @@ generate-secret-key-windows:
     @Write-Host "Genero SECRET_KEY generica:" -ForegroundColor Yellow
     {{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 
- 🔑 Genera SECRET_KEY per tutti i 4 ambienti
+# 🔑 Genera SECRET_KEY per tutti i 4 ambienti
 generate-secret-keys-all:
     just generate-secret-keys-all-{{os()}}
 
@@ -1015,139 +1015,223 @@ run-uvicorn-windows:
     {{django_manage}} collectstatic --no-input --clear
     @Write-Host "🌟 Starting Uvicorn server..." -ForegroundColor Green
     cd src; {{python}} -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --workers 1 --log-level info
-    
+
 # 🧪 Test Uvicorn locale (debug)
 test-uvicorn-local:
-    @@Write-Host "🧪 Test locale Uvicorn ASGI (debug, singolo worker)..." -ForegroundColor Cyan
-    @bash scripts/deployment/test-uvicorn-local.sh
+    just test-uvicorn-local-{{os()}}
+
+test-uvicorn-local-macos:
+    @ bash scripts/deployment/test-uvicorn-local.sh
+
+test-uvicorn-local-linux:
+    @ bash scripts/deployment/test-uvicorn-local.sh
+
+test-uvicorn-local-windows:
+    @powershell -ExecutionPolicy Bypass -File scripts/deployment/test-uvicorn-local.ps1
 
 # 📦 Raccolta file statici
 collectstatic:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m📦 Raccolta file statici...\033[0m\n"; \
-    else \
-        @Write-Host "📦 Raccolta file statici..." -ForegroundColor Cyan; \
-    fi
-    @{{django_manage}} collectstatic --noinput
+    just collectstatic-{{os()}}
 
-# 📦 Raccolta file statici DEV
+collectstatic-macos:
+    @ printf "\033[36m📁 Raccolta file statici (macOS)...\033[0m\n"
+    @ {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-linux:
+    @ printf "\033[36m📁 Raccolta file statici (Linux)...\033[0m\n"
+    @ {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-windows:
+    @Write-Host "📁 Raccolta file statici (Windows)..." -ForegroundColor Cyan
+    @{{django_manage}} collectstatic --no-input --clear
+
 collectstatic-dev:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m📦 Raccolta file statici (DEV)...\033[0m\n"; \
-    else \
-        @Write-Host "📦 Raccolta file statici (DEV)..." -ForegroundColor Cyan; \
-    fi
-    @$env:DJANGO_ENV="dev"; {{django_manage}} collectstatic --noinput
+    just collectstatic-dev-{{os()}}
 
-# 📦 Raccolta file statici TEST
+collectstatic-dev-macos:
+    @ printf "\033[36m📁 Raccolta file statici in ambiente DEV (macOS)...\033[0m\n"
+    @ DJANGO_ENV="dev" {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-dev-linux:
+    @ printf "\033[36m📁 Raccolta file statici in ambiente DEV (Linux)...\033[0m\n"
+    @ DJANGO_ENV="dev" {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-dev-windows:
+    @Write-Host "📁 Raccolta file statici in ambiente DEV (Windows)..." -ForegroundColor Cyan
+    @DJANGO_ENV="dev" {{django_manage}} collectstatic --no-input --clear
+
 collectstatic-test:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m📦 Raccolta file statici (TEST)...\033[0m\n"; \
-    else \
-        @Write-Host "📦 Raccolta file statici (TEST)..." -ForegroundColor Cyan; \
-    fi
-    @$env:DJANGO_ENV="test"; {{django_manage}} collectstatic --noinput
+    just collectstatic-test-{{os()}}
 
-# 📦 Raccolta file statici PROD
+collectstatic-test-macos:
+    @ printf "\033[36m📁 Raccolta file statici in ambiente TEST (macOS)...\033[0m\n"
+    @ DJANGO_ENV="test" {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-test-linux:
+    @ printf "\033[36m📁 Raccolta file statici in ambiente TEST (Linux)...\033[0m\n"
+    @ DJANGO_ENV="test" {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-test-windows:
+    @Write-Host "📁 Raccolta file statici in ambiente TEST (Windows)..." -ForegroundColor Cyan
+    @DJANGO_ENV="test" {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-staging:
+    just collectstatic-staging-{{os()}}
+
+collectstatic-staging-macos:
+    @ printf "\033[36m📁 Raccolta file statici in ambiente STAGING (macOS)...\033[0m\n"
+    @ DJANGO_ENV="staging" {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-staging-linux:
+    @ printf "\033[36m📁 Raccolta file statici in ambiente STAGING (Linux)...\033[0m\n"
+    @ DJANGO_ENV="staging" {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-staging-windows:
+    @Write-Host "📁 Raccolta file statici in ambiente STAGING (Windows)..." -ForegroundColor Cyan
+    @DJANGO_ENV="staging" {{django_manage}} collectstatic --no-input --clear
+
 collectstatic-prod:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m📦 Raccolta file statici (PROD)...\033[0m\n"; \
-    else \
-        @Write-Host "📦 Raccolta file statici (PROD)..." -ForegroundColor Cyan; \
-    fi
-    @$env:DJANGO_ENV="prod"; {{django_manage}} collectstatic --noinput
+    just collectstatic-prod-{{os()}}
+
+collectstatic-prod-macos:
+    @ printf "\033[36m📁 Raccolta file statici in ambiente PROD (macOS)...\033[0m\n"
+    @ DJANGO_ENV="prod" {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-prod-linux:
+    @ printf "\033[36m📁 Raccolta file statici in ambiente PROD (Linux)...\033[0m\n"
+    @ DJANGO_ENV="prod" {{django_manage}} collectstatic --no-input --clear
+
+collectstatic-prod-windows:
+    @Write-Host "📁 Raccolta file statici in ambiente PROD (Windows)..." -ForegroundColor Cyan
+    @DJANGO_ENV="prod" {{django_manage}} collectstatic --no-input --clear
 
 # 🌐 Apre la home page nel browser
 open-home:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🌐 Apertura pagina home nel browser...\033[0m\n"; \
-        if command -v xdg-open > /dev/null; then \
-            xdg-open "http://localhost:8000"; \
-        elif command -v open > /dev/null; then \
-            open "http://localhost:8000"; \
-        else \
-            @printf "\033[33mNon è stato trovato un comando per aprire il browser.\033[0m\n"; \
-        fi; \
-    else \
-        @Write-Host "🌐 Apertura pagina home nel browser..." -ForegroundColor Cyan; \
-        Start-Process "http://localhost:8000"; \
-    fi
+    just open-home-{{os()}}
+
+open-home-macos:
+    @ printf "\033[36m🌐 Apro la home del sito in browser (macOS)...\033[0m\n"
+    @ open "http://localhost:8000"
+
+open-home-linux:
+    @ printf "\033[36m🌐 Apro la home del sito in browser (Linux)...\033[0m\n"
+    @ xdg-open "http://localhost:8000"
+
+open-home-windows:
+    @Write-Host "🌐 Apro la home del sito in browser (Windows)..." -ForegroundColor Cyan
+    start "http://localhost:8000"
 
 # === SERVER MANAGEMENT ===
 
 # 🛑 Ferma tutti i server Django
 stop-servers:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m🛑 Arresto di tutti i server Django...\033[0m\n"; \
-        @printf "\033[36mℹ️  Nota: Eseguire da un terminale DIVERSO da quello che esegue il server\033[0m\n"; \
-        pkill -f "manage.py|gunicorn|waitress|uvicorn" || @printf "\033[33mNessun processo Django trovato.\033[0m\n"; \
-    else \
-        @Write-Host "🛑 Arresto di tutti i server Django..." -ForegroundColor Yellow; \
-        @Write-Host "ℹ️  Nota: Eseguire da un terminale DIVERSO da quello che esegue il server" -ForegroundColor Cyan; \
-        Get-Process | Where-Object {$_.ProcessName -match "python|gunicorn|waitress|uvicorn"} | Where-Object {$_.CommandLine -match "django|manage.py|wsgi|asgi"} | Stop-Process -Force; \
-    fi
+    just stop-servers-{{os()}}
+
+stop-servers-macos:
+    @ printf "\033[36m🛑 Arresto di tutti i server (macOS)...\033[0m\n"
+    @ pkill -f "uvicorn|waitress|manage.py runserver" || true
+
+stop-servers-linux:
+    @ printf "\033[36m🛑 Arresto di tutti i server (Linux)...\033[0m\n"
+    @ pkill -f "uvicorn|waitress|manage.py runserver" || true
+
+stop-servers-windows:
+    @Write-Host "🛑 Arresto di tutti i server (Windows)..." -ForegroundColor Red
+    Stop-Process -Name "python", "uvicorn", "waitress" -ErrorAction SilentlyContinue
 
 # 🔪 Termina processi sulla porta 8000
 kill-port:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m🔪 Terminazione processi sulla porta 8000...\033[0m\n"; \
-        @printf "\033[36mℹ️  Nota: Eseguire da un terminale DIVERSO da quello che esegue il server\033[0m\n"; \
-        fuser -k 8000/tcp || @printf "\033[33mNessun processo trovato sulla porta 8000.\033[0m\n"; \
-    else \
-        @Write-Host "🔪 Terminazione processi sulla porta 8000..." -ForegroundColor Yellow; \
-        @Write-Host "ℹ️  Nota: Eseguire da un terminale DIVERSO da quello che esegue il server" -ForegroundColor Cyan; \
-        $processes = Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess; if ($processes) { $processes | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; @Write-Host "Processi sulla porta 8000 terminati" } else { @Write-Host "Nessun processo trovato sulla porta 8000" }; \
-    fi
+    just kill-port-{{os()}}
 
+kill-port-macos:
+    @ printf "\033[36m🔪 Terminazione processo sulla porta 8000 (macOS)...\033[0m\n"
+    @ lsof -ti:8000 | xargs kill -9 || true
+
+kill-port-linux:
+    @ printf "\033[36m🔪 Terminazione processo sulla porta 8000 (Linux)...\033[0m\n"
+    @ lsof -ti:8000 | xargs kill -9 || true
+
+kill-port-windows:
+    @Write-Host "🔪 Terminazione processo sulla porta 8000 (Windows)..." -ForegroundColor Red
+    $pids = Get-NetTCPConnection -LocalPort 8000 | Select-Object -ExpandProperty OwningProcess
+    foreach ($pid in $pids) { Stop-Process -Id $pid -Force }
 # === ENVIRONMENT CHECKS ===
 
 # 🔍 Controllo ambiente corrente
 check-env:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🔍 Controllo dell'ambiente corrente...\033[0m\n"; \
-    else \
-        @Write-Host "🔍 Controllo dell'ambiente corrente..." -ForegroundColor Cyan; \
-    fi
-    @{{python}} src/test_logging.py
+    just check-env-{{os()}}
 
-# 🔍 Controllo ambiente DEV
+check-env-macos:
+    @ printf "\033[36m🔍 Controllo ambiente (macOS)...\033[0m\n"
+    @ {{python}} tools/check_env.py
+
+check-env-linux:
+    @ printf "\033[36m🔍 Controllo ambiente (Linux)...\033[0m\n"
+    @ {{python}} tools/check_env.py
+
+check-env-windows:
+    @Write-Host "🔍 Controllo ambiente (Windows)..." -ForegroundColor Cyan
+    {{python}} tools/check_env.py
+
 check-env-dev:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🔍 Controllo dell'ambiente DEV...\033[0m\n"; \
-    else \
-        @Write-Host "🔍 Controllo dell'ambiente DEV..." -ForegroundColor Cyan; \
-    fi
-    @$env:DJANGO_ENV="dev"; {{python}} src/test_logging.py
+    just check-env-dev-{{os()}}
 
-# 🔍 Controllo ambiente TEST
+check-env-dev-macos:
+    @ printf "\033[36m🔍 Controllo ambiente DEV (macOS)...\033[0m\n"
+    @ DJANGO_ENV="dev" {{python}} tools/check_env.py
+
+check-env-dev-linux:
+    @ printf "\033[36m🔍 Controllo ambiente DEV (Linux)...\033[0m\n"
+    @ DJANGO_ENV="dev" {{python}} tools/check_env.py
+
+check-env-dev-windows:
+    @Write-Host "🔍 Controllo ambiente DEV (Windows)..." -ForegroundColor Cyan
+    $env:DJANGO_ENV="dev"; {{python}} tools/check_env.py
+
 check-env-test:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🔍 Controllo dell'ambiente TEST...\033[0m\n"; \
-    else \
-        @Write-Host "🔍 Controllo dell'ambiente TEST..." -ForegroundColor Cyan; \
-    fi
-    @$env:DJANGO_ENV="test"; {{python}} src/test_logging.py
+    just check-env-test-{{os()}}
 
-# 🔍 Controllo ambiente STAGING
+check-env-test-macos:
+    @ printf "\033[36m🔍 Controllo ambiente TEST (macOS)...\033[0m\n"
+    @ DJANGO_ENV="test" {{python}} tools/check_env.py
+
+check-env-test-linux:
+    @ printf "\033[36m🔍 Controllo ambiente TEST (Linux)...\033[0m\n"
+    @ DJANGO_ENV="test" {{python}} tools/check_env.py
+
+check-env-test-windows:
+    @Write-Host "🔍 Controllo ambiente TEST (Windows)..." -ForegroundColor Cyan
+    $env:DJANGO_ENV="test"; {{python}} tools/check_env.py
+
 check-env-staging:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🎭 Controllo dell'ambiente STAGING...\033[0m\n"; \
-        @printf "\033[33m⚠️  STAGING usa PostgreSQL e logging su file!\033[0m\n"; \
-    else \
-        @Write-Host "🎭 Controllo dell'ambiente STAGING..." -ForegroundColor Cyan; \
-        @Write-Host "⚠️  STAGING usa PostgreSQL e logging su file!" -ForegroundColor Yellow; \
-    fi
-    @$env:DJANGO_ENV="staging"; {{python}} src/test_logging.py
+    just check-env-staging-{{os()}}
 
-# 🔍 Controllo ambiente PROD
+check-env-staging-macos:
+    @ printf "\033[36m🔍 Controllo ambiente STAGING (macOS)...\033[0m\n"
+    @ DJANGO_ENV="staging" {{python}} tools/check_env.py
+
+check-env-staging-linux:
+    @ printf "\033[36m🔍 Controllo ambiente STAGING (Linux)...\033[0m\n"
+    @ DJANGO_ENV="staging" {{python}} tools/check_env.py
+
+check-env-staging-windows:
+    @Write-Host "🔍 Controllo ambiente STAGING (Windows)..." -ForegroundColor Cyan
+    $env:DJANGO_ENV="staging"; {{python}} tools/check_env.py
+
 check-env-prod:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🔍 Controllo dell'ambiente PROD...\033[0m\n"; \
-    else \
-        @Write-Host "🔍 Controllo dell'ambiente PROD..." -ForegroundColor Cyan; \
-    fi
-    @$env:DJANGO_ENV="prod"; {{python}} src/test_logging.py
+    just check-env-prod-{{os()}}
 
+check-env-prod-macos:
+    @ printf "\033[36m🔍 Controllo ambiente PROD (macOS)...\033[0m\n"
+    @ DJANGO_ENV="prod" {{python}} tools/check_env.py
+
+check-env-prod-linux:
+    @ printf "\033[36m🔍 Controllo ambiente PROD (Linux)...\033[0m\n"
+    @ DJANGO_ENV="prod" {{python}} tools/check_env.py
+
+check-env-prod-windows:
+    @Write-Host "🔍 Controllo ambiente PROD (Windows)..." -ForegroundColor Cyan
+    $env:DJANGO_ENV="prod"; {{python}} tools/check_env.py
 # === CORPORATE COMMANDS ===
 
 # 🏢 Pre-commit con configurazione corporate
