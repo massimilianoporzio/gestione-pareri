@@ -157,4 +157,5 @@ disable = [
 [dependency-groups]
 dev = [
     "coverage>=7.10.6",
+    "pytest-cov>=6.3.0",
 ]

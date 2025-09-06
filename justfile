@@ -1,3 +1,6 @@
+coverage-clean:
+    @rm -f .coverage
+    @rm -rf htmlcov
 
 # Configura shell per Windows
 set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
@@ -147,31 +150,32 @@ security-scan-linux:
 
 # Test Coverage cross-platform
 @coverage:
+    just coverage-clean
     just coverage-{{os()}}
 
 coverage-windows:
     @Write-Host "📊 Coverage: esecuzione test con coverage..." -ForegroundColor Yellow
-    @uv run coverage run src/manage.py test
-    @uv run coverage report
-    @uv run coverage html
+    @cd src; uv run coverage run manage.py test
+    @cd src; uv run coverage report
+    @cd src; uv run coverage html -d ..\htmlcov
     @Write-Host "Report HTML generato in htmlcov/index.html" -ForegroundColor Green
     @Start-Process htmlcov/index.html
     @Write-Host "Per visualizzare il report renderizzato, apri htmlcov/index.html con l'estensione Live Preview in VS Code." -ForegroundColor Yellow
 
 coverage-macos:
     @printf "\033[33m📊 Coverage: esecuzione test con coverage...\033[0m\n"
-    @uv run coverage run src/manage.py test
-    @uv run coverage report
-    @uv run coverage html
+    @cd src && uv run coverage run manage.py test
+    @cd src && uv run coverage report
+    @cd src && uv run coverage html -d ../htmlcov
     @printf "\033[32mReport HTML generato in htmlcov/index.html\033[0m\n"
     @code htmlcov/index.html
     @printf "\033[33mPer visualizzare il report renderizzato, apri htmlcov/index.html con l'estensione Live Preview in VS Code.\033[0m\n"
 
 coverage-linux:
     @printf "\033[33m📊 Coverage: esecuzione test con coverage...\033[0m\n"
-    @uv run coverage run src/manage.py test
-    @uv run coverage report
-    @uv run coverage html
+    @cd src && uv run coverage run manage.py test
+    @cd src && uv run coverage report
+    @cd src && uv run coverage html -d ../htmlcov
     @printf "\033[32mReport HTML generato in htmlcov/index.html\033[0m\n"
     @code htmlcov/index.html
     @printf "\033[33mPer visualizzare il report renderizzato, apri htmlcov/index.html con l'estensione Live Preview in VS Code.\033[0m\n"
