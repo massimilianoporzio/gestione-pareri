@@ -4,13 +4,15 @@
 
 ### Architettura Target
 
-```
+````
+```text
 GitHub Repository → Clone Server Produzione → IIS Configuration → Database Setup
-```
+````
 
 ### Directory Structure Produzione
 
 ```
+
 C:\inetpub\wwwroot\pratiche-pareri\     # IIS Root Directory
 ├── src\                               # Django Application
 ├── staticfiles\                       # Static files raccolti
@@ -19,6 +21,7 @@ C:\inetpub\wwwroot\pratiche-pareri\     # IIS Root Directory
 ├── web.config                        # IIS Configuration (NON in repo)
 ├── .env.prod                         # Environment vars (NON in repo)
 └── uv.lock                          # Dipendenze locked
+
 ```
 
 ## 🔧 PASSO 1: Setup Server Produzione
@@ -33,6 +36,7 @@ C:\inetpub\wwwroot\pratiche-pareri\     # IIS Root Directory
 
 ### Setup Directory Produzione
 
+````powershell
 ```powershell
 # Crea directory base
 New-Item -ItemType Directory -Force -Path "C:\inetpub\wwwroot\pratiche-pareri"
@@ -41,18 +45,19 @@ Set-Location "C:\inetpub\wwwroot\pratiche-pareri"
 git clone <https://github.com/massimilianoporzio/gestione-pareri.git> .
 # Setup branch per produzione (opzionale)
 git checkout -b production-deploy
-```
+````
 
 ## 🔧 PASSO 2: Configurazione Credenziali
 
 ### Setup Files di Configurazione
 
+````powershell
 ```powershell
 # Crea file configurazione da template
 Copy-Item web.config.template web.config
 Copy-Item .env.prod.template .env.prod
 # IMPORTANTE: Modifica manualmente i file con valori reali!
-```
+````
 
 ### File da configurare
 
@@ -82,6 +87,7 @@ GRANT ALL PRIVILEGES ON DATABASE gestione_pareri_prod TO gestione_pareri_prod;
 
 ### Migrazioni e Setup
 
+````powershell
 ```powershell
 # Installa dipendenze
 uv sync
@@ -91,29 +97,32 @@ uv run python src/manage.py migrate --settings=home.settings.prod
 uv run python src/manage.py collectstatic --noinput --settings=home.settings.prod
 # Crea superuser
 uv run python src/manage.py createsuperuser --settings=home.settings.prod
-```
+````
 
 ## 🔧 PASSO 4: Configurazione IIS
 
 ### Setup Application Pool
 
+````powershell
 ```powershell
 # Crea Application Pool dedicato
 New-WebAppPool -Name "GestionePareriPool"
 Set-ItemProperty -Path "IIS:\AppPools\GestionePareriPool" -Name "processModel.identityType" -Value "ApplicationPoolIdentity"
-```
+````
 
 ### Setup Website
 
+````powershell
 ```powershell
 # Crea sito IIS
 New-Website -Name "GestionePareri" -PhysicalPath "C:\inetpub\wwwroot\pratiche-pareri" -ApplicationPool "GestionePareriPool" -Port 80
 # Oppure come Application sotto existing site:
 New-WebApplication -Site "Default Web Site" -Name "pratiche-pareri" -PhysicalPath "C:\inetpub\wwwroot\pratiche-pareri" -ApplicationPool "GestionePareriPool"
-```
+````
 
 ### Configurazione Permessi
 
+````powershell
 ```powershell
 # Imposta permessi directory per IIS
 $acl = Get-Acl "C:\inetpub\wwwroot\pratiche-pareri"
@@ -121,18 +130,19 @@ $appPoolSid = (New-Object System.Security.Principal.SecurityIdentifier("S-1-5-82
 $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($appPoolSid, "FullControl", "ContainerInherit,ObjectInherit", "None", "Allow")
 $acl.SetAccessRule($accessRule)
 Set-Acl -Path "C:\inetpub\wwwroot\pratiche-pareri" -AclObject $acl
-```
+````
 
 ## 🔧 PASSO 5: Test e Verifica
 
 ### Test Locali
 
+````powershell
 ```powershell
 # Test configurazione Django
 uv run python src/manage.py check --settings=home.settings.prod
 # Test server locale
 uv run uvicorn home.asgi:application --host localhost --port 8000
-```
+````
 
 ### Test IIS
 
@@ -143,6 +153,7 @@ uv run uvicorn home.asgi:application --host localhost --port 8000
 
 ### Script Update Produzione
 
+````powershell
 ```powershell
 # Pull latest changes
 git pull origin main
@@ -154,7 +165,7 @@ uv run python src/manage.py migrate --settings=home.settings.prod
 uv run python src/manage.py collectstatic --noinput --settings=home.settings.prod
 # Restart IIS Application Pool
 Restart-WebAppPool -Name "GestionePareriPool"
-```
+````
 
 ## 🔐 SICUREZZA
 
@@ -181,6 +192,7 @@ Restart-WebAppPool -Name "GestionePareriPool"
 
 ### Comandi diagnosi
 
+````powershell
 ```powershell
 # Check IIS status
 Get-Website -Name "GestionePareri"
@@ -189,4 +201,4 @@ Get-WebAppPool -Name "GestionePareriPool"
 Get-Process | Where-Object {$_.Name -like "*python*"}
 # Test database connection
 uv run python src/manage.py dbshell --settings=home.settings.prod
-```
+````

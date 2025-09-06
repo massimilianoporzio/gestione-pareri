@@ -267,7 +267,7 @@ uv run manage.py test accounts.tests.GroupsPermissionsTest accounts.tests.AdminI
 
 ### Validazione Domini - ZERO TOLLERANZA
 
-**Questi email devono fallire**
+### Questi email devono fallire
 
 ```python
 # ❌ QUESTI EMAIL DEVONO FALLIRE
@@ -283,7 +283,7 @@ invalid_emails = [
 
 ### Performance - Soglie IIS
 
-**Requisiti di performance**
+### Requisiti di performance
 
 ```python
 # ⚡ PERFORMANCE REQUIREMENTS
@@ -297,7 +297,7 @@ Response time: Admin deve caricare < 2 secondi
 
 ### Test Falliti - Troubleshooting
 
-**Verbosità alta per debug**
+### Verbosità alta per debug
 
 ```bash
 uv run manage.py test accounts.tests.SecurityTest --settings=home.settings.test_local --verbosity=2
@@ -307,7 +307,7 @@ uv run manage.py test accounts.tests.SecurityTest.test_email_domain_validation -
 
 ### Problemi Comuni
 
-**1. Database Permission Error**
+### 1. Database Permission Error
 
 ```text
 Got an error creating the test database: ERRORE: permesso di creare il database negato
@@ -331,7 +331,7 @@ AssertionError: 200 != 403
 
 ### GitHub Actions (Futuro)
 
-**Esempio workflow GitHub Actions**
+### Esempio workflow GitHub Actions
 
 ```yaml
 # .github/workflows/test.yml
@@ -347,7 +347,7 @@ AssertionError: 200 != 403
 
 ### Pre-Deploy Checklist
 
-**Checklist pre-deploy**
+### Checklist pre-deploy
 
 ```bash
 # 1. Test sicurezza
@@ -380,9 +380,7 @@ I nostri test garantiscono:
 
 ## Support & Troubleshooting
 
-### Comandi di Emergenza
-
-**Comandi di emergenza**
+### Comandi di emergenza
 
 ```bash
 # Test rapido pre-deploy

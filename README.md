@@ -29,8 +29,8 @@
 
 **Come cambio ambiente?** Usa i comandi `just check-env-<env>` e modifica le variabili in `.env`. **Come gestisco le
 secrets?** Vedi la guida [Database Security](docs/database-security.md) e
-[Safety CLI](#come-usare-safety-cli-e-api-key). **Come risolvo errori act/CodeQL?** Consulta la sezione troubleshooting
-in [docs/environments-guide.md](docs/environments-guide.md).
+[Safety CLI](docs/database-security.md#come-usare-safety-cli-e-api-key). **Come risolvo errori act/CodeQL?** Consulta la
+sezione troubleshooting in [docs/environments-guide.md](docs/environments-guide.md).
 
 ## Contributi & Support
 
@@ -38,7 +38,7 @@ Consulta anche:
 
 - [Environments Guide](docs/environments-guide.md)
 
-````text
+```text
 - [Just Commands](docs/just.md)
 - [Quick Start](docs/quick-start.md)
 
@@ -114,10 +114,9 @@ Consulta anche:
 4. Clicca su **"Create repository from template"**
 5. Una volta creato, clona il nuovo repository sulla tua macchina:
 
-   ```bash
-   git clone <https://github.com/tuousername/tuo-nuovo-repo.git>
-   cd tuo-nuovo-repo
-````
+  git clone <https://github.com/tuousername/tuo-nuovo-repo.git>
+  cd tuo-nuovo-repo
+```
 
 ## Requisiti
 
@@ -126,6 +125,20 @@ Consulta anche:
 - Visual Studio Code (consigliato per l'integrazione automatica)
 
 ## 🚀 Quick Links
+
+```bash
+npm install --save-dev @tailwindcss/cli autoprefixer
+npm install --save-dev webpack webpack-cli
+npm install --save-dev @babel/core @babel/preset-env
+# 3. Build script esempio per package.json
+{
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "css": "tailwindcss -i src/static/css/input.css -o src/static/css/style.css"
+  }
+}
+```
 
 ### 📋 **Setup Rapido**
 
@@ -158,13 +171,13 @@ word splitting), usa **shfmt**.
 
 ````bash
 brew install shfmt
-
+```bash
 
 **Linux (Debian/Ubuntu):**
 
 ```bash
 sudo apt-get install shfmt
-```text
+````
 
 **Windows:**
 
@@ -172,9 +185,9 @@ sudo apt-get install shfmt
 - Aggiungi la cartella del binario a PATH
 - Oppure usa [Scoop](https://scoop.sh/):
 
-```powershell
+````powershell
 scoop install shfmt
-```text
+```bash
 
 **Manuale (tutti gli OS):**
 
@@ -183,7 +196,7 @@ scoop install shfmt
 
 ```bash
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
-````
+```bash
 
 ### Utilizzo
 
@@ -191,7 +204,7 @@ Correggi tutti gli script bash di deployment:
 
 ```bash
 shfmt -w scripts/deployment/*.sh
-```
+````
 
 Puoi anche usare Just:
 
@@ -284,21 +297,15 @@ uv run python src/manage.py migrate
 uv run python src/manage.py runserver
 # Eseguire altri pacchetti Python
 uv run black .
-uv run pytest
-````
-
-### 2. Usando l'ambiente virtuale tradizionale
-
-Se preferisci l'approccio tradizionale, puoi attivare l'ambiente virtuale e poi eseguire i comandi:
 
 ```bash
 # Windows PowerShell
-.\.venv\Scripts\Activate.ps1
+\.venv\Scripts\Activate.ps1
 # Linux/macOS
 source .venv/bin/activate
 # Poi esegui i comandi normalmente
 python src/manage.py runserver
-```
+````
 
 > **Nota**: Gli script nella cartella `examples/` sono progettati per funzionare con entrambi gli approcci.
 
@@ -529,7 +536,11 @@ CI** - Test automatici su push 📊 **Quality gates** - Linting e formattazione
 
 ## 📁 Project Structure
 
-```
+deploy-django/ ├── docs/ # 📖 Guide specializzate ├── scripts/deployment/ # 🚀 Scripts deployment ├── src/home/ # 🏠
+Django app ├── .vscode/ # ⚙️ VS Code config ├── justfile # ⚡ Task runner ├── justfile # ⚡ Task runner moderno └──
+pyproject.toml # 🐍 Python config
+
+```text
 deploy-django/
 ├── docs/                    # 📖 Guide specializzate
 ├── scripts/deployment/      # 🚀 Scripts deployment
