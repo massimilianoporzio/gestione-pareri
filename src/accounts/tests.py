@@ -39,7 +39,10 @@ class CustomUserModelTest(TestCase):
     def test_create_user_valid_email(self):
         """Test creazione utente con email valida."""
         user = CustomUser.objects.create_user(
-            email=self.valid_email, password=self.password, first_name="Test", last_name="User"
+            email=self.valid_email,
+            password=self.password,
+            first_name="Test",
+            last_name="User",
         )
 
         self.assertEqual(user.email, self.valid_email)
@@ -51,11 +54,15 @@ class CustomUserModelTest(TestCase):
     def test_create_user_invalid_email_domain(self):
         """Test che la creazione utente fallisce con dominio non valido."""
         with self.assertRaises(ValidationError):
-            CustomUser.objects.create_user(email=self.invalid_email, password=self.password)
+            CustomUser.objects.create_user(
+                email=self.invalid_email, password=self.password
+            )
 
     def test_create_superuser(self):
         """Test creazione superuser."""
-        superuser = CustomUser.objects.create_superuser(email=self.valid_email, password=self.password)
+        superuser = CustomUser.objects.create_superuser(
+            email=self.valid_email, password=self.password
+        )
 
         self.assertTrue(superuser.is_superuser)
         self.assertTrue(superuser.is_staff)
@@ -64,11 +71,15 @@ class CustomUserModelTest(TestCase):
     def test_create_superuser_invalid_email(self):
         """Test che la creazione superuser fallisce con email non valida."""
         with self.assertRaises(ValidationError):
-            CustomUser.objects.create_superuser(email=self.invalid_email, password=self.password)
+            CustomUser.objects.create_superuser(
+                email=self.invalid_email, password=self.password
+            )
 
     def test_email_prefix_display(self):
         """Test proprietà email_prefix_display."""
-        user = CustomUser.objects.create_user(email=self.valid_email, password=self.password)
+        user = CustomUser.objects.create_user(
+            email=self.valid_email, password=self.password
+        )
         self.assertEqual(user.email_prefix_display, "test.user")
 
     def test_clean_method(self):
@@ -80,13 +91,18 @@ class CustomUserModelTest(TestCase):
     def test_string_representation(self):
         """Test rappresentazione stringa del modello."""
         user = CustomUser.objects.create_user(
-            email=self.valid_email, password=self.password, first_name="Test", last_name="User"
+            email=self.valid_email,
+            password=self.password,
+            first_name="Test",
+            last_name="User",
         )
         self.assertEqual(str(user), "Test User")
 
     def test_version_field(self):
         """Test campo version per django-concurrency."""
-        user = CustomUser.objects.create_user(email=self.valid_email, password=self.password)
+        user = CustomUser.objects.create_user(
+            email=self.valid_email, password=self.password
+        )
         self.assertIsNotNone(user.version)
 
         # Test aggiornamento versione
@@ -97,7 +113,9 @@ class CustomUserModelTest(TestCase):
 
     def test_audit_fields(self):
         """Test campi di audit created_by/updated_by."""
-        user = CustomUser.objects.create_user(email=self.valid_email, password=self.password)
+        user = CustomUser.objects.create_user(
+            email=self.valid_email, password=self.password
+        )
 
         # Test che i campi di audit esistano
         self.assertIsNotNone(user.created_at)
@@ -114,7 +132,9 @@ class CustomUserAuthenticationTest(TestCase):
         """Setup per i test."""
         self.valid_email = "auth.test@aslcn1.it"
         self.password = "authtest123"  # nosec
-        self.user = CustomUser.objects.create_user(email=self.valid_email, password=self.password)
+        self.user = CustomUser.objects.create_user(
+            email=self.valid_email, password=self.password
+        )
 
     def test_authenticate_with_email(self):
         """Test autenticazione con email."""
@@ -154,12 +174,16 @@ class CustomUserFormsTest(TestCase):
         # Prima crea l'utente
         CustomUser.objects.create_user(email=self.valid_email, password=self.password)
 
-        form = CustomAuthenticationForm(data={"username": self.valid_email, "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": self.valid_email, "password": self.password}
+        )
         self.assertTrue(form.is_valid())
 
     def test_custom_authentication_form_invalid_domain(self):
         """Test form di autenticazione con dominio non valido."""
-        form = CustomAuthenticationForm(data={"username": self.invalid_email, "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": self.invalid_email, "password": self.password}
+        )
         self.assertFalse(form.is_valid())
         # Il messaggio può essere escaped in HTML, controlliamo che contenga il concetto chiave
         error_str = str(form.errors)
@@ -168,7 +192,9 @@ class CustomUserFormsTest(TestCase):
 
     def test_custom_authentication_form_invalid_format(self):
         """Test form con formato email non valido."""
-        form = CustomAuthenticationForm(data={"username": "notanemail", "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": "notanemail", "password": self.password}
+        )
         self.assertFalse(form.is_valid())
 
     def test_custom_user_creation_form_valid(self):
@@ -226,7 +252,9 @@ class GroupsPermissionsTest(TestCase):
         """Setup per i test."""
         self.user_email = "groups.test@aslcn1.it"
         self.password = "groupstest123"  # nosec
-        self.user = CustomUser.objects.create_user(email=self.user_email, password=self.password)
+        self.user = CustomUser.objects.create_user(
+            email=self.user_email, password=self.password
+        )
 
     def test_full_access_group_creation(self):
         """Test creazione gruppo Full Access Admin."""
@@ -249,7 +277,10 @@ class GroupsPermissionsTest(TestCase):
         expected_groups = ["Full Access Admin", "Operatori Base", "Supervisori"]
 
         for group_name in expected_groups:
-            self.assertTrue(Group.objects.filter(name=group_name).exists(), f"Gruppo '{group_name}' non trovato")
+            self.assertTrue(
+                Group.objects.filter(name=group_name).exists(),
+                f"Gruppo '{group_name}' non trovato",
+            )
 
     def test_user_group_assignment(self):
         """Test assegnazione utente a gruppo."""
@@ -288,13 +319,20 @@ class AdminIntegrationTest(TestCase):
         """Setup per i test."""
         self.admin_email = "admin.test@aslcn1.it"
         self.password = "admintest123"  # nosec
-        self.admin_user = CustomUser.objects.create_superuser(email=self.admin_email, password=self.password)
+        self.admin_user = CustomUser.objects.create_superuser(
+            email=self.admin_email, password=self.password
+        )
         self.client = Client()
 
     def test_admin_login(self):
         """Test login nell'admin."""
         response = self.client.post(
-            "/admin/login/", {"username": self.admin_email, "password": self.password, "next": "/admin/"}
+            "/admin/login/",
+            {
+                "username": self.admin_email,
+                "password": self.password,
+                "next": "/admin/",
+            },
         )
 
         # Verifica redirect dopo login riuscito
@@ -332,10 +370,14 @@ class AdminIntegrationTest(TestCase):
         self.client.login(username=self.admin_email, password=self.password)
 
         # Crea un utente di test
-        CustomUser.objects.create_user(email="searchable.user@aslcn1.it", first_name="Searchable", last_name="User")
+        CustomUser.objects.create_user(
+            email="searchable.user@aslcn1.it", first_name="Searchable", last_name="User"
+        )
 
         # Test ricerca per email
-        response = self.client.get("/admin/accounts/customuser/?" + urlencode({"q": "searchable.user"}))
+        response = self.client.get(
+            "/admin/accounts/customuser/?" + urlencode({"q": "searchable.user"})
+        )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "searchable.user@aslcn1.it")
 
@@ -383,7 +425,9 @@ class SecurityTest(TestCase):
         """Setup per i test."""
         self.user_email = "security.test@aslcn1.it"
         self.password = "securitytest123"  # nosec
-        self.user = CustomUser.objects.create_user(email=self.user_email, password=self.password)
+        self.user = CustomUser.objects.create_user(
+            email=self.user_email, password=self.password
+        )
         self.client = Client()
 
     def test_csrf_protection(self):
@@ -423,7 +467,10 @@ class SecurityTest(TestCase):
 
         if "django.contrib.auth.hashers.MD5PasswordHasher" in settings.PASSWORD_HASHERS:
             # In ambiente test con MD5
-            self.assertTrue(self.user.password.startswith("md5$") or self.user.password.startswith("pbkdf2_sha256"))
+            self.assertTrue(
+                self.user.password.startswith("md5$")
+                or self.user.password.startswith("pbkdf2_sha256")
+            )
         else:
             # In ambiente produzione
             self.assertTrue(self.user.password.startswith("pbkdf2_sha256"))
@@ -439,12 +486,18 @@ class SecurityTest(TestCase):
         ]
 
         for invalid_email in invalid_emails:
-            with self.assertRaises(ValidationError, msg=f"Email {invalid_email} dovrebbe essere rifiutata"):
-                CustomUser.objects.create_user(email=invalid_email, password=self.password)
+            with self.assertRaises(
+                ValidationError, msg=f"Email {invalid_email} dovrebbe essere rifiutata"
+            ):
+                CustomUser.objects.create_user(
+                    email=invalid_email, password=self.password
+                )
 
     def test_superuser_permissions(self):
         """Test che i superuser abbiano tutti i permessi."""
-        superuser = CustomUser.objects.create_superuser(email="super.test@aslcn1.it", password=self.password)
+        superuser = CustomUser.objects.create_superuser(
+            email="super.test@aslcn1.it", password=self.password
+        )
 
         # Test permessi generici
         self.assertTrue(superuser.has_perm("accounts.add_customuser"))
@@ -480,7 +533,10 @@ class PerformanceTest(TestCase):
         for i in range(20, 40):  # Evita conflitti con setUp
             users_data.append(
                 CustomUser(
-                    email=f"bulk.user{i}@aslcn1.it", username=f"bulk.user{i}", first_name=f"Bulk{i}", last_name="User"
+                    email=f"bulk.user{i}@aslcn1.it",
+                    username=f"bulk.user{i}",
+                    first_name=f"Bulk{i}",
+                    last_name="User",
                 )
             )
 
@@ -493,7 +549,9 @@ class PerformanceTest(TestCase):
         self.assertLess(end_time - start_time, 1.0)
 
         # Verifica che tutti siano stati creati
-        self.assertEqual(CustomUser.objects.filter(username__startswith="bulk.user").count(), 20)
+        self.assertEqual(
+            CustomUser.objects.filter(username__startswith="bulk.user").count(), 20
+        )
 
     def test_query_optimization(self):
         """Test ottimizzazione query."""
@@ -576,7 +634,9 @@ class DeploymentTest(TestCase):
                         else "SELECT table_name FROM information_schema.tables WHERE table_name='accounts_customuser'"
                     )
                     result = cursor.fetchone()
-                    self.assertIsNotNone(result, "La tabella accounts_customuser dovrebbe esistere")
+                    self.assertIsNotNone(
+                        result, "La tabella accounts_customuser dovrebbe esistere"
+                    )
         except Exception:
             # Se il comando fallisce, verifichiamo almeno che il modello sia configurato
             from accounts.models import CustomUser
@@ -598,4 +658,6 @@ class DeploymentTest(TestCase):
             self.assertEqual(e.code, 0, f"System check failed: {err.getvalue()}")
 
         # Se arriviamo qui, i controlli sono passati
-        self.assertIn("System check identified no issues", out.getvalue() + err.getvalue())
+        self.assertIn(
+            "System check identified no issues", out.getvalue() + err.getvalue()
+        )

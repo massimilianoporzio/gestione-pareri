@@ -6,31 +6,24 @@ Questa cartella contiene script per varie operazioni di setup e manutenzione del
 
 ### Script di setup
 
-Questi script configurano completamente l'ambiente di sviluppo:
-
-| Script      | Piattaforma | Descrizione                                             |
-| ----------- | ----------- | ------------------------------------------------------- |
-| `setup.ps1` | Windows     | Script completo di setup del progetto per Windows       |
-| `setup.sh`  | macOS/Linux | Script completo di setup del progetto per macOS e Linux |
+Questi script configurano completamente l'ambiente di sviluppo: | Script | Piattaforma | Descrizione | | ----------- |
+----------- | ------------------------------------------------------- | | `setup.ps1` | Windows | Script completo di
+setup del progetto per Windows | | `setup.sh` | macOS/Linux | Script completo di setup del progetto per macOS e Linux |
 
 ### Script per la formattazione Markdown
 
-Questi script installano gli strumenti necessari per la formattazione Markdown:
-
-| Script                       | Piattaforma | Descrizione                                            |
-| ---------------------------- | ----------- | ------------------------------------------------------ |
-| `install-markdown-tools.ps1` | Windows     | Installa Prettier e markdownlint-cli2 su Windows       |
-| `install-markdown-tools.sh`  | macOS/Linux | Installa Prettier e markdownlint-cli2 su macOS e Linux |
+Questi script installano gli strumenti necessari per la formattazione Markdown: | Script | Piattaforma | Descrizione | |
+---------------------------- | ----------- | ------------------------------------------------------ | |
+`install-markdown-tools.ps1` | Windows | Installa Prettier e markdownlint-cli2 su Windows | |
+`install-markdown-tools.sh` | macOS/Linux | Installa Prettier e markdownlint-cli2 su macOS e Linux |
 
 ### Script per l'installazione di Make
 
-Questi script installano Make sulla piattaforma specificata:
-
-| Script                     | Piattaforma | Descrizione                                        |
-| -------------------------- | ----------- | -------------------------------------------------- |
-| `install-make-windows.ps1` | Windows     | Installa Make su Windows usando Chocolatey o Scoop |
-| `install-make-macos.sh`    | macOS       | Installa Make su macOS usando Homebrew             |
-| `install-make-linux.sh`    | Linux       | Installa Make su diverse distribuzioni Linux       |
+Questi script installano Make sulla piattaforma specificata: | Script | Piattaforma | Descrizione | |
+-------------------------- | ----------- | -------------------------------------------------- | |
+`install-make-windows.ps1` | Windows | Installa Make su Windows usando Chocolatey o Scoop | | `install-make-macos.sh` |
+macOS | Installa Make su macOS usando Homebrew | | `install-make-linux.sh` | Linux | Installa Make su diverse
+distribuzioni Linux |
 
 ## Utilizzo
 

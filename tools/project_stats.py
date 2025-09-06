@@ -22,7 +22,12 @@ def run_command(cmd):
 
         # Esegui con encoding UTF-8 esplicito per evitare problemi su Windows
         result = subprocess.run(  # nosec
-            cmd_args, capture_output=True, text=True, encoding="utf-8", errors="replace", check=False
+            cmd_args,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
         )
         return result.stdout, result.stderr, result.returncode
     except (subprocess.SubprocessError, OSError, ValueError) as e:
@@ -68,7 +73,9 @@ def analyze_ruff_rules():
     }
 
     for code, desc in categories.items():
-        stdout, _, returncode = run_command(f"uv run ruff check . --select {code} --statistics")
+        stdout, _, returncode = run_command(
+            f"uv run ruff check . --select {code} --statistics"
+        )
         print(f"\n📊 {desc.upper()} ({code})")
         if returncode == 0:
             print("  ✅ Nessun problema trovato")
@@ -94,7 +101,9 @@ def analyze_pylint_score():
     print("\n⭐ PUNTEGGIO PYLINT")
     print("=" * 50)
 
-    stdout, _, _ = run_command("uv run pylint --rcfile=.pylintrc src/ examples/ tools/ scripts/ --score-only")
+    stdout, _, _ = run_command(
+        "uv run pylint --rcfile=.pylintrc src/ examples/ tools/ scripts/ --score-only"
+    )
     if stdout:
         print(f"Punteggio: {stdout.strip()}")
 

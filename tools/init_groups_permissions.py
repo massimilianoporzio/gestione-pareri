@@ -79,7 +79,9 @@ def main():
 
         print("=" * 60)
         print("✅ Inizializzazione completata con successo!")
-        print(f"ℹ️  Il gruppo 'Full Access Admin' ha {full_access_group.permissions.count()} permessi")
+        print(
+            f"ℹ️  Il gruppo 'Full Access Admin' ha {full_access_group.permissions.count()} permessi"
+        )
 
     except Exception as e:
         print(f"❌ Errore durante l'inizializzazione: {e}")

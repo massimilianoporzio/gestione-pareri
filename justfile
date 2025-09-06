@@ -145,6 +145,36 @@ security-scan-linux:
 
 # === IIS DEPLOYMENT (Windows Server) ===
 
+# Test Coverage cross-platform
+@coverage:
+    just coverage-{{os()}}
+
+coverage-windows:
+    @Write-Host "📊 Coverage: esecuzione test con coverage..." -ForegroundColor Yellow
+    @uv run coverage run src/manage.py test
+    @uv run coverage report
+    @uv run coverage html
+    @Write-Host "Report HTML generato in htmlcov/index.html" -ForegroundColor Green
+    @Start-Process htmlcov/index.html
+    @Write-Host "Per visualizzare il report renderizzato, apri htmlcov/index.html con l'estensione Live Preview in VS Code." -ForegroundColor Yellow
+
+coverage-macos:
+    @printf "\033[33m📊 Coverage: esecuzione test con coverage...\033[0m\n"
+    @uv run coverage run src/manage.py test
+    @uv run coverage report
+    @uv run coverage html
+    @printf "\033[32mReport HTML generato in htmlcov/index.html\033[0m\n"
+    @code htmlcov/index.html
+    @printf "\033[33mPer visualizzare il report renderizzato, apri htmlcov/index.html con l'estensione Live Preview in VS Code.\033[0m\n"
+
+coverage-linux:
+    @printf "\033[33m📊 Coverage: esecuzione test con coverage...\033[0m\n"
+    @uv run coverage run src/manage.py test
+    @uv run coverage report
+    @uv run coverage html
+    @printf "\033[32mReport HTML generato in htmlcov/index.html\033[0m\n"
+    @code htmlcov/index.html
+    @printf "\033[33mPer visualizzare il report renderizzato, apri htmlcov/index.html con l'estensione Live Preview in VS Code.\033[0m\n"
 # 🌐 Setup IIS reverse proxy per Windows Server
 setup-iis:
     @Write-Host "🌐 Configurazione IIS reverse proxy..." -ForegroundColor Cyan
@@ -480,10 +510,19 @@ makemigrations-windows:
 # 🐚 Shell Django
 shell:
     just shell-{{os()}}
+# 🔍 Linting Markdown (markdownlint + Prettier)
 
 shell-macos:
     @ printf "\033[36m🐚 Avvio della shell Django (macOS)...\033[0m\n"
-    @ {{django_manage}} shell
+lint-markdown-macos:
+    @ printf "\033[36m🔍 Linting Markdown (macOS)...\033[0m\n"
+    @ printf "\033[33m1/3 - Prettier check...\033[0m\n"
+    @ pnpm exec prettier --check "**/*.md"
+    @ printf "\033[33m2/3 - Markdownlint check...\033[0m\n"
+    @ pnpm exec markdownlint-cli2 "**/*.md" "!**/node_modules/**/*.md" --ignore-path .markdownlintignore --config .config/.markdownlint-cli2.jsonc
+    @ printf "\033[33m3/3 - Markdownlint validation (pre-commit)...\033[0m\n"
+    @-pre-commit run markdownlint-cli2 --all-files
+    @ printf "\033[32m✅ Linting Markdown completato!\033[0m\n"
 
 shell-linux:
     @ printf "\033[36m🐚 Avvio della shell Django (Linux)...\033[0m\n"
@@ -492,7 +531,15 @@ shell-linux:
 shell-windows:
     @Write-Host "🐚 Avvio della shell Django (Windows)..." -ForegroundColor Cyan
     @{{django_manage}} shell
-
+lint-markdown-linux:
+    @ printf "\033[36m🔍 Linting Markdown (Linux)...\033[0m\n"
+    @ printf "\033[33m1/3 - Prettier check...\033[0m\n"
+    @ pnpm exec prettier --check "**/*.md"
+    @ printf "\033[33m2/3 - Markdownlint check...\033[0m\n"
+    @ pnpm exec markdownlint-cli2 "**/*.md" "!**/node_modules/**/*.md" --ignore-path .markdownlintignore --config .config/.markdownlint-cli2.jsonc
+    @ printf "\033[33m3/3 - Markdownlint validation (pre-commit)...\033[0m\n"
+    @-pre-commit run markdownlint-cli2 --all-files
+    @ printf "\033[32m✅ Linting Markdown completato!\033[0m\n"
 shell-dev:
     just shell-dev-{{os()}}
 
@@ -501,8 +548,15 @@ shell-dev-macos:
     @ DJANGO_ENV="dev" {{django_manage}} shell
 
 shell-dev-linux:
-    @ printf "\033[36m🐚 Avvio della shell Django in ambiente DEV (Linux)...\033[0m\n"
-    @ DJANGO_ENV="dev" {{django_manage}} shell
+lint-markdown-windows:
+    @Write-Host "� Linting Markdown (Windows)..." -ForegroundColor Cyan
+    Write-Host "1/3 - Prettier check..." -ForegroundColor Yellow
+    pnpm exec prettier --check "**/*.md"
+    Write-Host "2/3 - Markdownlint check..." -ForegroundColor Yellow
+    pnpm exec markdownlint-cli2 "**/*.md" "!**/node_modules/**/*.md" --ignore-path .markdownlintignore --config .config/.markdownlint-cli2.jsonc
+    Write-Host "3/3 - Markdownlint validation (pre-commit)..." -ForegroundColor Yellow
+    pre-commit run markdownlint-cli2 --all-files
+    Write-Host "✅ Linting Markdown completato!" -ForegroundColor Green
 
 shell-dev-windows:
     @Write-Host "🐚 Avvio della shell Django in ambiente DEV (Windows)..." -ForegroundColor Cyan
@@ -587,15 +641,15 @@ fix-all-macos:
     @ printf "\033[33m3/10 - Aggiunta docstring...\033[0m\n"
     @ {{python}} tools/add_docstring_batch.py .
     @ printf "\033[33m4/10 - Ordinamento import (isort style)...\033[0m\n"
-    @ {{python}} ruff check --select I --fix .
+    @ {{python}} ruff check --select I --fix . --config ruff.toml
     @ printf "\033[33m5/10 - Formattazione con Ruff...\033[0m\n"
-    @ {{python}} ruff format .
+    @ {{python}} ruff format . --config ruff.toml
     @ printf "\033[33m6/10 - Correzione automatica con Ruff...\033[0m\n"
-    @ {{python}} ruff check . --fix --unsafe-fixes
+    @ {{python}} ruff check . --fix --unsafe-fixes --config ruff.toml
     @ printf "\033[33m7/10 - Correzioni aggressive con autopep8...\033[0m\n"
     @ {{python}} autopep8 --in-place --aggressive --aggressive --recursive .
     @ printf "\033[33m8/10 - Formattazione finale con Ruff...\033[0m\n"
-    @ {{python}} ruff format .
+    @ {{python}} ruff format . --config ruff.toml
     @ printf "\033[33m9/10 - Formattazione Markdown...\033[0m\n"
     @ just format-markdown
     @ printf "\033[33m10/10 - Correzione problemi Markdown...\033[0m\n"
@@ -611,15 +665,15 @@ fix-all-linux:
     @ printf "\033[33m3/10 - Aggiunta docstring...\033[0m\n"
     @ {{python}} tools/add_docstring_batch.py .
     @ printf "\033[33m4/10 - Ordinamento import (isort style)...\033[0m\n"
-    @ {{python}} ruff check --select I --fix .
+    @ {{python}} ruff check --select I --fix . --config ruff.toml
     @ printf "\033[33m5/10 - Formattazione con Ruff...\033[0m\n"
-    @ {{python}} ruff format .
+    @ {{python}} ruff format . --config ruff.toml
     @ printf "\033[33m6/10 - Correzione automatica con Ruff...\033[0m\n"
-    @ {{python}} ruff check . --fix --unsafe-fixes
+    @ {{python}} ruff check . --fix --unsafe-fixes --config ruff.toml
     @ printf "\033[33m7/10 - Correzioni aggressive con autopep8...\033[0m\n"
     @ {{python}} autopep8 --in-place --aggressive --aggressive --recursive .
     @ printf "\033[33m8/10 - Formattazione finale con Ruff...\033[0m\n"
-    @ {{python}} ruff format .
+    @ {{python}} ruff format . --config ruff.toml
     @ printf "\033[33m9/10 - Formattazione Markdown...\033[0m\n"
     @ just format-markdown
     @ printf "\033[33m10/10 - Correzione problemi Markdown...\033[0m\n"
@@ -635,15 +689,15 @@ fix-all-windows:
     @Write-Host "3/10 - Aggiunta docstring..." -ForegroundColor Yellow
     {{python}} tools/add_docstring_batch.py .
     @Write-Host "4/10 - Ordinamento import (isort style)..." -ForegroundColor Yellow
-    {{python}} ruff check --select I --fix .
+    {{python}} ruff check --select I --fix . --config ruff.toml
     @Write-Host "5/10 - Formattazione con Ruff..." -ForegroundColor Yellow
-    {{python}} ruff format .
+    {{python}} ruff format . --config ruff.toml
     @Write-Host "6/10 - Correzione automatica con Ruff..." -ForegroundColor Yellow
-    {{python}} ruff check . --fix --unsafe-fixes
+    {{python}} ruff check . --fix --unsafe-fixes --config ruff.toml
     @Write-Host "7/10 - Correzioni aggressive con autopep8..." -ForegroundColor Yellow
     {{python}} autopep8 --in-place --aggressive --aggressive --recursive .
     @Write-Host "8/10 - Formattazione finale con Ruff..." -ForegroundColor Yellow
-    {{python}} ruff format .
+    {{python}} ruff format . --config ruff.toml
     @Write-Host "9/10 - Formattazione Markdown..." -ForegroundColor Yellow
     just format-markdown
     @Write-Host "10/10 - Correzione problemi Markdown..." -ForegroundColor Yellow
@@ -719,6 +773,9 @@ fix-codacy-windows:
 format-markdown:
     just format-markdown-{{os()}}
 
+# 🔍 Linting Markdown cross-platform
+lint-markdown:
+    just lint-markdown-{{os()}}
 format-markdown-macos:
     @ printf "\033[36m📝 Formattazione file Markdown (macOS)...\033[0m\n"
     @ find . -name "*.md" -exec printf "Formatting %s\n" {} \; -exec sed -i '' -e '/^[ \t]*$/d' -e ':a;N;$!ba;s/\n\{3,\}/\n\n/g' {} \;

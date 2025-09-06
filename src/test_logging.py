@@ -68,7 +68,9 @@ def print_logger_configuration():
 
     django_logger = logging.getLogger("django")
     print(f"Django logger level: {django_logger.level}")
-    print(f"Django logger handlers: {[h.__class__.__name__ for h in django_logger.handlers]}")
+    print(
+        f"Django logger handlers: {[h.__class__.__name__ for h in django_logger.handlers]}"
+    )
     return django_logger
 
 

@@ -1,24 +1,23 @@
-# ❓ FAQ
+# Database Setup e FAQ
 
-**Come configuro PostgreSQL per tutti gli ambienti?**
-Consulta la guida [Environments Guide](environments-guide.md) e usa i comandi just.
+## ❓ FAQ
 
-**Come gestisco le password?**
-Usa sempre `just generate-db-passwords` e salva solo in `.env`.
+**Come configuro PostgreSQL per tutti gli ambienti?** Consulta la guida [Environments Guide](environments-guide.md) e
+usa i comandi just. **Come gestisco le password?** Usa sempre `just generate-db-passwords` e salva solo in `.env`.
 
-# 🔗 Cross-link documentazione
+## 🔗 Cross-link documentazione
 
 Consulta anche:
 
 - [Environments Guide](environments-guide.md)
 - [Database Security](database-security.md)
 
-# 🗄️ Setup PostgreSQL Multi-Ambiente (DEV, TEST, STAGING, PROD)
+## 🗄️ Setup PostgreSQL Multi-Ambiente (DEV, TEST, STAGING, PROD)
 
-Questa sezione spiega come creare utenti e database separati per ciascun ambiente del progetto, con
-i permessi corretti per lo sviluppo e il testing.
+Questa sezione spiega come creare utenti e database separati per ciascun ambiente del progetto, con i permessi corretti
+per lo sviluppo e il testing.
 
-## 1. Creazione utenti e database
+### 1. Creazione utenti e database
 
 Accedi a PostgreSQL come superuser (ad esempio il tuo utente macOS con permessi Superuser):
 
@@ -32,21 +31,18 @@ Esegui questi comandi per ogni ambiente (sostituisci le password con quelle gene
 -- DEV
 CREATE USER gestione_pareri_dev WITH PASSWORD 'YOUR_DEV_PASSWORD' CREATEDB;
 CREATE DATABASE gestione_pareri_dev OWNER gestione_pareri_dev ENCODING 'UTF8' TEMPLATE template0;
-
 -- TEST
 CREATE USER gestione_pareri_test WITH PASSWORD 'YOUR_TEST_PASSWORD' CREATEDB;
 CREATE DATABASE gestione_pareri_test OWNER gestione_pareri_test ENCODING 'UTF8' TEMPLATE template0;
-
 -- STAGING
 CREATE USER gestione_pareri_staging WITH PASSWORD 'YOUR_STAGING_PASSWORD' CREATEDB;
 CREATE DATABASE gestione_pareri_staging OWNER gestione_pareri_staging ENCODING 'UTF8' TEMPLATE template0;
-
 -- PROD
 CREATE USER gestione_pareri_prod WITH PASSWORD 'YOUR_PROD_PASSWORD' CREATEDB;
 CREATE DATABASE gestione_pareri_prod OWNER gestione_pareri_prod ENCODING 'UTF8' TEMPLATE template0;
 ```
 
-## 2. Assegna permessi di creazione database
+### 2. Assegna permessi di creazione database
 
 ```sql
 ALTER USER gestione_pareri_dev CREATEDB;
@@ -55,20 +51,20 @@ ALTER USER gestione_pareri_staging CREATEDB;
 ALTER USER gestione_pareri_prod CREATEDB;
 ```
 
-## 3. Verifica utenti e database
+### 3. Verifica utenti e database
 
 ```sql
 \du      -- Mostra utenti e permessi
 \l       -- Mostra database
 ```
 
-## 4. Note
+### 4. Note
 
 - Le password possono essere generate con `just generate-db-passwords`.
 - Aggiorna la configurazione `.env` per ogni ambiente con i dati corretti.
 - I permessi `CREATEDB` sono necessari per eseguire i test Django.
 
-# 🗄️ Database Setup - PostgreSQL Multi-Ambiente
+## 🗄️ Database Setup - PostgreSQL Multi-Ambiente
 
 Guida completa per configurare PostgreSQL per tutti gli ambienti del progetto **gestione-pareri**.
 

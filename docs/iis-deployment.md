@@ -1,9 +1,9 @@
 # IIS Reverse Proxy per Django
 
 [![IIS](https://img.shields.io/badge/IIS-Windows%20Server-blue)](https://www.iis.net/)
-[![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/)
-Questa guida spiega come configurare **IIS (Internet Information Services)** come reverse proxy per
-Django in ambienti Windows Server o intranet aziendali.
+[![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/) Questa guida spiega
+come configurare **IIS (Internet Information Services)** come reverse proxy per Django in ambienti Windows Server o
+intranet aziendali.
 
 ## 🎯 Overview
 

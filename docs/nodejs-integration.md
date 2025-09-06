@@ -1,7 +1,7 @@
 # Node.js + Django Integration Guide
 
-Questa guida spiega come integrare **Node.js** e strumenti frontend moderni nel progetto Django, con
-focus particolare su **Tailwind CSS v4**.
+Questa guida spiega come integrare **Node.js** e strumenti frontend moderni nel progetto Django, con focus particolare
+su **Tailwind CSS v4**.
 
 ## 🎯 Overview
 
@@ -52,9 +52,8 @@ exclude: |
 
 ## 🎨 Focus: Tailwind CSS v4 + Django
 
-La seguente guida mostra come usare **Tailwind CSS v4** con Django, ma le stesse configurazioni
-supportano qualsiasi strumento Node.js. Tailwind CSS v4 semplifica drasticamente l'integrazione con
-Django:
+La seguente guida mostra come usare **Tailwind CSS v4** con Django, ma le stesse configurazioni supportano qualsiasi
+strumento Node.js. Tailwind CSS v4 semplifica drasticamente l'integrazione con Django:
 
 - ✅ **Zero configurazione** - niente `tailwind.config.js`
 - ✅ **Auto-discovery** - rileva automaticamente classi nei template
@@ -105,8 +104,8 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 
 ## 🎨 File CSS di Input (Opzionale)
 
-Il file `src/static/css/style.css` può contenere solo `@import "tailwindcss";` oppure puoi
-aggiungere componenti personalizzati:
+Il file `src/static/css/style.css` può contenere solo `@import "tailwindcss";` oppure puoi aggiungere componenti
+personalizzati:
 
 ```css
 /* Solo questa riga è essenziale! Tailwind v4 gestisce tutto automaticamente */
@@ -303,5 +302,5 @@ npm install --save-dev prettier
 
 ## **💡 Configurazioni**: Tutte le configurazioni (gitignore, pre-commit, VS Code) sono già predisposte per supportare questi strumenti
 
-🎯 **Tailwind v4 = Semplicità**: Solo CLI, nessun config file, auto-discovery dei template Django!
-⚙️ **Template = Flessibilità**: Pronto per qualsiasi strumento Node.js futuro!
+🎯 **Tailwind v4 = Semplicità**: Solo CLI, nessun config file, auto-discovery dei template Django! ⚙️ **Template =
+Flessibilità**: Pronto per qualsiasi strumento Node.js futuro!

@@ -19,6 +19,7 @@ exclude: |
     # Temporary files
     .*\.tmp$|
     .*\.temp$
+    \.secrets$|
     # pytest cache
     ^\.pytest_cache/.*
   )
@@ -71,6 +72,7 @@ repos:
         stages: [pre-commit]
         pass_filenames: false
         additional_dependencies: [pylint, pylint-django]
+    exclude: tools/add_docstring.py
 
   # Versione Unix (solo per GitHub Actions)
   - repo: local
@@ -84,6 +86,7 @@ repos:
         stages: [pre-commit]
         pass_filenames: false
         additional_dependencies: [pylint, pylint-django]
+    exclude: tools/add_docstring.py
 
   # Markdown formatter using Prettier
   - repo: https://github.com/pre-commit/mirrors-prettier

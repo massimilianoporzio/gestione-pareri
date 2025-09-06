@@ -55,8 +55,8 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 
 ## 🎨 File CSS di Input (Opzionale)
 
-Il file `src/static/css/style.css` può contenere solo `@import "tailwindcss";` oppure puoi
-aggiungere componenti personalizzati:
+Il file `src/static/css/style.css` può contenere solo `@import "tailwindcss";` oppure puoi aggiungere componenti
+personalizzati:
 
 ```css
 /* Solo questa riga è essenziale! Tailwind v4 gestisce tutto automaticamente */
@@ -720,5 +720,4 @@ make build-frontend-v4 && make deploy
 
 ---
 
-💡 **Suggerimento**: Tailwind v4 con Django è la combinazione perfetta - semplicità, performance e
-zero configurazione!
+💡 **Suggerimento**: Tailwind v4 con Django è la combinazione perfetta - semplicità, performance e zero configurazione!

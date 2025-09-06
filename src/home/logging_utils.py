@@ -76,8 +76,12 @@ def get_colorama_console_handler(level=logging.DEBUG, use_colors=True):
     console_handler.setLevel(level)
 
     # Formato del log: [LEVEL] timestamp module:line - message
-    log_format = "%(levelname)-8s %(asctime)s %(name)s %(filename)s:%(lineno)d %(message)s"
-    formatter = ColoramaFormatter(log_format, datefmt="%Y-%m-%d %H:%M:%S", use_colors=use_colors)
+    log_format = (
+        "%(levelname)-8s %(asctime)s %(name)s %(filename)s:%(lineno)d %(message)s"
+    )
+    formatter = ColoramaFormatter(
+        log_format, datefmt="%Y-%m-%d %H:%M:%S", use_colors=use_colors
+    )
 
     console_handler.setFormatter(formatter)
     return console_handler

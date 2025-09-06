@@ -1,7 +1,6 @@
 # AI Code Review - File di Configurazione
 
-Questa directory contiene i file di configurazione per integrare agenti AI per le review automatiche
-delle Pull Request.
+Questa directory contiene i file di configurazione per integrare agenti AI per le review automatiche delle Pull Request.
 
 ## 🚀 Quick Setup
 
@@ -15,9 +14,8 @@ delle Pull Request.
 
 2. **Installa le GitHub Apps** (nessun token necessario):
    - [CodeRabbit](https://coderabbit.ai) - Review dettagliate AI
-   - [Sourcery](https://sourcery.ai) - Refactoring Python automatico **Nota**: Sourcery funziona
-     tramite GitHub App, non tramite GitHub Actions. Una volta installata l'app, analizzerà
-     automaticamente le tue PR.
+   - [Sourcery](https://sourcery.ai) - Refactoring Python automatico **Nota**: Sourcery funziona tramite GitHub App, non
+     tramite GitHub Actions. Una volta installata l'app, analizzerà automaticamente le tue PR.
 3. **Il workflow GitHub Actions** eseguirà:
    - **CodeQL** per analisi di sicurezza
    - **Ruff + Pylint** per quality check locali
@@ -45,6 +43,5 @@ Ogni file include commenti dettagliati per personalizzare:
 2. **Gli AI iniziano automaticamente la review**
 3. **Ricevi commenti dettagliati** con suggerimenti
 4. **Confronta** le tue decisioni con i suggerimenti AI
-5. **Impara** nuovi pattern e best practices Questa configurazione ti darà un "secondo parere"
-   automatico su ogni modifica, aiutandoti a migliorare la qualità del codice e imparare nuove
-   tecniche! 🚀
+5. **Impara** nuovi pattern e best practices Questa configurazione ti darà un "secondo parere" automatico su ogni
+   modifica, aiutandoti a migliorare la qualità del codice e imparare nuove tecniche! 🚀

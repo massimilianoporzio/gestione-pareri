@@ -1,15 +1,115 @@
-"""Script per aggiungere automaticamente docstring ai file Python.
+"""Add Docstring module.
 
-Questo script analizza un file Python e aggiunge docstring mancanti a livello di modulo,
-classi e funzioni usando il modulo docstring_parser.
-
-Uso:
-    python add_docstring.py <file_path>
+Questo modulo fornisce funzionalità per add docstring.
 """
 
 import ast
+import os
 import sys
 from pathlib import Path
+
+# Disabilita l'uso delle settings Django se non necessario
+if "DJANGO_SETTINGS_MODULE" in os.environ:
+    try:
+        import django
+
+        django.setup()
+    except ImportError:
+        pass
+
+
+def _collect_classes_to_modify(tree):
+    """Raccoglie tutte le classi senza docstring."""
+    classes_to_modify = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef) and ast.get_docstring(node) is None:
+            classes_to_modify.append(node)
+    return classes_to_modify
+
+
+def _create_class_docstring_content(node):
+    """Crea una docstring per una classe."""
+    name_formatted = node.name.replace("_", " ")
+    if "test" in node.name.lower():
+        summary = f"Test suite for {name_formatted}."
+    else:
+        summary = f"Classe {name_formatted.capitalize()}."
+    return [f'"""{summary}"""']
+
+
+def _insert_class_docstring(lines, node):
+    """Inserisce la docstring per una classe specifica."""
+    # Trova la posizione corretta per inserire la docstring (dopo eventuali decoratori)
+    insert_position = node.lineno
+    # Se ci sono decoratori, la definizione della classe può essere più in basso
+    for i in range(node.lineno - 1, max(0, node.lineno - 5), -1):
+        if lines[i].lstrip().startswith("class "):
+            insert_position = i + 1
+            break
+    indent = " " * (
+        len(lines[insert_position - 1]) - len(lines[insert_position - 1].lstrip()) + 4
+    )
+    docstring_parts = _create_class_docstring_content(node)
+    docstring_lines = [f"{indent}{part}" for part in docstring_parts]
+    for i, docstring_line in enumerate(docstring_lines):
+        lines.insert(insert_position + i, docstring_line)
+
+
+def _process_classes(lines, classes_to_modify):
+    """Processa tutte le classi per aggiungere le docstring."""
+    for node in sorted(classes_to_modify, key=lambda n: n.lineno, reverse=True):
+        _insert_class_docstring(lines, node)
+
+
+def _parse_and_collect_classes(content):
+    """Parse and collect classes.
+
+    Args:
+        content: Descrizione di content
+
+    Returns:
+        Descrizione del valore restituito
+    """
+    try:
+        tree = ast.parse(content)
+        classes_to_modify = _collect_classes_to_modify(tree)
+        return classes_to_modify
+    except SyntaxError:
+        return None
+
+
+def _modify_and_save_classes(filepath, content, classes_to_modify):
+    """Modify and save classes.
+
+    Args:
+        filepath: Descrizione di filepath
+        content: Descrizione di content
+        classes_to_modify: Descrizione di classes_to_modify
+
+    Returns:
+        Descrizione del valore restituito
+    """
+    lines = content.splitlines()
+    _process_classes(lines, classes_to_modify)
+    path = Path(filepath)
+    path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"Aggiunte docstring alle classi in {filepath}")
+    return True
+
+
+def add_class_docstrings(filepath):
+    """Aggiunge docstring alle classi senza docstring."""
+    path = _validate_file_path(filepath)
+    if path is None:
+        return False
+    content = path.read_text(encoding="utf-8")
+    classes_to_modify = _parse_and_collect_classes(content)
+    if classes_to_modify is None:
+        print(f"Errore di sintassi nel file {filepath}")
+        return False
+    if not classes_to_modify:
+        return False
+    return _modify_and_save_classes(filepath, content, classes_to_modify)
 
 
 def get_module_docstring(source):
@@ -56,7 +156,9 @@ def add_module_docstring(filepath):
     # Crea una docstring predefinita conforme a Ruff/Google style
     module_name_formatted = module_name.replace("_", " ")
     module_docstring = f'"""{module_name_formatted.title()} module.\n\n'
-    module_docstring += f'Questo modulo fornisce funzionalità per {module_name_formatted}.\n"""\n\n'
+    module_docstring += (
+        f'Questo modulo fornisce funzionalità per {module_name_formatted}.\n"""\n\n'
+    )
 
     # Inserisce la docstring all'inizio del file, ma dopo eventuali commenti iniziali o shebang
     lines = content.splitlines()
@@ -113,7 +215,9 @@ def _collect_functions_to_modify(tree):
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef) and ast.get_docstring(node) is None:
             # Verifica che non sia già stata aggiunta
-            if not any(existing.lineno == node.lineno for existing in functions_to_modify):
+            if not any(
+                existing.lineno == node.lineno for existing in functions_to_modify
+            ):
                 functions_to_modify.append(node)
 
     return functions_to_modify
@@ -184,7 +288,9 @@ def _process_functions(lines, functions_to_modify):
     # per evitare che gli offset delle righe cambino
     for node in sorted(functions_to_modify, key=lambda n: n.lineno, reverse=True):
         # Determina l'indentazione
-        leading_spaces = len(lines[node.lineno - 1]) - len(lines[node.lineno - 1].lstrip())
+        leading_spaces = len(lines[node.lineno - 1]) - len(
+            lines[node.lineno - 1].lstrip()
+        )
         _insert_docstring(lines, node, leading_spaces)
 
 
@@ -248,9 +354,10 @@ def main():
 
     filepath = sys.argv[1]
     module_modified = add_module_docstring(filepath)
+    class_modified = add_class_docstrings(filepath)
     functions_modified = add_function_docstrings(filepath)
 
-    if module_modified or functions_modified:
+    if module_modified or class_modified or functions_modified:
         print(f"Docstring aggiunte con successo a {filepath}")
     else:
         print(f"Nessuna modifica apportata a {filepath}")

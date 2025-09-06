@@ -1,0 +1,12 @@
+[lint]
+ignore = []
+exclude = ["node_modules", "build", "dist", ".venv", "venv", "__pycache__", ".pytest_cache", "*.egg-info"]
+
+[lint.per-file-ignores]
+"src/home/settings.py" = ["F401", "F403"]
+"src/home/settings/*.py" = ["F401", "F403", "F405"]
+"examples/logging_example.py" = ["E402"]
+"examples/check_logging.py" = ["E402"]
+"src/test_logging.py" = ["E402"]
+"tools/check_settings.py" = ["E402"]
+"src/**/test_*.py" = ["S101"]

@@ -1,7 +1,6 @@
 # Uvicorn ASGI Server Integration
 
-Questa guida spiega come usare **Uvicorn** come server ASGI unificato per Django su tutti i sistemi
-operativi.
+Questa guida spiega come usare **Uvicorn** come server ASGI unificato per Django su tutti i sistemi operativi.
 
 ## 🎯 Overview
 
@@ -47,8 +46,7 @@ make uvicorn
 - `DJANGO_ENV`: `dev`, `test`, `prod` (default: `prod`)
 - `HOST`: Indirizzo bind (default: `0.0.0.0`)
 - `PORT`: Porta (default: `8000`)
-- `LOG_LEVEL`: `debug`, `info`, `warning`, `error` (default: `info`) **Unix/Linux/macOS
-  specifiche:**
+- `LOG_LEVEL`: `debug`, `info`, `warning`, `error` (default: `info`) **Unix/Linux/macOS specifiche:**
 - `WORKERS`: Numero di worker (default: `4`)
 - `TIMEOUT`: Timeout in secondi (default: `30`)
 - `KEEP_ALIVE`: Keep-alive timeout (default: `2`)
@@ -270,13 +268,13 @@ async def async_view(request):
 
 ---
 
-💡 **Raccomandazione**: Usa `make uvicorn` come server primario. Mantieni `make gunicorn` e
-`make waitress` solo per compatibilità legacy o requisiti specifici.
+💡 **Raccomandazione**: Usa `make uvicorn` come server primario. Mantieni `make gunicorn` e `make waitress` solo per
+compatibilità legacy o requisiti specifici.
 
 ## 🛠️ Correzione automatica script bash (shfmt)
 
-Per correggere automaticamente la formattazione e alcune best practice degli script bash (es.
-variabili non quotate, word splitting), usa **shfmt**.
+Per correggere automaticamente la formattazione e alcune best practice degli script bash (es. variabili non quotate,
+word splitting), usa **shfmt**.
 
 ### Installazione shfmt
 
@@ -335,5 +333,4 @@ Per generare una chiave segreta sicura per Django, usa il comando:
 make generate-secret-key
 ```
 
-Copia la chiave generata e usala come valore per la variabile d'ambiente `DJANGO_SECRET_KEY` (o nel
-file `.env`).
+Copia la chiave generata e usala come valore per la variabile d'ambiente `DJANGO_SECRET_KEY` (o nel file `.env`).

@@ -1,7 +1,6 @@
 # 🔐 Database Setup - Sicurezza Password
 
-Questo progetto utilizza un sistema sicuro per gestire le password PostgreSQL senza esporle nel
-repository.
+Questo progetto utilizza un sistema sicuro per gestire le password PostgreSQL senza esporle nel repository.
 
 ## 📋 File e Sicurezza
 
@@ -62,14 +61,10 @@ Remove-Item update_postgresql_staging.sql
 
 ## 🌍 Setup Ambienti
 
-Dopo il setup PostgreSQL hai 4 ambienti:
-
-| Ambiente | Comando            | Database   | Note            |
-| -------- | ------------------ | ---------- | --------------- |
-| DEV      | `just run-dev`     | SQLite     | Sviluppo rapido |
-| TEST     | `just run-test`    | SQLite     | Test veloci     |
-| STAGING  | `just run-staging` | PostgreSQL | Pre-produzione  |
-| PROD     | `just run-prod`    | PostgreSQL | Produzione      |
+Dopo il setup PostgreSQL hai 4 ambienti: | Ambiente | Comando | Database | Note | | -------- | ------------------ |
+---------- | --------------- | | DEV | `just run-dev` | SQLite | Sviluppo rapido | | TEST | `just run-test` | SQLite |
+Test veloci | | STAGING | `just run-staging` | PostgreSQL | Pre-produzione | | PROD | `just run-prod` | PostgreSQL |
+Produzione |
 
 ## ⚠️ Importante
 

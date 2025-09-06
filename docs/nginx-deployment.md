@@ -1,8 +1,8 @@
 # Nginx Reverse Proxy per Django
 
 [![Nginx](https://img.shields.io/badge/Nginx-Web%20Server-green)](https://nginx.org/)
-[![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/)
-Questa guida spiega come configurare **Nginx** come reverse proxy per Django su Linux e macOS.
+[![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/) Questa guida spiega
+come configurare **Nginx** come reverse proxy per Django su Linux e macOS.
 
 ## 🎯 Overview
 

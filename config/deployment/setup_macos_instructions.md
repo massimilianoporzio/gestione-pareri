@@ -1,7 +1,7 @@
 # Istruzioni per configurare il progetto deploy-django su macOS
 
-Questa guida ti mostrerà come configurare il tuo ambiente di sviluppo su macOS per continuare a
-lavorare sul repository `deploy-django`.
+Questa guida ti mostrerà come configurare il tuo ambiente di sviluppo su macOS per continuare a lavorare sul repository
+`deploy-django`.
 
 ## 1. Clonare il repository
 
@@ -114,14 +114,12 @@ git config --global user.email "tua.email@esempio.com"
 
 ## 8. Aggiornare il file di configurazione pre-commit
 
-Il file `.pre-commit-config.yaml` è già configurato per funzionare su tutte le piattaforme. Include
-due hook per pylint:
+Il file `.pre-commit-config.yaml` è già configurato per funzionare su tutte le piattaforme. Include due hook per pylint:
 
 1. `pylint-unified`: Esegue pylint su Windows e passa silenziosamente su macOS/Linux
-2. `pylint-unix-ci`: Esegue pylint su macOS/Linux e passa silenziosamente su Windows Entrambi gli
-   hook sono progettati per passare automaticamente sulla piattaforma appropriata senza mostrare
-   errori, quindi non è necessario fare alcuna modifica al file di configurazione. Per eseguire i
-   pre-commit hook:
+2. `pylint-unix-ci`: Esegue pylint su macOS/Linux e passa silenziosamente su Windows Entrambi gli hook sono progettati
+   per passare automaticamente sulla piattaforma appropriata senza mostrare errori, quindi non è necessario fare alcuna
+   modifica al file di configurazione. Per eseguire i pre-commit hook:
 
 ```bash
 # Installa i pre-commit hooks (una tantum)
@@ -133,10 +131,8 @@ pre-commit run --all-files
 ## Note importanti
 
 - Su macOS, i percorsi utilizzano `/` invece di `\` come su Windows
-- Assicurati che tutte le variabili d'ambiente nel file `.env` siano configurate correttamente per
-  macOS
-- Se incontri problemi con i permessi, potrebbe essere necessario utilizzare `sudo` per alcuni
-  comandi
+- Assicurati che tutte le variabili d'ambiente nel file `.env` siano configurate correttamente per macOS
+- Se incontri problemi con i permessi, potrebbe essere necessario utilizzare `sudo` per alcuni comandi
 
 ## Comandi utili per uv
 
@@ -167,5 +163,4 @@ xcode-select --install
 
 ### Problema: Font mancanti in VS Code
 
-Soluzione: Verifica che Hack Nerd Font sia installato correttamente e configurato nelle impostazioni
-di VS Code.
+Soluzione: Verifica che Hack Nerd Font sia installato correttamente e configurato nelle impostazioni di VS Code.

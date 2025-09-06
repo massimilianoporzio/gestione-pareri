@@ -35,6 +35,20 @@ Documentazione completa per il sistema di gestione pratiche e pareri in ambiente
 - 📋 [**Environment Variables**](environment-variables.md) - Configurazione variabili
 - 📝 [**Logging Configuration**](logs_configuration.md) - Sistema di logging
 
+#### Estensioni VS Code Consigliate
+
+Per lavorare al meglio su questo progetto, installa queste estensioni:
+
+- **Live Preview** (Microsoft): per visualizzare file HTML renderizzati direttamente nell’editor.
+- **Django** (Benoit Pierre): supporto avanzato per lo sviluppo Django (template, completamento, linting, ecc.).
+- **Prettier - Code formatter**: formattazione automatica del codice.
+- **markdownlint**: linting e correzione automatica dei file Markdown.
+- **Python** (Microsoft): ambiente Python completo.
+- **Run On Save** (emeraldwalk): esegue automaticamente comandi e test ogni volta che salvi un file. Per visualizzare il
+  report coverage HTML generato dalla ricetta `just coverage`:
+- apri `htmlcov/index.html`
+- clicca sull’icona globo (Live Preview) oppure usa il comando "Live Preview: Open Preview" dalla palette comandi.
+
 ## 🧪 **Testing - Start Here!** ⭐
 
 **Se stai per fare deploy su IIS, inizia dalla guida ai test:**
@@ -56,8 +70,7 @@ cd src && uv run manage.py test accounts.tests.PerformanceTest --settings=home.s
 - [ ] **SecurityTest** (6/6) - validazione domini @aslcn1.it
 - [ ] **PerformanceTest** (2/2) - ottimizzazione per IIS
 - [ ] **AdminIntegrationTest** (3/3) - interfaccia funzionante
-- [ ] **Database configurato** per ambiente target 📋 **Guida completa**:
-      [Testing Guide](testing-guide.md)
+- [ ] **Database configurato** per ambiente target 📋 **Guida completa**: [Testing Guide](testing-guide.md)
 
 ## 🎯 Flusso di Lavoro Consigliato
 
@@ -160,13 +173,53 @@ Coordina il team, pianifica rilasci, verifica la conformità e la documentazione
 
 ## 📚 Glossario
 
-## 🔗 Cross-link documentazione
+## ✅ Best Practice Django
 
-Consulta anche:
+Ecco una checklist di best practice per mantenere il progetto robusto e sicuro:
 
-1. [Testing Guide](testing-guide.md) - Overview dei test
-2. [IIS Deployment](iis-deployment.md) - Deploy produzione
-3. Quick Reference (sopra)
+- [x] Test automatici con copertura >90%
+- [x] Linting e formattazione automatica (ruff, djlint, markdownlint, Prettier)
+- [x] Gestione sicura delle variabili d’ambiente (.env, python-dotenv)
+- [x] Aggiornamento regolare delle dipendenze (uv, pip-tools, safety)
+- [x] Logging avanzato e monitoraggio (Sentry, django-crum)
+- [x] Protezione CSRF e password sicure
+- [x] Documentazione aggiornata e onboarding per nuovi sviluppatori
+- [x] Flusso CI/CD automatizzato (GitHub Actions)
+- [x] Deploy scriptato e riproducibile (Justfile, Docker)
+- [x] Audit trail e tracciamento accessi
 
-> **⚠️ IMPORTANTE**: Prima di ogni deploy in produzione, tutti i test devono passare. La
-> documentazione testing è **OBBLIGATORIA** per deployment su IIS in ambiente ospedaliero.
+## 📊 Guida Coverage (Test Coverage)
+
+**Coverage** misura quante righe di codice sono coperte dai test automatici. Usarlo è fondamentale per garantire qualità
+e sicurezza.
+
+### Come si usa
+
+1. Installa coverage:
+
+   ```bash
+   uv add --dev coverage
+   ```
+
+2. Esegui i test con coverage:
+
+   ```bash
+   just coverage
+   ```
+
+3. Visualizza il report:
+   - Testo: `coverage report`
+   - HTML: `coverage html` (generato in `htmlcov/index.html`)
+4. **Visualizza il report HTML renderizzato in VS Code**:
+   - Installa l’estensione "Live Preview" di Microsoft.
+   - Apri `htmlcov/index.html` e clicca su "Apri con Live Preview" (icona globo in alto a destra) oppure usa il comando
+     "Live Preview: Open Preview" dalla palette comandi.
+   - La ricetta `just coverage` ti ricorda automaticamente come visualizzare il report renderizzato.
+
+### Consigli
+
+- Integra coverage in CI/CD per bloccare merge se la copertura scende sotto una soglia.
+- Punta ad almeno 90% di copertura, ma verifica che le parti critiche siano sempre testate.
+- Usa il report HTML per individuare facilmente le righe non coperte.
+  > **⚠️ IMPORTANTE**: Prima di ogni deploy in produzione, tutti i test devono passare. La documentazione testing è
+  > **OBBLIGATORIA** per deployment su IIS in ambiente ospedaliero.

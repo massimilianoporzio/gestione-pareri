@@ -1,4 +1,4 @@
-# 🛡️ Checklist Sicurezza
+# Ambienti di Sviluppo - Guida Completa
 
 - Usa sempre HTTPS in produzione
 - Configura ALLOWED_HOSTS con domini specifici
@@ -8,11 +8,11 @@
 - Monitora metriche e log
 - Usa secrets e variabili d'ambiente, mai hardcoded
 
-# 🔍 Troubleshooting
+## 🔍 Troubleshooting
 
 Consulta la sezione FAQ qui sotto e la guida [Database Security](database-security.md) per problemi comuni.
 
-# 🔗 Cross-link documentazione
+## 🔗 Cross-link documentazione
 
 Consulta anche:
 
@@ -20,10 +20,10 @@ Consulta anche:
 - [Database Security](database-security.md)
 - [Just Commands](just.md)
 
-# 🌍 Ambienti di Sviluppo - Guida Completa
+## 🌍 Ambienti di Sviluppo - Guida Completa
 
-Questo progetto è configurato per funzionare con **4 ambienti distinti**, ognuno con il proprio
-scopo specifico nel ciclo di sviluppo software.
+Questo progetto è configurato per funzionare con **4 ambienti distinti**, ognuno con il proprio scopo specifico nel
+ciclo di sviluppo software.
 
 ## 📋 Panoramica Ambienti
 

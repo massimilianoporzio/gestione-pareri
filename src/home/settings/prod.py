@@ -135,7 +135,11 @@ for logger_name in LOGGING["loggers"]:  # noqa: F405
         # Manteniamo mail_admins dove è presente, aggiungiamo file e console
         handlers = LOGGING["loggers"][logger_name]["handlers"]  # noqa: F405
         if "mail_admins" in handlers:
-            LOGGING["loggers"][logger_name]["handlers"] = ["file", "mail_admins", "console"]  # noqa: F405
+            LOGGING["loggers"][logger_name]["handlers"] = [
+                "file",
+                "mail_admins",
+                "console",
+            ]  # noqa: F405
         else:
             LOGGING["loggers"][logger_name]["handlers"] = ["file", "console"]  # noqa: F405
 
