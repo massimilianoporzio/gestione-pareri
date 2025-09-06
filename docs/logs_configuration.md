@@ -27,7 +27,7 @@ export DJANGO_LOGS_DIR="/percorso/personalizzato/logs"
 
 Puoi anche specificare la directory dei log nel file `.env`:
 
-```
+```env
 DJANGO_LOGS_DIR=/percorso/personalizzato/logs
 ```
 

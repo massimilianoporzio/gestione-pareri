@@ -38,19 +38,20 @@ Consulta anche:
 
 - [Environments Guide](docs/environments-guide.md)
 
-```text
-- [Just Commands](docs/just.md)
-- [Quick Start](docs/quick-start.md)
+```bash
+npm install --save-dev @tailwindcss/cli autoprefixer
+npm install --save-dev webpack webpack-cli
+npm install --save-dev @babel/core @babel/preset-env
+# 3. Build script esempio per package.json
+{
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "css": "tailwindcss -i src/static/css/input.css -o src/static/css/style.css"
+  }
+}
+```
 
-<!-- Code Quality & Linting -->
-
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
-[![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat)](https://pycqa.github.io/isort/)
-[![flake8](https://img.shields.io/badge/linting-flake8-yellowgreen)](https://github.com/PyCQA/flake8)
-[![ruff](https://img.shields.io/badge/ruff-enabled-blueviolet)](https://github.com/charliermarsh/ruff)
-[![pylint](https://img.shields.io/badge/pylint-enabled-orange)](https://github.com/PyCQA/pylint)
-[![djlint](https://img.shields.io/badge/djlint-HTML%20linting-blue)](https://github.com/Riverside-Healthcare/djlint)
 [![Prettier](https://img.shields.io/badge/prettier-markdown-ff69b4)](https://prettier.io/)
 [![markdownlint](https://img.shields.io/badge/markdownlint-enabled-brightgreen)](https://github.com/DavidAnson/markdownlint)
 [![Bandit](https://img.shields.io/badge/Bandit-security--scan-blue?logo=python&logoColor=white)](https://bandit.readthedocs.io/en/latest/)
@@ -114,9 +115,10 @@ Consulta anche:
 4. Clicca su **"Create repository from template"**
 5. Una volta creato, clona il nuovo repository sulla tua macchina:
 
-  git clone <https://github.com/tuousername/tuo-nuovo-repo.git>
-  cd tuo-nuovo-repo
-```
+git clone <https://github.com/tuousername/tuo-nuovo-repo.git>
+cd tuo-nuovo-repo
+
+````
 
 ## Requisiti
 
@@ -138,7 +140,7 @@ npm install --save-dev @babel/core @babel/preset-env
     "css": "tailwindcss -i src/static/css/input.css -o src/static/css/style.css"
   }
 }
-```
+````
 
 ### 📋 **Setup Rapido**
 

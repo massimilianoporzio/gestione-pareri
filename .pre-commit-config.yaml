@@ -1,28 +1,4 @@
-# Esclusioni globali per tutti i hook
-exclude: |
-  (?x)(
-    # Node.js dependencies
-    ^node_modules/.*|
-    # Build outputs
-    ^dist/.*|
-    ^build/.*|
-    ^out/.*|
-    # Python virtualenvs
-    ^\.venv/.*|
-    ^venv/.*|
-    # Python cache
-    ^__pycache__/.*|
-    # Egg info
-    ^.*\.egg-info/.*|
-    # Django migrations (exclude all migrations folders)
-    (^|/)migrations/.*|
-    # Temporary files
-    .*\.tmp$|
-    .*\.temp$
-    \.secrets$|
-    # pytest cache
-    ^\.pytest_cache/.*
-  )
+
 
 repos:
   # Controlli di base
@@ -30,9 +6,17 @@ repos:
     rev: v6.0.0
     hooks:
       - id: trailing-whitespace
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)
       - id: end-of-file-fixer
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)
       - id: check-yaml
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)
       - id: check-added-large-files
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)
 
   # Formattazione del codice
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -40,9 +24,13 @@ repos:
     hooks:
       - id: ruff-format
         name: ruff (formatter)
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)
       - id: ruff
         name: ruff (linter)
         args: [--fix]
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)
 
   # Linting più specifico
   - repo: https://github.com/PyCQA/flake8
@@ -50,6 +38,8 @@ repos:
     hooks:
       - id: flake8
         args: ["--config=.config/flake8"]
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)
 
   # Hook per djlint cross-platform
   - repo: https://github.com/Riverside-Healthcare/djlint
@@ -59,6 +49,8 @@ repos:
         name: Format Django HTML templates
         files: \.(html|jinja|j2)$
         additional_dependencies: [djlint==1.36.4]
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)
 
   # Hook unificato per pylint che funziona su tutte le piattaforme
   - repo: local
@@ -72,7 +64,8 @@ repos:
         stages: [pre-commit]
         pass_filenames: false
         additional_dependencies: [pylint, pylint-django]
-    exclude: tools/add_docstring.py
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*|tools/add_docstring.py)
 
   # Versione Unix (solo per GitHub Actions)
   - repo: local
@@ -86,7 +79,8 @@ repos:
         stages: [pre-commit]
         pass_filenames: false
         additional_dependencies: [pylint, pylint-django]
-    exclude: tools/add_docstring.py
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*|tools/add_docstring.py)
 
   # Markdown formatter using Prettier
   - repo: https://github.com/pre-commit/mirrors-prettier
@@ -98,6 +92,8 @@ repos:
         args: ["--config", ".config/prettierrc.json"]
         additional_dependencies:
           - prettier@3.2.5
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)
 
   # Markdown linting
   - repo: https://github.com/DavidAnson/markdownlint-cli2
@@ -107,3 +103,5 @@ repos:
         name: markdownlint
         types: [markdown]
         args: ["--config", ".config/.markdownlint-cli2.jsonc"]
+        exclude: |
+          (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)

@@ -15,32 +15,38 @@ Tailwind CSS v4 semplifica drasticamente l'integrazione con Django:
 
 Assicurati di avere Node.js installato (solo per installare Tailwind CLI):
 
-```bash
-# Controlla se Node.js è installato
-node --version
-npm --version  # oppure yarn --version o pnpm --version
-# Se non installato, scarica da: <https://nodejs.org/>
+```text
+deploy-django/
+├── src/
+│   ├── static/
+│   │   └── css/
+│   │       ├── style.css          # Input: @import "tailwindcss"
+│   │       └── tailwind.css       # Output: CSS compilato
+│   ├── templates/                 # Template Django (auto-rilevati da Tailwind v4)
+│   │   └── base.html
+│   └── manage.py
+├── node_modules/                  # Dipendenze Tailwind (auto-generato)
+└── package.json                   # Solo per installare Tailwind CLI
 ```
 
-## 🚀 Setup Tailwind CSS v4
-
-### 1. Installa Tailwind CSS CLI
-
-```bash
-# Con npm
 npm install tailwindcss @tailwindcss/cli
+
 # Con yarn
+
 yarn add tailwindcss @tailwindcss/cli
+
 # Con pnpm
+
 pnpm add tailwindcss @tailwindcss/cli
-```
+
+````
 
 ### 2. Crea il file CSS di input
 
 ```bash
 # Crea il file CSS sorgente
 echo '@import "tailwindcss";' > src/static/css/style.css
-```
+````
 
 ### 3. Compila il CSS per la prima volta
 
@@ -60,7 +66,7 @@ personalizzati:
 
 ```css
 /* Solo questa riga è essenziale! Tailwind v4 gestisce tutto automaticamente */
-@import 'tailwindcss';
+@import "tailwindcss";
 /*
 🎯 ESEMPI OPZIONALI - Componenti personalizzati per Django
 Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue necessità
