@@ -1,3 +1,25 @@
+# 🛡️ Checklist Sicurezza
+
+- Usa sempre HTTPS in produzione
+- Configura ALLOWED_HOSTS con domini specifici
+- Non usare mai DEBUG=True in produzione
+- Usa password complesse per database
+- Configura backup automatici
+- Monitora metriche e log
+- Usa secrets e variabili d'ambiente, mai hardcoded
+
+# 🔍 Troubleshooting
+
+Consulta la sezione FAQ qui sotto e la guida [Database Security](database-security.md) per problemi comuni.
+
+# 🔗 Cross-link documentazione
+
+Consulta anche:
+
+- [Database Setup](database-setup.md)
+- [Database Security](database-security.md)
+- [Just Commands](just.md)
+
 # 🌍 Ambienti di Sviluppo - Guida Completa
 
 Questo progetto è configurato per funzionare con **4 ambienti distinti**, ognuno con il proprio

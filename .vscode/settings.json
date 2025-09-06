@@ -5,7 +5,7 @@
   "[django-html]": {
     "editor.formatOnSave": false
   },
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "emeraldwalk.runonsave": {
     "commands": [
       {
@@ -44,8 +44,11 @@
     "--line-length=120"
   ],
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
     "editor.formatOnSave": true
+  },
+  "markdownlint.config": {
+    "MD013": { "line_length": 120 }
   },
   "makefile.configureOnOpen": false,
   "ruff.enable": true,
@@ -127,5 +130,6 @@
     "strings": false
   },
   "editor.suggestOnTriggerCharacters": false,
-  "editor.wordBasedSuggestions": "off"
+  "editor.wordBasedSuggestions": "off",
+  "prettier.requireConfig": true
 }

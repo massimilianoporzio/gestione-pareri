@@ -1,3 +1,18 @@
+# ❓ FAQ
+
+**Come configuro PostgreSQL per tutti gli ambienti?**
+Consulta la guida [Environments Guide](environments-guide.md) e usa i comandi just.
+
+**Come gestisco le password?**
+Usa sempre `just generate-db-passwords` e salva solo in `.env`.
+
+# 🔗 Cross-link documentazione
+
+Consulta anche:
+
+- [Environments Guide](environments-guide.md)
+- [Database Security](database-security.md)
+
 # 🗄️ Setup PostgreSQL Multi-Ambiente (DEV, TEST, STAGING, PROD)
 
 Questa sezione spiega come creare utenti e database separati per ciascun ambiente del progetto, con

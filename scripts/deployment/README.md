@@ -1,3 +1,24 @@
+# 🛠️ Troubleshooting
+
+Consulta la guida [Environments Guide](../../docs/environments-guide.md) e la sezione FAQ per problemi comuni.
+
+# 🛡️ Best Practices Sicurezza
+
+- Usa sempre HTTPS in produzione
+- Configura ALLOWED_HOSTS con domini specifici
+- Non usare mai DEBUG=True in produzione
+- Usa password complesse per database
+- Configura backup automatici
+- Monitora metriche e log
+- Usa secrets e variabili d'ambiente, mai hardcoded
+
+# 🔗 Cross-link documentazione
+
+Consulta anche:
+
+- [Environments Guide](../../docs/environments-guide.md)
+- [Database Security](../../docs/database-security.md)
+
 # Deployment Scripts
 
 Questa directory contiene script per il deployment in produzione usando diversi server WSGI.

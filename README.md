@@ -1,3 +1,50 @@
+# 📑 Indice
+
+- [🚀 Quick Start](#quick-start)
+- [📖 Documentazione principale](#documentazione-principale)
+- [🔧 Requisiti](#requisiti)
+- [🛡️ Sicurezza](#sicurezza)
+- [❓ FAQ](#faq)
+- [🤝 Contributi & Support](#contributi--support)
+
+# 🚀 Onboarding rapido
+
+1. Clona il repository
+2. Installa Python, uv, Node.js (se serve)
+3. Esegui `just setup` per configurare tutto
+4. Consulta la guida [Quick Start](docs/quick-start.md)
+5. Usa i comandi `just` per gestire ambienti e test
+
+# 🛡️ Checklist Sicurezza
+
+- [ ] Usa sempre HTTPS in produzione
+- [ ] Configura ALLOWED_HOSTS con domini specifici
+- [ ] Non usare mai DEBUG=True in produzione
+- [ ] Usa password complesse per database
+- [ ] Configura backup automatici
+- [ ] Monitora metriche e log
+- [ ] Usa secrets e variabili d'ambiente, mai hardcoded
+
+# ❓ FAQ
+
+**Come cambio ambiente?**
+Usa i comandi `just check-env-<env>` e modifica le variabili in `.env`.
+
+**Come gestisco le secrets?**
+Vedi la guida [Database Security](docs/database-security.md) e [Safety CLI](#come-usare-safety-cli-e-api-key).
+
+**Come risolvo errori act/CodeQL?**
+Consulta la sezione troubleshooting in [docs/environments-guide.md](docs/environments-guide.md).
+
+# 🔗 Cross-link documentazione
+
+Consulta anche:
+
+- [Environments Guide](docs/environments-guide.md)
+- [Database Security](docs/database-security.md)
+- [Just Commands](docs/just.md)
+- [Quick Start](docs/quick-start.md)
+
 # Deploy Django - Template Repository
 
 <!-- Code Quality & Linting -->

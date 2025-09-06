@@ -129,6 +129,8 @@ just run-dev
 
 ### **👨‍💻 Developer**
 
+Sviluppa nuove funzionalità, scrive test, mantiene la qualità del codice.
+
 1. [UV Package Manager](uv-guide.md) - Setup ambiente moderno
 2. [Ambienti di Sviluppo](environments-guide.md)
 3. [Testing Guide](testing-guide.md)
@@ -137,6 +139,8 @@ just run-dev
 
 ### **🏗️ DevOps**
 
+Gestisce deployment, sicurezza, configurazione server e ambienti.
+
 1. [IIS Deployment](iis-deployment.md)
 2. [Database Security](database-security.md)
 3. [Environment Variables](environment-variables.md)
@@ -144,17 +148,25 @@ just run-dev
 
 ### **🧪 QA Tester**
 
+Verifica la qualità, esegue test, segnala bug e anomalie.
+
 1. [Testing Guide](testing-guide.md) ⭐
 2. [Environments Guide](environments-guide.md)
 3. [Code Analysis](code_analysis.md)
 
 ### **👨‍💼 Project Manager**
 
+Coordina il team, pianifica rilasci, verifica la conformità e la documentazione.
+
+## 📚 Glossario
+
+## 🔗 Cross-link documentazione
+
+Consulta anche:
+
 1. [Testing Guide](testing-guide.md) - Overview dei test
 2. [IIS Deployment](iis-deployment.md) - Deploy produzione
 3. Quick Reference (sopra)
-
----
 
 > **⚠️ IMPORTANTE**: Prima di ogni deploy in produzione, tutti i test devono passare. La
 > documentazione testing è **OBBLIGATORIA** per deployment su IIS in ambiente ospedaliero.
