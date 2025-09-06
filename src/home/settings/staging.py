@@ -1,3 +1,4 @@
+# flake8: noqa: F405
 """Impostazioni di Django per l'ambiente di staging/pre-produzione."""
 
 from decouple import config

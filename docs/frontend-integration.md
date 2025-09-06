@@ -31,14 +31,17 @@ Il template **deploy-django** supporta l'integrazione completa con ecosistemi fr
 
 ### 1. Inizializzazione Progetto
 
-```bash
+````bash
 # Inizializza package.json
+```bash
 npm init -y
 # Installa dipendenze base
 npm install --save-dev webpack webpack-cli webpack-dev-server
 npm install --save-dev @babel/core @babel/preset-env babel-loader
 npm install --save-dev css-loader mini-css-extract-plugin
-```
+````
+
+````
 
 ### 2. Tailwind CSS Setup
 
@@ -47,14 +50,14 @@ npm install --save-dev css-loader mini-css-extract-plugin
 npm install --save-dev tailwindcss @tailwindcss/cli autoprefixer postcss
 # Inizializza configurazione
 npx tailwindcss init -p
-```
+````
 
 **File: `tailwind.config.js`**
 
 ```javascript
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.html', './src/**/*.js', './src/**/*.py'],
+  content: ["./src/**/*.html", "./src/**/*.js", "./src/**/*.py"],
   theme: {
     extend: {},
   },
@@ -67,18 +70,18 @@ module.exports = {
 **File: `webpack.config.js`**
 
 ```javascript
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
-  entry: './src/static/js/main.js',
+  entry: "./src/static/js/main.js",
   output: {
-    path: path.resolve(__dirname, 'src/static/dist'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "src/static/dist"),
+    filename: "bundle.js",
     clean: true,
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'styles.css',
+      filename: "styles.css",
     }),
   ],
   module: {
@@ -87,19 +90,19 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env'],
+            presets: ["@babel/preset-env"],
           },
         },
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
     ],
   },
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: process.env.NODE_ENV === "production" ? "production" : "development",
 };
 ```
 
@@ -271,7 +274,7 @@ module.exports = {
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
-    ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
+    ...(process.env.NODE_ENV === "production" ? { cssnano: {} } : {}),
   },
 };
 ```
