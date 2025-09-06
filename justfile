@@ -147,122 +147,64 @@ security-scan-linux:
 
 # 🌐 Setup IIS reverse proxy per Windows Server
 setup-iis:
-    @printf "\033[36m🌐 Configurazione IIS reverse proxy...\033[0m\n"
-    @printf "\033[33m⚠️  Richiede privilegi di amministratore!\033[0m\n"
+    @Write-Host "🌐 Configurazione IIS reverse proxy..." -ForegroundColor Cyan
+    @Write-Host "⚠️  Richiede privilegi di amministratore!" -ForegroundColor Yellow
     @powershell -ExecutionPolicy Bypass -File "deployment/setup-iis.ps1"
 
 # 🚀 Deploy completo per IIS
 deploy-iis:
-    @printf "\033[35m🚀 Deploy completo con IIS reverse proxy...\033[0m\n"
-    @printf "\033[33m1/4 - Installazione dipendenze produzione...\033[0m\n"
+    @Write-Host "🚀 Deploy completo con IIS reverse proxy..." -ForegroundColor Magenta
+    @Write-Host "1/4 - Installazione dipendenze produzione..." -ForegroundColor Yellow
     @uv sync --frozen
-    @printf "\033[33m2/4 - Migrazioni database...\033[0m\n"
+    @Write-Host "2/4 - Migrazioni database..." -ForegroundColor Yellow
     @DJANGO_ENV="prod" {{django_manage}} migrate --no-input
-    @printf "\033[33m3/4 - Raccolta file statici...\033[0m\n"
+    @Write-Host "3/4 - Raccolta file statici..." -ForegroundColor Yellow
     @DJANGO_ENV="prod" {{django_manage}} collectstatic --no-input --clear
-    @printf "\033[33m4/4 - Avvio server Uvicorn per IIS...\033[0m\n"
-    @printf "\033[32m🌐 Server disponibile per reverse proxy IIS\033[0m\n"
+    @Write-Host "4/4 - Avvio server Uvicorn per IIS..." -ForegroundColor Yellow
+    @Write-Host "🌐 Server disponibile per reverse proxy IIS" -ForegroundColor Green
     @DJANGO_ENV="prod" cd src; {{python}} -m uvicorn home.asgi:application --host 127.0.0.1 --port 8000 --workers 1 --log-level info
 
 # === NGINX DEPLOYMENT (Linux/macOS) ===
 
 # 🌐 Setup Nginx per Linux/macOS
 setup-nginx:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[34m🌐 Configurazione Nginx per Linux/macOS...\033[0m\n"; \
-        @printf "\033[33m⚠️  Richiede privilegi sudo!\033[0m\n"; \
-        @printf "\033[33m1/4 - Copia configurazione Nginx...\033[0m\n"; \
-    else \
-        @Write-Host "🌐 Configurazione Nginx per Linux/macOS..." -ForegroundColor Blue; \
-        @Write-Host "⚠️  Richiede privilegi sudo!" -ForegroundColor Yellow; \
-        @Write-Host "1/4 - Copia configurazione Nginx..." -ForegroundColor Yellow; \
-    fi
+    @printf "\033[34m🌐 Configurazione Nginx per Linux/macOS...\033[0m\n"
+    @printf "\033[33m⚠️  Richiede privilegi sudo!\033[0m\n"
+    @printf "\033[33m1/4 - Copia configurazione Nginx...\033[0m\n"
     sudo cp deployment/nginx.conf /etc/nginx/sites-available/gestione-pareri
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m2/4 - Abilita sito...\033[0m\n"; \
-    else \
-        @Write-Host "2/4 - Abilita sito..." -ForegroundColor Yellow; \
-    fi
+    @printf "\033[33m2/4 - Abilita sito...\033[0m\n"; \
     sudo ln -sf /etc/nginx/sites-available/gestione-pareri /etc/nginx/sites-enabled/
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m3/4 - Test configurazione...\033[0m\n"; \
-    else \
-        @Write-Host "3/4 - Test configurazione..." -ForegroundColor Yellow; \
-    fi
+    @printf "\033[33m3/4 - Test configurazione...\033[0m\n"; \
     sudo nginx -t
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m4/4 - Ricarica Nginx...\033[0m\n"; \
-    else \
-        @Write-Host "4/4 - Ricarica Nginx..." -ForegroundColor Yellow; \
-    fi
+    @printf "\033[33m4/4 - Ricarica Nginx...\033[0m\n"; \
     sudo systemctl reload nginx
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[32m✅ Nginx configurato con successo!\033[0m\n"; \
-        @printf "\033[32m🌐 Sito disponibile su: http://localhost\033[0m\n"; \
-    else \
-        @Write-Host "✅ Nginx configurato con successo!" -ForegroundColor Green; \
-        @Write-Host "🌐 Sito disponibile su: http://localhost" -ForegroundColor Green; \
-    fi
+    @printf "\033[32m✅ Nginx configurato con successo!\033[0m\n"; \
+    @printf "\033[32m🌐 Sito disponibile su: http://localhost\033[0m\n"; \
 
 # 🚀 Deploy completo con Nginx
 deploy-nginx: install-prod
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[34m🚀 Deploy completo con Nginx...\033[0m\n"; \
-        @printf "\033[33m1/5 - Installazione dipendenze...\033[0m\n"; \
-    else \
-        @Write-Host "🚀 Deploy completo con Nginx..." -ForegroundColor Blue; \
-        @Write-Host "1/5 - Installazione dipendenze..." -ForegroundColor Yellow; \
-    fi
+    @printf "\033[34m🚀 Deploy completo con Nginx...\033[0m\n"; \
+    @printf "\033[33m1/5 - Installazione dipendenze...\033[0m\n"; \
     @uv sync --frozen
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m2/5 - Migrazioni database...\033[0m\n"; \
-    else \
-        @Write-Host "2/5 - Migrazioni database..." -ForegroundColor Yellow; \
-    fi
+    @printf "\033[33m2/5 - Migrazioni database...\033[0m\n"; \
     @DJANGO_ENV="prod" {{django_manage}} migrate --no-input
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m3/5 - Raccolta file statici...\033[0m\n"; \
-    else \
-        @Write-Host "3/5 - Raccolta file statici..." -ForegroundColor Yellow; \
-    fi
+    @printf "\033[33m3/5 - Raccolta file statici...\033[0m\n"; \
     @DJANGO_ENV="prod" {{django_manage}} collectstatic --no-input --clear
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m4/5 - Riavvio Django service...\033[0m\n"; \
-    else \
-        @Write-Host "4/5 - Riavvio Django service..." -ForegroundColor Yellow; \
-    fi
+    @printf "\033[33m4/5 - Riavvio Django service...\033[0m\n"; \
     sudo systemctl restart gestione-pareri || echo "Service gestione-pareri non configurato"
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m5/5 - Reload Nginx...\033[0m\n"; \
-    else \
-        @Write-Host "5/5 - Reload Nginx..." -ForegroundColor Yellow; \
-    fi
+    @printf "\033[33m5/5 - Reload Nginx...\033[0m\n"; \
     sudo systemctl reload nginx
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[32m✅ Deploy Nginx completato!\033[0m\n"; \
-        @printf "\033[32m🌐 Server disponibile tramite Nginx reverse proxy\033[0m\n"; \
-    else \
-        @Write-Host "✅ Deploy Nginx completato!" -ForegroundColor Green; \
-        @Write-Host "🌐 Server disponibile tramite Nginx reverse proxy" -ForegroundColor Green; \
-    fi
+    @printf "\033[32m✅ Deploy Nginx completato!\033[0m\n"; \
+    @printf "\033[32m🌐 Server disponibile tramite Nginx reverse proxy\033[0m\n"; \
+
 
 # 📊 Status servizi Nginx
 status-nginx:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[34m📊 Status servizi Nginx...\033[0m\n"; \
-        @printf "\033[36m=== NGINX STATUS ===\033[0m\n"; \
-    else \
-        @Write-Host "📊 Status servizi Nginx..." -ForegroundColor Blue; \
-        @Write-Host "=== NGINX STATUS ===" -ForegroundColor Cyan; \
-    fi
+    @printf "\033[34m📊 Status servizi Nginx...\033[0m\n"; \
+    @printf "\033[36m=== NGINX STATUS ===\033[0m\n"; \
     sudo systemctl status nginx --no-pager
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[97m\n\033[0m"; \
-        @printf "\033[36m=== DJANGO SERVICE STATUS ===\033[0m\n"; \
-    else \
-        @Write-Host "" -ForegroundColor White; \
-        @Write-Host "=== DJANGO SERVICE STATUS ===" -ForegroundColor Cyan; \
-    fi
+    @printf "\033[97m\n\033[0m"; \
+    @printf "\033[36m=== DJANGO SERVICE STATUS ===\033[0m\n"; \
     sudo systemctl status gestione-pareri --no-pager || echo "Service gestione-pareri non configurato"
 
 # === DJANGO COMMANDS ===
@@ -438,73 +380,181 @@ test-prod-windows:
 
 # 📦 Migrazioni database
 migrate:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m📦 Applicazione delle migrazioni...\033[0m\n"; \
-    else \
-        @Write-Host "📦 Applicazione delle migrazioni..." -ForegroundColor Cyan; \
-    fi
+    just migrate-{{os()}}
+
+migrate-macos:
+    @ printf "\033[36m📦 Applicazione delle migrazioni (macOS)...\033[0m\n"
+    @ {{django_manage}} migrate
+
+migrate-linux:
+    @ printf "\033[36m📦 Applicazione delle migrazioni (Linux)...\033[0m\n"
+    @ {{django_manage}} migrate
+
+migrate-windows:
+    @Write-Host "📦 Applicazione delle migrazioni (Windows)..." -ForegroundColor Cyan
     @{{django_manage}} migrate
 
 # 📦 Migrazioni in ambiente DEV
 migrate-dev:
-    @printf "\033[36m📦 Applicazione delle migrazioni in ambiente DEV...\033[0m\n"
+    just migrate-dev-{{os()}}
+
+migrate-dev-macos:
+    @ printf "\033[36m📦 Applicazione delle migrazioni in ambiente DEV (macOS)...\033[0m\n"
+    @ DJANGO_ENV="dev" {{django_manage}} migrate
+
+migrate-dev-linux:
+    @ printf "\033[36m📦 Applicazione delle migrazioni in ambiente DEV (Linux)...\033[0m\n"
+    @ DJANGO_ENV="dev" {{django_manage}} migrate
+
+migrate-dev-windows:
+    @Write-Host "📦 Applicazione delle migrazioni in ambiente DEV (Windows)..." -ForegroundColor Cyan
     @DJANGO_ENV="dev" {{django_manage}} migrate
 
 # 📦 Migrazioni in ambiente TEST
 migrate-test:
-    @printf "\033[36m📦 Applicazione delle migrazioni in ambiente TEST...\033[0m\n"
+    just migrate-test-{{os()}}
+
+migrate-test-macos:
+    @ printf "\033[36m📦 Applicazione delle migrazioni in ambiente TEST (macOS)...\033[0m\n"
+    @ DJANGO_ENV="test" {{django_manage}} migrate
+
+migrate-test-linux:
+    @ printf "\033[36m📦 Applicazione delle migrazioni in ambiente TEST (Linux)...\033[0m\n"
+    @ DJANGO_ENV="test" {{django_manage}} migrate
+
+migrate-test-windows:
+    @Write-Host "📦 Applicazione delle migrazioni in ambiente TEST (Windows)..." -ForegroundColor Cyan
     @DJANGO_ENV="test" {{django_manage}} migrate
 
 # 📦 Migrazioni in ambiente STAGING
 migrate-staging:
-    @printf "\033[36m🎭 Applicazione delle migrazioni in ambiente STAGING...\033[0m\n"
-    @printf "\033[33m⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!\033[0m\n"
+    just migrate-staging-{{os()}}
+
+migrate-staging-macos:
+    @ printf "\033[36m🎭 Applicazione delle migrazioni in ambiente STAGING (macOS)...\033[0m\n"
+    @ printf "\033[33m⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!\033[0m\n"
+    @ DJANGO_ENV="staging" {{django_manage}} migrate
+
+migrate-staging-linux:
+    @ printf "\033[36m🎭 Applicazione delle migrazioni in ambiente STAGING (Linux)...\033[0m\n"
+    @ printf "\033[33m⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!\033[0m\n"
+    @ DJANGO_ENV="staging" {{django_manage}} migrate
+
+migrate-staging-windows:
+    @Write-Host "🎭 Applicazione delle migrazioni in ambiente STAGING (Windows)..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL - assicurati che sia configurato!" -ForegroundColor Yellow
     @DJANGO_ENV="staging" {{django_manage}} migrate
 
 # 📦 Migrazioni in ambiente PROD
 migrate-prod:
-    @printf "\033[36m📦 Applicazione delle migrazioni in ambiente PROD...\033[0m\n"
+    just migrate-prod-{{os()}}
+
+migrate-prod-macos:
+    @ printf "\033[36m📦 Applicazione delle migrazioni in ambiente PROD (macOS)...\033[0m\n"
+    @ DJANGO_ENV="prod" {{django_manage}} migrate
+
+migrate-prod-linux:
+    @ printf "\033[36m📦 Applicazione delle migrazioni in ambiente PROD (Linux)...\033[0m\n"
+    @ DJANGO_ENV="prod" {{django_manage}} migrate
+
+migrate-prod-windows:
+    @Write-Host "📦 Applicazione delle migrazioni in ambiente PROD (Windows)..." -ForegroundColor Cyan
     @DJANGO_ENV="prod" {{django_manage}} migrate
 
 # 📝 Creazione migrazioni
 makemigrations:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m📝 Creazione delle migrazioni...\033[0m\n"; \
-    else \
-        @Write-Host "📝 Creazione delle migrazioni..." -ForegroundColor Cyan; \
-    fi
+    just makemigrations-{{os()}}
+
+makemigrations-macos:
+    @ printf "\033[36m📝 Creazione delle migrazioni (macOS)...\033[0m\n"
+    @ {{django_manage}} makemigrations
+
+makemigrations-linux:
+    @ printf "\033[36m📝 Creazione delle migrazioni (Linux)...\033[0m\n"
+    @ {{django_manage}} makemigrations
+
+makemigrations-windows:
+    @Write-Host "📝 Creazione delle migrazioni (Windows)..." -ForegroundColor Cyan
     @{{django_manage}} makemigrations
 
 # 🐚 Shell Django
 shell:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🐚 Avvio della shell Django...\033[0m\n"; \
-    else \
-        @Write-Host "🐚 Avvio della shell Django..." -ForegroundColor Cyan; \
-    fi
+    just shell-{{os()}}
+
+shell-macos:
+    @ printf "\033[36m🐚 Avvio della shell Django (macOS)...\033[0m\n"
+    @ {{django_manage}} shell
+
+shell-linux:
+    @ printf "\033[36m🐚 Avvio della shell Django (Linux)...\033[0m\n"
+    @ {{django_manage}} shell
+
+shell-windows:
+    @Write-Host "🐚 Avvio della shell Django (Windows)..." -ForegroundColor Cyan
     @{{django_manage}} shell
 
-# 🐚 Shell Django DEV
 shell-dev:
-    @printf "\033[36m🐚 Avvio della shell Django in ambiente DEV...\033[0m\n"
+    just shell-dev-{{os()}}
+
+shell-dev-macos:
+    @ printf "\033[36m🐚 Avvio della shell Django in ambiente DEV (macOS)...\033[0m\n"
+    @ DJANGO_ENV="dev" {{django_manage}} shell
+
+shell-dev-linux:
+    @ printf "\033[36m🐚 Avvio della shell Django in ambiente DEV (Linux)...\033[0m\n"
+    @ DJANGO_ENV="dev" {{django_manage}} shell
+
+shell-dev-windows:
+    @Write-Host "🐚 Avvio della shell Django in ambiente DEV (Windows)..." -ForegroundColor Cyan
     @DJANGO_ENV="dev" {{django_manage}} shell
 
-# 🐚 Shell Django TEST
 shell-test:
-    @printf "\033[36m🐚 Avvio della shell Django in ambiente TEST...\033[0m\n"
+    just shell-test-{{os()}}
+
+shell-test-macos:
+    @ printf "\033[36m🐚 Avvio della shell Django in ambiente TEST (macOS)...\033[0m\n"
+    @ DJANGO_ENV="test" {{django_manage}} shell
+
+shell-test-linux:
+    @ printf "\033[36m🐚 Avvio della shell Django in ambiente TEST (Linux)...\033[0m\n"
+    @ DJANGO_ENV="test" {{django_manage}} shell
+
+shell-test-windows:
+    @Write-Host "🐚 Avvio della shell Django in ambiente TEST (Windows)..." -ForegroundColor Cyan
     @DJANGO_ENV="test" {{django_manage}} shell
 
-# 🐚 Shell Django STAGING
 shell-staging:
-    @printf "\033[36m🎭 Avvio della shell Django in ambiente STAGING...\033[0m\n"
-    @printf "\033[33m⚠️  STAGING usa PostgreSQL!\033[0m\n"
+    just shell-staging-{{os()}}
+
+shell-staging-macos:
+    @ printf "\033[36m🎭 Avvio della shell Django in ambiente STAGING (macOS)...\033[0m\n"
+    @ printf "\033[33m⚠️  STAGING usa PostgreSQL!\033[0m\n"
+    @ DJANGO_ENV="staging" {{django_manage}} shell
+
+shell-staging-linux:
+    @ printf "\033[36m🎭 Avvio della shell Django in ambiente STAGING (Linux)...\033[0m\n"
+    @ printf "\033[33m⚠️  STAGING usa PostgreSQL!\033[0m\n"
+    @ DJANGO_ENV="staging" {{django_manage}} shell
+
+shell-staging-windows:
+    @Write-Host "🎭 Avvio della shell Django in ambiente STAGING (Windows)..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL!" -ForegroundColor Yellow
     @DJANGO_ENV="staging" {{django_manage}} shell
 
-# 🐚 Shell Django PROD
 shell-prod:
-    @printf "\033[36m🐚 Avvio della shell Django in ambiente PROD...\033[0m\n"
-    @DJANGO_ENV="prod" {{django_manage}} shell
+    just shell-prod-{{os()}}
 
+shell-prod-macos:
+    @ printf "\033[36m🐚 Avvio della shell Django in ambiente PROD (macOS)...\033[0m\n"
+    @ DJANGO_ENV="prod" {{django_manage}} shell
+
+shell-prod-linux:
+    @ printf "\033[36m🐚 Avvio della shell Django in ambiente PROD (Linux)...\033[0m\n"
+    @ DJANGO_ENV="prod" {{django_manage}} shell
+
+shell-prod-windows:
+    @Write-Host "🐚 Avvio della shell Django in ambiente PROD (Windows)..." -ForegroundColor Cyan
+    @DJANGO_ENV="prod" {{django_manage}} shell
 # === QUALITY COMMANDS ===
 
 # 📝 Aggiunge docstring mancanti
@@ -629,63 +679,100 @@ fix-all-windows:
 
 # 🔍 Test pre-commit hooks senza modifiche
 test-precommit:
-    @printf "\033[36m🔍 Test di tutti i controlli pre-commit...\033[0m\n"
-    @pre-commit run --all-files
-    @printf "\033[32m✅ Test pre-commit completato!\033[0m\n"
+    just test-precommit-{{os()}}
+
+test-precommit-macos:
+    @ printf "\033[36m🔍 Test di tutti i controlli pre-commit (macOS)...\033[0m\n"
+    @ pre-commit run --all-files
+    @ printf "\033[32m✅ Test pre-commit completato!\033[0m\n"
+
+test-precommit-linux:
+    @ printf "\033[36m🔍 Test di tutti i controlli pre-commit (Linux)...\033[0m\n"
+    @ pre-commit run --all-files
+    @ printf "\033[32m✅ Test pre-commit completato!\033[0m\n"
+
+test-precommit-windows:
+    @Write-Host "🔍 Test di tutti i controlli pre-commit (Windows)..." -ForegroundColor Cyan
+    pre-commit run --all-files
+    @Write-Host "✅ Test pre-commit completato!" -ForegroundColor Green
 
 # 🔧 Correzione automatica script bash
 fix-codacy:
-    @printf "\033[36m🔧 Correzione automatica script bash...\033[0m\n"
-    @find scripts/deployment -name "*.sh" -exec shfmt -w {} +
-    @printf "\033[32m✅ Correzioni applicate!\033[0m\n"
+    just fix-codacy-{{os()}}
+
+fix-codacy-macos:
+    @ printf "\033[36m🔧 Correzione automatica script bash (macOS)...\033[0m\n"
+    @ find scripts/deployment -name "*.sh" -exec shfmt -w {} +
+    @ printf "\033[32m✅ Correzioni applicate!\033[0m\n"
+
+fix-codacy-linux:
+    @ printf "\033[36m🔧 Correzione automatica script bash (Linux)...\033[0m\n"
+    @ find scripts/deployment -name "*.sh" -exec shfmt -w {} +
+    @ printf "\033[32m✅ Correzioni applicate!\033[0m\n"
+
+fix-codacy-windows:
+    @Write-Host "🔧 Correzione automatica script bash (Windows)..." -ForegroundColor Cyan
+    find scripts/deployment -name "*.sh" -exec shfmt -w {} +
+    @Write-Host "✅ Correzioni applicate!" -ForegroundColor Green
 
 # 📝 Formattazione file Markdown
 format-markdown:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m📝 Formattazione file Markdown...\033[0m\n"; \
-    else \
-        @Write-Host "📝 Formattazione file Markdown..." -ForegroundColor Cyan; \
-    fi
-    @find . -name "*.md" -exec @printf "Formatting %s\n" {} \; -exec sed -i '' -e '/^[ \t]*$/d' -e ':a;N;$!ba;s/\n\{3,\}/\n\n/g' {} \;
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[32m✅ File Markdown formattati con successo!\033[0m\n"; \
-    else \
-        @Write-Host "✅ File Markdown formattati con successo!" -ForegroundColor Green; \
-    fi
+    just format-markdown-{{os()}}
+
+format-markdown-macos:
+    @ printf "\033[36m📝 Formattazione file Markdown (macOS)...\033[0m\n"
+    @ find . -name "*.md" -exec printf "Formatting %s\n" {} \; -exec sed -i '' -e '/^[ \t]*$/d' -e ':a;N;$!ba;s/\n\{3,\}/\n\n/g' {} \;
+    @ printf "\033[32m✅ File Markdown formattati con successo!\033[0m\n"
+
+format-markdown-linux:
+    @ printf "\033[36m📝 Formattazione file Markdown (Linux)...\033[0m\n"
+    @ find . -name "*.md" -exec printf "Formatting %s\n" {} \; -exec sed -i -e '/^[ \t]*$/d' -e ':a;N;$!ba;s/\n\{3,\}/\n\n/g' {} \;
+    @ printf "\033[32m✅ File Markdown formattati con successo!\033[0m\n"
+
+format-markdown-windows:
+    @Write-Host "📝 Formattazione file Markdown (Windows)..." -ForegroundColor Cyan
+    find . -name "*.md" -exec Write-Host "Formatting {}" \; -exec sed -i -e '/^[ \t]*$/d' -e ':a;N;$!ba;s/\n\{3,\}/\n\n/g' {} \;
+    @Write-Host "✅ File Markdown formattati con successo!" -ForegroundColor Green
 
 # 📝 Correzione problemi Markdown
 fix-markdown:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m📝 Correzione problemi Markdown...\033[0m\n"; \
-        @printf "\033[33m1/4 - Correzioni automatiche...\033[0m\n"; \
-    else \
-        @Write-Host "📝 Correzione problemi Markdown..." -ForegroundColor Cyan; \
-        @Write-Host "1/4 - Correzioni automatiche..." -ForegroundColor Yellow; \
-    fi
-    @{{python}} tools/fix_markdown.py
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m2/4 - Prettier formatting...\033[0m\n"; \
-    else \
-        @Write-Host "2/4 - Prettier formatting..." -ForegroundColor Yellow; \
-    fi
-    @pnpm exec prettier --write "**/*.md"
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m3/4 - Markdownlint auto-fix...\033[0m\n"; \
-    else \
-        @Write-Host "3/4 - Markdownlint auto-fix..." -ForegroundColor Yellow; \
-    fi
-    @pnpm exec markdownlint-cli2 --fix "**/*.md" "!**/node_modules/**/*.md" --ignore-path .markdownlintignore --config .config/.markdownlint-cli2.jsonc
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[33m4/4 - Markdownlint validation...\033[0m\n"; \
-    else \
-        @Write-Host "4/4 - Markdownlint validation..." -ForegroundColor Yellow; \
-    fi
+    just fix-markdown-{{os()}}
+
+fix-markdown-macos:
+    @ printf "\033[36m📝 Correzione problemi Markdown (macOS)...\033[0m\n"
+    @ printf "\033[33m1/4 - Correzioni automatiche...\033[0m\n"
+    @ {{python}} tools/fix_markdown.py
+    @ printf "\033[33m2/4 - Prettier formatting...\033[0m\n"
+    @ pnpm exec prettier --write "**/*.md"
+    @ printf "\033[33m3/4 - Markdownlint auto-fix...\033[0m\n"
+    @ pnpm exec markdownlint-cli2 --fix "**/*.md" "!**/node_modules/**/*.md" --ignore-path .markdownlintignore --config .config/.markdownlint-cli2.jsonc
+    @ printf "\033[33m4/4 - Markdownlint validation...\033[0m\n"
     @-pre-commit run markdownlint-cli2 --all-files
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[32m✅ Problemi Markdown corretti!\033[0m\n"; \
-    else \
-        @Write-Host "✅ Problemi Markdown corretti!" -ForegroundColor Green; \
-    fi
+    @ printf "\033[32m✅ Problemi Markdown corretti!\033[0m\n"
+
+fix-markdown-linux:
+    @ printf "\033[36m📝 Correzione problemi Markdown (Linux)...\033[0m\n"
+    @ printf "\033[33m1/4 - Correzioni automatiche...\033[0m\n"
+    @ {{python}} tools/fix_markdown.py
+    @ printf "\033[33m2/4 - Prettier formatting...\033[0m\n"
+    @ pnpm exec prettier --write "**/*.md"
+    @ printf "\033[33m3/4 - Markdownlint auto-fix...\033[0m\n"
+    @ pnpm exec markdownlint-cli2 --fix "**/*.md" "!**/node_modules/**/*.md" --ignore-path .markdownlintignore --config .config/.markdownlint-cli2.jsonc
+    @ printf "\033[33m4/4 - Markdownlint validation...\033[0m\n"
+    @-pre-commit run markdownlint-cli2 --all-files
+    @ printf "\033[32m✅ Problemi Markdown corretti!\033[0m\n"
+
+fix-markdown-windows:
+    @Write-Host "📝 Correzione problemi Markdown (Windows)..." -ForegroundColor Cyan
+    @Write-Host "1/4 - Correzioni automatiche..." -ForegroundColor Yellow
+    {{python}} tools/fix_markdown.py
+    @Write-Host "2/4 - Prettier formatting..." -ForegroundColor Yellow
+    pnpm exec prettier --write "**/*.md"
+    @Write-Host "3/4 - Markdownlint auto-fix..." -ForegroundColor Yellow
+    pnpm exec markdownlint-cli2 --fix "**/*.md" "!**/node_modules/**/*.md" --ignore-path .markdownlintignore --config .config/.markdownlint-cli2.jsonc
+    @Write-Host "4/4 - Markdownlint validation..." -ForegroundColor Yellow
+    pre-commit run markdownlint-cli2 --all-files
+    @Write-Host "✅ Problemi Markdown corretti!" -ForegroundColor Green
 
 # 🔍 Controlli qualità stile Codacy (semplificato)
 lint-codacy:
@@ -722,89 +809,132 @@ lint-codacy-windows:
 
 # 📊 Statistiche progetto
 stats:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m📊 Generazione statistiche progetto...\033[0m\n"; \
-    else \
-        @Write-Host "📊 Generazione statistiche progetto..." -ForegroundColor Cyan; \
-    fi
-    @{{python}} tools/project_stats.py
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[32m📊 Dashboard disponibile in tools/quality_dashboard.md\033[0m\n"; \
-    else \
-        @Write-Host "📊 Dashboard disponibile in tools/quality_dashboard.md" -ForegroundColor Green; \
-    fi
+    just stats-{{os()}}
+
+stats-macos:
+    @ printf "\033[36m📊 Generazione statistiche progetto (macOS)...\033[0m\n"
+    @ {{python}} tools/project_stats.py
+    @ printf "\033[32m📊 Dashboard disponibile in tools/quality_dashboard.md\033[0m\n"
+
+stats-linux:
+    @ printf "\033[36m📊 Generazione statistiche progetto (Linux)...\033[0m\n"
+    @ {{python}} tools/project_stats.py
+    @ printf "\033[32m📊 Dashboard disponibile in tools/quality_dashboard.md\033[0m\n"
+
+stats-windows:
+    @Write-Host "📊 Generazione statistiche progetto (Windows)..." -ForegroundColor Cyan
+    {{python}} tools/project_stats.py
+    @Write-Host "📊 Dashboard disponibile in tools/quality_dashboard.md" -ForegroundColor Green
 
 # 🔑 Genera Django SECRET_KEY
 generate-secret-key:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🔑 Generazione Django SECRET_KEY...\033[0m\n"; \
-        @printf "\033[33mGenero SECRET_KEY generica:\033[0m\n"; \
-    else \
-        @Write-Host "🔑 Generazione Django SECRET_KEY..." -ForegroundColor Cyan; \
-        @Write-Host "Genero SECRET_KEY generica:" -ForegroundColor Yellow; \
-    fi
-    @{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    just generate-secret-key-{{os()}}
 
-# 🔑 Genera SECRET_KEY per tutti i 4 ambienti
+generate-secret-key-macos:
+    @ printf "\033[36m🔑 Generazione Django SECRET_KEY (macOS)...\033[0m\n"
+    @ printf "\033[33mGenero SECRET_KEY generica:\033[0m\n"
+    @ {{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+
+generate-secret-key-linux:
+    @ printf "\033[36m🔑 Generazione Django SECRET_KEY (Linux)...\033[0m\n"
+    @ printf "\033[33mGenero SECRET_KEY generica:\033[0m\n"
+    @ {{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+
+generate-secret-key-windows:
+    @Write-Host "🔑 Generazione Django SECRET_KEY (Windows)..." -ForegroundColor Cyan
+    @Write-Host "Genero SECRET_KEY generica:" -ForegroundColor Yellow
+    {{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+
+ 🔑 Genera SECRET_KEY per tutti i 4 ambienti
 generate-secret-keys-all:
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[36m🔐 Generazione SECRET_KEY per tutti gli ambienti...\033[0m\n"; \
-        @printf "\n"; \
-        @printf "\033[32m🔧 DEV Environment:\033[0m\n"; \
-        dev_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"); \
-        @printf "DJANGO_SECRET_KEY_DEV=%s\n" "$dev_key"; \
-        @printf "\n"; \
-        @printf "\033[34m🧪 TEST Environment:\033[0m\n"; \
-        test_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"); \
-        @printf "DJANGO_SECRET_KEY_TEST=%s\n" "$test_key"; \
-        @printf "\n"; \
-        @printf "\033[35m🎭 STAGING Environment:\033[0m\n"; \
-        staging_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"); \
-        @printf "DJANGO_SECRET_KEY_STAGING=%s\n" "$staging_key"; \
-        @printf "\n"; \
-        @printf "\033[31m⚡ PROD Environment:\033[0m\n"; \
-        prod_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"); \
-        @printf "DJANGO_SECRET_KEY_PROD=%s\n" "$prod_key"; \
-        @printf "\n"; \
-        @printf "\033[36m💡 CONFIGURAZIONE .env:\033[0m\n"; \
-        @printf "\033[36m=======================\033[0m\n"; \
-        @printf "DJANGO_SECRET_KEY_DEV=%s\n" "$dev_key"; \
-        @printf "DJANGO_SECRET_KEY_TEST=%s\n" "$test_key"; \
-        @printf "DJANGO_SECRET_KEY_STAGING=%s\n" "$staging_key"; \
-        @printf "DJANGO_SECRET_KEY_PROD=%s\n" "$prod_key"; \
-        @printf "\n"; \
-        @printf "\033[33m⚠️  IMPORTANTE: Ogni ambiente deve avere la sua SECRET_KEY!\033[0m\n"; \
-        @printf "\033[90m📖 Vedi docs/environments-guide.md per configurazione completa\033[0m\n"; \
-    else \
-        @Write-Host "🔐 Generazione SECRET_KEY per tutti gli ambienti..." -ForegroundColor Cyan; \
-        @Write-Host ""; \
-        @Write-Host "🔧 DEV Environment:" -ForegroundColor Green; \
-        @$dev_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"; \
-        @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key" -ForegroundColor White; \
-        @Write-Host ""; \
-        @Write-Host "🧪 TEST Environment:" -ForegroundColor Blue; \
-        @$test_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"; \
-        @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key" -ForegroundColor White; \
-        @Write-Host ""; \
-        @Write-Host "🎭 STAGING Environment:" -ForegroundColor Magenta; \
-        @$staging_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"; \
-        @Write-Host "DJANGO_SECRET_KEY_STAGING=$staging_key" -ForegroundColor White; \
-        @Write-Host ""; \
-        @Write-Host "⚡ PROD Environment:" -ForegroundColor Red; \
-        @$prod_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"; \
-        @Write-Host "DJANGO_SECRET_KEY_PROD=$prod_key" -ForegroundColor White; \
-        @Write-Host ""; \
-        @Write-Host "💡 CONFIGURAZIONE .env:" -ForegroundColor Cyan; \
-        @Write-Host "=======================" -ForegroundColor Cyan; \
-        @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key"; \
-        @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key"; \
-        @Write-Host "DJANGO_SECRET_KEY_STAGING=$staging_key"; \
-        @Write-Host "DJANGO_SECRET_KEY_PROD=$prod_key"; \
-        @Write-Host ""; \
-        @Write-Host "⚠️  IMPORTANTE: Ogni ambiente deve avere la sua SECRET_KEY!" -ForegroundColor Yellow; \
-        @Write-Host "📖 Vedi docs/environments-guide.md per configurazione completa" -ForegroundColor Gray; \
-    fi
+    just generate-secret-keys-all-{{os()}}
 
+generate-secret-keys-all-macos:
+    @ printf "\033[36m🔐 Generazione SECRET_KEY per tutti gli ambienti (macOS)...\033[0m\n"
+    @ printf "\n"
+    @ printf "\033[32m🔧 DEV Environment:\033[0m\n"
+    dev_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
+    @ printf "DJANGO_SECRET_KEY_DEV=%s\n" "$dev_key"
+    @ printf "\n"
+    @ printf "\033[34m🧪 TEST Environment:\033[0m\n"
+    test_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
+    @ printf "DJANGO_SECRET_KEY_TEST=%s\n" "$test_key"
+    @ printf "\n"
+    @ printf "\033[35m🎭 STAGING Environment:\033[0m\n"
+    staging_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
+    @ printf "DJANGO_SECRET_KEY_STAGING=%s\n" "$staging_key"
+    @ printf "\n"
+    @ printf "\033[31m⚡ PROD Environment:\033[0m\n"
+    prod_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
+    @ printf "DJANGO_SECRET_KEY_PROD=%s\n" "$prod_key"
+    @ printf "\n"
+    @ printf "\033[36m💡 CONFIGURAZIONE .env:\033[0m\n"
+    @ printf "\033[36m=======================\033[0m\n"
+    @ printf "DJANGO_SECRET_KEY_DEV=%s\n" "$dev_key"
+    @ printf "DJANGO_SECRET_KEY_TEST=%s\n" "$test_key"
+    @ printf "DJANGO_SECRET_KEY_STAGING=%s\n" "$staging_key"
+    @ printf "DJANGO_SECRET_KEY_PROD=%s\n" "$prod_key"
+    @ printf "\n"
+    @ printf "\033[33m⚠️  IMPORTANTE: Ogni ambiente deve avere la sua SECRET_KEY!\033[0m\n"
+    @ printf "\033[90m📖 Vedi docs/environments-guide.md per configurazione completa\033[0m\n"
+
+generate-secret-keys-all-linux:
+    @ printf "\033[36m🔐 Generazione SECRET_KEY per tutti gli ambienti (Linux)...\033[0m\n"
+    @ printf "\n"
+    @ printf "\033[32m🔧 DEV Environment:\033[0m\n"
+    dev_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
+    @ printf "DJANGO_SECRET_KEY_DEV=%s\n" "$dev_key"
+    @ printf "\n"
+    @ printf "\033[34m🧪 TEST Environment:\033[0m\n"
+    test_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
+    @ printf "DJANGO_SECRET_KEY_TEST=%s\n" "$test_key"
+    @ printf "\n"
+    @ printf "\033[35m🎭 STAGING Environment:\033[0m\n"
+    staging_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
+    @ printf "DJANGO_SECRET_KEY_STAGING=%s\n" "$staging_key"
+    @ printf "\n"
+    @ printf "\033[31m⚡ PROD Environment:\033[0m\n"
+    prod_key=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
+    @ printf "DJANGO_SECRET_KEY_PROD=%s\n" "$prod_key"
+    @ printf "\n"
+    @ printf "\033[36m💡 CONFIGURAZIONE .env:\033[0m\n"
+    @ printf "\033[36m=======================\033[0m\n"
+    @ printf "DJANGO_SECRET_KEY_DEV=%s\n" "$dev_key"
+    @ printf "DJANGO_SECRET_KEY_TEST=%s\n" "$test_key"
+    @ printf "DJANGO_SECRET_KEY_STAGING=%s\n" "$staging_key"
+    @ printf "DJANGO_SECRET_KEY_PROD=%s\n" "$prod_key"
+    @ printf "\n"
+    @ printf "\033[33m⚠️  IMPORTANTE: Ogni ambiente deve avere la sua SECRET_KEY!\033[0m\n"
+    @ printf "\033[90m📖 Vedi docs/environments-guide.md per configurazione completa\033[0m\n"
+
+generate-secret-keys-all-windows:
+    @Write-Host "🔐 Generazione SECRET_KEY per tutti gli ambienti (Windows)..." -ForegroundColor Cyan
+    @Write-Host ""
+    @Write-Host "🔧 DEV Environment:" -ForegroundColor Green
+    @$dev_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "🧪 TEST Environment:" -ForegroundColor Blue
+    @$test_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "🎭 STAGING Environment:" -ForegroundColor Magenta
+    @$staging_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    @Write-Host "DJANGO_SECRET_KEY_STAGING=$staging_key" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "⚡ PROD Environment:" -ForegroundColor Red
+    @$prod_key = &{{python}} python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    @Write-Host "DJANGO_SECRET_KEY_PROD=$prod_key" -ForegroundColor White
+    @Write-Host ""
+    @Write-Host "💡 CONFIGURAZIONE .env:" -ForegroundColor Cyan
+    @Write-Host "=======================" -ForegroundColor Cyan
+    @Write-Host "DJANGO_SECRET_KEY_DEV=$dev_key"
+    @Write-Host "DJANGO_SECRET_KEY_TEST=$test_key"
+    @Write-Host "DJANGO_SECRET_KEY_STAGING=$staging_key"
+    @Write-Host "DJANGO_SECRET_KEY_PROD=$prod_key"
+    @Write-Host ""
+    @Write-Host "⚠️  IMPORTANTE: Ogni ambiente deve avere la sua SECRET_KEY!" -ForegroundColor Yellow
+    @Write-Host "📖 Vedi docs/environments-guide.md per configurazione completa" -ForegroundColor Gray
 # === DEPLOYMENT COMMANDS ===
 
 # 📦 Installazione dipendenze produzione
@@ -847,31 +977,45 @@ waitress: install-prod
     @$env:DJANGO_ENV="prod"; cd src; {{python}} -m waitress --host=0.0.0.0 --port=8000 --threads=4 --connection-limit=1000 --channel-timeout=120 home.wsgi:application
 
 # ⚡ Uvicorn ASGI server - RACCOMANDATO
-run-uvicorn: install-prod
-    @if [ "$(uname -s)" = "Darwin" ] || [ "$(uname -s)" = "Linux" ]; then \
-        @printf "\033[32m⚡ Avvio Django con Uvicorn ASGI...\033[0m\n"; \
-        @printf "\033[34m🚀 Starting Uvicorn ASGI Server\033[0m\n"; \
-        @printf "\033[33mEnvironment: prod\033[0m\n"; \
-        @printf "\033[33mHost: 0.0.0.0:8000\033[0m\n"; \
-        @printf "\033[33m📊 Running migrations...\033[0m\n"; \
-        {{django_manage}} migrate --no-input; \
-        @printf "\033[33m📁 Collecting static files...\033[0m\n"; \
-        {{django_manage}} collectstatic --no-input --clear; \
-        @printf "\033[33m⚡ Modalità produzione: single worker\033[0m\n"; \
-        DJANGO_ENV="prod" cd src; {{python}} -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --log-level info --access-log --timeout-keep-alive 2; \
-    else \
-        @Write-Host "⚡ Avvio Django con Uvicorn ASGI (Windows)..." -ForegroundColor Green; \
-        @Write-Host "🚀 Starting Uvicorn ASGI Server" -ForegroundColor Blue; \
-        @Write-Host "Environment: prod" -ForegroundColor Yellow; \
-        @Write-Host "Host: 0.0.0.0:8000" -ForegroundColor Yellow; \
-        @Write-Host "📊 Running migrations..." -ForegroundColor Yellow; \
-        {{django_manage}} migrate --no-input; \
-        @Write-Host "📁 Collecting static files..." -ForegroundColor Yellow; \
-        {{django_manage}} collectstatic --no-input --clear; \
-        @Write-Host "⚡ Modalità produzione: single worker (Windows optimized)" -ForegroundColor Yellow; \
-        @$env:DJANGO_ENV="prod"; cd src; {{python}} -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --log-level info --access-log --timeout-keep-alive 2; \
-    fi
+run-uvicorn:
+    just run-uvicorn-{{os()}}
 
+run-uvicorn-macos:
+    @ printf "\033[32m⚡ Avvio Django con Uvicorn ASGI (macOS)...\033[0m\n"
+    @ printf "\033[34m🚀 Starting Uvicorn ASGI Server\033[0m\n"
+    @ printf "\033[33mEnvironment: prod\033[0m\n"
+    @ printf "\033[33mHost: 0.0.0.0:8000\033[0m\n"
+    @ printf "\033[33m📊 Running migrations...\033[0m\n"
+    {{django_manage}} migrate --no-input
+    @ printf "\033[33m📁 Collecting static files...\033[0m\n"
+    {{django_manage}} collectstatic --no-input --clear
+    @ printf "\033[32m🌟 Starting Uvicorn server...\033[0m\n"
+    cd src; {{python}} -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --workers 1 --log-level info
+
+run-uvicorn-linux:
+    @ printf "\033[32m⚡ Avvio Django con Uvicorn ASGI (Linux)...\033[0m\n"
+    @ printf "\033[34m🚀 Starting Uvicorn ASGI Server\033[0m\n"
+    @ printf "\033[33mEnvironment: prod\033[0m\n"
+    @ printf "\033[33mHost: 0.0.0.0:8000\033[0m\n"
+    @ printf "\033[33m📊 Running migrations...\033[0m\n"
+    {{django_manage}} migrate --no-input
+    @ printf "\033[33m📁 Collecting static files...\033[0m\n"
+    {{django_manage}} collectstatic --no-input --clear
+    @ printf "\033[32m🌟 Starting Uvicorn server...\033[0m\n"
+    cd src; {{python}} -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --workers 1 --log-level info
+
+run-uvicorn-windows:
+    @Write-Host "⚡ Avvio Django con Uvicorn ASGI (Windows)..." -ForegroundColor Green
+    @Write-Host "🚀 Starting Uvicorn ASGI Server" -ForegroundColor Blue
+    @Write-Host "Environment: prod" -ForegroundColor Yellow
+    @Write-Host "Host: 0.0.0.0:8000" -ForegroundColor Yellow
+    @Write-Host "📊 Running migrations..." -ForegroundColor Yellow
+    {{django_manage}} migrate --no-input
+    @Write-Host "📁 Collecting static files..." -ForegroundColor Yellow
+    {{django_manage}} collectstatic --no-input --clear
+    @Write-Host "🌟 Starting Uvicorn server..." -ForegroundColor Green
+    cd src; {{python}} -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --workers 1 --log-level info
+    
 # 🧪 Test Uvicorn locale (debug)
 test-uvicorn-local:
     @@Write-Host "🧪 Test locale Uvicorn ASGI (debug, singolo worker)..." -ForegroundColor Cyan
