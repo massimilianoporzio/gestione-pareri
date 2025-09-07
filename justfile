@@ -158,6 +158,7 @@ coverage-windows:
     @cd src; uv run coverage run manage.py test
     @cd src; uv run coverage report
     @cd src; uv run coverage html -d ..\htmlcov
+    @cd src; uv run coverage xml
     @Write-Host "Report HTML generato in htmlcov/index.html" -ForegroundColor Green
     @Start-Process htmlcov/index.html
     @Write-Host "Per visualizzare il report renderizzato, apri htmlcov/index.html con l'estensione Live Preview in VS Code." -ForegroundColor Yellow
@@ -167,6 +168,7 @@ coverage-macos:
     @cd src && uv run coverage run manage.py test
     @cd src && uv run coverage report
     @cd src && uv run coverage html -d ../htmlcov
+    @cd src && uv run coverage xml
     @printf "\033[32mReport HTML generato in htmlcov/index.html\033[0m\n"
     @code htmlcov/index.html
     @printf "\033[33mPer visualizzare il report renderizzato, apri htmlcov/index.html con l'estensione Live Preview in VS Code.\033[0m\n"
@@ -176,6 +178,7 @@ coverage-linux:
     @cd src && uv run coverage run manage.py test
     @cd src && uv run coverage report
     @cd src && uv run coverage html -d ../htmlcov
+    @cd src && uv run coverage xml
     @printf "\033[32mReport HTML generato in htmlcov/index.html\033[0m\n"
     @code htmlcov/index.html
     @printf "\033[33mPer visualizzare il report renderizzato, apri htmlcov/index.html con l'estensione Live Preview in VS Code.\033[0m\n"
