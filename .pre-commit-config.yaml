@@ -103,11 +103,14 @@ repos:
         name: markdownlint
         types: [markdown]
         args:
-          - "**/*.md"
+          - "docs/**/*.md"
+          - "README.md"
           - "!**/node_modules/**/*.md"
           - "!**/staticfiles/**/*.md"
           - "!**/admin/**/*.md"
+          - "!**/.pytest_cache/**/*.md"
+          - "!**/.venv/**/*.md"
           - "--config"
-          - ".config/.markdownlint-cli2.jsonc"
+          - ".markdownlint-cli2.jsonc"
         exclude: |
           (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)

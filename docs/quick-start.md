@@ -73,37 +73,47 @@ Vai a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) nel tuo browser.
 ## 🔄 Workflow di sviluppo consigliato
 
 1. **Crea una nuova app Django**:
-   ```bash
+
+```bash
    cd src
    python manage.py startapp myapp
    ```
-2. **Aggiungi l'app a `INSTALLED_APPS`** in `src/home/settings.py`:
-   ```python
+
+1. **Aggiungi l'app a `INSTALLED_APPS`** in `src/home/settings.py`:
+
+```python
    INSTALLED_APPS = [
        # ...
        'myapp',
    ]
    ```
-3. **Definisci modelli** in `src/myapp/models.py`
-4. **Crea e applica migrazioni**:
-   ```bash
+
+1. **Definisci modelli** in `src/myapp/models.py`
+2. **Crea e applica migrazioni**:
+
+```bash
    python manage.py makemigrations
    python manage.py migrate
    ```
-5. **Crea viste** in `src/myapp/views.py`
-6. **Configura URL** in `src/myapp/urls.py` e `src/home/urls.py`
-7. **Crea template** in `src/myapp/templates/`
-8. **Scrivi test** in `src/myapp/tests.py`
-9. **Esegui test**:
-   ```bash
+
+1. **Crea viste** in `src/myapp/views.py`
+2. **Configura URL** in `src/myapp/urls.py` e `src/home/urls.py`
+3. **Crea template** in `src/myapp/templates/`
+4. **Scrivi test** in `src/myapp/tests.py`
+5. **Esegui test**:
+
+```bash
    python manage.py test
    ```
-10. **Commit delle modifiche**:
-    ```bash
+
+1. **Commit delle modifiche**:
+
+```bash
     git add .
     git commit -m "Descrizione delle modifiche"
     ```
-    (pre-commit eseguirà automaticamente i check di qualità)
+
+(pre-commit eseguirà automaticamente i check di qualità)
 
 ## 🛠️ Comandi utili
 

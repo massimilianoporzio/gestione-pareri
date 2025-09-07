@@ -8,3 +8,5 @@ CHANGELOG*.md
 **/staticfiles/admin/
 **/LICENSE*.md
 **/CHANGELOG*.md
+
+.pytest_cache/

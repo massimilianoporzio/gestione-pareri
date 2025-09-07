@@ -196,17 +196,21 @@ e sicurezza.
 ### Come si usa
 
 1. Installa coverage:
-   ```bash
+
+```bash
    uv add --dev coverage
    ```
-2. Esegui i test con coverage:
-   ```bash
+
+1. Esegui i test con coverage:
+
+```bash
    just coverage
    ```
-3. Visualizza il report:
+
+1. Visualizza il report:
    - Testo: `coverage report`
    - HTML: `coverage html` (generato in `htmlcov/index.html`)
-4. **Visualizza il report HTML renderizzato in VS Code**:
+1. **Visualizza il report HTML renderizzato in VS Code**:
    - Installa l’estensione "Live Preview" di Microsoft.
    - Apri `htmlcov/index.html` e clicca su "Apri con Live Preview" (icona globo in alto a destra) oppure usa il comando
      "Live Preview: Open Preview" dalla palette comandi.

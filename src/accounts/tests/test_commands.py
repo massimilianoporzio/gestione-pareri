@@ -51,13 +51,18 @@ class AccountsCommandsTestCase(TestCase):
         cmd._create_full_access_group()
         # Verifica che sia stato chiamato il ramo SUCCESS
         calls = [call[0][0] for call in cmd.stdout.write.call_args_list]
-        assert any("SUCCESS: ✅ Gruppo 'Full Access Admin' creato con successo" in c for c in calls)
+        assert any(
+            "SUCCESS: ✅ Gruppo 'Full Access Admin' creato con successo" in c
+            for c in calls
+        )
 
         # Caso gruppo già esistente
         cmd.stdout.write.reset_mock()
         cmd._create_full_access_group()
         calls = [call[0][0] for call in cmd.stdout.write.call_args_list]
-        assert any("WARNING: ℹ️  Gruppo 'Full Access Admin' già esistente" in c for c in calls)
+        assert any(
+            "WARNING: ℹ️  Gruppo 'Full Access Admin' già esistente" in c for c in calls
+        )
 
     """Test suite for AccountsCommandsTestCase."""
 

@@ -8,11 +8,11 @@ I file nel modulo `home/settings/` sono stati esclusi dai controlli di linting a
 1. **Importazioni con Asterisco**: I file di impostazioni di Django tipicamente usano `from .base import *` per
    ereditare le impostazioni base, causando errori di lint come F403 (importazione con asterisco) e F405 (variabili
    importate ma non definite).
-2. **Struttura Specifica di Django**: I moduli di impostazioni di Django seguono convenzioni specifiche che spesso
+1. **Struttura Specifica di Django**: I moduli di impostazioni di Django seguono convenzioni specifiche che spesso
    entrano in conflitto con le regole generali di linting Python.
-3. **Modifiche Frequenti**: I file di impostazioni richiedono frequenti modifiche per adattarsi a diversi ambienti di
+1. **Modifiche Frequenti**: I file di impostazioni richiedono frequenti modifiche per adattarsi a diversi ambienti di
    sviluppo e deployment, rendendo più pratico evitare vincoli di formattazione rigidi.
-4. **Compatibilità tra Ambienti**: L'uso di importazioni dinamiche e strutture condizionali per supportare diversi
+1. **Compatibilità tra Ambienti**: L'uso di importazioni dinamiche e strutture condizionali per supportare diversi
    ambienti può generare falsi positivi nei controlli di lint.
 
 ## Hook di Pylint Disabilitato

@@ -47,7 +47,7 @@ npm install --save-dev @babel/core @babel/preset-env
 # (empty)
 ```
 
-````json
+```json
 {
   "scripts": {
     "build": "webpack --mode production",
@@ -55,7 +55,7 @@ npm install --save-dev @babel/core @babel/preset-env
     "css": "tailwindcss -i src/static/css/input.css -o src/static/css/style.css"
   }
 }
-````
+```
 
 [![Prettier](https://img.shields.io/badge/prettier-markdown-ff69b4)](https://prettier.io/)
 [![markdownlint](https://img.shields.io/badge/markdownlint-enabled-brightgreen)](https://github.com/DavidAnson/markdownlint)
@@ -327,6 +327,7 @@ just
 just setup           #  Setup completo progetto
 just dev             # 25 Server sviluppo con hot-reload
 just fix-all         # 50 Pipeline qualità completa
+
 just deploy          # 0f Deploy automatico multi-platform
 just stats           # dcca Statistiche progetto
 ```
@@ -352,6 +353,7 @@ choco install just
 ```bash
 # macOS (Homebrew)
 brew install just
+
 # Linux (Snap)
 snap install --edge --classic just
 # Oppure usa uv direttamente
@@ -439,18 +441,18 @@ npm install --save-dev @babel/core @babel/preset-env
 
 ### 📁 **Struttura consigliata con Node.js:**
 
-```
+```markdown
 deploy-django/
-├── src/                     # Django source code
-│   ├── static/
-│   │   ├── css/            # CSS sorgente e compilato
-│   │   ├── js/             # JavaScript sorgente
-│   │   └── dist/           # Build outputs (ignorato da Git)
-├── node_modules/           # Dipendenze Node.js (ignorato da Git)
-├── package.json            # Configurazione Node.js
-├── webpack.config.js       # Build configuration
-├── tailwind.config.js      # Tailwind configuration
-└── staticfiles/            # Django collected static files
+├── src/ # Django source code
+│ ├── static/
+│ │ ├── css/ # CSS sorgente e compilato
+│ │ ├── js/ # JavaScript sorgente
+│ │ └── dist/ # Build outputs (ignorato da Git)
+├── node_modules/ # Dipendenze Node.js (ignorato da Git)
+├── package.json # Configurazione Node.js
+├── webpack.config.js # Build configuration
+├── tailwind.config.js # Tailwind configuration
+└── staticfiles/ # Django collected static files
 ```
 
 ### ⚙️ **Integrazione con Django:**
@@ -597,6 +599,7 @@ push e pull request.
 ### Esecuzione manuale locale
 
 - Puoi comunque eseguire Safety localmente con:
+
   ```bash
   uv sync
   just safety-scan
@@ -639,13 +642,16 @@ Questo progetto usa **Dependabot** per mantenere aggiornate le dipendenze Python
 ### Uso in locale
 
 - Per usare Safety CLI localmente, esegui:
+
   ```bash
   safety login
   # oppure
   safety auth login
   ```
+
 - Incolla la tua API Key quando richiesto.
 - Ora puoi eseguire:
+
   ```bash
   uv run safety scan --output screen
   ```
