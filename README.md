@@ -9,6 +9,23 @@
 - [FAQ](#faq)
 - [Contributi & Support](#contributi--support)
 
+## Requisiti
+
+Per utilizzare questo template sono necessari:
+
+- **Python >= 3.13**
+- **uv** (gestore pacchetti Python moderno)
+- **Node.js** (solo se vuoi integrare strumenti frontend)
+- **Git**
+- **Make** o **Just** (task runner)
+
+Consigliato:
+
+- **VS Code** come editor di sviluppo
+- **Docker** per ambienti isolati (opzionale)
+
+Per dettagli sull'installazione consulta la documentazione nelle sezioni dedicate.
+
 ## Quick Start Guide
 
 1. Clona il repository
@@ -65,13 +82,13 @@ npm install --save-dev @babel/core @babel/preset-env
 
 ## Documentazione Hub
 
-- [🌍 Environments Guide](docs/environments-guide.md) - **Guida completa ai 4 ambienti**
-- [📋 Just Commands](docs/just.md) - Task runner moderno (47 comandi)
-- [🗄️ Database Setup](docs/database-setup.md) - PostgreSQL multi-ambiente
-- [🔐 Database Security](docs/database-security.md) - Gestione sicura password
-- [🔧 Environment Variables](docs/environment-variables.md) - Configurazione ambienti
-- [📊 Code Quality](tools/quality_dashboard.md) - Pipeline qualità locale
-- [🔍 VS Code Setup](docs/vscode-configuration.md) - Configurazione editore
+- [Environments Guide](docs/environments-guide.md) 🌍 - **Guida completa ai 4 ambienti**
+- [Just Commands](docs/just.md) 📋 - Task runner moderno (47 comandi)
+- [Database Setup](docs/database-setup.md) 🗄️ - PostgreSQL multi-ambiente
+- [Database Security](docs/database-security.md) 🔐 - Gestione sicura password
+- [Environment Variables](docs/environment-variables.md) 🔧 - Configurazione ambienti
+- [Code Quality](tools/quality_dashboard.md) 📊 - Pipeline qualità locale
+- [VS Code Setup](docs/vscode-configuration.md) 🔍 - Configurazione editore
   <!-- Framework & Language -->
   [![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/)
   [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/release/python-3130/)
@@ -124,9 +141,9 @@ npm install --save-dev @babel/core @babel/preset-env
 git clone <https://github.com/tuousername/tuo-nuovo-repo.git>
 ```
 
-- [Setup iniziale](#setup-iniziale) - Configurazione progetto
-- [Task Runner Just](#task-runner-just) - Comandi moderni e cross-platform
-- [Integrazione VS Code](#vs-code-integration) - Configurazione editor
+- [Setup iniziale](setup-iniziale - Configurazione progetto - #%f0%9f%94%a8)
+- [Task Runner Just](task-runner-just - Comandi moderni e cross-platform - #%f0%9f%9a%80)
+- [Integrazione VS Code](vs-code-integration) - Configurazione editor #%f0%9f%93%9d
 
 ### 🌐 Deployment Guides
 
