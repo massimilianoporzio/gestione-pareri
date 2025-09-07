@@ -56,7 +56,9 @@ class InitGroupsPermissionsCoverageTests(TestCase):
     def test_assign_specific_permissions_to_base_group(self):
         """Test assign specific permissions to base group."""
         # Crea permesso fittizio
-        Permission.objects.create(codename="view_customuser", name="Can view customuser", content_type_id=1)
+        Permission.objects.create(
+            codename="view_customuser", name="Can view customuser", content_type_id=1
+        )
         cmd = Command()
         cmd.stdout = StringIO()
         # Patch base_groups per includere permessi
@@ -70,11 +72,16 @@ class InitGroupsPermissionsCoverageTests(TestCase):
         with patch.object(cmd, "_create_base_groups", wraps=cmd._create_base_groups):
             # Sostituisci la variabile locale nel metodo
             with patch(
-                "accounts.management.commands.init_groups_permissions.Command._create_base_groups", return_value=None
+                "accounts.management.commands.init_groups_permissions.Command._create_base_groups",
+                return_value=None,
             ):
                 # Esegui direttamente la logica di assegnazione permessi
                 group, _ = Group.objects.get_or_create(name=base_groups[0]["name"])
-                permissions = Permission.objects.filter(codename__in=base_groups[0]["permissions"])
+                permissions = Permission.objects.filter(
+                    codename__in=base_groups[0]["permissions"]
+                )
                 group.permissions.set(permissions)
-                cmd.stdout.write(f"🔑 Assegnati {permissions.count()} permessi specifici")
+                cmd.stdout.write(
+                    f"🔑 Assegnati {permissions.count()} permessi specifici"
+                )
                 self.assertIn("permessi specifici", cmd.stdout.getvalue())

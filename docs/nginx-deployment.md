@@ -92,7 +92,7 @@ server {
     listen 80;
     server_name tuodominio.com www.tuodominio.com;
 
-    # Redirect HTTP to HTTPS
+# Redirect HTTP to HTTPS
     return 301 <https://$server_name$request_uri;>
 }
 
@@ -101,7 +101,7 @@ server {
     listen 443 ssl http2;
     server_name tuodominio.com www.tuodominio.com;
 
-    # SSL Configuration
+# SSL Configuration
     ssl_certificate /path/to/your/certificate.crt;
     ssl_certificate_key /path/to/your/private.key;
     ssl_protocols TLSv1.2 TLSv1.3;
@@ -110,39 +110,40 @@ server {
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 10m;
 
-    # Security Headers
+# Security Headers
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src
+     'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';" always;
 
-    # Max file upload size
+# Max file upload size
     client_max_body_size 100M;
 
-    # Root directory
+# Root directory
     root /path/to/your/project;
 
-    # Static files (served by Nginx)
+# Static files (served by Nginx)
     location /static/ {
         alias /path/to/your/project/staticfiles/;
         expires 1y;
         add_header Cache-Control "public, immutable";
 
-        # Gzip compression
+# Gzip compression
         gzip on;
         gzip_vary on;
         gzip_types text/css application/javascript image/svg+xml;
     }
 
-    # Media files (user uploads)
+# Media files (user uploads)
     location /media/ {
         alias /path/to/your/project/media/;
         expires 1M;
         add_header Cache-Control "public";
     }
 
-    # Django application (reverse proxy)
+# Django application (reverse proxy)
     location / {
         proxy_pass <http://django_backend;>
         proxy_set_header Host $host;
@@ -151,42 +152,42 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-Host $host;
 
-        # Timeout settings
+# Timeout settings
         proxy_connect_timeout 30s;
         proxy_send_timeout 30s;
         proxy_read_timeout 30s;
 
-        # Buffer settings
+# Buffer settings
         proxy_buffer_size 4k;
         proxy_buffers 8 4k;
         proxy_busy_buffers_size 8k;
 
-        # WebSocket support (se necessario)
+# WebSocket support (se necessario)
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
     }
 
-    # Health check endpoint
+# Health check endpoint
     location /health/ {
         proxy_pass <http://django_backend/health/;>
         access_log off;
     }
 
-    # Block access to sensitive files
+# Block access to sensitive files
     location ~ /\.(ht|env|git) {
         deny all;
         return 404;
     }
 
-    # Favicon
+# Favicon
     location = /favicon.ico {
         alias /path/to/your/project/staticfiles/favicon.ico;
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
 
-    # Robots.txt
+# Robots.txt
     location = /robots.txt {
         alias /path/to/your/project/staticfiles/robots.txt;
         expires 1y;

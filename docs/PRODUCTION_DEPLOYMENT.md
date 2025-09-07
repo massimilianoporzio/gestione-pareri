@@ -4,21 +4,21 @@
 
 ### Architettura Target
 
-````text
+```text
 GitHub Repository → Clone Server Produzione → IIS Configuration → Database Setup
-````
+```
 
 ### Directory Structure Produzione
 
-```
-C:\inetpub\wwwroot\pratiche-pareri\     # IIS Root Directory
-├── src\                               # Django Application
-├── staticfiles\                       # Static files raccolti
-├── media\                            # Media files uploaded
-├── logs\                             # Application logs
-├── web.config                        # IIS Configuration (NON in repo)
-├── .env.prod                         # Environment vars (NON in repo)
-└── uv.lock                          # Dipendenze locked
+```markdown
+C:\inetpub\wwwroot\pratiche-pareri\ # IIS Root Directory
+├── src\ # Django Application
+├── staticfiles\ # Static files raccolti
+├── media\ # Media files uploaded
+├── logs\ # Application logs
+├── web.config # IIS Configuration (NON in repo)
+├── .env.prod # Environment vars (NON in repo)
+└── uv.lock # Dipendenze locked
 ```
 
 ## 🔧 PASSO 1: Setup Server Produzione
@@ -30,6 +30,7 @@ C:\inetpub\wwwroot\pratiche-pareri\     # IIS Root Directory
 ### Setup Directory Produzione
 
 ````powershell
+
 ```powershell
 # Crea directory base
 New-Item -ItemType Directory -Force -Path "C:\inetpub\wwwroot\pratiche-pareri"
@@ -149,7 +150,9 @@ Accedi all'URL della tua applicazione e verifica che tutto funzioni correttament
 <configuration>
   <system.webServer>
     <handlers>
-      <add name="Python FastCGI" path="app.fcgi" verb="*" modules="FastCgiModule" scriptProcessor="C:\path\to\python.exe|C:\path\to\yourapp.wsgi" resourceType="Unspecified" requireAccess="Script" />
+      <add name="Python FastCGI" path="app.fcgi" verb="*"
+      modules="FastCgiModule" scriptProcessor="C:\path\to\python.exe|C:\path\to\yourapp.wsgi" resourceType="Unspecified"
+      requireAccess="Script" />
     </handlers>
   </system.webServer>
 </configuration>
@@ -241,7 +244,8 @@ Generare report periodici sull'uso delle risorse, performance dell'applicazione 
 
 ## 🎉 Conclusioni
 
-Seguendo questa guida, dovresti essere in grado di effettuare il deploy della tua applicazione Django con Tailwind CSS su un server Windows con IIS in modo sicuro ed efficiente. Buona fortuna!
+Seguendo questa guida, dovresti essere in grado di effettuare il deploy della tua applicazione Django con Tailwind CSS
+su un server Windows con IIS in modo sicuro ed efficiente. Buona fortuna!
 
 ## Esempio File `package.json`
 
@@ -261,3 +265,4 @@ Seguendo questa guida, dovresti essere in grado di effettuare il deploy della tu
   }
 }
 ```
+````

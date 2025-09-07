@@ -6,7 +6,11 @@ Questo modulo fornisce test per le forms custom di accounts.
 from django.contrib.auth import get_user_model
 from django.test import RequestFactory, TestCase
 
-from accounts.forms import CustomAuthenticationForm, CustomUserChangeForm, CustomUserCreationForm
+from accounts.forms import (
+    CustomAuthenticationForm,
+    CustomUserChangeForm,
+    CustomUserCreationForm,
+)
 
 User = get_user_model()
 
@@ -16,28 +20,36 @@ class TestCustomAuthenticationForm(TestCase):
 
     def test_clean_username_missing_direct(self):
         """Chiama direttamente clean con username mancante."""
-        form = CustomAuthenticationForm(data={"username": "", "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": "", "password": self.password}
+        )
         form.is_valid()
         with self.assertRaises(Exception):
             form.clean()
 
     def test_clean_invalid_email_format_direct(self):
         """Chiama direttamente clean con email non valida."""
-        form = CustomAuthenticationForm(data={"username": "notanemail", "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": "notanemail", "password": self.password}
+        )
         form.is_valid()
         with self.assertRaises(Exception):
             form.clean()
 
     def test_clean_invalid_email_domain_direct(self):
         """Chiama direttamente clean con dominio non valido."""
-        form = CustomAuthenticationForm(data={"username": self.invalid_email, "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": self.invalid_email, "password": self.password}
+        )
         form.is_valid()
         with self.assertRaises(Exception):
             form.clean()
 
     def test_clean_password_missing_direct(self):
         """Chiama direttamente clean con password mancante."""
-        form = CustomAuthenticationForm(data={"username": self.valid_email, "password": ""})
+        form = CustomAuthenticationForm(
+            data={"username": self.valid_email, "password": ""}
+        )
         form.is_valid()
         with self.assertRaises(Exception):
             form.clean()
@@ -84,7 +96,9 @@ class TestCustomAuthenticationForm(TestCase):
 
     def test_get_user_returns_none_before_auth(self):
         """Test get_user returns None before authentication."""
-        form = CustomAuthenticationForm(data={"username": self.valid_email, "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": self.valid_email, "password": self.password}
+        )
         self.assertIsNone(form.get_user())
 
     def test_clean_successful_authentication(self):
@@ -99,21 +113,27 @@ class TestCustomAuthenticationForm(TestCase):
 
     def test_clean_password_missing(self):
         """Test clean raises error if password missing."""
-        form = CustomAuthenticationForm(data={"username": self.valid_email, "password": ""})
+        form = CustomAuthenticationForm(
+            data={"username": self.valid_email, "password": ""}
+        )
         self.assertFalse(form.is_valid())
         with self.assertRaises(Exception):
             form.clean()
 
     def test_clean_invalid_email_format(self):
         """Test clean raises error for invalid email format."""
-        form = CustomAuthenticationForm(data={"username": "notanemail", "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": "notanemail", "password": self.password}
+        )
         self.assertFalse(form.is_valid())
         with self.assertRaises(Exception):
             form.clean()
 
     def test_clean_invalid_email_domain(self):
         """Test clean raises error for invalid email domain."""
-        form = CustomAuthenticationForm(data={"username": self.invalid_email, "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": self.invalid_email, "password": self.password}
+        )
         self.assertFalse(form.is_valid())
         with self.assertRaises(Exception):
             form.clean()
@@ -144,19 +164,25 @@ class TestCustomAuthenticationForm(TestCase):
 
     def test_empty_username_raises(self):
         """Test empty username raises."""
-        form = CustomAuthenticationForm(data={"username": "", "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": "", "password": self.password}
+        )
         self.assertFalse(form.is_valid())
         self.assertIn("non può essere vuoto", str(form.errors))
 
     def test_invalid_email_format_raises(self):
         """Test invalid email format raises."""
-        form = CustomAuthenticationForm(data={"username": "notanemail", "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": "notanemail", "password": self.password}
+        )
         self.assertFalse(form.is_valid())
         self.assertIn("indirizzo email valido", str(form.errors))
 
     def test_invalid_email_domain_raises(self):
         """Test invalid email domain raises."""
-        form = CustomAuthenticationForm(data={"username": self.invalid_email, "password": self.password})
+        form = CustomAuthenticationForm(
+            data={"username": self.invalid_email, "password": self.password}
+        )
         self.assertFalse(form.is_valid())
         # Cerca solo le parti chiave del messaggio, ignorando gli escape HTML
         self.assertIn("deve essere", str(form.errors))
@@ -164,7 +190,9 @@ class TestCustomAuthenticationForm(TestCase):
 
     def test_empty_password_raises(self):
         """Test empty password raises."""
-        form = CustomAuthenticationForm(data={"username": self.valid_email, "password": ""})
+        form = CustomAuthenticationForm(
+            data={"username": self.valid_email, "password": ""}
+        )
         self.assertFalse(form.is_valid())
         self.assertIn("La password non può essere vuota", str(form.errors))
 

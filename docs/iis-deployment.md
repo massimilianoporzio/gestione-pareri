@@ -7,8 +7,6 @@
 come configurare **IIS (Internet Information Services)** come reverse proxy per Django in ambienti Windows Server o
 intranet aziendali.
 
-## 🎯 Overview
-
 **IIS Reverse Proxy** permette di:
 
 - ✅ **Domini personalizzati**: `<http://gestione-pareri.local`> invece di `IP:8000`
@@ -40,6 +38,7 @@ just deploy-intranet
 - **URL Rewrite Module** per IIS
 - **Privilegi amministratore**
 ### Installazione IIS
+
 ```powershell
 # Abilita IIS su Windows
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole
@@ -67,6 +66,7 @@ DJANGO_CSRF_TRUSTED_ORIGINS=<http://gestione-pareri.local,<https://gestione-pare
 ### 2. Application Pool IIS
 
 ````powershell
+
 ```powershell
 # Crea Application Pool dedicato
 New-WebAppPool -Name "GestionePareri" -Force
@@ -77,6 +77,7 @@ Set-ItemProperty -Path "IIS:\AppPools\GestionePareri" -Name recycling.periodicRe
 ### 3. Sito Web IIS
 
 ````powershell
+
 ```powershell
 # Crea sito web
 New-Website -Name "GestionePareri" -Port 80 -PhysicalPath "C:\inetpub\wwwroot\gestione-pareri" -ApplicationPool "GestionePareri"
@@ -165,6 +166,7 @@ just collectstatic-prod
 ### 2. Avvio Django Backend
 
 ````bash
+
 ```bash
 # Avvia server Django per reverse proxy
 just run-uvicorn
@@ -174,6 +176,7 @@ just run-uvicorn
 ### 3. Test Configuration
 
 ````bash
+
 ```bash
 # Test connettività Django diretto
 curl <http://127.0.0.1:8000>
@@ -191,6 +194,7 @@ curl <http://gestione-pareri.local>
 ### Performance Monitoring
 
 ````powershell
+
 ```powershell
 # Monitora performance IIS
 Get-Counter -Counter "\Web Service(_Total)\Current Connections"
@@ -251,3 +255,4 @@ icacls "staticfiles" /grant "IIS_IUSRS:(OI)(CI)F"
 - [`deployment/README.md`](../deployment/README.md) - Guide deployment
 - [`justfile`](../justfile) - Task runner commands
 ```
+`````

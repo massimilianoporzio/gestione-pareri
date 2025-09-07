@@ -157,7 +157,7 @@ just fix-all
    - `ms-python.black-formatter`
    - `ms-python.isort`
    - `ms-python.pylint`
-2. Controlla configurazione in `.vscode/settings.json`
+1. Controlla configurazione in `.vscode/settings.json`
 
 ### Problema: "Errori non evidenziati"
 

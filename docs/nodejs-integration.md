@@ -106,7 +106,7 @@ personalizzati:
 
 ```css
 /* Solo questa riga è essenziale! Tailwind v4 gestisce tutto automaticamente */
-@import 'tailwindcss';
+@import "tailwindcss";
 /*
 ESEMPI OPZIONALI - Componenti personalizzati per Django
 Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue necessità
@@ -216,7 +216,7 @@ make deploy
 
 ## 📁 Struttura File Essenziale
 
-```
+```markdown
 deploy-django/
 ├── src/
 │   ├── static/
@@ -294,7 +294,7 @@ npm install --save-dev eslint
 npm install --save-dev prettier
 ```
 
-## **💡 Configurazioni**: Tutte le configurazioni (gitignore, pre-commit, VS Code) sono già predisposte per supportare questi strumenti
+## **💡 Configurazioni**: Tutte le configurazioni sono già predisposte per supportare questi strumenti
 
 🎯 **Tailwind v4 = Semplicità**: Solo CLI, nessun config file, auto-discovery dei template Django! ⚙️ **Template =
 Flessibilità**: Pronto per qualsiasi strumento Node.js futuro!

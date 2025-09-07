@@ -42,10 +42,10 @@ sicurezza e la manutenibilità.
 1. **Per visualizzare i risultati**:
    - Visita la tab "Actions" nel repository GitHub per vedere l'esecuzione dei workflow.
    - Accedi alle dashboard specifiche di SonarCloud e Codacy per analisi dettagliate.
-2. **Per configurare i segreti necessari**:
+1. **Per configurare i segreti necessari**:
    - Per SonarCloud: Aggiungi `SONAR_TOKEN` nelle impostazioni del repository GitHub (Settings > Secrets).
    - Per Codacy: Aggiungi `CODACY_PROJECT_TOKEN` nelle impostazioni del repository.
-3. **Per personalizzare le regole**:
+1. **Per personalizzare le regole**:
    - SonarCloud: Modifica il file `sonar-project.properties`.
    - Codacy: Configura le regole tramite l'interfaccia web di Codacy.
    - CodeQL: Modifica il file di configurazione per ignorare specifici avvisi o personalizzare l'analisi.

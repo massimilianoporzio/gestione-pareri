@@ -3,6 +3,7 @@
         "**/*.md",
         "!**/node_modules/**/*.md",
         "!**/staticfiles/**/*.md",
-        "!**/admin/**/*.md"
+        "!**/admin/**/*.md",
+        "!**/.pytest_cache/**/*.md"
     ]
 }

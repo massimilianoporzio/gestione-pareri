@@ -9,7 +9,7 @@ viene salvato.
 1. Quando salvi un file Python, l'estensione "Run on Save" esegue automaticamente:
    - isort per ordinare gli import
    - lo script `add_docstring.py` che aggiunge una docstring a livello di modulo se non è presente
-2. Lo script analizza il file e aggiunge una docstring in formato standard che include:
+1. Lo script analizza il file e aggiunge una docstring in formato standard che include:
    - Un titolo basato sul nome del file
    - Una descrizione generale delle funzionalità del modulo
 

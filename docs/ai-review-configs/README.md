@@ -5,16 +5,18 @@ Questa directory contiene i file di configurazione per integrare agenti AI per l
 ## 🚀 Quick Setup
 
 1. **Copia i file di configurazione** dalla root del tuo progetto:
-   ```bash
+
+```bash
    cp docs/ai-review-configs/.coderabbit.yml .
    cp docs/ai-review-configs/.sourcery.yaml .
    cp docs/ai-review-configs/ai-review.yml .github/workflows/
    ```
-2. **Installa le GitHub Apps** (nessun token necessario):
+
+1. **Installa le GitHub Apps** (nessun token necessario):
    - [CodeRabbit](https://coderabbit.ai) - Review dettagliate AI
    - [Sourcery](https://sourcery.ai) - Refactoring Python automatico **Nota**: Sourcery funziona tramite GitHub App, non
      tramite GitHub Actions. Una volta installata l'app, analizzerà automaticamente le tue PR.
-3. **Il workflow GitHub Actions** eseguirà:
+1. **Il workflow GitHub Actions** eseguirà:
    - **CodeQL** per analisi di sicurezza
    - **Ruff + Pylint** per quality check locali
    - **Summary automatico** dei risultati
