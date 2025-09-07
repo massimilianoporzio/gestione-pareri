@@ -280,19 +280,15 @@ La ricetta è cross-platform e ignora le directory di dipendenze e cache.
 
 - Nei test, le password hardcoded sono accettabili. Per evitare warning Bandit, aggiungi il commento `# nosec` accanto
   alle stringhe di password:
-
   ```python
   self.password = "testpass123"  # nosec
   user = authenticate(username=self.valid_email, password="wrongpass")  # nosec
   ```
-
 - Negli script che usano `subprocess` in modo sicuro, aggiungi `# nosec` accanto all'import e alle chiamate:
-
   ```python
   import subprocess  # nosec
   result = subprocess.run(cmd_args, ...)  # nosec
   ```
-
   Consulta la documentazione di Bandit per interpretare i risultati:
   [Bandit documentation](https://bandit.readthedocs.io/en/latest/).
 

@@ -1,5 +1,7 @@
 # IIS Reverse Proxy per Django
 
+## 🎯 Overview
+
 [![IIS](https://img.shields.io/badge/IIS-Windows%20Server-blue)](https://www.iis.net/)
 [![Django](https://img.shields.io/badge/Django-5.2.0-green.svg)](https://www.djangoproject.com/) Questa guida spiega
 come configurare **IIS (Internet Information Services)** come reverse proxy per Django in ambienti Windows Server o
@@ -29,24 +31,15 @@ make setup-iis
 
 ### Deploy Completo
 
-```bash
+`````bash
 # Deploy con IIS reverse proxy
 just deploy-intranet
 # Make equivalente
-make deploy-intranet
-```
-
-## 📋 Prerequisiti
-
-### Software Requirements
-
 - **Windows Server 2016+** o **Windows 10/11 Pro**
 - **IIS** installato e configurato
 - **URL Rewrite Module** per IIS
 - **Privilegi amministratore**
-
 ### Installazione IIS
-
 ```powershell
 # Abilita IIS su Windows
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole
@@ -57,11 +50,10 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpCompressionStatic
 
 ### URL Rewrite Module
 
-Scarica e installa da: <https://www.iis.net/downloads/microsoft/url-rewrite>
+Scarica e installa da: <https://www.iis.net/downloads/microsoft/url-rewrite> Scarica e installa da:
+<https://www.iis.net/downloads/microsoft/url-rewrite>
 
 ## ⚙️ Configurazione Manuale
-
-### 1. Configurazione Django
 
 **File: `.env`**
 
@@ -74,25 +66,27 @@ DJANGO_CSRF_TRUSTED_ORIGINS=<http://gestione-pareri.local,<https://gestione-pare
 
 ### 2. Application Pool IIS
 
+````powershell
 ```powershell
 # Crea Application Pool dedicato
 New-WebAppPool -Name "GestionePareri" -Force
 Set-ItemProperty -Path "IIS:\AppPools\GestionePareri" -Name processModel.identityType -Value ApplicationPoolIdentity
 Set-ItemProperty -Path "IIS:\AppPools\GestionePareri" -Name recycling.periodicRestart.time -Value "00:00:00"
-```
+````
 
 ### 3. Sito Web IIS
 
+````powershell
 ```powershell
 # Crea sito web
 New-Website -Name "GestionePareri" -Port 80 -PhysicalPath "C:\inetpub\wwwroot\gestione-pareri" -ApplicationPool "GestionePareri"
 # Configura binding dominio personalizzato
 New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gestione-pareri.local"
-```
+````
 
 ### 4. Web.config
 
-**File: `staticfiles/web.config`**
+**File: `staticfiles/web.config`** **File: `staticfiles/web.config`**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -130,13 +124,15 @@ New-WebBinding -Name "GestionePareri" -Protocol http -Port 80 -HostHeader "gesti
 
 ### 5. DNS/Hosts Configuration
 
-**File: `C:\Windows\System32\drivers\etc\hosts`**
+**File: `C:\Windows\System32\drivers\etc\hosts`** **File: `C:\Windows\System32\drivers\etc\hosts`**
 
 ```
 127.0.0.1    gestione-pareri.local
 ```
 
 ## 🔒 SSL/HTTPS Configuration
+
+### Self-Signed Certificate
 
 ### Self-Signed Certificate
 
@@ -149,15 +145,13 @@ New-WebBinding -Name "GestionePareri" -Protocol https -Port 443 -HostHeader "ges
 
 ### Enterprise Certificate
 
-Per certificati aziendali, consulta il tuo team IT per:
+Per certificati aziendali, consulta il tuo team IT per: Per certificati aziendali, consulta il tuo team IT per:
 
 - **Certificati CA interni**
 - **Wildcard certificates**
 - **Integrazione AD CS** (Active Directory Certificate Services)
 
 ## 🚀 Deployment Workflow
-
-### 1. Preparazione
 
 ```bash
 # Installa dipendenze
@@ -170,41 +164,40 @@ just collectstatic-prod
 
 ### 2. Avvio Django Backend
 
+````bash
 ```bash
 # Avvia server Django per reverse proxy
 just run-uvicorn
 # Server disponibile su <http://127.0.0.1:8000>
-```
+````
 
 ### 3. Test Configuration
 
+````bash
 ```bash
 # Test connettività Django diretto
 curl <http://127.0.0.1:8000>
 # Test reverse proxy IIS
 curl <http://gestione-pareri.local>
-```
+````
 
 ## 📊 Monitoring & Logs
 
 ### Log Locations
 
-- **Django Logs**: `logs/django.log`
-- **IIS Access Logs**: `%SystemDrive%\inetpub\logs\LogFiles`
 - **IIS Error Logs**: `%SystemRoot%\System32\LogFiles\HTTPERR`
 - **Event Viewer**: Windows Logs > Application
 
 ### Performance Monitoring
 
+````powershell
 ```powershell
 # Monitora performance IIS
 Get-Counter -Counter "\Web Service(_Total)\Current Connections"
 Get-Counter -Counter "\Web Service(_Total)\Bytes Total/Sec"
-```
+````
 
 ## 🔧 Troubleshooting
-
-### Problema: "502 Bad Gateway"
 
 **Cause comuni:**
 
@@ -222,7 +215,7 @@ netstat -an | findstr 8000
 
 ### Problema: "File statici non caricano"
 
-**Soluzioni:**
+**Soluzioni:** **Soluzioni:**
 
 ```bash
 # Rigenera file statici
@@ -233,45 +226,28 @@ icacls "staticfiles" /grant "IIS_IUSRS:(OI)(CI)F"
 
 ### Problema: "CSRF token missing or incorrect"
 
-**Verifica configurazione:**
+**Verifica configurazione:** **Verifica configurazione:**
 
 ```env
-# .env
-DJANGO_CSRF_TRUSTED_ORIGINS=<http://gestione-pareri.local,<https://gestione-pareri.loca>l>
-```
-
 ## 🎯 Best Practices
-
 ### Security
-
-- ✅ **Firewall**: Blocca porta 8000 esterna
 - ✅ **HTTPS only**: Redirect HTTP → HTTPS
 - ✅ **Headers security**: X-Frame-Options, CSP
 - ✅ **Updates**: Mantieni IIS e moduli aggiornati
-
-### Performance
-
 - ✅ **Static files**: Serve da IIS, non Django
 - ✅ **Compression**: Abilita compressione IIS
 - ✅ **Caching**: Headers caching per risorse statiche
 - ✅ **Load balancing**: Multiple Django workers
-
-### Maintenance
-
 - ✅ **Backup**: Database e configurazioni
 - ✅ **Monitoring**: Script automated health check
 - ✅ **Logging**: Rotazione log automatica
-- ✅ **Updates**: Processo deployment zero-downtime
-
-## 📚 Risorse Aggiuntive
-
+## 🔗 File Correlati
 - [IIS URL Rewrite Documentation](https://docs.microsoft.com/en-us/iis/extensions/url-rewrite-module/)
 - [Django Deployment Checklist](https://docs.djangoproject.com/en/stable/howto/deployment/checklist/)
 - [Windows Server IIS Best Practices](https://docs.microsoft.com/en-us/iis/)
-
 ## 🔗 File Correlati
-
 - [`deployment/web.config`](../deployment/web.config) - Configurazione IIS
 - [`deployment/setup-iis.ps1`](../deployment/setup-iis.ps1) - Script automatizzazione
 - [`deployment/README.md`](../deployment/README.md) - Guide deployment
 - [`justfile`](../justfile) - Task runner commands
+```

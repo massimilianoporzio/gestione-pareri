@@ -37,10 +37,7 @@ yarn-error.log*
 .yarn
 # .pre-commit-config.yaml - Skip node_modules nei hook
 exclude: |
-    (?x)^(
-        .*node_modules.*|
-        .*\.min\.(js|css)$
-    )$
+    (?x)^(\n        .*node_modules.*|\n        .*\.min\.(js|css)$\n    )$
 # .vscode/settings.json - Esclude da ricerche
 "files.exclude": {
     "node_modules": true
@@ -73,7 +70,7 @@ npm --version  # oppure yarn --version o pnpm --version
 
 ## 🚀 Setup Tailwind CSS v4
 
-### 1. Installa Tailwind CSS CLI
+## 1. Installa Tailwind CSS CLI
 
 ```bash
 # Con npm
@@ -84,14 +81,14 @@ yarn add tailwindcss @tailwindcss/cli
 pnpm add tailwindcss @tailwindcss/cli
 ```
 
-### 2. Crea il file CSS di input
+## 2. Crea il file CSS di input
 
 ```bash
 # Crea il file CSS sorgente
 echo '@import "tailwindcss";' > src/static/css/style.css
 ```
 
-### 3. Compila il CSS per la prima volta
+## 3. Compila il CSS per la prima volta
 
 ```bash
 # Con npm
@@ -109,9 +106,9 @@ personalizzati:
 
 ```css
 /* Solo questa riga è essenziale! Tailwind v4 gestisce tutto automaticamente */
-@import "tailwindcss";
+@import 'tailwindcss';
 /*
-🎯 ESEMPI OPZIONALI - Componenti personalizzati per Django
+ESEMPI OPZIONALI - Componenti personalizzati per Django
 Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue necessità
 */
 @layer components {
@@ -141,14 +138,14 @@ Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue nece
   }
 }
 /*
-💡 SUGGERIMENTO: Puoi anche usare solo classi utility direttamente nei template
+SUGGERIMENTO: Puoi anche usare solo classi utility direttamente nei template
 senza definire componenti personalizzati - dipende dalle tue preferenze!
 */
 ```
 
 ## ⚙️ Comandi Tailwind CLI Essenziali
 
-### Build per Sviluppo (con watch)
+## Build per Sviluppo (con watch)
 
 ```bash
 # Ricompila automaticamente quando cambi i template Django
@@ -159,7 +156,7 @@ yarn @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --watch
 ```
 
-### Build per Produzione (minificato)
+## Build per Produzione (minificato)
 
 ```bash
 # Build ottimizzato per produzione
@@ -178,22 +175,19 @@ Includi il CSS compilato nei tuoi template Django:
 <!-- src/templates/base.html -->
 {% load static %}
 <!doctype html>
-<html lang="it">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Django + Tailwind v4{% endblock %}</title>
-    <!-- Includi il CSS compilato da Tailwind -->
-    <link href="{% static 'css/tailwind.css' %}" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <title>{% block title %}Deploy Django{% endblock %}</title>
+    <!-- Tailwind CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <!-- Webpack Bundle CSS -->
+    <link href="{% static 'dist/styles.css' %}" rel="stylesheet" />
   </head>
-  <body>
-    <!-- I tuoi template possono usare classi Tailwind -->
-    <div class="container mx-auto px-4 py-8">
-      <h1 class="text-3xl font-bold text-gray-900">Django + Tailwind v4</h1>
-      {% if messages %} {% for message in messages %}
-      <div class="django-messages {{ message.tags }}">{{ message }}</div>
-      {% endfor %} {% endif %} {% block content %}{% endblock %}
-    </div>
+  <body class="bg-gray-100">
+    {% block content %}{% endblock %}
+    <!-- Webpack Bundle JS -->
+    <script src="{% static 'dist/bundle.js' %}"></script>
   </body>
 </html>
 ```

@@ -19,9 +19,8 @@ Consulta la guida [Environments Guide](../../docs/environments-guide.md) e la se
 Consulta anche:
 
 - [Environments Guide](../../docs/environments-guide.md)
-- [Database Security](../../docs/database-security.md)
-
-Questa directory contiene script per il deployment in produzione usando diversi server WSGI.
+- [Database Security](../../docs/database-security.md) Questa directory contiene script per il deployment in produzione
+  usando diversi server WSGI.
 
 ## � Gestione File Statici
 
@@ -72,13 +71,11 @@ make collectstatic-prod
 ### Struttura Directory Produzione
 
 ```text
-
 project/
 ├── src/static/          # File statici dell'app
 ├── staticfiles/         # File raccolti per produzione (auto-generati)
 ├── media/              # File caricati dagli utenti
 └── mediafiles/         # Media files per produzione
-
 ```
 
 ## 🎯 Deployment Step-by-Step

@@ -1,6 +1,6 @@
-"""Test Init Groups Permissions Cov module.
+"""Test Init Groups Permissions module.
 
-Questo modulo fornisce funzionalità per test init groups permissions cov.
+Questo modulo fornisce funzionalità per test init groups permissions.
 """
 
 from io import StringIO
@@ -14,6 +14,24 @@ from accounts.management.commands.init_groups_permissions import Command
 
 
 class InitGroupsPermissionsCoverageTests(TestCase):
+    """Test suite for InitGroupsPermissionsCoverageTests."""
+
+    def test_create_full_access_group_else_branch(self):
+        """Test che copre il ramo else quando il gruppo esiste già (righe 61-65)."""
+        from io import StringIO
+
+        from django.contrib.auth.models import Group
+
+        from accounts.management.commands.init_groups_permissions import Command
+
+        # Assicurati che il gruppo esista già
+        Group.objects.get_or_create(name="Full Access Admin")
+        cmd = Command()
+        cmd.stdout = StringIO()
+        cmd._create_full_access_group()
+        output = cmd.stdout.getvalue()
+        assert "già esistente" in output
+
     """Test suite for InitGroupsPermissionsCoverageTests."""
 
     def setUp(self):

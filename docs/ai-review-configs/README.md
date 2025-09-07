@@ -5,13 +5,11 @@ Questa directory contiene i file di configurazione per integrare agenti AI per l
 ## 🚀 Quick Setup
 
 1. **Copia i file di configurazione** dalla root del tuo progetto:
-
    ```bash
    cp docs/ai-review-configs/.coderabbit.yml .
    cp docs/ai-review-configs/.sourcery.yaml .
    cp docs/ai-review-configs/ai-review.yml .github/workflows/
    ```
-
 2. **Installa le GitHub Apps** (nessun token necessario):
    - [CodeRabbit](https://coderabbit.ai) - Review dettagliate AI
    - [Sourcery](https://sourcery.ai) - Refactoring Python automatico **Nota**: Sourcery funziona tramite GitHub App, non
@@ -45,3 +43,17 @@ Ogni file include commenti dettagliati per personalizzare:
 4. **Confronta** le tue decisioni con i suggerimenti AI
 5. **Impara** nuovi pattern e best practices Questa configurazione ti darà un "secondo parere" automatico su ogni
    modifica, aiutandoti a migliorare la qualità del codice e imparare nuove tecniche! 🚀
+
+```bash
+# Esegui come Administrator
+.\scripts\deployment\production-deploy.ps1 `
+  -DeployPath "E:\prod\gestione-pareri" `
+  -ServerIP "192.168.1.100" `
+  -SiteName "GestionePareri" `
+  -AppPoolName "GestionePareriPool"
+```
+
+```powershell
+cd E:\prod\gestione-pareri
+uv run python src/manage.py createsuperuser --settings=home.settings.prod
+```

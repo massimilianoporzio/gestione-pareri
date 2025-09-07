@@ -10,7 +10,7 @@
 
 ## 🎯 Fase 1: Installazione Iniziale (UNA VOLTA SOLA)
 
-```powershell
+```bash
 # Esegui come Administrator
 .\scripts\deployment\production-deploy.ps1 `
   -DeployPath "E:\prod\gestione-pareri" `
