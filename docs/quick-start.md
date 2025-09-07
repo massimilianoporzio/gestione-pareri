@@ -77,7 +77,7 @@ Vai a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) nel tuo browser.
 ```bash
    cd src
    python manage.py startapp myapp
-   ```
+```
 
 1. **Aggiungi l'app a `INSTALLED_APPS`** in `src/home/settings.py`:
 
@@ -86,7 +86,7 @@ Vai a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) nel tuo browser.
        # ...
        'myapp',
    ]
-   ```
+```
 
 1. **Definisci modelli** in `src/myapp/models.py`
 2. **Crea e applica migrazioni**:
@@ -94,7 +94,7 @@ Vai a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) nel tuo browser.
 ```bash
    python manage.py makemigrations
    python manage.py migrate
-   ```
+```
 
 1. **Crea viste** in `src/myapp/views.py`
 2. **Configura URL** in `src/myapp/urls.py` e `src/home/urls.py`
@@ -104,11 +104,11 @@ Vai a [http://127.0.0.1:8000/](http://127.0.0.1:8000/) nel tuo browser.
 
 ```bash
    python manage.py test
-   ```
+```
 
 1. **Commit delle modifiche**:
 
-```bash
+````bash
     git add .
     git commit -m "Descrizione delle modifiche"
     ```
@@ -130,7 +130,7 @@ python manage.py collectstatic
 python manage.py test
 # Esegui manualmente pre-commit
 pre-commit run --all-files
-```
+````
 
 ## 📚 Risorse utili
 

@@ -199,13 +199,13 @@ e sicurezza.
 
 ```bash
    uv add --dev coverage
-   ```
+```
 
 1. Esegui i test con coverage:
 
 ```bash
    just coverage
-   ```
+```
 
 1. Visualizza il report:
    - Testo: `coverage report`

@@ -292,7 +292,7 @@ La ricetta è cross-platform e ignora le directory di dipendenze e cache.
   import subprocess  # nosec
   result = subprocess.run(cmd_args, ...)  # nosec
   ```
-  
+
   Consulta la documentazione di Bandit per interpretare i risultati:
   [Bandit documentation](https://bandit.readthedocs.io/en/latest/).
 

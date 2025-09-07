@@ -57,7 +57,7 @@
 ```powershell
    cd E:\prod\gestione-pareri
    uv run python src/manage.py createsuperuser --settings=home.settings.prod
-   ```
+```
 
 1. **Verifica logs**:
    - IIS Logs: C:\inetpub\logs\LogFiles\

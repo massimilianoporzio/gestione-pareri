@@ -219,15 +219,15 @@ make deploy
 ```markdown
 deploy-django/
 ├── src/
-│   ├── static/
-│   │   └── css/
-│   │       ├── style.css          # Input: @import "tailwindcss"
-│   │       └── tailwind.css       # Output: CSS compilato
-│   ├── templates/                 # Template Django (auto-rilevati da Tailwind v4)
-│   │   └── base.html
-│   └── manage.py
-├── node_modules/                  # Dipendenze Tailwind (auto-generato)
-└── package.json                   # Solo per installare Tailwind CLI
+│ ├── static/
+│ │ └── css/
+│ │ ├── style.css # Input: @import "tailwindcss"
+│ │ └── tailwind.css # Output: CSS compilato
+│ ├── templates/ # Template Django (auto-rilevati da Tailwind v4)
+│ │ └── base.html
+│ └── manage.py
+├── node_modules/ # Dipendenze Tailwind (auto-generato)
+└── package.json # Solo per installare Tailwind CLI
 ```
 
 **File necessari:**
