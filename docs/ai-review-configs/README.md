@@ -10,7 +10,7 @@ Questa directory contiene i file di configurazione per integrare agenti AI per l
    cp docs/ai-review-configs/.coderabbit.yml .
    cp docs/ai-review-configs/.sourcery.yaml .
    cp docs/ai-review-configs/ai-review.yml .github/workflows/
-   ```
+```
 
 1. **Installa le GitHub Apps** (nessun token necessario):
    - [CodeRabbit](https://coderabbit.ai) - Review dettagliate AI

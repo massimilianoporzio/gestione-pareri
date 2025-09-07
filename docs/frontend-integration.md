@@ -39,7 +39,7 @@ npm init -y
 npm install --save-dev webpack webpack-cli webpack-dev-server
 npm install --save-dev @babel/core @babel/preset-env babel-loader
 npm install --save-dev css-loader mini-css-extract-plugin
-````
+```
 
 ### 2. Tailwind CSS Setup
 
@@ -48,7 +48,7 @@ npm install --save-dev css-loader mini-css-extract-plugin
 npm install --save-dev tailwindcss @tailwindcss/cli autoprefixer postcss
 # Inizializza configurazione
 npx tailwindcss init -p
-````
+```
 
 **File: `tailwind.config.js`**
 
@@ -121,23 +121,23 @@ module.exports = {
 
 ```markdown
 deploy-django/
-├── src/                     # Django source code
-│   ├── static/
-│   │   ├── css/
-│   │   │   ├── input.css   # Tailwind source
-│   │   │   └── style.css   # Tailwind compiled
-│   │   ├── js/
-│   │   │   ├── main.js     # Entry point
-│   │   │   └── components/ # JS modules
-│   │   └── dist/           # Webpack outputs
-│   │       ├── bundle.js
-│   │       └── styles.css
-├── node_modules/           # Node.js deps (ignored)
-├── package.json            # Node.js config
-├── webpack.config.js       # Build config
-├── tailwind.config.js      # Tailwind config
-├── postcss.config.js       # PostCSS config
-└── staticfiles/            # Django collected statics
+├── src/ # Django source code
+│ ├── static/
+│ │ ├── css/
+│ │ │ ├── input.css # Tailwind source
+│ │ │ └── style.css # Tailwind compiled
+│ │ ├── js/
+│ │ │ ├── main.js # Entry point
+│ │ │ └── components/ # JS modules
+│ │ └── dist/ # Webpack outputs
+│ │ ├── bundle.js
+│ │ └── styles.css
+├── node_modules/ # Node.js deps (ignored)
+├── package.json # Node.js config
+├── webpack.config.js # Build config
+├── tailwind.config.js # Tailwind config
+├── postcss.config.js # PostCSS config
+└── staticfiles/ # Django collected statics
 ```
 
 ## 🔄 Workflow di Sviluppo
