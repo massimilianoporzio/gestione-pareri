@@ -1,4 +1,4 @@
-# � Deploy Django - Template Repository
+# 🚀 Deploy Django - Template Repository
 
 ## Indice
 
@@ -25,12 +25,11 @@
 - [ ] Usa password complesse per database
 - [ ] Configura backup automatici
 - [ ] Monitora metriche e log
-- [ ] Usa secrets e variabili d'ambiente, mai hardcoded
-
-**Come cambio ambiente?** Usa i comandi `just check-env-<env>` e modifica le variabili in `.env`. **Come gestisco le
-secrets?** Vedi la guida [Database Security](docs/database-security.md) e
-[Safety CLI](docs/database-security.md#come-usare-safety-cli-e-api-key). **Come risolvo errori act/CodeQL?** Consulta la
-sezione troubleshooting in [docs/environments-guide.md](docs/environments-guide.md).
+- [ ] Usa secrets e variabili d'ambiente, mai hardcoded **Come cambio ambiente?** Usa i comandi `just check-env-<env>` e
+      modifica le variabili in `.env`. **Come gestisco le secrets?** Vedi la guida
+      [Database Security](docs/database-security.md) e
+      [Safety CLI](docs/database-security.md#come-usare-safety-cli-e-api-key). **Come risolvo errori act/CodeQL?**
+      Consulta la sezione troubleshooting in [docs/environments-guide.md](docs/environments-guide.md).
 
 ## Contributi & Support
 
@@ -42,7 +41,13 @@ Consulta anche:
 npm install --save-dev @tailwindcss/cli autoprefixer
 npm install --save-dev webpack webpack-cli
 npm install --save-dev @babel/core @babel/preset-env
-# 3. Build script esempio per package.json
+```
+
+```bash
+# (empty)
+```
+
+````json
 {
   "scripts": {
     "build": "webpack --mode production",
@@ -50,7 +55,7 @@ npm install --save-dev @babel/core @babel/preset-env
     "css": "tailwindcss -i src/static/css/input.css -o src/static/css/style.css"
   }
 }
-```
+````
 
 [![Prettier](https://img.shields.io/badge/prettier-markdown-ff69b4)](https://prettier.io/)
 [![markdownlint](https://img.shields.io/badge/markdownlint-enabled-brightgreen)](https://github.com/DavidAnson/markdownlint)
@@ -115,50 +120,23 @@ npm install --save-dev @babel/core @babel/preset-env
 4. Clicca su **"Create repository from template"**
 5. Una volta creato, clona il nuovo repository sulla tua macchina:
 
-git clone <https://github.com/tuousername/tuo-nuovo-repo.git>
-cd tuo-nuovo-repo
-
-````
-
-## Requisiti
-
-- Python 3.13+
-- [uv](https://github.com/astral-sh/uv) - Gestore di pacchetti Python veloce e moderno
-- Visual Studio Code (consigliato per l'integrazione automatica)
-
-## 🚀 Quick Links
-
 ```bash
-npm install --save-dev @tailwindcss/cli autoprefixer
-npm install --save-dev webpack webpack-cli
-npm install --save-dev @babel/core @babel/preset-env
-# 3. Build script esempio per package.json
-{
-  "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development --watch",
-    "css": "tailwindcss -i src/static/css/input.css -o src/static/css/style.css"
-  }
-}
-````
+git clone <https://github.com/tuousername/tuo-nuovo-repo.git>
+```
 
-### 📋 **Setup Rapido**
+- [Setup iniziale](#setup-iniziale) - Configurazione progetto
+- [Task Runner Just](#task-runner-just) - Comandi moderni e cross-platform
+- [Integrazione VS Code](#vs-code-integration) - Configurazione editor
 
-- [Setup iniziale](#-setup-iniziale) - Configurazione progetto
-- [Task Runner Just](#-task-runner-just) - Comandi moderni e cross-platform
-- [Integrazione VS Code](#-vs-code-integration) - Configurazione editor
+### 🌐 Deployment Guides
 
-### 🌐 **Deployment Guides**
-
-- [🪟 IIS Deployment](docs/iis-deployment.md) - Windows Server & Intranet aziendale
-- [🐧 Nginx Deployment](docs/nginx-deployment.md) - Linux/macOS Production
 - [⚡ Uvicorn Integration](docs/uvicorn-integration.md) - ASGI server configuration
 
-### 📖 **Documentazione Just & Quality**
+### 📖 Documentazione Just & Quality
 
 - [📋 Just Commands](docs/just.md) - Task runner moderno (47 comandi)
-- [�️ Database Setup](docs/database-setup.md) - PostgreSQL multi-ambiente
-- [�🔧 Environment Variables](docs/environment-variables.md) - Configurazione ambienti
+- [🗄️ Database Setup](docs/database-setup.md) - PostgreSQL multi-ambiente
+- [🔧 Environment Variables](docs/environment-variables.md) - Configurazione ambienti
 - [📊 Code Quality](tools/quality_dashboard.md) - Pipeline qualità locale
 - [🔍 VS Code Setup](docs/vscode-configuration.md) - Configurazione editore
 
@@ -171,15 +149,15 @@ word splitting), usa **shfmt**.
 
 **macOS (Homebrew):**
 
-````bash
-brew install shfmt
 ```bash
+brew install shfmt
+```
 
 **Linux (Debian/Ubuntu):**
 
 ```bash
 sudo apt-get install shfmt
-````
+```
 
 **Windows:**
 
@@ -187,9 +165,9 @@ sudo apt-get install shfmt
 - Aggiungi la cartella del binario a PATH
 - Oppure usa [Scoop](https://scoop.sh/):
 
-````powershell
+```powershell
 scoop install shfmt
-```bash
+```
 
 **Manuale (tutti gli OS):**
 
@@ -198,7 +176,7 @@ scoop install shfmt
 
 ```bash
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
-```bash
+```
 
 ### Utilizzo
 
@@ -206,7 +184,7 @@ Correggi tutti gli script bash di deployment:
 
 ```bash
 shfmt -w scripts/deployment/*.sh
-````
+```
 
 Puoi anche usare Just:
 
@@ -271,6 +249,7 @@ chmod +x scripts/setup.sh  # Rendi lo script eseguibile
 
 5. **Importante**: Se desideri usare un modello User personalizzato, crealo **prima** di eseguire le migrazioni.
    Consulta la [guida rapida](docs/quick-start.md) per maggiori dettagli.
+
 6. Avvia il server di sviluppo:
 
    ```bash
@@ -283,7 +262,6 @@ chmod +x scripts/setup.sh  # Rendi lo script eseguibile
 
 ## 💻 Esecuzione di comandi Python
 
-````text
 Questo template utilizza [uv](https://github.com/astral-sh/uv) come gestore di pacchetti e ambiente virtuale. Ci sono
 due modi per eseguire comandi Python:
 
@@ -299,15 +277,21 @@ uv run python src/manage.py migrate
 uv run python src/manage.py runserver
 # Eseguire altri pacchetti Python
 uv run black .
+```
+
+### 2. Attivando manualmente l'ambiente virtuale
+
+```powershell
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+```
 
 ```bash
-# Windows PowerShell
-\.venv\Scripts\Activate.ps1
 # Linux/macOS
 source .venv/bin/activate
 # Poi esegui i comandi normalmente
 python src/manage.py runserver
-````
+```
 
 > **Nota**: Gli script nella cartella `examples/` sono progettati per funzionare con entrambi gli approcci.
 
@@ -340,11 +324,11 @@ Questo template usa **Just** come task runner moderno per un'esperienza di svilu
 # Mostra help colorato con emoji
 just
 # Esempi di comandi più utilizzati
-just setup           # � Setup completo progetto
-just dev             # 🔥 Server sviluppo con hot-reload
-just fix-all         # ⭐ Pipeline qualità completa
-just deploy          # 🎯 Deploy automatico multi-platform
-just stats           # 📊 Statistiche progetto
+just setup           #  Setup completo progetto
+just dev             # 25 Server sviluppo con hot-reload
+just fix-all         # 50 Pipeline qualità completa
+just deploy          # 0f Deploy automatico multi-platform
+just stats           # dcca Statistiche progetto
 ```
 
 **Perché Just invece di Make?**
@@ -360,9 +344,12 @@ just stats           # 📊 Statistiche progetto
 
 Se non hai Just installato:
 
-```bash
+```powershell
 # Windows (Chocolatey)
 choco install just
+```
+
+```bash
 # macOS (Homebrew)
 brew install just
 # Linux (Snap)
@@ -384,9 +371,12 @@ Il template include un sistema di logging avanzato:
 - **Directory dei log personalizzabile**: Puoi specificare una directory personalizzata per i log tramite la variabile
   d'ambiente `DJANGO_LOGS_DIR`
 
-```bash
+```powershell
 # Windows PowerShell
 $env:DJANGO_LOGS_DIR = "E:\percorso\personalizzato\logs"
+```
+
+```bash
 # macOS/Linux
 export DJANGO_LOGS_DIR="/percorso/personalizzato/logs"
 # Verifica configurazione
@@ -538,9 +528,16 @@ CI** - Test automatici su push 📊 **Quality gates** - Linting e formattazione
 
 ## 📁 Project Structure
 
-deploy-django/ ├── docs/ # 📖 Guide specializzate ├── scripts/deployment/ # 🚀 Scripts deployment ├── src/home/ # 🏠
-Django app ├── .vscode/ # ⚙️ VS Code config ├── justfile # ⚡ Task runner ├── justfile # ⚡ Task runner moderno └──
-pyproject.toml # 🐍 Python config
+```text
+deploy-django/
+├── docs/                    # 📖 Guide specializzate
+├── scripts/deployment/      # 🚀 Scripts deployment
+├── src/home/                # 🏠 Django app
+├── .vscode/                 # ⚙️ VS Code config
+├── justfile                 # ⚡ Task runner
+├── justfile                 # ⚡ Task runner moderno
+└── pyproject.toml           # 🐍 Python config
+```
 
 ```text
 deploy-django/
@@ -600,7 +597,6 @@ push e pull request.
 ### Esecuzione manuale locale
 
 - Puoi comunque eseguire Safety localmente con:
-
   ```bash
   uv sync
   just safety-scan
@@ -643,16 +639,13 @@ Questo progetto usa **Dependabot** per mantenere aggiornate le dipendenze Python
 ### Uso in locale
 
 - Per usare Safety CLI localmente, esegui:
-
   ```bash
   safety login
   # oppure
   safety auth login
   ```
-
 - Incolla la tua API Key quando richiesto.
 - Ora puoi eseguire:
-
   ```bash
   uv run safety scan --output screen
   ```

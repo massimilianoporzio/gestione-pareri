@@ -29,27 +29,23 @@ deploy-django/
 └── package.json                   # Solo per installare Tailwind CLI
 ```
 
-npm install tailwindcss @tailwindcss/cli
-
-# Con yarn
-
-yarn add tailwindcss @tailwindcss/cli
-
-# Con pnpm
-
-pnpm add tailwindcss @tailwindcss/cli
-
-````
-
-### 2. Crea il file CSS di input
+Installa Tailwind CSS CLI:
 
 ```bash
+npm install tailwindcss @tailwindcss/cli
+# Con yarn
+yarn add tailwindcss @tailwindcss/cli
+# Con pnpm
+pnpm add tailwindcss @tailwindcss/cli
+```
+
+## 2. Crea il file CSS di input
+
+````bash
 # Crea il file CSS sorgente
 echo '@import "tailwindcss";' > src/static/css/style.css
-````
-
-### 3. Compila il CSS per la prima volta
-
+```bash
+## 3. Compila il CSS per la prima volta
 ```bash
 # Con npm
 npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
@@ -57,7 +53,7 @@ npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css 
 yarn @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
 # Con pnpm
 pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --minify
-```
+````
 
 ## 🎨 File CSS di Input (Opzionale)
 
@@ -66,9 +62,9 @@ personalizzati:
 
 ```css
 /* Solo questa riga è essenziale! Tailwind v4 gestisce tutto automaticamente */
-@import "tailwindcss";
+@import 'tailwindcss';
 /*
-🎯 ESEMPI OPZIONALI - Componenti personalizzati per Django
+ESEMPI OPZIONALI - Componenti personalizzati per Django
 Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue necessità
 */
 @layer components {
@@ -98,14 +94,14 @@ Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue nece
   }
 }
 /*
-💡 SUGGERIMENTO: Puoi anche usare solo classi utility direttamente nei template
+SUGGERIMENTO: Puoi anche usare solo classi utility direttamente nei template
 senza definire componenti personalizzati - dipende dalle tue preferenze!
 */
 ```
 
 ## ⚙️ Comandi Tailwind CLI Essenziali
 
-### Build per Sviluppo (con watch)
+## Build per Sviluppo (con watch)
 
 ```bash
 # Ricompila automaticamente quando cambi i template Django
@@ -116,7 +112,7 @@ yarn @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --watch
 ```
 
-### Build per Produzione (minificato)
+## Build per Produzione (minificato)
 
 ```bash
 # Build ottimizzato per produzione
@@ -157,7 +153,7 @@ Includi il CSS compilato nei tuoi template Django:
 
 ## 🔄 Workflow Sviluppo
 
-### Durante lo sviluppo (2 terminali)
+## Durante lo sviluppo (2 terminali)
 
 ```bash
 # Terminal 1: Django server
@@ -166,7 +162,7 @@ make run-server
 npx @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --watch
 ```
 
-### Per produzione
+## Per produzione
 
 ```bash
 # 1. Build CSS ottimizzato

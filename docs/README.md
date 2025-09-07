@@ -196,17 +196,13 @@ e sicurezza.
 ### Come si usa
 
 1. Installa coverage:
-
    ```bash
    uv add --dev coverage
    ```
-
 2. Esegui i test con coverage:
-
    ```bash
    just coverage
    ```
-
 3. Visualizza il report:
    - Testo: `coverage report`
    - HTML: `coverage html` (generato in `htmlcov/index.html`)
@@ -223,3 +219,55 @@ e sicurezza.
 - Usa il report HTML per individuare facilmente le righe non coperte.
   > **⚠️ IMPORTANTE**: Prima di ogni deploy in produzione, tutti i test devono passare. La documentazione testing è
   > **OBBLIGATORIA** per deployment su IIS in ambiente ospedaliero.
+
+## 📦 Guida Installazione TailwindCSS e Strumenti Frontend
+
+Per configurare TailwindCSS e gli strumenti frontend necessari, segui questi passaggi:
+
+### 1. Installa le Dipendenze Necessarie
+
+Esegui questi comandi nella radice del tuo progetto:
+
+```bash
+npm install --save-dev @tailwindcss/cli autoprefixer
+npm install --save-dev webpack webpack-cli
+npm install --save-dev @babel/core @babel/preset-env
+```
+
+### 2. Configura i Comandi Nella tua `package.json`
+
+Aggiungi questi script alla sezione `"scripts"` del tuo file `package.json`:
+
+```json
+{
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "css": "tailwindcss -i src/static/css/input.css -o src/static/css/style.css"
+  }
+}
+```
+
+### 3. Esegui la Build e Avvia il Dev Server
+
+Usa questi comandi per costruire il progetto e avviare il server di sviluppo:
+
+```bash
+# Costruisci il progetto per la produzione
+npm run build
+
+# Avvia il server di sviluppo con watch
+npm run dev
+```
+
+### 4. Compila i Fogli di Stile con TailwindCSS
+
+Esegui questo comando per generare il foglio di stile finale con TailwindCSS:
+
+```bash
+npm run css
+```
+
+### 5. Verifica la Configurazione
+
+Controlla che non ci siano errori nella console e che il tuo progetto si compili correttamente.

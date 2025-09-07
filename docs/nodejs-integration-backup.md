@@ -24,7 +24,7 @@ npm --version  # oppure yarn --version o pnpm --version
 
 ## 🚀 Setup Tailwind CSS v4
 
-### 1. Installa Tailwind CSS CLI
+## 1. Installa Tailwind CSS CLI
 
 ```bash
 # Con npm
@@ -35,14 +35,14 @@ yarn add tailwindcss @tailwindcss/cli
 pnpm add tailwindcss @tailwindcss/cli
 ```
 
-### 2. Crea il file CSS di input
+## 2. Crea il file CSS di input
 
 ```bash
 # Crea il file CSS sorgente
 echo '@import "tailwindcss";' > src/static/css/style.css
 ```
 
-### 3. Compila il CSS per la prima volta
+## 3. Compila il CSS per la prima volta
 
 ```bash
 # Con npm
@@ -60,9 +60,9 @@ personalizzati:
 
 ```css
 /* Solo questa riga è essenziale! Tailwind v4 gestisce tutto automaticamente */
-@import "tailwindcss";
+@import 'tailwindcss';
 /*
-🎯 ESEMPI OPZIONALI - Componenti personalizzati per Django
+ESEMPI OPZIONALI - Componenti personalizzati per Django
 Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue necessità
 */
 @layer components {
@@ -92,12 +92,11 @@ Puoi personalizzare questi esempi o creare i tuoi componenti secondo le tue nece
   }
 }
 /*
-💡 SUGGERIMENTO: Puoi anche usare solo classi utility direttamente nei template
+SUGGERIMENTO: Puoi anche usare solo classi utility direttamente nei template
 senza definire componenti personalizzati - dipende dalle tue preferenze!
 */
 ```
 
-````
 ## 🔗 Inclusione nei Template Django
 Includi il CSS compilato nei tuoi template Django:
 ```html
@@ -150,7 +149,7 @@ Includi il CSS compilato nei tuoi template Django:
 
 ## ⚙️ Comandi Tailwind CLI Essenziali
 
-### Build per Sviluppo (con watch)
+## Build per Sviluppo (con watch)
 
 ```bash
 # Ricompila automaticamente quando cambi i template Django
@@ -161,7 +160,7 @@ yarn @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css --watch
 ```
 
-### Build per Produzione (minificato)
+## Build per Produzione (minificato)
 
 ```bash
 # Build ottimizzato per produzione
@@ -204,15 +203,11 @@ pnpm @tailwindcss/cli -i src/static/css/style.css -o src/static/css/tailwind.css
 <form method="post" class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
   {% csrf_token %}
   <div class="mb-4">
-    <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-      Nome
-    </label>
+    <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2"> Nome </label>
     {{ form.name|add_class:"form-input" }}
   </div>
   <div class="mb-6">
-    <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-      Email
-    </label>
+    <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2"> Email </label>
     {{ form.email|add_class:"form-input" }}
   </div>
   <button type="submit" class="btn-primary w-full">Invia</button>
@@ -308,7 +303,6 @@ make deploy
 ## 📁 Struttura File Essenziale
 
 ```
-
 deploy-django/
 ├── src/
 │   ├── static/
@@ -320,7 +314,6 @@ deploy-django/
 │   └── manage.py
 ├── node_modules/                  # Dipendenze Tailwind (auto-generato)
 └── package.json                   # Solo per installare Tailwind CLI
-
 ```
 
 **File necessari:**
@@ -444,7 +437,7 @@ ls -la src/static/dist/
 
 ```css
 /* src/static/css/style.css - Approccio v4 */
-@import "tailwindcss";
+@import 'tailwindcss';
 /*
 🎯 ESEMPI di componenti Django-specific
 Personalizza questi esempi secondo il tuo design system
@@ -531,14 +524,10 @@ direttamente le classi Tailwind nei template Django per massima flessibilità
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       {% block content %}
       <div class="px-4 py-6 sm:px-0">
-        <div
-          class="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center"
-        >
+        <div class="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
           <div class="text-center">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">🚀 Django + Tailwind CSS v4</h2>
-            <p class="text-gray-600 mb-6">
-              Zero configurazione, auto-discovery, performance ottimizzate
-            </p>
+            <p class="text-gray-600 mb-6">Zero configurazione, auto-discovery, performance ottimizzate</p>
             <button class="btn-primary">Get Started</button>
           </div>
         </div>
@@ -548,9 +537,7 @@ direttamente le classi Tailwind nei template Django per massima flessibilità
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 mt-auto">
       <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-        <p class="text-center text-sm text-gray-500">
-          Template Django con Tailwind CSS v4 - Zero Configuration
-        </p>
+        <p class="text-center text-sm text-gray-500">Template Django con Tailwind CSS v4 - Zero Configuration</p>
       </div>
     </footer>
   </body>

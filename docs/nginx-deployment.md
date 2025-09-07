@@ -17,7 +17,7 @@ come configurare **Nginx** come reverse proxy per Django su Linux e macOS.
 
 ## 🚀 Quick Start
 
-### Installazione Nginx
+## Installazione Nginx
 
 **Ubuntu/Debian:**
 
@@ -44,7 +44,7 @@ brew install nginx
 brew services start nginx
 ```
 
-### Test Installazione
+## Test Installazione
 
 ```bash
 # Verifica stato
@@ -55,7 +55,7 @@ curl <http://localhost>
 
 ## ⚙️ Configurazione Django + Nginx
 
-### 1. Configurazione Django
+## 1. Configurazione Django
 
 **File: `.env`**
 
@@ -72,7 +72,7 @@ DJANGO_STATIC_URL=/static/
 DJANGO_MEDIA_URL=/media/
 ```
 
-### 2. Configurazione Nginx
+## 2. Configurazione Nginx
 
 **File: `/etc/nginx/sites-available/gestione-pareri`**
 
@@ -86,17 +86,21 @@ upstream django_backend {
     # server 127.0.0.1:8001 weight=2;
     # server 127.0.0.1:8002 backup;
 }
+
 # HTTP Server (redirect to HTTPS)
 server {
     listen 80;
     server_name tuodominio.com www.tuodominio.com;
+
     # Redirect HTTP to HTTPS
     return 301 <https://$server_name$request_uri;>
 }
+
 # HTTPS Server (main)
 server {
     listen 443 ssl http2;
     server_name tuodominio.com www.tuodominio.com;
+
     # SSL Configuration
     ssl_certificate /path/to/your/certificate.crt;
     ssl_certificate_key /path/to/your/private.key;
@@ -105,32 +109,39 @@ server {
     ssl_prefer_server_ciphers off;
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 10m;
+
     # Security Headers
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';" always;
+
     # Max file upload size
     client_max_body_size 100M;
+
     # Root directory
     root /path/to/your/project;
+
     # Static files (served by Nginx)
     location /static/ {
         alias /path/to/your/project/staticfiles/;
         expires 1y;
         add_header Cache-Control "public, immutable";
+
         # Gzip compression
         gzip on;
         gzip_vary on;
         gzip_types text/css application/javascript image/svg+xml;
     }
+
     # Media files (user uploads)
     location /media/ {
         alias /path/to/your/project/media/;
         expires 1M;
         add_header Cache-Control "public";
     }
+
     # Django application (reverse proxy)
     location / {
         proxy_pass <http://django_backend;>
@@ -139,35 +150,42 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-Host $host;
+
         # Timeout settings
         proxy_connect_timeout 30s;
         proxy_send_timeout 30s;
         proxy_read_timeout 30s;
+
         # Buffer settings
         proxy_buffer_size 4k;
         proxy_buffers 8 4k;
         proxy_busy_buffers_size 8k;
+
         # WebSocket support (se necessario)
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
     }
+
     # Health check endpoint
     location /health/ {
         proxy_pass <http://django_backend/health/;>
         access_log off;
     }
+
     # Block access to sensitive files
     location ~ /\.(ht|env|git) {
         deny all;
         return 404;
     }
+
     # Favicon
     location = /favicon.ico {
         alias /path/to/your/project/staticfiles/favicon.ico;
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
+
     # Robots.txt
     location = /robots.txt {
         alias /path/to/your/project/staticfiles/robots.txt;
@@ -177,7 +195,7 @@ server {
 }
 ```
 
-### 3. Attivazione Site
+## 3. Attivazione Site
 
 ```bash
 # Abilita configurazione
@@ -190,7 +208,7 @@ sudo systemctl reload nginx
 
 ## 🔒 SSL/TLS con Let's Encrypt
 
-### Installazione Certbot
+## Installazione Certbot
 
 **Ubuntu/Debian:**
 
@@ -204,7 +222,7 @@ sudo apt install certbot python3-certbot-nginx
 sudo dnf install certbot python3-certbot-nginx
 ```
 
-### Genera Certificato
+## Genera Certificato
 
 ```bash
 # Certificato automatico per dominio
@@ -213,7 +231,7 @@ sudo certbot --nginx -d tuodominio.com -d www.tuodominio.com
 sudo certbot certonly --nginx -d tuodominio.com
 ```
 
-### Auto-renewal
+## Auto-renewal
 
 ```bash
 # Test renewal
@@ -224,7 +242,7 @@ echo "0 12 * * * /usr/bin/certbot renew --quiet" | sudo crontab -
 
 ## 🚀 Deployment con Systemd
 
-### 1. Service File Django
+## 1. Service File Django
 
 **File: `/etc/systemd/system/gestione-pareri.service`**
 
@@ -232,6 +250,7 @@ echo "0 12 * * * /usr/bin/certbot renew --quiet" | sudo crontab -
 [Unit]
 Description=Gestione Pareri Django App
 After=network.target
+
 [Service]
 Type=notify
 User=django
@@ -246,11 +265,12 @@ TimeoutStopSec=5
 PrivateTmp=true
 Restart=always
 RestartSec=10
+
 [Install]
 WantedBy=multi-user.target
 ```
 
-### 2. Attivazione Service
+## 2. Attivazione Service
 
 ```bash
 # Ricarica systemd
@@ -264,7 +284,7 @@ sudo systemctl status gestione-pareri
 
 ## 🎯 Task Runner Integration
 
-### Comandi Just/Make
+## Comandi Just/Make
 
 Aggiungi al `justfile`:
 
@@ -303,7 +323,7 @@ status-nginx:
 
 ## 📊 Monitoring & Performance
 
-### Log Analysis
+## Log Analysis
 
 ```bash
 # Log Nginx access
@@ -314,7 +334,7 @@ sudo tail -f /var/log/nginx/error.log
 sudo journalctl -u gestione-pareri -f
 ```
 
-### Performance Tuning
+## Performance Tuning
 
 **Nginx optimizations:**
 
@@ -322,22 +342,25 @@ sudo journalctl -u gestione-pareri -f
 # nginx.conf
 worker_processes auto;
 worker_connections 1024;
+
 # Gzip compression
 gzip on;
 gzip_vary on;
 gzip_min_length 1024;
 gzip_types text/css application/javascript application/json image/svg+xml;
+
 # File caching
 open_file_cache max=1000 inactive=60s;
 open_file_cache_valid 60s;
 ```
 
-### SSL Performance
+## SSL Performance
 
 ```nginx
 # SSL session caching
 ssl_session_cache shared:SSL:50m;
 ssl_session_timeout 1h;
+
 # OCSP stapling
 ssl_stapling on;
 ssl_stapling_verify on;
@@ -345,7 +368,7 @@ ssl_stapling_verify on;
 
 ## 🔧 Troubleshooting
 
-### Problema: "502 Bad Gateway"
+## Problema: "502 Bad Gateway"
 
 ```bash
 # Verifica Django service
@@ -357,7 +380,7 @@ sudo systemctl restart gestione-pareri
 sudo systemctl reload nginx
 ```
 
-### Problema: File statici non caricano
+## Problema: File statici non caricano
 
 ```bash
 # Permissions
@@ -367,7 +390,7 @@ sudo chmod -R 644 /path/to/staticfiles
 python manage.py collectstatic --clear --no-input
 ```
 
-### Debug Configuration
+## Debug Configuration
 
 ```bash
 # Test configurazione Nginx
@@ -380,7 +403,7 @@ sudo netstat -tlnp | grep nginx
 
 ## 🏗️ Load Balancing
 
-### Multiple Django Workers
+## Multiple Django Workers
 
 ```nginx
 upstream django_backend {
@@ -391,7 +414,7 @@ upstream django_backend {
 }
 ```
 
-### Health Checks
+## Health Checks
 
 ```nginx
 location /health/ {

@@ -102,6 +102,12 @@ repos:
       - id: markdownlint-cli2
         name: markdownlint
         types: [markdown]
-        args: ["--config", ".config/.markdownlint-cli2.jsonc"]
+        args:
+          - "**/*.md"
+          - "!**/node_modules/**/*.md"
+          - "!**/staticfiles/**/*.md"
+          - "!**/admin/**/*.md"
+          - "--config"
+          - ".config/.markdownlint-cli2.jsonc"
         exclude: |
           (?x)(^node_modules/.*|^dist/.*|^build/.*|^out/.*|^\.venv/.*|^venv/.*|^__pycache__/.*|^.*\.egg-info/.*|(^|/)migrations/.*|.*\.tmp$|.*\.temp$|\.secrets$|^\.pytest_cache/.*)

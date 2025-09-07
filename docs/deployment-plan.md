@@ -53,12 +53,10 @@
 ## 📊 Post-Installazione
 
 1. **Crea superuser**:
-
    ```powershell
    cd E:\prod\gestione-pareri
    uv run python src/manage.py createsuperuser --settings=home.settings.prod
    ```
-
 2. **Verifica logs**:
    - IIS Logs: C:\inetpub\logs\LogFiles\
    - Django Logs: E:\prod\gestione-pareri\logs\

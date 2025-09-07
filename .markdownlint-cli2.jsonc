@@ -1,0 +1,8 @@
+{
+    "files": [
+        "**/*.md",
+        "!**/node_modules/**/*.md",
+        "!**/staticfiles/**/*.md",
+        "!**/admin/**/*.md"
+    ]
+}
