@@ -23,7 +23,9 @@ class InitGroupsPermissionsCoverageTests(TestCase):
         cmd.stdout = StringIO()
         cmd.style = self.DummyStyle()
         # Crea permesso fittizio
-        Permission.objects.create(codename="view_customuser", name="Can view customuser", content_type_id=1)
+        Permission.objects.create(
+            codename="view_customuser", name="Can view customuser", content_type_id=1
+        )
         # Modifica il gruppo base in modo che abbia il permesso
         # Serve modificare la variabile locale nel metodo: lo facciamo via monkeypatch
         original_method = cmd._create_base_groups
@@ -40,13 +42,23 @@ class InitGroupsPermissionsCoverageTests(TestCase):
             for group_info in base_groups:
                 group, created = Group.objects.get_or_create(name=group_info["name"])
                 if created:
-                    cmd.stdout.write(cmd.style.SUCCESS(f"✅ Gruppo '{group_info['name']}' creato"))
+                    cmd.stdout.write(
+                        cmd.style.SUCCESS(f"✅ Gruppo '{group_info['name']}' creato")
+                    )
                     if group_info["permissions"]:
-                        permissions = Permission.objects.filter(codename__in=group_info["permissions"])
+                        permissions = Permission.objects.filter(
+                            codename__in=group_info["permissions"]
+                        )
                         group.permissions.set(permissions)
-                        cmd.stdout.write(f"🔑 Assegnati {permissions.count()} permessi specifici")
+                        cmd.stdout.write(
+                            f"🔑 Assegnati {permissions.count()} permessi specifici"
+                        )
                 else:
-                    cmd.stdout.write(cmd.style.WARNING(f"ℹ️  Gruppo '{group_info['name']}' già esistente"))
+                    cmd.stdout.write(
+                        cmd.style.WARNING(
+                            f"ℹ️  Gruppo '{group_info['name']}' già esistente"
+                        )
+                    )
 
         cmd._create_base_groups = monkeypatched_create_base_groups
         cmd._create_base_groups()
@@ -63,7 +75,9 @@ class InitGroupsPermissionsCoverageTests(TestCase):
         cmd.stdout = StringIO()
         cmd.style = self.DummyStyle()
         # Crea permesso fittizio
-        Permission.objects.create(codename="view_customuser", name="Can view customuser", content_type_id=1)
+        Permission.objects.create(
+            codename="view_customuser", name="Can view customuser", content_type_id=1
+        )
 
         # Patch il metodo per usare un gruppo base con permessi
         def custom_base_groups():
@@ -84,13 +98,23 @@ class InitGroupsPermissionsCoverageTests(TestCase):
             for group_info in base_groups:
                 group, created = Group.objects.get_or_create(name=group_info["name"])
                 if created:
-                    cmd.stdout.write(cmd.style.SUCCESS(f"✅ Gruppo '{group_info['name']}' creato"))
+                    cmd.stdout.write(
+                        cmd.style.SUCCESS(f"✅ Gruppo '{group_info['name']}' creato")
+                    )
                     if group_info["permissions"]:
-                        permissions = Permission.objects.filter(codename__in=group_info["permissions"])
+                        permissions = Permission.objects.filter(
+                            codename__in=group_info["permissions"]
+                        )
                         group.permissions.set(permissions)
-                        cmd.stdout.write(f"🔑 Assegnati {permissions.count()} permessi specifici")
+                        cmd.stdout.write(
+                            f"🔑 Assegnati {permissions.count()} permessi specifici"
+                        )
                 else:
-                    cmd.stdout.write(cmd.style.WARNING(f"ℹ️  Gruppo '{group_info['name']}' già esistente"))
+                    cmd.stdout.write(
+                        cmd.style.WARNING(
+                            f"ℹ️  Gruppo '{group_info['name']}' già esistente"
+                        )
+                    )
 
         cmd._create_base_groups = patched_create_base_groups
         cmd._create_base_groups()
@@ -202,7 +226,9 @@ class InitGroupsPermissionsCoverageTests(TestCase):
         cmd.stdout = StringIO()
         cmd.style = self.DummyStyle()
         # Simula un errore in _create_full_access_group
-        with patch.object(cmd, "_create_full_access_group", side_effect=Exception("Errore simulato")):
+        with patch.object(
+            cmd, "_create_full_access_group", side_effect=Exception("Errore simulato")
+        ):
             with self.assertRaises(Exception):
                 cmd.handle()
         output = cmd.stdout.getvalue()
@@ -250,7 +276,9 @@ class InitGroupsPermissionsCoverageTests(TestCase):
     def test_assign_specific_permissions_to_base_group(self):
         """Test assign specific permissions to base group."""
         # Crea permesso fittizio
-        Permission.objects.create(codename="view_customuser", name="Can view customuser", content_type_id=1)
+        Permission.objects.create(
+            codename="view_customuser", name="Can view customuser", content_type_id=1
+        )
         cmd = Command()
         cmd.stdout = StringIO()
         # Patch base_groups per includere permessi
@@ -269,7 +297,11 @@ class InitGroupsPermissionsCoverageTests(TestCase):
             ):
                 # Esegui direttamente la logica di assegnazione permessi
                 group, _ = Group.objects.get_or_create(name=base_groups[0]["name"])
-                permissions = Permission.objects.filter(codename__in=base_groups[0]["permissions"])
+                permissions = Permission.objects.filter(
+                    codename__in=base_groups[0]["permissions"]
+                )
                 group.permissions.set(permissions)
-                cmd.stdout.write(f"🔑 Assegnati {permissions.count()} permessi specifici")
+                cmd.stdout.write(
+                    f"🔑 Assegnati {permissions.count()} permessi specifici"
+                )
                 self.assertIn("permessi specifici", cmd.stdout.getvalue())
