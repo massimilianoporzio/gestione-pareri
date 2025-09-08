@@ -1,3 +1,7 @@
+# ricetta default
+@default:
+    just default-{{os()}}
+
 # Coverage con PostgreSQL e pulizia DB
 @coverage-postgres:
     just coverage-postgres-{{os()}}
@@ -52,8 +56,7 @@ django_manage := "uv run src/manage.py"
 
 
 
-default:
-    just default-{{os()}}
+
 
 @default-linux:
     just default-macos
@@ -418,7 +421,7 @@ test-dev-windows:
     cd src; $env:DJANGO_ENV="dev"; uv run manage.py test
 
 # 🧪 Test in ambiente TEST
-test-test:
+@test-test:
     just test-test-{{os()}}
 
 test-test-macos:
