@@ -79,6 +79,7 @@ npm install --save-dev @babel/core @babel/preset-env
 [![Bandit](https://img.shields.io/badge/Bandit-security--scan-blue?logo=python&logoColor=white)](https://bandit.readthedocs.io/en/latest/)
 [![Safety Scan](https://github.com/massimilianoporzio/gestione-pareri/actions/workflows/safety.yml/badge.svg)](https://github.com/massimilianoporzio/gestione-pareri/actions/workflows/safety.yml)
 [![Dependabot](https://img.shields.io/badge/dependabot-enabled-brightgreen?logo=dependabot)](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically)
+[![codecov](https://codecov.io/gh/massimilianoporzio/gestione-pareri/branch/main/graph/badge.svg)](https://codecov.io/gh/massimilianoporzio/gestione-pareri)
 
 ## Documentazione Hub
 
