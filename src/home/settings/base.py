@@ -44,18 +44,38 @@ else:
 SECRET_KEY = config("DJANGO_SECRET_KEY", default=get_random_secret_key())
 
 # Application definition
-INSTALLED_APPS = [
+
+# App di terze parti che vanno caricate prima di Django (se serve)
+THIRD_PARTY_APPS_BEFORE_DJANGO = [
+    # es: "jazzmin",
+]
+
+# App Django core
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Third-party apps
-    "concurrency",
-    # App personalizzate
-    "accounts",
 ]
+
+# App di terze parti
+THIRD_PARTY_APPS = [
+    "concurrency",
+    # es: "cities_light",
+]
+
+# App locali/personalizzate
+LOCAL_APPS = [
+    "accounts",
+    # aggiungi qui le tue altre app
+]
+
+INSTALLED_APPS = (
+    THIRD_PARTY_APPS_BEFORE_DJANGO + DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+)
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

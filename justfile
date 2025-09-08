@@ -72,6 +72,10 @@ default-macos:
     @ printf "\033[32m  just run-staging        🎭 Server sviluppo (STAGING)\033[0m\n";
     @ printf "\033[32m  just run-prod           ⚡ Server sviluppo (PROD)\033[0m\n";
     @ printf "\033[32m  just migrate            📦 Migrazioni database\033[0m\n";
+    @ printf "\033[32m  just migrate-dev        🛠️ Migrazioni database dev\033[0m\n";
+    @ printf "\033[32m  just migrate-test       🧪 Migrazioni database test\033[0m\n";
+    @ printf "\033[32m  just migrate-staging    🎭 Migrazioni database staging\033[0m\n";
+    @ printf "\033[32m  just migrate-prod       🚀 Migrazioni database prod\033[0m\n";
     @ printf "\033[32m  just makemigrations     📝 Crea migrazioni\033[0m\n";
     @ printf "\033[32m  just shell              🐚 Shell Django\033[0m\n";
     @ printf "\033[32m  just test-sqlite        🧪 Test veloce (SQLite, default)\033[0m\n";
@@ -102,6 +106,14 @@ default-macos:
     @ printf "\033[97m  just stats              📊 Statistiche progetto\033[0m\n";
     @ printf "\033[97m  just check-env          🔍 Controllo ambiente\033[0m\n";
     @ printf "\033[97m  just check-env-dev      🔍 Controllo ambiente DEV\033[0m\n";
+    @ printf "\033[97m  just check-env-test     🧪 Controllo ambiente TEST\033[0m\n";
+    @ printf "\033[97m  just check-env-staging  🎭 Controllo ambiente STAGING\033[0m\n";
+    @ printf "\033[97m  just check-env-prod     ⚡ Controllo ambiente PROD\033[0m\n";
+    @ printf "\033[97m  just generate-secret-key 🔑 Genera Django SECRET_KEY\033[0m\n";
+    @ printf "\033[97m  just generate-secret-keys-all 🔐 Genera SECRET_KEY per tutti e 4 gli ambienti\033[0m\n";
+    @ printf "\033[97m  just generate-db-passwords 🔐 Genera password PostgreSQL sicure\033[0m\n";
+    @ printf "\033[97m  just create-db-script   🗄️ Crea script SQL con password reali\033[0m\n";
+    @ printf "\033[97m  just --list             📋 Lista completa comandi\033[0m\n";
 
 default-windows:
     @Write-Host "🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI" -ForegroundColor Magenta;
@@ -109,15 +121,19 @@ default-windows:
     @Write-Host "";
     @Write-Host "📊 DJANGO & DATABASE:" -ForegroundColor Green;
     @Write-Host "  just run-server         🚀 Server di sviluppo Django" -ForegroundColor Green;
-    @Write-Host "  just run-dev            🔧 Server sviluppo (DEV)" -ForegroundColor Green;
+    @Write-Host "  just run-dev            🛠️ Server sviluppo (DEV)" -ForegroundColor Green;
     @Write-Host "  just run-test           🧪 Server sviluppo (TEST)" -ForegroundColor Green;
     @Write-Host "  just run-staging        🎭 Server sviluppo (STAGING)" -ForegroundColor Green;
     @Write-Host "  just run-prod           ⚡ Server sviluppo (PROD)" -ForegroundColor Green;
     @Write-Host "  just migrate            📦 Migrazioni database" -ForegroundColor Green;
+    @Write-Host "  just migrate-dev        🛠️ Migrazioni database dev" -ForegroundColor Green;
+    @Write-Host "  just migrate-test       🧪 Migrazioni database test" -ForegroundColor Green;
+    @Write-Host "  just migrate-staging    🎭 Migrazioni database staging" -ForegroundColor Green;
+    @Write-Host "  just migrate-prod       � Migrazioni database prod" -ForegroundColor Green;
     @Write-Host "  just makemigrations     📝 Crea migrazioni" -ForegroundColor Green;
     @Write-Host "  just shell              🐚 Shell Django" -ForegroundColor Green;
     @Write-Host "  just test               🧪 Esegue test progetto" -ForegroundColor Green;
-    @Write-Host "  just test-dev           🔧 Test ambiente DEV" -ForegroundColor Green;
+    @Write-Host "  just test-dev           🛠️ Test ambiente DEV" -ForegroundColor Green;
     @Write-Host "  just test-test          🧪 Test ambiente TEST" -ForegroundColor Green;
     @Write-Host "  just test-staging       🎭 Test ambiente STAGING" -ForegroundColor Green;
     @Write-Host "  just test-prod          ⚡ Test ambiente PROD" -ForegroundColor Green;
@@ -475,8 +491,71 @@ test-prod-windows:
     cd src; $env:DJANGO_ENV="prod"; uv run manage.py test
 
 # 📦 Migrazioni database
-migrate:
+@migrate:
     just migrate-{{os()}}
+
+migrate-windows:
+    @Write-Host "📦 Migrazione database (Windows)..." -ForegroundColor Green
+    cd src; $env:DJANGO_ENV="dev"; uv run manage.py migrate
+migrate-linux:
+    @ printf "\033[32m📦 Migrazione database (macOS)...\033[0m\n"
+    @ cd src && DJANGO_ENV="dev" uv run manage.py migrate
+migrate-macos:
+    @ printf "\033[32m📦 Migrazione database (Linux)...\033[0m\n"
+    @ cd src && DJANGO_ENV="dev" uv run manage.py migrate
+
+@migrate-test:
+    just migrate-test-{{os()}}
+
+migrate-test-windows:
+    @Write-Host "📦 Migrazione database (Windows)..." -ForegroundColor Green
+    cd src; $env:DJANGO_ENV="test"; uv run manage.py migrate
+migrate-test-linux:
+    @ printf "\033[32m📦 Migrazione database (macOS)...\033[0m\n"
+    @ cd src && DJANGO_ENV="test" uv run manage.py migrate
+migrate-test-macos:
+    @ printf "\033[32m📦 Migrazione database (Linux)...\033[0m\n"
+    @ cd src && DJANGO_ENV="test" uv run manage.py migrate
+
+@migrate-staging:
+    just migrate-staging-{{os()}}
+
+migrate-staging-windows:
+    @Write-Host "📦 Migrazione database (Windows)..." -ForegroundColor Green
+    cd src; $env:DJANGO_ENV="staging"; uv run manage.py migrate
+migrate-staging-linux:
+    @ printf "\033[32m📦 Migrazione database (macOS)...\033[0m\n"
+    @ cd src && DJANGO_ENV="staging" uv run manage.py migrate
+migrate-staging-macos:
+    @ printf "\033[32m📦 Migrazione database (Linux)...\033[0m\n"
+    @ cd src && DJANGO_ENV="staging" uv run manage.py migrate
+
+@migrate-prod:
+    just migrate-prod-{{os()}}
+
+migrate-prod-windows:
+    @Write-Host "📦 Migrazione database (Windows)..." -ForegroundColor Green
+    cd src; $env:DJANGO_ENV="prod"; uv run manage.py migrate
+migrate-prod-linux:
+    @ printf "\033[32m📦 Migrazione database (macOS)...\033[0m\n"
+    @ cd src && DJANGO_ENV="prod" uv run manage.py migrate
+migrate-prod-macos:
+    @ printf "\033[32m📦 Migrazione database (Linux)...\033[0m\n"
+    @ cd src && DJANGO_ENV="prod" uv run manage.py migrate
+
+
+@migrate-dev:
+    just migrate-dev-{{os()}}
+
+migrate-dev-windows:
+    @Write-Host "📦 Migrazione database (Windows)..." -ForegroundColor Green
+    cd src; $env:DJANGO_ENV="dev"; uv run manage.py migrate
+migrate-dev-linux:
+    @ printf "\033[32m📦 Migrazione database (macOS)...\033[0m\n"
+    @ cd src && DJANGO_ENV="dev" uv run manage.py migrate
+migrate-dev-macos:
+    @ printf "\033[32m📦 Migrazione database (Linux)...\033[0m\n"
+    @ cd src && DJANGO_ENV="dev" uv run manage.py migrate
 
 # 🔄 Clean & recreate test database PostgreSQL
 @db-test-clean:
@@ -490,3 +569,88 @@ db-test-clean-linux:
 
 db-test-clean-windows:
     @uv run scripts/db_test_clean.py
+
+# === ENVIRONMENT CHECKS ===
+
+# 🔍 Controllo ambiente corrente
+@check-env:
+    just check-env-{{os()}}
+
+check-env-windows:
+    @Write-Host "🔍 Controllo dell'ambiente corrente..." -ForegroundColor Cyan
+    @{{python}} src/test_logging.py
+
+check-env-macos:
+    @printf "\033[36m🔍 Controllo dell'ambiente corrente...\033[0m\n"
+    @{{python}} src/test_logging.py
+
+check-env-linux:
+    @printf "\033[36m🔍 Controllo dell'ambiente corrente...\033[0m\n"
+    @{{python}} src/test_logging.py
+
+# 🔍 Controllo ambiente DEV
+@check-env-dev:
+    just check-env-dev-{{os()}}
+
+check-env-dev-windows:
+    @Write-Host "🔍 Controllo dell'ambiente DEV..." -ForegroundColor Cyan
+    cd src; $env:DJANGO_ENV="dev"; uv run test_logging.py
+
+check-env-dev-macos:
+    @printf "\033[36m🔍 Controllo dell'ambiente DEV...\033[0m\n"
+    @DJANGO_ENV="dev" {{python}} src/test_logging.py
+
+check-env-dev-linux:
+    @printf "\033[36m🔍 Controllo dell'ambiente DEV...\033[0m\n"
+    @DJANGO_ENV="dev" {{python}} src/test_logging.py
+
+# 🔍 Controllo ambiente TEST
+@check-env-test:
+    just check-env-test-{{os()}}
+
+check-env-test-windows:
+    @Write-Host "🔍 Controllo dell'ambiente TEST..." -ForegroundColor Cyan
+    cd src; $env:DJANGO_ENV="test"; uv run test_logging.py
+
+check-env-test-macos:
+    @printf "\033[36m🔍 Controllo dell'ambiente TEST...\033[0m\n"
+    @DJANGO_ENV="test" {{python}} src/test_logging.py
+
+check-env-test-linux:
+    @printf "\033[36m🔍 Controllo dell'ambiente TEST...\033[0m\n"
+    @DJANGO_ENV="test" {{python}} src/test_logging.py
+
+# 🔍 Controllo ambiente STAGING
+@check-env-staging:
+    just check-env-staging-{{os()}}
+
+check-env-staging-windows:
+    @Write-Host "🎭 Controllo dell'ambiente STAGING..." -ForegroundColor Cyan
+    @Write-Host "⚠️  STAGING usa PostgreSQL e logging su file!" -ForegroundColor Yellow
+    cd src; $env:DJANGO_ENV="staging"; uv run test_logging.py
+
+check-env-staging-macos:
+    @printf "\033[36m🎭 Controllo dell'ambiente STAGING...\033[0m\n"
+    @printf "\033[33m⚠️  STAGING usa PostgreSQL e logging su file!\033[0m\n"
+    @DJANGO_ENV="staging" {{python}} src/test_logging.py
+
+check-env-staging-linux:
+    @printf "\033[36m🎭 Controllo dell'ambiente STAGING...\033[0m\n"
+    @printf "\033[33m⚠️  STAGING usa PostgreSQL e logging su file!\033[0m\n"
+    @DJANGO_ENV="staging" {{python}} src/test_logging.py
+
+# 🔍 Controllo ambiente PROD
+@check-env-prod:
+    just check-env-prod-{{os()}}
+
+check-env-prod-windows:
+    @Write-Host "🔍 Controllo dell'ambiente PROD..." -ForegroundColor Cyan
+    cd src; $env:DJANGO_ENV="prod"; uv run test_logging.py
+
+check-env-prod-macos:
+    @printf "\033[36m🔍 Controllo dell'ambiente PROD...\033[0m\n"
+    @DJANGO_ENV="prod" {{python}} src/test_logging.py
+
+check-env-prod-linux:
+    @printf "\033[36m🔍 Controllo dell'ambiente PROD...\033[0m\n"
+    @DJANGO_ENV="prod" {{python}} src/test_logging.py
