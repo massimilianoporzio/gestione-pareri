@@ -158,7 +158,8 @@ class CustomUser(AbstractUser):
 
     @property
     def email_prefix_display(self):
-        """Restituisce la parte dell'email prima della @ per la visualizzazione."""
+        """Restituisce la parte dell'email prima della @ per la
+        visualizzazione."""
         if self.email:
             return self.email.split("@")[0]
         return ""

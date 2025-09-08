@@ -225,7 +225,8 @@ class AccountsModelsTestCase(TestCase):
         self.assertTrue(user.version > old_version)
 
     def test_created_by_updated_by_with_mock(self):
-        """Test created_by/updated_by con CustomUser reale come utente corrente."""
+        """Test created_by/updated_by con CustomUser reale come utente
+        corrente."""
         import accounts.models as models_mod
         from accounts.models import CustomUser
 
@@ -279,7 +280,8 @@ class AccountsModelsTestCase(TestCase):
         self.assertIsNotNone(user.version)
 
     def test_created_updated_by_fields(self):
-        """Test created/updated_by con CustomUser reale come utente corrente."""
+        """Test created/updated_by con CustomUser reale come utente
+        corrente."""
         import accounts.models as models_mod
         from accounts.models import CustomUser
 

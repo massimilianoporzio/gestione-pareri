@@ -10,7 +10,8 @@ class AccountsCommandsTestCase(TestCase):
     """Test suite for AccountsCommandsTestCase."""
 
     def test_call_command_group_already_exists(self):
-        """Test che copre il ramo else quando il gruppo esiste già (righe 61-65)."""
+        """Test che copre il ramo else quando il gruppo esiste già (righe
+        61-65)."""
         from unittest.mock import patch
 
         from django.contrib.auth.models import Group
@@ -33,7 +34,8 @@ class AccountsCommandsTestCase(TestCase):
     """Test suite for AccountsCommandsTestCase."""
 
     def test_create_full_access_group_output(self):
-        """Test che copre i rami di output per gruppo creato e già esistente."""
+        """Test che copre i rami di output per gruppo creato e già
+        esistente."""
         from unittest.mock import MagicMock
 
         from django.contrib.auth.models import Group
@@ -96,7 +98,8 @@ class AccountsCommandsTestCase(TestCase):
         self.assertEqual(group2.name, "Full Access Admin")
 
     def test_full_access_group_permissions_assigned(self):
-        """Test che tutti i permessi siano assegnati al gruppo Full Access Admin."""
+        """Test che tutti i permessi siano assegnati al gruppo Full Access
+        Admin."""
         from django.contrib.auth.models import Permission
 
         from accounts.management.commands.init_groups_permissions import Command

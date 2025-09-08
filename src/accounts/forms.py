@@ -1,6 +1,7 @@
 """Forms module for accounts app.
 
-This module contains custom forms for user authentication and management.
+This module contains custom forms for user authentication and
+management.
 """
 
 from django import forms

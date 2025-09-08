@@ -654,3 +654,15 @@ check-env-prod-macos:
 check-env-prod-linux:
     @printf "\033[36m🔍 Controllo dell'ambiente PROD...\033[0m\n"
     @DJANGO_ENV="prod" {{python}} src/test_logging.py
+
+@format-docs:
+    just format-docs-{{os()}}
+
+@format-docs-windows:
+    Get-ChildItem src -Recurse -Filter *.py | ForEach-Object { uv run docformatter --in-place $_.FullName }
+
+format-docs-macos:
+    find src -name '*.py' -exec uv run docformatter --in-place {} +
+
+format-docs-linux:
+    find src -name '*.py' -exec uv run docformatter --in-place {} +
