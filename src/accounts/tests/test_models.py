@@ -77,14 +77,18 @@ class AccountsModelsTestCase(TestCase):
         from accounts.models import CustomUser
 
         with self.assertRaises(ValueError):
-            CustomUser.objects.create_superuser(email="admin@aslcn1.it", password="superpass", is_staff=False)
+            CustomUser.objects.create_superuser(
+                email="admin@aslcn1.it", password="superpass", is_staff=False
+            )
 
     def test_create_superuser_valueerror_is_superuser(self):
         """Test create superuser valueerror is superuser."""
         from accounts.models import CustomUser
 
         with self.assertRaises(ValueError):
-            CustomUser.objects.create_superuser(email="admin@aslcn1.it", password="superpass", is_superuser=False)
+            CustomUser.objects.create_superuser(
+                email="admin@aslcn1.it", password="superpass", is_superuser=False
+            )
 
     """Test suite for AccountsModelsTestCase."""
 
@@ -92,7 +96,9 @@ class AccountsModelsTestCase(TestCase):
         """Test create superuser method."""
         from accounts.models import CustomUser
 
-        superuser = CustomUser.objects.create_superuser(email="admin@aslcn1.it", password="superpass")
+        superuser = CustomUser.objects.create_superuser(
+            email="admin@aslcn1.it", password="superpass"
+        )
         self.assertTrue(superuser.is_superuser)
         self.assertTrue(superuser.is_staff)
         self.assertTrue(superuser.is_active)
@@ -112,7 +118,9 @@ class AccountsModelsTestCase(TestCase):
         """
         from accounts.models import CustomUser
 
-        cls.creator = CustomUser.objects.create(email="creator3@aslcn1.it", first_name="Creatore3", password="pass")
+        cls.creator = CustomUser.objects.create(
+            email="creator3@aslcn1.it", first_name="Creatore3", password="pass"
+        )
 
     def test_manual_created_by_field(self):
         """Test manual created by field: assegna esplicitamente il campo created_by usando setUpTestData."""
@@ -127,7 +135,10 @@ class AccountsModelsTestCase(TestCase):
 
         models_mod.get_current_user = lambda: Anon()
         user = CustomUser.objects.create(
-            email="manual@aslcn1.it", first_name="Manuale", password="pass", created_by=self.creator
+            email="manual@aslcn1.it",
+            first_name="Manuale",
+            password="pass",
+            created_by=self.creator,
         )
         self.assertEqual(user.created_by, self.creator)
 
@@ -218,7 +229,9 @@ class AccountsModelsTestCase(TestCase):
         import accounts.models as models_mod
         from accounts.models import CustomUser
 
-        current_user = CustomUser.objects.create(email="creator@aslcn1.it", first_name="Creatore", password="pass")
+        current_user = CustomUser.objects.create(
+            email="creator@aslcn1.it", first_name="Creatore", password="pass"
+        )
 
         def dummy_get_current_user():
             """Dummy get current user."""
