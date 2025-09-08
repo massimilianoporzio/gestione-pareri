@@ -1,7 +1,8 @@
 """Configurazione per il logging colorato usando colorama.
 
-Questo modulo fornisce un formatter personalizzato che aggiunge colori ai log
-utilizzando la libreria colorama, che supporta i colori in modo cross-platform.
+Questo modulo fornisce un formatter personalizzato che aggiunge colori
+ai log utilizzando la libreria colorama, che supporta i colori in modo
+cross-platform.
 """
 
 import logging
@@ -14,7 +15,8 @@ init(autoreset=True)
 
 
 class ColoramaFormatter(logging.Formatter):
-    """Formatter per log colorati che usa colorama per la compatibilità cross-platform.
+    """Formatter per log colorati che usa colorama per la compatibilità cross-
+    platform.
 
     Supporta Windows, Linux e macOS.
     """

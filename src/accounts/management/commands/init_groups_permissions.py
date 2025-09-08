@@ -16,8 +16,8 @@ from django.db import transaction
 class Command(BaseCommand):
     """Django management command to initialize base groups and permissions.
 
-    This command creates the base user groups and assigns appropriate permissions
-    for the gestione pareri application.
+    This command creates the base user groups and assigns appropriate
+    permissions for the gestione pareri application.
     """
 
     help = "Inizializza gruppi e permessi di base del sistema"

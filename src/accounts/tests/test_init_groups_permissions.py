@@ -70,7 +70,8 @@ class InitGroupsPermissionsCoverageTests(TestCase):
     """Test suite for InitGroupsPermissionsCoverageTests."""
 
     def test_create_base_group_with_permissions(self):
-        """Test che copre l'assegnazione di permessi specifici a un gruppo base."""
+        """Test che copre l'assegnazione di permessi specifici a un gruppo
+        base."""
         cmd = Command()
         cmd.stdout = StringIO()
         cmd.style = self.DummyStyle()
@@ -237,7 +238,8 @@ class InitGroupsPermissionsCoverageTests(TestCase):
     """Test suite for InitGroupsPermissionsCoverageTests."""
 
     def test_create_full_access_group_else_branch(self):
-        """Test che copre il ramo else quando il gruppo esiste già (righe 61-65)."""
+        """Test che copre il ramo else quando il gruppo esiste già (righe
+        61-65)."""
         from io import StringIO
 
         from django.contrib.auth.models import Group
