@@ -69,7 +69,9 @@ psql_cmd = [
 env = os.environ.copy()
 env["PGPASSWORD"] = DB_PASSWORD
 try:
-    result = subprocess.run(psql_cmd, env=env, check=True, capture_output=True, text=True)
+    result = subprocess.run(
+        psql_cmd, env=env, check=True, capture_output=True, text=True
+    )
     test_dbs = [db.strip() for db in result.stdout.splitlines() if db.strip()]
     for test_db in test_dbs:
         print(f"🗑️  Drop database: {test_db}")

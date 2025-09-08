@@ -31,7 +31,9 @@ class CustomUserManager(BaseUserManager):
         """
         # Validazione dominio aziendale
         if not email.endswith("@aslcn1.it"):
-            raise ValidationError(_("Il dominio dell'indirizzo email deve essere '@aslcn1.it'."))
+            raise ValidationError(
+                _("Il dominio dell'indirizzo email deve essere '@aslcn1.it'.")
+            )
 
     def create_user(self, email, password=None, **extra_fields):
         """Create and return a user with email and password.
@@ -70,7 +72,9 @@ class CustomUserManager(BaseUserManager):
         # Imposta i campi necessari per un superuser
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("is_active", True)  # I superuser dovrebbero essere attivi per default
+        extra_fields.setdefault(
+            "is_active", True
+        )  # I superuser dovrebbero essere attivi per default
 
         if extra_fields.get("is_staff") is not True:
             raise ValueError(_("Superuser deve avere is_staff=True."))
@@ -95,7 +99,9 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []  # Campi richiesti oltre a USERNAME_FIELD e password
 
-    email = models.EmailField(_("indirizzo email aziendale"), unique=True)  # pragma: no cover
+    email = models.EmailField(
+        _("indirizzo email aziendale"), unique=True
+    )  # pragma: no cover
     username = models.CharField(
         _("nome utente"), max_length=150, unique=True, blank=True, null=True
     )  # pragma: no cover
@@ -121,7 +127,9 @@ class CustomUser(AbstractUser):
         blank=True,
         related_name="created_%(class)s_set",
     )  # pragma: no cover
-    created_by_fullname = models.CharField(max_length=150, blank=True)  # pragma: no cover
+    created_by_fullname = models.CharField(
+        max_length=150, blank=True
+    )  # pragma: no cover
     updated_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -129,13 +137,17 @@ class CustomUser(AbstractUser):
         blank=True,
         related_name="updated_%(class)s_set",
     )  # pragma: no cover
-    updated_by_fullname = models.CharField(max_length=150, blank=True)  # pragma: no cover
+    updated_by_fullname = models.CharField(
+        max_length=150, blank=True
+    )  # pragma: no cover
 
     created_at = models.DateTimeField(
         _("created at"),
         auto_now_add=True,
     )  # pragma: no cover
-    updated_at = models.DateTimeField(_("updated at"), auto_now=True)  # pragma: no cover
+    updated_at = models.DateTimeField(
+        _("updated at"), auto_now=True
+    )  # pragma: no cover
 
     def __str__(self):
         """Return the full name of the user."""
@@ -171,7 +183,9 @@ class CustomUser(AbstractUser):
         super().clean()
         # Validazione dominio aziendale
         if self.email and not self.email.endswith("@aslcn1.it"):
-            raise ValidationError(_("Il dominio dell'indirizzo email deve essere '@aslcn1.it'."))
+            raise ValidationError(
+                _("Il dominio dell'indirizzo email deve essere '@aslcn1.it'.")
+            )
 
     def save(self, *args, **kwargs):
         """Save the user instance."""
@@ -182,9 +196,13 @@ class CustomUser(AbstractUser):
             # Se il record è nuovo (non ha ancora una chiave primaria)
             if not self.pk:
                 self.created_by = user
-                self.created_by_fullname = user.nome_utente if hasattr(user, "nome_utente") else str(user)
+                self.created_by_fullname = (
+                    user.nome_utente if hasattr(user, "nome_utente") else str(user)
+                )
             # L'utente che ha fatto l'ultima modifica è sempre l'utente corrente
             self.updated_by = user
-            self.updated_by_fullname = user.nome_utente if hasattr(user, "nome_utente") else str(user)
+            self.updated_by_fullname = (
+                user.nome_utente if hasattr(user, "nome_utente") else str(user)
+            )
 
         super().save(*args, **kwargs)
