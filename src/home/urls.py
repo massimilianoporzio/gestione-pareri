@@ -23,10 +23,13 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.hello_world, name="home"),
+    path("", admin.site.urls),  # la root mostra direttamente la admin
     path("healthz/", views.healthz_view, name="health_check"),
-    path("admin/", admin.site.urls),
 ]
+
+# Gestione custom error pages
+handler404 = "src.home.views.custom_404"
+handler500 = "src.home.views.custom_500"
 
 # Serve media files during development
 if settings.DEBUG:

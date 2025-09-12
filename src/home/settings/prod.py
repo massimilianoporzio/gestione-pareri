@@ -112,16 +112,18 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="noreply@example.com")
 
-# IIS Subpath configuration
-FORCE_SCRIPT_NAME = config("DJANGO_FORCE_SCRIPT_NAME", default="")
+
+# Subpath/reverse proxy per produzione
+DJANGO_SUBPATH = config("DJANGO_SUBPATH", default=None)
+FORCE_SCRIPT_NAME = f"/{DJANGO_SUBPATH}" if DJANGO_SUBPATH else None
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Static e Media files in produzione
-STATIC_URL = f"{FORCE_SCRIPT_NAME}/static/"
+STATIC_URL = f"/{DJANGO_SUBPATH}/static/" if DJANGO_SUBPATH else "/static/"
 STATIC_ROOT = REPO_DIR / "staticfiles"  # noqa: F405
-MEDIA_URL = f"{FORCE_SCRIPT_NAME}/media/"
+MEDIA_URL = f"/{DJANGO_SUBPATH}/media/" if DJANGO_SUBPATH else "/media/"
 MEDIA_ROOT = REPO_DIR / "media"  # noqa: F405
 
 # Configurazione del logging per produzione

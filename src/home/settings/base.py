@@ -72,9 +72,7 @@ LOCAL_APPS = [
     # aggiungi qui le tue altre app
 ]
 
-INSTALLED_APPS = (
-    THIRD_PARTY_APPS_BEFORE_DJANGO + DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-)
+INSTALLED_APPS = THIRD_PARTY_APPS_BEFORE_DJANGO + DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 
 MIDDLEWARE = [
@@ -146,16 +144,11 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 STATIC_ROOT = REPO_DIR / "staticfiles"
-
-# Additional locations of static files
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Media files (uploaded by users)
 MEDIA_URL = "/media/"
