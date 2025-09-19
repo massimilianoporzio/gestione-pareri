@@ -1,5 +1,11 @@
+"""Generate Nginx Conf module.
+
+Questo modulo fornisce funzionalità per generate nginx conf.
+"""
+
 import os
 import sys
+
 from decouple import Config, RepositoryEnv
 
 # Carica variabili da .env
@@ -41,7 +47,8 @@ server {{
 }}
 """
 
-with open(os.path.join(REPO_DIR, f"nginx_{DJANGO_SUBPATH}.conf"), "w", encoding="utf-8") as f:
+output_path = os.path.join(REPO_DIR, "scripts", "deployment", f"nginx_{DJANGO_SUBPATH}.conf")
+with open(output_path, "w", encoding="utf-8") as f:
     f.write(nginx_conf)
 
-print(f"Configurazione Nginx generata in nginx_{DJANGO_SUBPATH}.conf")
+print(f"Configurazione Nginx generata in scripts/deployment/nginx_{DJANGO_SUBPATH}.conf")

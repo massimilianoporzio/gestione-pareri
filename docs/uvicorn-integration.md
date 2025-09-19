@@ -87,12 +87,20 @@ DJANGO_ENV=test PORT=8080 make uvicorn
 - **Single worker**: Usa Uvicorn diretto per `WORKERS = 1`
 - **Performance**: Ottimali con uvloop
 
-### Windows
 
-- **Script**: `scripts/deployment/start-uvicorn.ps1`
-- **Multi-worker**: Single worker ottimizzato (Windows non supporta fork)
-- **Performance**: Eccellenti anche senza uvloop
+## Deploy cross-platform con Nginx
+
+Per una guida completa al deploy e gestione di Nginx/Uvicorn su macOS, Linux e Windows tramite justfile:
+
+- [Deploy Django/Uvicorn con Nginx (cross-platform)](./nginx-uvicorn-deploy.md)
+
+## Windows
+
+Per eseguire Uvicorn come servizio su Windows, consulta la guida dedicata:
+
+- [Esecuzione Uvicorn come servizio Windows con NSSM](./uvicorn-nssm-windows.md)
 - **Compatibilità**: 100% nativa
+- **Servizio come Windows Service**: Vedi la guida dedicata: [`docs/uvicorn-nssm-windows.md`](uvicorn-nssm-windows.md)
 
 ## 📊 Modalità di Esecuzione
 

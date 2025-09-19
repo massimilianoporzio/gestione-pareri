@@ -36,12 +36,16 @@ default-macos:
     @ printf "  just test-prod          ⚡ Test ambiente PROD\n";
     @ printf "\n";
     @ printf "\033[36m🌐 SERVER & DEPLOY:\033[0m\n";
-    @ printf "  just run-uvicorn        ⚡ Server Uvicorn ASGI\n";
-    @ printf "  just setup-nginx        🌐 Configura Nginx reverse proxy\n";
-    @ printf "  just deploy-nginx       🚀 Deploy completo con Nginx\n";
-    @ printf "  just status-nginx       📊 Status servizi Nginx/Django\n";
-    @ printf "  just stop-servers       🛑 Ferma tutti i server\n";
-    @ printf "  just kill-port          🔪 Termina processo porta 8000\n";
+    @ printf "  just nginx-generate-conf     📝 Genera file configurazione Nginx\n";
+    @ printf "  just nginx-copy-conf         📋 Copia file configurazione Nginx\n";
+    @ printf "  just nginx-reload            🔄 Riavvia/reload Nginx\n";
+    @ printf "  just run-uvicorn-prod        ⚡ Uvicorn produzione (cross-platform)\n";
+    @ printf "  just deploy-nginx-steps      🚀 Deploy Nginx step-by-step (cross-platform)\n";
+    @ printf "  just deploy-nginx            🚀 Deploy completo con Nginx\n";
+    @ printf "  just setup-nginx             🌐 Configura Nginx reverse proxy\n";
+    @ printf "  just status-nginx            📊 Status servizi Nginx/Django\n";
+    @ printf "  just stop-servers            🛑 Ferma tutti i server\n";
+    @ printf "  just kill-port               🔪 Termina processo porta 8000\n";
     @ printf "\n";
     @ printf "\033[33m🔧 QUALITY & FORMAT:\033[0m\n";
     @ printf "  just fix-all            ⭐ CORREZIONE GLOBALE completa\n";
@@ -63,6 +67,65 @@ default-macos:
     @ printf "  just generate-db-passwords 🔐 Genera password PostgreSQL sicure\n";
     @ printf "  just create-db-script   🗄️ Crea script SQL con password reali\n";
     @ printf "  just --list             📋 Lista completa comandi\n"
+# === NGINX/Uvicorn cross-platform ===
+
+
+# Wrapper cross-platform per caricare variabili da .env
+
+
+# Wrapper per esportare solo DJANGO_SUBPATH e SERVER_IP da .env (safe)
+
+dotenv_win_safe := "$lines = Get-Content .env | Where-Object { $_ -match '^(DJANGO_SUBPATH|SERVER_IP)=' }; foreach ($line in $lines) { $pair = $line -split '=',2; if ($pair.Length -eq 2) { Set-Item -Path Env:$($pair[0].Trim()) -Value $pair[1].Trim() } }"
+
+# 1. Genera file di configurazione Nginx (cross-platform)
+@nginx-generate-conf:
+    just nginx-generate-conf-{{os()}}
+
+
+nginx-generate-conf-macos:
+    DJANGO_SUBPATH=$(grep '^DJANGO_SUBPATH=' .env | cut -d'=' -f2-) SERVER_IP=$(grep '^SERVER_IP=' .env | cut -d'=' -f2-) uv run scripts/deployment/generate_nginx_conf.py
+
+
+nginx-generate-conf-linux:
+    DJANGO_SUBPATH=$(grep '^DJANGO_SUBPATH=' .env | cut -d'=' -f2-) SERVER_IP=$(grep '^SERVER_IP=' .env | cut -d'=' -f2-) uv run scripts/deployment/generate_nginx_conf.py
+
+nginx-generate-conf-windows:
+    powershell -Command "${dotenv_win_safe}; uv run scripts/deployment/generate_nginx_conf.py"
+
+# 2. Copia file di configurazione Nginx (macOS/Linux/Windows)
+@nginx-copy-conf:
+    just nginx-copy-conf-{{os()}}
+
+
+nginx-copy-conf-macos:
+    DJANGO_SUBPATH=$(grep '^DJANGO_SUBPATH=' .env | cut -d'=' -f2-) sudo cp scripts/deployment/nginx_$(grep '^DJANGO_SUBPATH=' .env | cut -d'=' -f2-).conf /opt/homebrew/etc/nginx/gestione-pareri.conf
+
+
+nginx-copy-conf-linux:
+    DJANGO_SUBPATH=$(grep '^DJANGO_SUBPATH=' .env | cut -d'=' -f2-) sudo cp scripts/deployment/nginx_$(grep '^DJANGO_SUBPATH=' .env | cut -d'=' -f2-).conf /etc/nginx/sites-available/gestione-pareri && sudo ln -sf /etc/nginx/sites-available/gestione-pareri /etc/nginx/sites-enabled/
+
+nginx-copy-conf-windows:
+    powershell -Command "${dotenv_win_safe}; Copy-Item -Path 'scripts/deployment/nginx_$env:DJANGO_SUBPATH.conf' -Destination 'C:\nginx\conf\gestione-pareri.conf' -Force"
+
+# 3. Riavvia/reload Nginx (macOS/Linux/Windows)
+@nginx-reload:
+    just nginx-reload-{{os()}}
+
+nginx-reload-macos:
+    brew services restart nginx
+
+nginx-reload-linux:
+    sudo systemctl reload nginx
+
+nginx-reload-windows:
+    Stop-Process -Name nginx -Force -ErrorAction SilentlyContinue; Start-Process "C:\nginx\nginx.exe"
+
+# 4. Ricetta unica: deploy step-by-step (cross-platform)
+@deploy-nginx-steps:
+    just nginx-generate-conf
+    just nginx-copy-conf
+    just nginx-reload
+    just run-uvicorn-prod
 
 default-windows:
     @Write-Host "🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI" -ForegroundColor Magenta;
@@ -89,6 +152,22 @@ default-windows:
     @Write-Host "";
     @Write-Host "🌐 SERVER & DEPLOY:" -ForegroundColor Cyan;
     @Write-Host "  just run-uvicorn        ⚡ Server Uvicorn ASGI" -ForegroundColor Cyan;
+    @Write-Host "  just run-uvicorn-prod   ⚡ Uvicorn produzione (cross-platform)" -ForegroundColor Cyan;
+# === Uvicorn produzione cross-platform ===
+@run-uvicorn-prod:
+    just run-uvicorn-prod-{{os()}}
+
+run-uvicorn-prod-macos:
+    @ printf "\033[32m⚡ Avvio Uvicorn in produzione (macOS)...\033[0m\n"
+    @ uv run -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --workers 4 --env-file .env --app-dir src
+
+run-uvicorn-prod-linux:
+    @ printf "\033[32m⚡ Avvio Uvicorn in produzione (Linux)...\033[0m\n"
+    @ uv run -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --workers 4 --env-file .env --app-dir src
+
+run-uvicorn-prod-windows:
+    @Write-Host "⚡ Avvio Uvicorn in produzione (Windows)..." -ForegroundColor Green
+    uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --workers 4 --env-file .env
     @Write-Host "  just setup-nginx        🌐 Configura Nginx reverse proxy" -ForegroundColor Cyan;
     @Write-Host "  just deploy-nginx       🚀 Deploy completo con Nginx" -ForegroundColor Cyan;
     @Write-Host "  just status-nginx       📊 Status servizi Nginx/Django" -ForegroundColor Cyan;
