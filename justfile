@@ -94,83 +94,61 @@ nginx-generate-conf-windows:
 
 # 2. Copia file di configurazione Nginx (macOS/Linux/Windows)
 @nginx-copy-conf:
-    just nginx-copy-conf-{{os()}}
-
-
-nginx-copy-conf-macos:
-    DJANGO_SUBPATH=$(grep '^DJANGO_SUBPATH=' .env | cut -d'=' -f2-) sudo cp scripts/deployment/nginx_$(grep '^DJANGO_SUBPATH=' .env | cut -d'=' -f2-).conf /opt/homebrew/etc/nginx/gestione-pareri.conf
-
-
-nginx-copy-conf-linux:
-    DJANGO_SUBPATH=$(grep '^DJANGO_SUBPATH=' .env | cut -d'=' -f2-) sudo cp scripts/deployment/nginx_$(grep '^DJANGO_SUBPATH=' .env | cut -d'=' -f2-).conf /etc/nginx/sites-available/gestione-pareri && sudo ln -sf /etc/nginx/sites-available/gestione-pareri /etc/nginx/sites-enabled/
-
-nginx-copy-conf-windows:
-    powershell -Command "${dotenv_win_safe}; Copy-Item -Path 'scripts/deployment/nginx_$env:DJANGO_SUBPATH.conf' -Destination 'C:\nginx\conf\gestione-pareri.conf' -Force"
-
-# 3. Riavvia/reload Nginx (macOS/Linux/Windows)
-@nginx-reload:
-    just nginx-reload-{{os()}}
-
-nginx-reload-macos:
-    brew services restart nginx
-
-nginx-reload-linux:
-    sudo systemctl reload nginx
-
-nginx-reload-windows:
-    Stop-Process -Name nginx -Force -ErrorAction SilentlyContinue; Start-Process "C:\nginx\nginx.exe"
-
-# 4. Ricetta unica: deploy step-by-step (cross-platform)
-@deploy-nginx-steps:
-    just nginx-generate-conf
-    just nginx-copy-conf
-    just nginx-reload
-    just run-uvicorn-prod
-
-default-windows:
-    @Write-Host "🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI" -ForegroundColor Magenta;
-    @Write-Host "============================================================" -ForegroundColor Gray;
-    @Write-Host "";
-    @Write-Host "📊 DJANGO & DATABASE:" -ForegroundColor Green;
-    @Write-Host "  just run-server         🚀 Server di sviluppo Django" -ForegroundColor Green;
-    @Write-Host "  just run-dev            🛠️ Server sviluppo (DEV)" -ForegroundColor Green;
-    @Write-Host "  just run-test           🧪 Server sviluppo (TEST)" -ForegroundColor Green;
-    @Write-Host "  just run-staging        🎭 Server sviluppo (STAGING)" -ForegroundColor Green;
-    @Write-Host "  just run-prod           ⚡ Server sviluppo (PROD)" -ForegroundColor Green;
-    @Write-Host "  just migrate            📦 Migrazioni database" -ForegroundColor Green;
-    @Write-Host "  just migrate-dev        🛠️ Migrazioni database dev" -ForegroundColor Green;
-    @Write-Host "  just migrate-test       🧪 Migrazioni database test" -ForegroundColor Green;
-    @Write-Host "  just migrate-staging    🎭 Migrazioni database staging" -ForegroundColor Green;
-    @Write-Host "  just migrate-prod       🚀 Migrazioni database prod" -ForegroundColor Green;
-    @Write-Host "  just makemigrations     📝 Crea migrazioni" -ForegroundColor Green;
-    @Write-Host "  just shell              🐚 Shell Django" -ForegroundColor Green;
-    @Write-Host "  just test-sqlite        🧪 Test veloce (SQLite, default)" -ForegroundColor Green;
-    @Write-Host "  just test-postgres      🧪 Test realistico (PostgreSQL, pulizia DB)" -ForegroundColor Green;
-    @Write-Host "  just test-dev           🔧 Test ambiente DEV" -ForegroundColor Green;
-    @Write-Host "  just test-staging       🎭 Test ambiente STAGING" -ForegroundColor Green;
-    @Write-Host "  just test-prod          ⚡ Test ambiente PROD" -ForegroundColor Green;
-    @Write-Host "";
-    @Write-Host "🌐 SERVER & DEPLOY:" -ForegroundColor Cyan;
-    @Write-Host "  just run-uvicorn        ⚡ Server Uvicorn ASGI" -ForegroundColor Cyan;
-    @Write-Host "  just run-uvicorn-prod   ⚡ Uvicorn produzione (cross-platform)" -ForegroundColor Cyan;
-# === Uvicorn produzione cross-platform ===
-@run-uvicorn-prod:
-    just run-uvicorn-prod-{{os()}}
-
-run-uvicorn-prod-macos:
-    @ printf "\033[32m⚡ Avvio Uvicorn in produzione (macOS)...\033[0m\n"
-    @ uv run -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --workers 4 --env-file .env --app-dir src
-
-run-uvicorn-prod-linux:
-    @ printf "\033[32m⚡ Avvio Uvicorn in produzione (Linux)...\033[0m\n"
-    @ uv run -m uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --workers 4 --env-file .env --app-dir src
-
-run-uvicorn-prod-windows:
-    @Write-Host "⚡ Avvio Uvicorn in produzione (Windows)..." -ForegroundColor Green
-    uvicorn home.asgi:application --host 0.0.0.0 --port 8000 --workers 4 --env-file .env
-    @Write-Host "  just setup-nginx        🌐 Configura Nginx reverse proxy" -ForegroundColor Cyan;
-    @Write-Host "  just deploy-nginx       🚀 Deploy completo con Nginx" -ForegroundColor Cyan;
-    @Write-Host "  just status-nginx       📊 Status servizi Nginx/Django" -ForegroundColor Cyan;
+    default-windows:
+        @Write-Host "🚀 GESTIONE PRATICHE & PARERI - COMANDI DISPONIBILI" -ForegroundColor Magenta;
+        @Write-Host "============================================================" -ForegroundColor Gray;
+        @Write-Host "";
+        @Write-Host "📊 DJANGO & DATABASE:" -ForegroundColor Green;
+        @Write-Host "  just run-server         🚀 Server di sviluppo Django" -ForegroundColor Green;
+        @Write-Host "  just run-dev            � Server sviluppo (DEV)" -ForegroundColor Green;
+        @Write-Host "  just run-test           🧪 Server sviluppo (TEST)" -ForegroundColor Green;
+        @Write-Host "  just run-staging        🎭 Server sviluppo (STAGING)" -ForegroundColor Green;
+        @Write-Host "  just run-prod           ⚡ Server sviluppo (PROD)" -ForegroundColor Green;
+        @Write-Host "  just migrate            📦 Migrazioni database" -ForegroundColor Green;
+        @Write-Host "  just migrate-dev        🛠️ Migrazioni database dev" -ForegroundColor Green;
+        @Write-Host "  just migrate-test       🧪 Migrazioni database test" -ForegroundColor Green;
+        @Write-Host "  just migrate-staging    🎭 Migrazioni database staging" -ForegroundColor Green;
+        @Write-Host "  just migrate-prod       🚀 Migrazioni database prod" -ForegroundColor Green;
+        @Write-Host "  just makemigrations     📝 Crea migrazioni" -ForegroundColor Green;
+        @Write-Host "  just shell              🐚 Shell Django" -ForegroundColor Green;
+        @Write-Host "  just test-sqlite        🧪 Test veloce (SQLite, default)" -ForegroundColor Green;
+        @Write-Host "  just test-postgres      🧪 Test realistico (PostgreSQL, pulizia DB)" -ForegroundColor Green;
+        @Write-Host "  just test-dev           🔧 Test ambiente DEV" -ForegroundColor Green;
+        @Write-Host "  just test-staging       🎭 Test ambiente STAGING" -ForegroundColor Green;
+        @Write-Host "  just test-prod          ⚡ Test ambiente PROD" -ForegroundColor Green;
+        @Write-Host "";
+        @Write-Host "🌐 SERVER & DEPLOY:" -ForegroundColor Cyan;
+        @Write-Host "  just nginx-generate-conf     📝 Genera file configurazione Nginx" -ForegroundColor Cyan;
+        @Write-Host "  just nginx-copy-conf         📋 Copia file configurazione Nginx" -ForegroundColor Cyan;
+        @Write-Host "  just nginx-reload            🔄 Riavvia/reload Nginx" -ForegroundColor Cyan;
+        @Write-Host "  just run-uvicorn-prod        ⚡ Uvicorn produzione (cross-platform)" -ForegroundColor Cyan;
+        @Write-Host "  just deploy-nginx-steps      🚀 Deploy Nginx step-by-step (cross-platform)" -ForegroundColor Cyan;
+        @Write-Host "  just deploy-nginx            🚀 Deploy completo con Nginx" -ForegroundColor Cyan;
+        @Write-Host "  just setup-nginx             🌐 Configura Nginx reverse proxy" -ForegroundColor Cyan;
+        @Write-Host "  just status-nginx            📊 Status servizi Nginx/Django" -ForegroundColor Cyan;
+        @Write-Host "  just stop-servers            🛑 Ferma tutti i server" -ForegroundColor Cyan;
+        @Write-Host "  just kill-port               🔪 Termina processo porta 8000" -ForegroundColor Cyan;
+        @Write-Host "";
+        @Write-Host "🔧 QUALITY & FORMAT:" -ForegroundColor Yellow;
+        @Write-Host "  just fix-all            ⭐ CORREZIONE GLOBALE completa" -ForegroundColor Yellow;
+        @Write-Host "  just lint-codacy        🔍 Controlli qualità Codacy" -ForegroundColor Yellow;
+        @Write-Host "  just add-docstrings     📝 Aggiunge docstring mancanti" -ForegroundColor Yellow;
+        @Write-Host "  just precommit-corporate 🏢 Pre-commit aziendale" -ForegroundColor Yellow;
+        @Write-Host "  just quality-corporate  🏢 Quality controlli alternativi" -ForegroundColor Yellow;
+        @Write-Host "  just fix-markdown       📝 Corregge problemi Markdown" -ForegroundColor Yellow;
+        @Write-Host "";
+        @Write-Host "ℹ️  UTILITY:" -ForegroundColor White;
+        @Write-Host "  just stats              📊 Statistiche progetto" -ForegroundColor White;
+        @Write-Host "  just check-env          🔍 Controllo ambiente" -ForegroundColor White;
+        @Write-Host "  just check-env-dev      🔍 Controllo ambiente DEV" -ForegroundColor White;
+        @Write-Host "  just check-env-test     🧪 Controllo ambiente TEST" -ForegroundColor White;
+        @Write-Host "  just check-env-staging  🎭 Controllo ambiente STAGING" -ForegroundColor White;
+        @Write-Host "  just check-env-prod     ⚡ Controllo ambiente PROD" -ForegroundColor White;
+        @Write-Host "  just generate-secret-key 🔑 Genera Django SECRET_KEY" -ForegroundColor White;
+        @Write-Host "  just generate-secret-keys-all 🔐 Genera SECRET_KEY per tutti e 4 gli ambienti" -ForegroundColor White;
+        @Write-Host "  just generate-db-passwords 🔐 Genera password PostgreSQL sicure" -ForegroundColor White;
+        @Write-Host "  just create-db-script   🗄️ Crea script SQL con password reali" -ForegroundColor White;
+        @Write-Host "  just --list             � Lista completa comandi" -ForegroundColor White;
     @Write-Host "  just stop-servers       🛑 Ferma tutti i server" -ForegroundColor Cyan;
     @Write-Host "  just kill-port          🔪 Termina processo porta 8000" -ForegroundColor Cyan;
     @Write-Host "";
